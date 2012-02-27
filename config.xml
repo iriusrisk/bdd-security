@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<web-app>
+	<defaultDriver>HtmlUnit</defaultDriver>
+	<burpDriver>BurpHtmlUnit</burpDriver>
+	<baseUrl>http://www.ispatula.com:8081/ispatula/</baseUrl>
+	<class>IspatulaApplication</class>
+
+	<burpHost>127.0.0.1</burpHost>
+	<burpPort>8080</burpPort>
+	<burpWSUrl>http://127.0.0.1:8181/</burpWSUrl>
+	<storyUrl>src/main/stories/</storyUrl>
+	<reportsDir>reports</reportsDir>
+	<latestReportsDir>target/jbehave/</latestReportsDir>
+
+	<sessionIds>
+		<name>JSESSIONID</name>
+	</sessionIds>
+	
+	<users>
+		<user username="bob" password="password">
+				<role>user</role>
+		</user>
+		<user username="alice" password="password">
+				<role>user</role>
+		</user>
+		<user username="admin" password="password">
+				<role>user</role>
+				<role>admin</role>
+		</user>
+	</users>
+
+</web-app>
