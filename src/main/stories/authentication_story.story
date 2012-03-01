@@ -17,9 +17,10 @@ Meta:
 
 Given the default username from: users.table
 And an incorrect password
-When the user logs in from a fresh login page 4 times
+And the user logs in from a fresh login page 4 times
+When the default password is used from: users.table
+And the user logs in from a fresh login page
 Then the user is not logged in
-Given the default user logs in: users.table
 
 
 Scenario: Login should be secure against SQL injection bypass attacks in the password field

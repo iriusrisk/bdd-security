@@ -9,7 +9,7 @@
 	<groupId>net.continuumsecurity</groupId>
 	<artifactId>bdd-security</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,12 +45,12 @@
 		<dependency>
 			<groupId>net.continuumsecurity</groupId>
 			<artifactId>burp-client</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.continuumsecurity</groupId>
 			<artifactId>resty-burp</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>

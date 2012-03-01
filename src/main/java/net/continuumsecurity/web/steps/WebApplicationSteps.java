@@ -90,6 +90,7 @@ public class WebApplicationSteps {
 	}
 
 	@Given("the default password from: $credentialsTable")
+	@When("the default password is used from: $credentialsTable")
 	public void defaultPassword(ExamplesTable credentialsTable) {
 		credentials.setPassword(tableToDefaultCredentials(credentialsTable)
 				.getPassword());
@@ -174,7 +175,7 @@ public class WebApplicationSteps {
 		credentials.setPassword(wrongCasePassword);
 	}
 
-	@When("the user logs in from a fresh login page $limit times")
+	@Given("the user logs in from a fresh login page $limit times")
 	public void whenTheUserLogsInFromAFreshLoginPageXTimes(int limit) {
 		for (int i = 0; i < limit; i++) {
 			createApp();

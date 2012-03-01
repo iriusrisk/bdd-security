@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <web-app>
-	<defaultDriver>HtmlUnit</defaultDriver>
-	<burpDriver>BurpHtmlUnit</burpDriver>
+    <!-- The settings in this file are for a fictional web application called "ISpatula", you'll need to modify them for your app! -->
+    
+	<!-- The HttpAware WebDrivers drivers to use, available drivers can be found in net.continuumsecurity.web.driver.HttpAware*Driver -->
+	<defaultDriver>Firefox</defaultDriver>
+	
+	<!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.driver.Burp*Driver -->
+	<burpDriver>BurpFirefox</burpDriver>
+	
+	<!-- Base URL for the application to test -->
 	<baseUrl>http://www.ispatula.com:8081/ispatula/</baseUrl>
+	
+	<!-- The class name representing the application under test -->
 	<class>IspatulaApplication</class>
 
-	<burpHost>127.0.0.1</burpHost>
-	<burpPort>8080</burpPort>
-	<burpWSUrl>http://127.0.0.1:8181/</burpWSUrl>
-	<storyUrl>src/main/stories/</storyUrl>
-	<reportsDir>reports</reportsDir>
-	<latestReportsDir>target/jbehave/</latestReportsDir>
-
+	<!-- Names of the session ID cookies -->
 	<sessionIds>
 		<name>JSESSIONID</name>
 	</sessionIds>
@@ -29,4 +32,11 @@
 		</user>
 	</users>
 
+	<!-- The settings below usually don't need to be changed -->
+    <burpHost>127.0.0.1</burpHost>
+	<burpPort>8080</burpPort>
+	<burpWSUrl>http://127.0.0.1:8181/</burpWSUrl>
+	<storyUrl>src/main/stories/</storyUrl>
+	<reportsDir>reports</reportsDir>
+	<latestReportsDir>target/jbehave/</latestReportsDir>
 </web-app>
