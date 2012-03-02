@@ -3,7 +3,6 @@ package net.continuumsecurity.examples.hacmebooks;
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,7 +12,7 @@ import org.openqa.selenium.support.How;
  * The page you see after logging in
  */
 public class HomePage extends Page {
-	static String url = Config.getBaseUrl()+"shop/signonForm.do";
+	static String url = Config.getBaseUrl()+"mainMenu.html";
 	
 	@FindBy(how = How.ID, using = "keyWords")
 	WebElement keyWords;
