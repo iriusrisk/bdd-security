@@ -21,12 +21,12 @@ package net.continuumsecurity.web;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.continuumsecurity.examples.ispatula.IspatulaApplication;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -34,10 +34,26 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 
+
 public class Config {
 
 	public static WebApplication createApp(WebDriver driver) {
-		return new IspatulaApplication(driver);
+		Object app = null;
+		try {
+			Class appClass = Class.forName(Config.getClassName());
+			Constructor constructor = appClass.getConstructor(WebDriver.class);
+			app = constructor.newInstance(driver);
+			if (!(app instanceof WebApplication)) {
+				System.err.println("FATAL error: The defined class: "+Config.getClassName()+" does not extend WebApplication.");
+				System.exit(1);
+			}
+			return (WebApplication)app;
+		} catch (Exception e) {
+			System.err.println("FATAL error instantiating the class: "+Config.getClassName());
+			e.printStackTrace();
+			System.exit(1);
+		} 
+		return (WebApplication)app;
 	}
 
 	public static Config instance() {
@@ -83,6 +99,10 @@ public class Config {
 
 	protected XMLConfiguration xml;
 
+	public static String getClassName() {
+		return getXml().getString("class");
+	}
+	
 	public static String getBaseUrl() {
 		return getXml().getString("baseUrl");
 	}

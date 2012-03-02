@@ -1,0 +1,399 @@
+#banner {
+	background: #fff url(../images/background-banner.png) repeat top left;
+}
+
+#banner img {
+	padding: 4px 0 4px 20px;
+}
+
+#footer {
+	width: 100%;
+	background: #fff url(../images/background-footer.png) repeat;
+	color: #fff;
+	border: 1px solid;
+	padding: 5px 0 5px 0;
+	margin-top: 50px;
+	font-size: 0.8em;
+	position: fixed;
+	bottom: 0;
+}
+
+#footer div.left {
+	float: left;
+}
+
+#header {
+	margin: 0 auto 0 auto;
+	margin-left: 30px;
+	margin-bottom: 40px;
+}
+
+body {
+	margin: 0;
+	font-family: "Lucida Grande", "Arial", "Helvetica", "Verdana",
+		sans-serif;
+	font-size: 0.84em;
+	color: #555;
+	text-align: left;
+	padding: 0 0 10px 0;
+	background-color: #fff;
+}
+
+h2 {
+	background-color: #ffcd13;
+	margin-bottom: 10px;
+	padding: 5px 10px;
+}
+
+body,td,select,input,li {
+	font-size: 13px;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:link {
+	color: #39912b;
+	font-weight: bold;
+}
+
+a:visited {
+	color: #39912b;
+}
+
+a:active,a:hover {
+	color: #39912b;
+}
+
+b {
+	color: #333;
+}
+
+.logo {
+	float: right;
+	margin-right: 30px;
+}
+
+.clear {
+	clear: both;
+}
+
+.left {
+	text-align: left;
+	margin-left: 10px;
+}
+
+.right {
+	text-align: right;
+	margin-right: 10px;
+}
+
+.reports {
+	margin-left: 30px;
+	margin-top: 30px;
+	text-align: left;
+}
+
+.reports h2 {
+    opacity: 0.85;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.stories {
+    border: 1px solid #000;
+}
+
+.scenarios {
+	border: 1px solid #000;
+}
+
+.steps {
+	border: 1px solid #000;
+}
+
+.totals {
+    border-top: 1px solid #000;
+    padding-top: 10px;
+    font-weight: bold;
+}	
+
+.reports table {
+	border: solid;
+}
+
+.reports table th {
+	border-bottom: 1px solid #000;
+	text-align: center;
+	font-weight: bold;
+	padding: 10px;
+}
+
+.reports table td {
+	text-align: center;
+	padding: 5px;
+}
+
+.reports table td.story {
+	text-align: left;
+	padding: 5px;
+}
+
+.reports table td a {
+    color: #555;
+}
+
+.lane {
+    border-left: 1px solid #000;
+}
+
+.maps {
+	margin-left: 30px;
+	margin-top: 30px;
+	text-align: left;
+}
+
+.maps h2 {
+    opacity: 0.85;
+}
+
+.maps table {
+	border: solid;
+}
+
+.maps table th {
+	text-align: center;
+	font-weight: bold;
+	padding: 10px;
+}
+
+.maps table td {
+	text-align: center;
+	padding: 5px;
+}
+
+.maps table td.name {
+	text-align: left;
+	padding: 5px;
+}
+
+.views {
+    margin-left: 30px;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.views h2 {
+    opacity: 0.85;
+}
+
+.views table {
+    border: solid;
+}
+
+.views table th {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.views table td {
+    text-align: center;
+    padding: 5px;
+}
+
+.views table td.name {
+    text-align: left;
+    padding: 5px;
+}
+
+.story {
+	text-align: left;
+	margin-left: 10px;
+}
+
+.story h2 {
+	background-color: #fff;
+	border-color: #ffcd13;
+}
+
+.meta {
+	text-align: left;
+	color: purple;
+	margin-bottom: 10px;
+}
+
+.filter {
+	text-align: left;
+	color: red;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.keyword {
+	margin-left: 10px;
+}
+
+.property {
+	margin-left: 10px;
+}
+
+.narrative {
+	text-align: left;
+	color: blue;
+}
+
+.element {
+	padding-left: 10px;
+}
+
+span.inOrderTo,span.asA,span.iWantTo {
+	font-weight: bold;
+}
+
+.givenStories, .path {
+	font-weight: bolder;
+	font-size: 16px;
+    opacity: 0.85;
+	margin-bottom: 10px;
+	padding: 5px 10px;
+}
+
+.scenario {
+	text-align: left;
+	padding-left: 1px;
+}
+
+.step {
+	color: black;
+	padding: 2px 2px 2px 20px;
+}
+
+.successful {
+	color: green;
+}
+
+.ignorable {
+	color: blue;
+}
+
+.pending {
+	color: olive;
+}
+
+.notPerformed {
+	color: brown;
+}
+
+.failed {
+	color: red;
+}
+
+.cancelled {
+	color: red;
+}
+
+.restarted {
+	color: orange;
+}
+
+.dryRun {
+	border: solid;
+	color: amber;
+	background-color: yellow;
+	margin-left: 12px;
+	padding: 10px;
+	font-size: 20px;
+	text-align: center;
+	text-weight: bold;
+}
+
+.parameter {
+	color: purple;
+	padding-left: 0px;
+	text-weight: bold;
+}
+
+.keyword {
+	text-weight: bold;
+}
+
+.examples {
+	margin-left: 10px;
+    padding-bottom: 20px;
+}
+
+.examples h3 {
+	opacity: 0.85;
+}
+
+.examples table {
+	border: 1px solid;
+	margin-top: 12px;
+	margin-left: 12px;
+}
+
+.examples table th, td {
+	text-align: center;
+	padding-left: 5px;
+    padding-right: 5px;
+    border-left: 1px solid;	
+}
+
+.examples table th {
+    font-weight: bold;
+}
+
+.outcomes table {
+    border: 1px solid;
+    margin-top: 12px;
+    margin-left: 12px;
+}
+
+.outcomes table th, td {
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-left: 1px solid; 
+}
+
+.outcomes table th {
+    font-weight: bold;
+}
+
+.outcomes table tr.notVerified {
+	color: red;
+}
+
+.outcomes table tr.verified {
+	color: green;
+}
+
+.outcomes {
+	padding-bottom: 20px;
+}
+
+.parameter table {
+    border: 1px solid;
+    margin-top: 12px;
+    margin-left: 12px;
+}
+
+.parameter table th, td {
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-left: 1px solid; 
+}
+
+.parameter table th {
+    font-weight: bold;
+}
+
+pre.failure {
+	padding-left: 10px;
+	color: red;
+}

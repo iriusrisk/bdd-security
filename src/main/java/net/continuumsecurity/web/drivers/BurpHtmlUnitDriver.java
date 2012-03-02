@@ -30,6 +30,7 @@ public class BurpHtmlUnitDriver extends HtmlUnitDriver implements BurpDriver {
 		super();
 		log = Logger.getLogger(this.getClass().getName());
 		log.debug("Constructing BurpHtmlUnitDriver");
+		getWebClient().setThrowExceptionOnScriptError(false);
 		setProxy(Config.getBurpHost(),Config.getBurpPort());
 	}
 	

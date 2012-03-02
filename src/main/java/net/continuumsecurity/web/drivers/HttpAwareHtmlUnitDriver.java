@@ -36,6 +36,7 @@ public class HttpAwareHtmlUnitDriver extends HtmlUnitDriver implements HttpAware
 	public HttpAwareHtmlUnitDriver() {
 		super(true); //enable JavaScript
 		log.debug("Constructing EnhancedHtmlUnitDriver");
+		getWebClient().setThrowExceptionOnScriptError(false);
 		proxy = new ProxyFacade();
 		setProxy(proxy.getHost(),proxy.getPort());
 	}

@@ -24,6 +24,10 @@ public class UserPassCredentials extends Credentials {
 		super();
 	}
 	
+	public UserPassCredentials(Credentials creds) {
+		super("username",creds.get("username"),"password",creds.get("password"));
+	}
+	
 	public UserPassCredentials(String username,String password) {
 		super("username",username,"password",password);
 	}

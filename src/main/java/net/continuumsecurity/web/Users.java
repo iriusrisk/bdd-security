@@ -37,12 +37,23 @@ public class Users {
 	
 	public String getDefaultRole() {
 		assert users.size() > 0;
-		return users.get(0).getRoles().get(0);
+		if (users.get(0).getRoles().size() > 0) {
+			return users.get(0).getRoles().get(0);
+		} else { 
+			return null;
+		}
+	}
+	
+	public Credentials getDefaultCredentials() {
+		return getDefaultCredentials(getDefaultRole());
 	}
 	
 	public Credentials getDefaultCredentials(String role) {
 		assert users.size() > 0;
 		for (User user : users) {
+			if (role == null) {
+				return user.getCredentials();
+			}
 			if (user.getRoles().contains(role)) {
 				return user.getCredentials();
 			}
