@@ -103,7 +103,6 @@ public class WebApplicationSteps {
 	}
 
 	@Given("the default user logs in: $credentialsTable")
-	@When("the default user logs in: $credentialsTable")
 	public void loginFromTable(ExamplesTable credentialsTable) {
 		openLoginPage();
 		credentials = tableToDefaultCredentials(credentialsTable);

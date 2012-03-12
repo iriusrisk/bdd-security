@@ -28,13 +28,12 @@ import net.continuumsecurity.web.Page;
 
 
 public class SearchPage extends Page {
+	static String url = Config.getBaseUrl()+"shop/Search.do";
 	
 	WebElement query;
 	
 	@FindBy(how = How.XPATH, using = "//input[@type='image']")
 	WebElement submit;
-	
-	static String url = Config.getBaseUrl()+"shop/Search.do";
 	
 	public SearchPage(WebDriver driver) {
 		super(url,driver);

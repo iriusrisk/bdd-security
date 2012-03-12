@@ -92,6 +92,11 @@ public class Page {
 							+ " in page: " + this.getClass().getCanonicalName();
 					log.error(msg);
 					throw new UnexpectedPageException(msg);
+				} catch (IllegalStateException ise) {
+					String msg = "Could not find WebElement: " + fld.getName()
+							+ " in page: " + this.getClass().getCanonicalName();
+					log.error(msg);
+					throw new UnexpectedPageException(msg);
 				} catch (IllegalArgumentException e) {
 					log.error(e.getMessage());
 					e.printStackTrace();

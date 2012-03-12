@@ -2,17 +2,17 @@
 <web-app>
     <!-- The settings in this file are for a fictional web application called "ISpatula", you'll need to modify them for your app! -->
     
-    <!-- The HttpAware WebDrivers drivers to use, available drivers can be found in net.continuumsecurity.web.driver.HttpAware*Driver -->
+	<!-- The HttpAware WebDrivers drivers to use, available drivers can be found in net.continuumsecurity.web.driver.HttpAware*Driver -->
 	<defaultDriver>HtmlUnit</defaultDriver>
 	
 	<!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.driver.Burp*Driver -->
 	<burpDriver>BurpHtmlUnit</burpDriver>
-		
-	<!-- Base URL for the application to test -->
-	<baseUrl>http://www.ispatula.com:8081/ispatula/</baseUrl>
 	
-	<!-- The fully qualified class name representing the application under test -->
-	<class>net.continuumsecurity.examples.ispatula.IspatulaApplication</class>
+	<!-- Base URL for the application to test -->
+	<baseUrl>http://172.16.1.128:8989/HacmeBooks/</baseUrl>
+	
+	<!-- The class name representing the application under test -->
+	<class>net.continuumsecurity.examples.hacmebooks.HacmeBooksApp</class>
 
 	<!-- Names of the session ID cookies -->
 	<sessionIds>
@@ -20,16 +20,7 @@
 	</sessionIds>
 	
 	<users>
-		<user username="bob" password="password">
-				<role>user</role>
-		</user>
-		<user username="alice" password="password">
-				<role>user</role>
-		</user>
-		<user username="admin" password="password">
-				<role>user</role>
-				<role>admin</role>
-		</user>
+		<user username="testuser" password="password"/>
 	</users>
 
 	<!-- The settings below usually don't need to be changed -->

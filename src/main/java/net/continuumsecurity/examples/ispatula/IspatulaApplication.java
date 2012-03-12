@@ -62,8 +62,8 @@ public class IspatulaApplication extends WebApplication implements ILogin,ILogou
 	}
 	
 	@Roles({"admin"})
-	public ListOrdersPage listOrders() {
-		return new ListOrdersPage(driver).open();
+	public ListAllOrdersPage listOrders() {
+		return new ListAllOrdersPage(driver).open();
 	}
 	
 	public Page search(String query) {

@@ -1,2 +1,4 @@
 |username		|password		|roles		
-|testuser		|password		|		
+|bob		|password		|user		
+|alice		|password		|user		
+|admin		|password		|user,admin		
