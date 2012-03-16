@@ -24,6 +24,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class DriverFactory {
 	private static DriverFactory dm;
@@ -78,9 +80,9 @@ public class DriverFactory {
 		if (type.equalsIgnoreCase("burphtmlunit"))
 			return (findOrCreateClass(BurpHtmlUnitDriver.class));
 		if (type.equalsIgnoreCase("firefox"))
-			return (findOrCreateClass(HttpAwareFirefoxDriver.class));
+			return (findOrCreateClass(FirefoxDriver.class));
 		if (type.equalsIgnoreCase("htmlunit"))
-			return (findOrCreateClass(HttpAwareHtmlUnitDriver.class));
+			return (findOrCreateClass(HtmlUnitDriver.class));
 		throw new RuntimeException(
 				"Internal error, no suitable WebDriver found.");
 	}

@@ -78,9 +78,9 @@
 			<version>2.0.16</version>
 		</dependency>
 		<dependency>
-			<groupId>org.browsermob</groupId>
+			<groupId>biz.neustar</groupId>
 			<artifactId>browsermob-proxy</artifactId>
-			<version>2.0-beta-2</version>
+			<version>2.0-beta-6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -107,7 +107,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
-				
+
 
 
 			</plugin>
