@@ -50,7 +50,7 @@ import org.kohsuke.args4j.Option;
 public class StoryRunner extends BaseStoryRunner {
 	final CmdLineParser parser;
 	private static final String LATEST_REPORTS = Config.getLatestReportsDir();
-	private static final String RESOURCES_DIR = "src/main/resources";
+	private static final String RESOURCES_DIR = "src"+File.pathSeparator+"main"+File.pathSeparator+"resources";
 	private static final String REPORTS_DIR = Config.getReportsDir();
 
 	@Option(name = "-m", usage = "append meta filters")
