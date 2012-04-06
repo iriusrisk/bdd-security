@@ -23,23 +23,24 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.util.Map;
 
+import net.continuumsecurity.burpclient.BurpClient;
+import net.continuumsecurity.burpclient.ScanPolicy;
+import net.continuumsecurity.restyburp.model.ScanIssueBean;
+import net.continuumsecurity.restyburp.model.ScanIssueList;
+import net.continuumsecurity.web.Config;
+import net.continuumsecurity.web.IScanWorkflow;
+import net.continuumsecurity.web.WebApplication;
+import net.continuumsecurity.web.drivers.BurpFactory;
+import net.continuumsecurity.web.drivers.DriverFactory;
+import net.continuumsecurity.web.reporting.BurpAnalyser;
+import net.continuumsecurity.web.reporting.ScannerReporter;
+
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-
-import net.continuumsecurity.web.Config;
-import net.continuumsecurity.web.IScanWorkflow;
-import net.continuumsecurity.web.WebApplication;
-import net.continuumsecurity.web.drivers.BurpFactory;
-import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.reporting.ScannerReporter;
-import net.continuumsecurity.burpclient.BurpClient;
-import net.continuumsecurity.burpclient.ScanPolicy;
-import net.continuumsecurity.restyburp.model.ScanIssueBean;
-import net.continuumsecurity.restyburp.model.ScanIssueList;
 
 public class AutomatedScanningSteps {
 	Logger log = Logger.getLogger(AutomatedScanningSteps.class);
@@ -173,10 +174,10 @@ public class AutomatedScanningSteps {
 		int complete = 0;
 		while (complete < 100) {
 			complete = burp.percentComplete(scanId);
-			// log.info("Scan is " + complete + "% complete.");
-			// Thread.sleep(3000);
+			log.debug("Scan is " + complete + "% complete.");
+			Thread.sleep(3000);
 		}
-		issues = burp.getIssueList(scanId);
+		issues = BurpAnalyser.instance().filter(burp.getIssueList(scanId));
 		log.debug(issues.getIssues().size() + " security issues were found.");
 		reporter.write(reference, issues);
 	}

@@ -50,7 +50,7 @@ import org.kohsuke.args4j.Option;
 public class StoryRunner extends BaseStoryRunner {
 	final CmdLineParser parser;
 	private static final String LATEST_REPORTS = Config.getLatestReportsDir();
-	private static final String RESOURCES_DIR = "src"+File.pathSeparator+"main"+File.pathSeparator+"resources";
+	private static final String RESOURCES_DIR = "src"+File.separator+"main"+File.separator+"resources";
 	private static final String REPORTS_DIR = Config.getReportsDir();
 
 	@Option(name = "-m", usage = "append meta filters")
@@ -93,13 +93,13 @@ public class StoryRunner extends BaseStoryRunner {
 	
 	private void prepareReportsDir() throws IOException {
 		FileUtils.deleteQuietly(new File(LATEST_REPORTS));
-		File viewDir = new File(LATEST_REPORTS + System.getProperty("file.separator")+"view");
+		File viewDir = new File(LATEST_REPORTS + File.separator+"view");
 		FileUtils.copyDirectory(new File(RESOURCES_DIR), viewDir);
 	}
 	
 	private void copyResultsToStampedReportsDir() throws IOException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss", Locale.getDefault());
-		File dirName = new File(REPORTS_DIR+System.getProperty("file.separator")+formatter.format(new Date()));
+		File dirName = new File(REPORTS_DIR+File.separator+formatter.format(new Date()));
 		FileUtils.forceMkdir(dirName);
 		FileUtils.copyDirectory(new File(LATEST_REPORTS), dirName);
 	}

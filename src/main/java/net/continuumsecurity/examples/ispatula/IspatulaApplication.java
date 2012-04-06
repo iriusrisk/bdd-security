@@ -57,8 +57,8 @@ public class IspatulaApplication extends WebApplication implements ILogin,ILogou
 	//Use for automated scanning tests.  navigateAll() is used to direct traffic through Burp, then all URLs are scanned.
 	public void navigateAll() {
 		search("hello");
-		openLoginPage().login(Config.instance().getUsers().getDefaultCredentials("user"));
-		new AccountInfoPage(driver).open();
+		//openLoginPage().login(Config.instance().getUsers().getDefaultCredentials("user"));
+		//new AccountInfoPage(driver).open();
 	}
 	
 	@Roles({"admin"})

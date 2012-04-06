@@ -137,10 +137,14 @@ public class Config {
 
 	public static List<String> getSessionIDs() {
 		List<String> ids = new ArrayList<String>();
-		for (Object o : getXml().getList("sessionIDs.name")) {
+		for (Object o : getXml().getList("sessionIds.name")) {
 			ids.add((String) o);
 		}
 		return ids;
+	}
+	
+	public static void setXml(XMLConfiguration xml) {
+		instance().xml = xml;
 	}
 
 	public static String getStoryUrl() {
