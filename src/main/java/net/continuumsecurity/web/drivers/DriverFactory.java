@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -51,8 +50,10 @@ public class DriverFactory {
 	public static WebDriver getDriver(String type) {
 		WebDriver retVal = get().findOrCreate(type);
 		try {
-			if (!retVal.getCurrentUrl().equals("about:blank"))
+			if (!retVal.getCurrentUrl().equals("about:blank")) {
+				log.debug("Deleting all cookies on driver: "+type);
 				retVal.manage().deleteAllCookies();
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
@@ -87,12 +88,18 @@ public class DriverFactory {
 				"Internal error, no suitable WebDriver found.");
 	}
 
+	/*
+	 * Re-use drivers to reduce startup times
+	 */
 	private WebDriver findOrCreateClass(Class classType) {
 		for (WebDriver driver : drivers) {
-			if (classType.isInstance(driver))
+			if (classType.isInstance(driver)) {
+				
 				return driver;
+			}
+				
 		}
-		Log.debug("No pre-instantiated driver of type: "
+		log.debug("No pre-instantiated driver of type: "
 				+ classType.getCanonicalName() + " found.\nCreating...");
 		try {
 			WebDriver driver = (WebDriver) classType.newInstance();
@@ -105,7 +112,7 @@ public class DriverFactory {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		throw new RuntimeException("Driver could not be instatiated");
 	}
 
 }

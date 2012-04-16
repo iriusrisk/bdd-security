@@ -27,7 +27,8 @@ Scenario: Login should be secure against SQL injection bypass attacks in the pas
 Meta:
 @id auth_sql_bypass
 
-Given the login page
+Given a fresh application
+And the login page
 And the default username from: users.table
 When the password is changed to values from <value>
 And the user logs in
@@ -38,9 +39,10 @@ sqlinjection.strings.table
 
 Scenario: Login should be secure against SQL injection bypass attacks in the username field
 Meta:
-@id auth_sql_bypass2
+@id auth_sql_bypass_username
 
-Given the login page
+Given a fresh application
+And the login page
 And the default username from: users.table
 When an SQL injection <value> is appended to the username
 And the user logs in

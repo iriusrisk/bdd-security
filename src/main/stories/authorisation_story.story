@@ -5,7 +5,8 @@ Scenario: Verify that only authorised users can view restricted resources
 Meta:
 @id access_control_restricted
 
-Given the login page
+Given a fresh application
+And the login page
 And the username <username> 
 And the password <password>
 When the user logs in

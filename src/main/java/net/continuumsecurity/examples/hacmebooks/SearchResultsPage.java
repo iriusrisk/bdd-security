@@ -2,7 +2,7 @@ package net.continuumsecurity.examples.hacmebooks;
 
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Page;
-import net.continuumsecurity.web.UnexpectedPageException;
+import net.continuumsecurity.web.UnexpectedContentException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,7 +25,7 @@ public class SearchResultsPage extends Page {
 		if (getSource().contains("displaying all products")) {
 			log.debug("SearchResultsPage verified.");
 		} else {
-			throw new UnexpectedPageException("Not on search results page");
+			throw new UnexpectedContentException("Not on search results page");
 		}
 	}
 	

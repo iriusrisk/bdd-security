@@ -5,7 +5,8 @@ Scenario: Verify that all users can login correctly
 Meta:
 @id config_login_ok
 
-Given the login page
+Given a fresh application
+And the login page
 And the username <username> 
 And the password <password>
 When the user logs in
@@ -18,7 +19,8 @@ Scenario: Verify that users are not logged in when using an incorrect password
 Meta:
 @id config_wrong_password
 
-Given the login page
+Given a fresh application
+And the login page
 And the username <username>
 And an incorrect password
 When the user logs in
@@ -45,7 +47,8 @@ Scenario: Verify that authorised users can view restricted resources
 Meta:
 @id config_authorisation
 
-Given the login page
+Given a fresh application
+And the login page
 And the username <username> 
 And the password <password>
 When the user logs in

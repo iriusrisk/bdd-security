@@ -6,7 +6,7 @@ import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
 import net.continuumsecurity.web.IScanWorkflow;
 import net.continuumsecurity.web.Page;
-import net.continuumsecurity.web.UnexpectedPageException;
+import net.continuumsecurity.web.UnexpectedContentException;
 import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
@@ -25,7 +25,7 @@ public class HacmeBooksAppRawWebDriver extends WebApplication implements ILogin,
 		openLoginPage();
 		login(Config.instance().getUsers().getDefaultCredentials());
 		
-		if (!isLoggedIn(null)) throw new UnexpectedPageException("Login failed!");
+		if (!isLoggedIn(null)) throw new UnexpectedContentException("Login failed!");
 		
 		driver.findElement(By.className("loginbutton")).click();
 		driver.findElement(By.id("keyWords")).clear();

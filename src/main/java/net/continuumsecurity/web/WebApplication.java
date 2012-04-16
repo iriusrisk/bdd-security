@@ -34,7 +34,7 @@ public class WebApplication {
 	protected WebDriver driver;
 
 	public WebApplication(WebDriver driver) {
-		log = Logger.getLogger(this.getClass().getName());
+		log = Logger.getLogger(WebApplication.class);
 		log.debug("Constructing new WebApplication");
 		this.driver = driver;
 	}
@@ -64,10 +64,14 @@ public class WebApplication {
 			log.error(e.getMessage());
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			log.error(e.getMessage());
+			log.error("The method: "+methodName+" is defined with parameters and has been tagged with the @Roles annotation.  Roles can only be defined on no-argument methods.");
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void verifyTextPresent(String text) {
+		if (!this.driver.getPageSource().contains(text)) throw new UnexpectedContentException("Expected text: ["+text+"] was not found.");
 	}
 	
 }

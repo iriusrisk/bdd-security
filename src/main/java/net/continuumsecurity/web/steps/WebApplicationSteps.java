@@ -36,7 +36,8 @@ import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
 import net.continuumsecurity.web.Page;
 import net.continuumsecurity.web.StepException;
-import net.continuumsecurity.web.UnexpectedPageException;
+import net.continuumsecurity.web.UnexpectedContentException;
+import net.continuumsecurity.web.User;
 import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.BurpFactory;
@@ -65,6 +66,11 @@ public class WebApplicationSteps {
 		createApp();
 	}
 	
+	/*
+	 * This has to be called explicitly when using an examples table in order to start with a fresh browser instance, 
+	 * because @BeforeScenario is only called once for the whole scenario, not each example.
+	 */
+	@Given("a fresh application")
 	public void createApp() {
 		app = Config.createApp(DriverFactory.getDriver(Config.getDefaultDriver()));
 	}
@@ -141,9 +147,16 @@ public class WebApplicationSteps {
 
 		return new UserPassCredentials(username, password);
 	}
+	
+	private String findRoleByUsername(String username) {
+		User user = Config.instance().getUsers().findByCredential("username", username);
+		if (user != null) {
+			return user.getDefaultRole();
+		}
+		return null;
+	}
 
 	@Then("the user with the role <role> should be logged in")
-	@Alias("the user should be logged in")
 	public void isLoggedIn(@Named("role") String role) {
 		log.debug("checking whether logged in");
 		assertThat(((ILogin)app).isLoggedIn(role), is(true));
@@ -151,13 +164,13 @@ public class WebApplicationSteps {
 
 	@Then("the user is logged in")
 	public void loginSucceedsVariant2() {
-		assertThat(((ILogin)app).isLoggedIn(null), is(true));
+		assertThat(((ILogin)app).isLoggedIn(findRoleByUsername(credentials.getUsername())), is(true));
 	}
 
 	@Then("login fails")
 	@Alias("the user is not logged in")
 	public void loginFails() {
-		assertThat(((ILogin)app).isLoggedIn(null), is(false));
+		assertThat(((ILogin)app).isLoggedIn(findRoleByUsername(credentials.getUsername())), is(false));
 	}
 
 	@When("the case of the password is changed")
@@ -275,14 +288,28 @@ public class WebApplicationSteps {
 	public void checkAccessToResource(@Named("method") String method) {
 		try {
 			Page page = (Page)app.getClass().getMethod(method, null).invoke(app, null);
-			page.verify();
-		} catch (UnexpectedPageException e) {
+			//If the app is using the PageObjects pattern
+			if (page != null) {
+				page.verify();
+			}
+		} catch (UnexpectedContentException e) {
 			fail("User with credentials: "+credentials.getUsername()+" "+credentials.getPassword()+" could not access the method: "+method+"()");
-		} catch (Exception e) {
-			fail(e.getMessage());
-			log.error(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			
 			e.printStackTrace();
-		} 
+		} catch (SecurityException e) {
+			
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			
+			e.printStackTrace();
+		}  
 	}
 	
 	@Then("they should not be able to access the restricted resource <method>")
@@ -292,7 +319,7 @@ public class WebApplicationSteps {
 			page.verify();
 			assertThat("",equalTo("Unauthorised user with credentials: "+credentials.getUsername()+" "+credentials.getPassword()+" could access the method: "+method+"()"));
 		} catch (InvocationTargetException e) {
-			assertThat(e.getCause() instanceof UnexpectedPageException,is(true));
+			assertThat(e.getCause() instanceof UnexpectedContentException,is(true));
 			
 		} catch (Exception e) {
 			assertThat("",equalTo(e.getMessage()));

@@ -18,7 +18,6 @@
  ******************************************************************************/
 package net.continuumsecurity.web.drivers;
 
-import org.browsermob.core.har.Har;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;

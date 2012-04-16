@@ -1,4 +1,3 @@
- 
 Meta:
 @story Automated Scanning
 

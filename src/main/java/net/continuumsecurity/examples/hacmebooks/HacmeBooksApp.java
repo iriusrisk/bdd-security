@@ -6,11 +6,10 @@ import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
 import net.continuumsecurity.web.IScanWorkflow;
 import net.continuumsecurity.web.Page;
-import net.continuumsecurity.web.UnexpectedPageException;
 import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 	
 public class HacmeBooksApp extends WebApplication implements ILogin, ILogout,IScanWorkflow {

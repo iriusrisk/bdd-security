@@ -38,6 +38,13 @@ public class User {
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
+	
+	public String getDefaultRole() {
+		if (roles != null && roles.size() > 0) {
+			return roles.get(0);
+		}
+		return null;
+	}
 
 	public List<String> getRoles() {
 		return roles;

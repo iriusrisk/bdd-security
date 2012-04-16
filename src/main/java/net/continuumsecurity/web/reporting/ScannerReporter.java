@@ -31,7 +31,6 @@ import net.continuumsecurity.restyburp.model.ScanIssueList;
 import net.continuumsecurity.restyburp.server.JAXBContextResolver;
 
 public class ScannerReporter {
-	//TODO fixme 
 	static final String path = "target"+System.getProperty("file.separator")+"jbehave"+System.getProperty("file.separator");
 	Logger log = Logger.getLogger(ScannerReporter.class);
 

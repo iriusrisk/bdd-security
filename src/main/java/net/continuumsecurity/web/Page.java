@@ -21,7 +21,6 @@ package net.continuumsecurity.web;
 import java.lang.reflect.Field;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -45,7 +44,7 @@ public class Page {
 
 	public Page open() {
 		if ("".equals(url))
-			throw new UnexpectedPageException(
+			throw new UnexpectedContentException(
 					"Url has not been set.  Set it through the Page constructor.");
 		log.debug(" Getting URL: " + url);
 		driver.get(url);
@@ -91,12 +90,12 @@ public class Page {
 					String msg = "Could not find WebElement: " + fld.getName()
 							+ " in page: " + this.getClass().getCanonicalName();
 					log.error(msg);
-					throw new UnexpectedPageException(msg);
+					throw new UnexpectedContentException(msg);
 				} catch (IllegalStateException ise) {
 					String msg = "Could not find WebElement: " + fld.getName()
 							+ " in page: " + this.getClass().getCanonicalName();
 					log.error(msg);
-					throw new UnexpectedPageException(msg);
+					throw new UnexpectedContentException(msg);
 				} catch (IllegalArgumentException e) {
 					log.error(e.getMessage());
 					e.printStackTrace();

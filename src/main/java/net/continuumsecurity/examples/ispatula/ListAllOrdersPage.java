@@ -20,7 +20,7 @@ package net.continuumsecurity.examples.ispatula;
 
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Page;
-import net.continuumsecurity.web.UnexpectedPageException;
+import net.continuumsecurity.web.UnexpectedContentException;
 
 import org.openqa.selenium.WebDriver;
 
@@ -40,7 +40,7 @@ public class ListAllOrdersPage extends Page {
 	@Override
 	public void verify() {
 		if (!getSource().contains((expectedText))) {
-			throw new UnexpectedPageException("Did not find the expected text: "+expectedText);
+			throw new UnexpectedContentException("Did not find the expected text: "+expectedText);
 		}
 	}
 }

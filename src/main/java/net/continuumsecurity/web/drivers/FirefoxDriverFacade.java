@@ -18,31 +18,21 @@
  ******************************************************************************/
 package net.continuumsecurity.web.drivers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.browsermob.core.har.HarEntry;
-import org.browsermob.core.har.HarNameValuePair;
-import org.browsermob.proxy.ProxyServer;
-import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import net.continuumsecurity.web.Config;
 
 public class FirefoxDriverFacade implements WebDriver {
 	protected Logger log;
 	FirefoxDriver ffDriver;
 
 	//Can't be instantiated.  Meant to be used as a convenience base class
-	protected FirefoxDriverFacade() {// start the proxy
+	protected FirefoxDriverFacade() {
 		log = Logger.getLogger(this.getClass().getName());
 		log.debug("Constructing FirefoxDriverFacade");
 	}
