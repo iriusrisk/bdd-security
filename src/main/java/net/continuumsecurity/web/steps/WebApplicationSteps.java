@@ -327,6 +327,11 @@ public class WebApplicationSteps {
 		} 
 	}
 	
+	@Then("no exceptions are thrown")
+	public void doNothing() {
+		
+	}
+	
 	private Cookie findCookieByName(List<Cookie> cookies, String name) {
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equalsIgnoreCase(name)) return cookie;

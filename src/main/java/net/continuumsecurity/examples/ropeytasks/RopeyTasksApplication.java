@@ -22,7 +22,17 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 
 	@Override
 	public void navigateAll() {
-
+		openLoginPage();
+		login(Config.instance().getUsers().getDefaultCredentials("user"));
+		verifyTextPresent("Welcome");
+		viewProfile();
+		search("test");
+		logout();
+		
+		openLoginPage();
+		login(Config.instance().getUsers().getDefaultCredentials("admin"));
+		verifyTextPresent("Welcome");
+		viewUserList();
 	}
 
 	/*

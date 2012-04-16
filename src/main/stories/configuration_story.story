@@ -42,6 +42,7 @@ Meta:
 
 Given the login page
 When the application is navigated
+Then no exceptions are thrown
 
 Scenario: Verify that authorised users can view restricted resources
 Meta:
