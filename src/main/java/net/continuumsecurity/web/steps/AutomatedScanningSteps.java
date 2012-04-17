@@ -21,6 +21,7 @@ package net.continuumsecurity.web.steps;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import net.continuumsecurity.burpclient.BurpClient;
@@ -158,9 +159,11 @@ public class AutomatedScanningSteps {
 	public void navigateApp() throws Exception {
 		// Navigate through the app and record the traffic through the
 		// scanner
-		log.debug(" navigating application ");
-		app.setDriver(DriverFactory.getDriver(Config.getBurpDriver()));
-		((IScanWorkflow) app).navigateAll();
+		for (Method method : app.getScannableMethods()) {
+			app.setDriver(DriverFactory.getDriver(Config.getBurpDriver()));
+			log.debug("Navigating method: "+method.getName());
+			app.getClass().getMethod(method.getName(), null).invoke(app, null);
+		}
 		navigated = true;
 	}
 

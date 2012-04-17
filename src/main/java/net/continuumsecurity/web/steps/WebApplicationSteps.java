@@ -316,7 +316,10 @@ public class WebApplicationSteps {
 	public void checkNoAccessToResource(@Named("method") String method) {
 		try {
 			Page page = (Page)app.getClass().getMethod(method, null).invoke(app, null);
-			page.verify();
+			//If the app is using the PageObjects pattern
+			if (page != null) {
+				page.verify();
+			}
 			assertThat("",equalTo("Unauthorised user with credentials: "+credentials.getUsername()+" "+credentials.getPassword()+" could access the method: "+method+"()"));
 		} catch (InvocationTargetException e) {
 			assertThat(e.getCause() instanceof UnexpectedContentException,is(true));

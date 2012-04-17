@@ -47,6 +47,16 @@ public class WebApplication {
 		this.driver = driver;
 	}
 	
+	public List<Method> getScannableMethods() {
+		List<Method> methods = new ArrayList<Method>();
+		for (Method method : this.getClass().getMethods()) {
+			if (method.isAnnotationPresent(SecurityScan.class)) {
+				methods.add(method);
+			}
+		}
+		return methods;
+	}
+	
 	public List<Method> getRestrictedMethods() {
 		List<Method> methods = new ArrayList<Method>();
 		for (Method method : this.getClass().getMethods()) {

@@ -4,9 +4,9 @@ import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Credentials;
 import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
-import net.continuumsecurity.web.IScanWorkflow;
 import net.continuumsecurity.web.Page;
 import net.continuumsecurity.web.Roles;
+import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
@@ -14,21 +14,23 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
-		ILogout, IScanWorkflow {
+		ILogout {
 
 	public RopeyTasksApplication(WebDriver driver) {
 		super(driver);
 	}
 
-	@Override
-	public void navigateAll() {
+	@SecurityScan
+	public void navigateUser() {
 		openLoginPage();
 		login(Config.instance().getUsers().getDefaultCredentials("user"));
 		verifyTextPresent("Welcome");
 		viewProfile();
 		search("test");
-		logout();
-		
+	}
+	
+	
+	public void navigateAdmin() {
 		openLoginPage();
 		login(Config.instance().getUsers().getDefaultCredentials("admin"));
 		verifyTextPresent("Welcome");

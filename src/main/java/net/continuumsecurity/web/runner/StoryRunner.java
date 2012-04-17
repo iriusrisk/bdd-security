@@ -109,8 +109,6 @@ public class StoryRunner extends BaseStoryRunner {
 	 */
     protected List<String> createFilters() {
 		List<String> filters = new ArrayList<String>();
-		filters.add("-skip");
-
 		if (useFilters != null)
 			filters.addAll(parseMetaFilters());
 		
@@ -121,12 +119,13 @@ public class StoryRunner extends BaseStoryRunner {
 			log.debug(" app doesn't implement ILogin, skipping authentication tests");
 			filters.add("-story Authentication");
 		}
-		if (app instanceof IScanWorkflow) {
-			log.debug(" app implements IScanWorkflow, Burp scanning enabled.");
+		if (app.getScannableMethods().size() > 0) {
+			log.debug(" app has scannable methods, Burp scanning enabled.");
 		} else {
-			log.debug(" app doesn't implement IScanWorkflow, skipping Burp");
+			log.debug(" app doesn't have scannable methods, skipping Burp");
 			filters.add("-story Automated Scanning");
 		}
+		filters.add("-skip");
 		log.debug(" running with filters:");
 		for (String filter : filters) {
 			log.debug("\t"+filter);
