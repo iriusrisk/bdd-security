@@ -1,3 +1,5 @@
 |method		|username		|password		
 |viewUserList		|bob		|password		
 |viewUserList		|alice		|password		
+|viewUserDetails		|bob		|password		
+|viewUserDetails		|alice		|password		

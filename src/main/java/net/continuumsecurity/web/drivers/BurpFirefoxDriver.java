@@ -18,20 +18,24 @@
  ******************************************************************************/
 package net.continuumsecurity.web.drivers;
 
+import net.continuumsecurity.web.Config;
+
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import net.continuumsecurity.web.Config;
 
 public class BurpFirefoxDriver extends FirefoxDriverFacade implements BurpDriver {
 	
 	public BurpFirefoxDriver() {
 		log.debug("Constructing BurpFirefoxDriver");
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability(CapabilityType.PROXY, getBurpProxy());
-		ffDriver = new FirefoxDriver(capabilities);
+		//DesiredCapabilities capabilities = new DesiredCapabilities();
+		//capabilities.setCapability(CapabilityType.PROXY, getBurpProxy());
+		FirefoxProfile ffProfile = new FirefoxProfile();
+		ffProfile.setPreference("permissions.default.image", 2);
+		ffProfile.setProxyPreferences(getBurpProxy());
+		ffDriver = new FirefoxDriver(ffProfile);
 	}
 	
 	public Proxy getBurpProxy() {

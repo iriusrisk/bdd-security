@@ -1,4 +1,5 @@
 |method		|username		|password		
 |viewProfile		|bob		|password		
 |viewUserList		|admin		|password		
+|viewUserDetails		|admin		|password		
 |testSearch		|bob		|password		

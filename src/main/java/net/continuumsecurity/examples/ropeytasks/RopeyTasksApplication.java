@@ -49,9 +49,14 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	
 	@Roles({"admin"})
 	public void viewUserList() {
-		this.verifyTextPresent("Users");
-		driver.findElement(By.linkText("Users")).click();
+		driver.get(Config.getBaseUrl() + "admin/list");
 		verifyTextPresent("User List");
+	}
+	
+	@Roles({"admin"})
+	public void viewUserDetails() {
+		driver.get(Config.getBaseUrl() + "admin/show/2");
+		verifyTextPresent("Show User");
 	}
 	
 	/*

@@ -4,21 +4,20 @@ import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Credentials;
 import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
-import net.continuumsecurity.web.IScanWorkflow;
 import net.continuumsecurity.web.Page;
+import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
-
 import org.openqa.selenium.WebDriver;
 	
-public class HacmeBooksApp extends WebApplication implements ILogin, ILogout,IScanWorkflow {
+public class HacmeBooksApp extends WebApplication implements ILogin, ILogout {
 
 		public HacmeBooksApp(WebDriver driver) {
 			super(driver);
 		}
 
-		@Override
+		@SecurityScan
 		public void navigateAll() {
 			UserPassCredentials creds = new UserPassCredentials(Config.instance().getUsers().getDefaultCredentials());
 			HomePage home = (HomePage)openLoginPage().login(creds.getUsername(),creds.getPassword());

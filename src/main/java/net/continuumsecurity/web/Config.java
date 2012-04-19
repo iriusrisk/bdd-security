@@ -106,6 +106,10 @@ public class Config {
 	public static String getBaseUrl() {
 		return getXml().getString("baseUrl");
 	}
+	
+	public static String getSecureBaseUrl() {
+		return getXml().getString("secureBaseUrl");
+	}
 
 	public static String getDefaultDriver() {
 		return getXml().getString("defaultDriver");
@@ -141,6 +145,14 @@ public class Config {
 			ids.add((String) o);
 		}
 		return ids;
+	}
+	
+	public static String getBurpWSProxyHost() {
+		return getXml().getString("burpWSProxyHost");
+	}
+	
+	public static int getBurpWSProxyPort() {
+		return getXml().getInt("burpWSProxyPort");
 	}
 	
 	public static void setXml(XMLConfiguration xml) {

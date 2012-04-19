@@ -36,7 +36,7 @@ Meta:
 Given the login page
 Then the user is not logged in
 
-Scenario: Verify that the IScanWorkflow.navigateAll() method works
+Scenario: Verify that the methods tagged with @SecurityScan can be navigated without errors
 Meta:
 @id config_navigate_all
 

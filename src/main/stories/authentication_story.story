@@ -14,6 +14,7 @@ Then the user is not logged in
 Scenario: The user account should be locked out after 4 incorrect authentication attempts
 Meta:
 @id auth_lockout
+@skip
 
 Given the default username from: users.table
 And an incorrect password
@@ -22,35 +23,6 @@ When the default password is used from: users.table
 And the user logs in from a fresh login page
 Then the user is not logged in
 
-
-Scenario: Login should be secure against SQL injection bypass attacks in the password field
-Meta:
-@id auth_sql_bypass
-
-Given a fresh application
-And the login page
-And the default username from: users.table
-When the password is changed to values from <value>
-And the user logs in
-Then the user is not logged in
-
-Examples:
-sqlinjection.strings.table
-
-Scenario: Login should be secure against SQL injection bypass attacks in the username field
-Meta:
-@id auth_sql_bypass_username
-
-Given a fresh application
-And the login page
-And the default username from: users.table
-When an SQL injection <value> is appended to the username
-And the user logs in
-Then the user is not logged in
-
-Examples:
-sqlinjection.strings.table 
-
 Scenario: The login form itself should be served over SSL to reduce the risk of Phishing attacks
 Meta:
 @id auth_login_form_over_ssl
@@ -58,8 +30,7 @@ Meta:
 Given an HTTP logging driver
 And clean HTTP logs
 And the login page
-And the HTTP request containing the password form
-Then the protocol should be HTTPS
+Then the protocol of the current URL should be HTTPS
 
 Scenario: The authentication credentials should be sent over SSL
 Meta:
@@ -69,7 +40,7 @@ Given an HTTP logging driver
 And clean HTTP logs
 And the default user logs in: users.table
 And the HTTP request-response containing the default credentials
-Then the protocol should be HTTPS
+Then the protocol of the request should be HTTPS
 
 Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code
 Meta:

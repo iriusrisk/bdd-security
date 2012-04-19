@@ -31,7 +31,6 @@ import java.util.Locale;
 
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.ILogin;
-import net.continuumsecurity.web.IScanWorkflow;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.BurpFactory;
 import net.continuumsecurity.web.drivers.DriverFactory;

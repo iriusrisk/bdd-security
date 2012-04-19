@@ -22,15 +22,15 @@ import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Credentials;
 import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
-import net.continuumsecurity.web.IScanWorkflow;
 import net.continuumsecurity.web.Page;
 import net.continuumsecurity.web.Roles;
+import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
 import org.openqa.selenium.WebDriver;
 
-public class IspatulaApplication extends WebApplication implements ILogin,ILogout,IScanWorkflow  {	
+public class IspatulaApplication extends WebApplication implements ILogin,ILogout  {	
 
 	public IspatulaApplication(WebDriver driver) {
 		super(driver);
@@ -54,7 +54,8 @@ public class IspatulaApplication extends WebApplication implements ILogin,ILogou
 		return new LogoutPage(driver).open().logout();
 	}
 	
-	//Use for automated scanning tests.  navigateAll() is used to direct traffic through Burp, then all URLs are scanned.
+	//Use for automated scanning tests.  All methods tagged with @SecurityScan are directed through Burp, then all URLs are scanned.
+	@SecurityScan
 	public void navigateAll() {
 		search("hello");
 		//openLoginPage().login(Config.instance().getUsers().getDefaultCredentials("user"));
