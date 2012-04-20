@@ -5,6 +5,7 @@ Meta:
 
 Scenario: Verify that only authorised users can view restricted resources
 Meta:
+@Rationale Resources should only be accessible by the user roles authorised to view them.  Access by unauthorised users could lead to a breach of confidentiality/integrity of the data.
 @id access_control_restricted
 
 Given a fresh application
