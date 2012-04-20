@@ -18,22 +18,23 @@
  ******************************************************************************/
 package net.continuumsecurity.web;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.continuumsecurity.burpclient.ScanPolicy;
+import net.continuumsecurity.scanner.BurpVulns;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
-
 
 public class Config {
 
@@ -44,16 +45,19 @@ public class Config {
 			Constructor constructor = appClass.getConstructor(WebDriver.class);
 			app = constructor.newInstance(driver);
 			if (!(app instanceof WebApplication)) {
-				System.err.println("FATAL error: The defined class: "+Config.getClassName()+" does not extend WebApplication.");
+				System.err.println("FATAL error: The defined class: "
+						+ Config.getClassName()
+						+ " does not extend WebApplication.");
 				System.exit(1);
 			}
-			return (WebApplication)app;
+			return (WebApplication) app;
 		} catch (Exception e) {
-			System.err.println("FATAL error instantiating the class: "+Config.getClassName());
+			System.err.println("FATAL error instantiating the class: "
+					+ Config.getClassName());
 			e.printStackTrace();
 			System.exit(1);
-		} 
-		return (WebApplication)app;
+		}
+		return (WebApplication) app;
 	}
 
 	public static Config instance() {
@@ -68,13 +72,12 @@ public class Config {
 		PropertyConfigurator.configure("log4j.properties");
 		loadConfig("config.xml");
 	}
-
-	public synchronized void initialiseTables() {
-		writeTable(getStoryUrl() + "users.table",
-				usersToTable(getUsers()));
-		writeTable(getStoryUrl() + "authorised.resources.table",
+	
+	public synchronized void initialiseTables() {	
+		writeTable(getStoryDir() +"users.table", usersToTable(getUsers()));
+		writeTable(getStoryDir() + "tables"+File.separator+"authorised.resources.table",
 				authorisedResourcesToTable(createApp(null), getUsers()));
-		writeTable(getStoryUrl() + "unauthorised.resources.table",
+		writeTable(getStoryDir() + "tables"+File.separator+"unauthorised.resources.table",
 				unAuthorisedResourcesToTable(createApp(null), getUsers()));
 	}
 
@@ -86,10 +89,12 @@ public class Config {
 		List<HierarchicalConfiguration> usersInXml = xml
 				.configurationsAt("users.user");
 		for (HierarchicalConfiguration user : usersInXml) {
-			User theUser = new User(new UserPassCredentials(user.getString("[@username]"),user.getString("[@password]")));
+			User theUser = new User(new UserPassCredentials(
+					user.getString("[@username]"),
+					user.getString("[@password]")));
 			List<String> roles = new ArrayList<String>();
 			for (Object o : user.getList("role")) {
-				roles.add((String)o);
+				roles.add((String) o);
 			}
 			theUser.setRoles(roles);
 			users.add(theUser);
@@ -102,11 +107,11 @@ public class Config {
 	public static String getClassName() {
 		return getXml().getString("class");
 	}
-	
+
 	public static String getBaseUrl() {
 		return getXml().getString("baseUrl");
 	}
-	
+
 	public static String getSecureBaseUrl() {
 		return getXml().getString("secureBaseUrl");
 	}
@@ -120,15 +125,15 @@ public class Config {
 	}
 
 	public static String getBurpHost() {
-		return getXml().getString("burpHost");
+		return getXml().getString("burp.host");
 	}
 
 	public static int getBurpPort() {
-		return getXml().getInt("burpPort");
+		return getXml().getInt("burp.port");
 	}
 
 	public static String getBurpWSUrl() {
-		return getXml().getString("burpWSUrl");
+		return getXml().getString("burp.WSUrl");
 	}
 
 	public static String getLatestReportsDir() {
@@ -146,23 +151,46 @@ public class Config {
 		}
 		return ids;
 	}
-	
+
 	public static String getBurpWSProxyHost() {
-		return getXml().getString("burpWSProxyHost");
+		try {
+			return getXml().getString("burp.WSProxyHost");
+		} catch (java.util.NoSuchElementException nse) {
+			return null;
+		}
 	}
-	
+
 	public static int getBurpWSProxyPort() {
-		return getXml().getInt("burpWSProxyPort");
+		try {
+			return getXml().getInt("burp.WSProxyPort");
+		} catch (java.util.NoSuchElementException nse) {
+			return 0;
+		}
 	}
-	
+
 	public static void setXml(XMLConfiguration xml) {
 		instance().xml = xml;
 	}
 
+	//Not used yet
+	public static String getUpstreamProxyHost() {
+		return getXml().getString("upstreamproxyHost");
+	}
+	
+	//Not used yet
+	public static int getUpstreamProxyPort() {
+		return getXml().getInt("upstreamproxyPort");
+	}
+	
+	
+	public static String getStoryDir() {
+		return System.getProperty("user.dir")
+				+ File.separator
+				+ getXml().getString("storyDir");
+	}
+	
 	public static String getStoryUrl() {
-		return "file:///" + System.getProperty("user.dir")
-				+ System.getProperty("file.separator")
-				+ getXml().getString("storyUrl");
+		return "file:///" + getStoryDir();
 	}
 
 	public synchronized static XMLConfiguration getXml() {
@@ -245,9 +273,9 @@ public class Config {
 	public static synchronized void writeTable(String file,
 			List<List<String>> table) {
 		PrintStream writer = null;
+		System.out.println("Writing to table file: "+file);
 		try {
-			writer = new PrintStream(new FileOutputStream(
-					new URL(file).getPath(), false));
+			writer = new PrintStream(new FileOutputStream(file, false));
 			for (List<String> row : table) {
 				StringBuilder sb = new StringBuilder();
 				for (String col : row) {

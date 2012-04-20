@@ -1,3 +1,5 @@
+Description: Verify that access control is well implemented
+
 Meta:
 @story Authorisation
 
@@ -13,4 +15,4 @@ When the user logs in
 Then they should not be able to access the restricted resource <method>
 
 Examples:
-unauthorised.resources.table
+tables/unauthorised.resources.table

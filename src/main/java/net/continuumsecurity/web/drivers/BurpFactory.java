@@ -30,13 +30,13 @@ public class BurpFactory {
 	static Logger log = Logger.getLogger(BurpFactory.class);
 	
 	public static BurpClient getBurp() {
-		if (burp == null) burp = new BurpClient(Config.getBurpWSUrl());
+		if (burp == null) burp = new BurpClient(Config.getBurpWSUrl(),Config.getBurpWSProxyHost(),Config.getBurpWSProxyPort());
 		return burp;
 	}
 	
 	public static void destroyAll() {
 		log.debug("destroying Burp clients");
-		burp.destroy();
+		getBurp().destroy();
 	}
 	
 	

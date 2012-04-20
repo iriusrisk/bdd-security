@@ -1,3 +1,5 @@
+Description: Verify that the configuration and application definition are sane
+
 Meta:
 @story Configuration
 
@@ -41,7 +43,7 @@ Meta:
 @id config_navigate_all
 
 Given the login page
-When the application is navigated
+When the scannable methods of the application are navigated
 Then no exceptions are thrown
 
 Scenario: Verify that authorised users can view restricted resources
@@ -56,4 +58,4 @@ When the user logs in
 Then they should be able to access the restricted resource <method>
 
 Examples:
-authorised.resources.table
+tables/authorised.resources.table

@@ -33,10 +33,27 @@
 	</users>
 
 	<!-- The settings below usually don't need to be changed -->
-    <burpHost>127.0.0.1</burpHost>
-	<burpPort>8080</burpPort>
-	<burpWSUrl>http://127.0.0.1:8181/</burpWSUrl>
-	<storyUrl>src/main/stories/</storyUrl>
+    <burp>
+		<host>127.0.0.1</host>
+		<port>8080</port>
+		<WSUrl>http://127.0.0.1:8181/</WSUrl>
+		<WSProxyHost>127.0.0.1</WSProxyHost>
+		<WSProxyPort>8086</WSProxyPort>
+
+		
+			<policy name="command.injection" enabled="false"/>
+			<policy name="xss" enabled="true"/>
+			<policy name="misc" enabled="false"/>
+			<policy name="xml.injection" enabled="false"/>
+			<policy name="ldap.injection" enabled="false"/>
+			<policy name="sql.injection" enabled="false"/>
+			<policy name="sql.injection.timing" enabled="false"/>
+			<policy name="rest.params" enabled="false"/>
+			<policy name="all.injection.points" enabled="true"/>
+			<policy name="passive" enabled="true"/>
+		
+	</burp>
+	<storyDir>src/main/stories/</storyDir>
 	<reportsDir>reports</reportsDir>
 	<latestReportsDir>target/jbehave/</latestReportsDir>
 </web-app>

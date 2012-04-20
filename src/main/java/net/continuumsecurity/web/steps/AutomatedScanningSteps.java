@@ -46,112 +46,99 @@ public class AutomatedScanningSteps {
 	Logger log = Logger.getLogger(AutomatedScanningSteps.class);
 	BurpClient burp;
 	WebApplication app;
-	Map<String, String> scanPolicy;
+	ScanPolicy scanPolicy;
 	ScanIssueList issues;
 	String vulnName;
 	private boolean navigated = false;
 	ScannerReporter reporter;
 
-	public AutomatedScanningSteps(WebApplicationSteps webAppSteps) {
-		this.app = webAppSteps.app;
-		this.burp = BurpFactory.getBurp();
-		reporter = new ScannerReporter();
+	public AutomatedScanningSteps() {
+		
 	}
 
 	@BeforeStory
 	public void createScanner() {
+		app = Config.createApp(DriverFactory.getDriver(Config.getBurpDriver()));
+		scanPolicy = new ScanPolicy();
 		log.debug("Resetting Burp state");
+		this.burp = BurpFactory.getBurp();
 		burp.reset();
-		scanPolicy = null;
+		reporter = new ScannerReporter();
 	}
 
 	@Given("scanning of all injection points is enabled")
 	public void enableAllInjectionPoints() {
 		assert scanPolicy != null : "scanPolicy first needs to be created before injection points are set.";
 		log.debug(" enabling all injection points");
-		scanPolicy.put(ScanPolicy.INSERT_BODY_PARAMS, "true");
-		scanPolicy.put(ScanPolicy.INSERT_AMF_PARAMS, "true");
-		scanPolicy.put(ScanPolicy.INSERT_COOKIES, "true");
-		scanPolicy.put(ScanPolicy.INSERT_HEADERS, "true");
-		scanPolicy.put(ScanPolicy.INSERT_PARAM_NAME, "true");
-		scanPolicy.put(ScanPolicy.INSERT_URL_PARAMS, "true");
+		scanPolicy.enableAllInjectionPoints();
 	}
 
 	@Given("scanning of REST-style URL parameters is enabled")
 	public void enableRESTparams() {
 		assert scanPolicy != null : "scanPolicy first needs to be created before injection points are set.";
 		log.debug(" enabling REST-style parameters");
-
-		scanPolicy.put(ScanPolicy.INSERT_REST_PARAMS, "true");
+		scanPolicy.enableRESTparams();
+		
 	}
 
 	@Given("a passive scanning policy")
 	public void setupPassivePolicy() {
 		vulnName = "passive security";
 		log.debug(" configuring " + vulnName + " policy");
-
-		scanPolicy = new ScanPolicy().enable(ScanPolicy.FORMS,
-				ScanPolicy.LINKS, ScanPolicy.PARAMS, ScanPolicy.COOKIES,
-				ScanPolicy.MIME, ScanPolicy.CACHING,
-				ScanPolicy.INFO_DISCLOSURE, ScanPolicy.VIEWSTATE).getPolicy();
+		scanPolicy = new ScanPolicy();
+		scanPolicy.enablePassive();
 	}
 
 	@Given("an SQL injection scanning policy")
 	public void setupSQLinjectionPolicy() {
 		vulnName = "SQL injection";
 		log.debug(" configuring " + vulnName + " policy");
-
-		scanPolicy = new ScanPolicy().enable(ScanPolicy.SQL_INJECTION,
-				ScanPolicy.SQL_INJECTION_BOOLEAN,
-				ScanPolicy.SQL_INJECTION_ERROR).getPolicy();// ,
-		// ScanPolicy.SQL_INJECTION_TIME).policy
+		scanPolicy = new ScanPolicy();
+		scanPolicy.enableSQLinjection();
 	}
 
 	@Given("an LDAP injection scanning policy")
 	public void setupLDAPinjectionPolicy() {
 		vulnName = "LDAP injection";
 		log.debug(" configuring " + vulnName + " policy");
-
-		scanPolicy = new ScanPolicy().enable(ScanPolicy.LDAP_INJECTION)
-				.getPolicy();
+		scanPolicy = new ScanPolicy();
+		scanPolicy.enableLDAPinjection();
 	}
 
 	@Given("an XML injection scanning policy")
 	public void setupXMLinjectionPolicy() {
 		vulnName = "XML injection";
 		log.debug(" configuring " + vulnName + " policy");
-
-		scanPolicy = new ScanPolicy().enable(ScanPolicy.XML_SOAP_INJECTION)
-				.getPolicy();
+		scanPolicy = new ScanPolicy();
+		scanPolicy.enableXMLinjection();
+		
 	}
 
 	@Given("a policy containing miscellaneous header and server checks")
 	public void setupMiscPolicy() {
 		vulnName = "general security";
 		log.debug(" configuring " + vulnName + " policy");
-
-		scanPolicy = new ScanPolicy().enable(ScanPolicy.PATH_TRAVERSAL,
-				ScanPolicy.HEADER_INJECTION, ScanPolicy.HEADER_MANIPULATION,
-				ScanPolicy.SERVER_ISSUES).getPolicy();
+		scanPolicy = new ScanPolicy();
+		scanPolicy.enableMisc();
+		
 	}
 
 	@Given("a Cross Site Scripting scanning policy")
 	public void setupXSSPolicy() {
 		vulnName = "Cross Site Scripting";
 		log.debug(" configuring " + vulnName + " policy");
-
-		scanPolicy = new ScanPolicy().enable(ScanPolicy.REFLECTED_XSS,
-				ScanPolicy.STORED_XSS).getPolicy();
+		scanPolicy = new ScanPolicy();
+		scanPolicy.enableXSS();
+		
 	}
 
 	@Given("a command injection scanning policy")
 	public void setupCommandInjectionPolicy() {
 		vulnName = "command injection";
 		log.debug(" configuring " + vulnName + " policy");
-
-		scanPolicy = new ScanPolicy().enable(ScanPolicy.COMMAND_INJECTION,
-				ScanPolicy.COMMAND_INJECTION_INFORMED,
-				ScanPolicy.COMMAND_INJECTION_BLIND).getPolicy();
+		scanPolicy = new ScanPolicy();
+		scanPolicy.enableCommandInjection();
+		
 	}
 
 	@When("the application is navigated")
@@ -171,7 +158,7 @@ public class AutomatedScanningSteps {
 		if (!navigated)
 			navigateApp();
 		log.debug("running scanner for scenario: " + reference);
-		burp.setConfig(scanPolicy);
+		burp.setConfig(scanPolicy.getPolicy());
 		int scanId = burp.scan(Config.getBaseUrl());
 		int complete = 0;
 		while (complete < 100) {

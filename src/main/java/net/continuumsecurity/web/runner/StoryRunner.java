@@ -76,7 +76,7 @@ public class StoryRunner extends BaseStoryRunner {
 		WebApplicationSteps ws = new WebApplicationSteps();
 		return new InstanceStepsFactory(configuration(),
 				ws,
-				new AutomatedScanningSteps(ws));
+				new AutomatedScanningSteps());
 	}
 
 	@Override

@@ -20,17 +20,21 @@ package net.continuumsecurity.web.steps;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import net.continuumsecurity.burpclient.BurpClient;
 import net.continuumsecurity.restyburp.model.HttpRequestResponseBean;
+import net.continuumsecurity.restyburp.model.ScanIssueBean;
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
@@ -46,13 +50,16 @@ import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.BeforeScenario;
+import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.steps.Parameters;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebElement;
 
 public class WebApplicationSteps {
 	Logger log = Logger.getLogger(WebApplicationSteps.class);
@@ -63,6 +70,11 @@ public class WebApplicationSteps {
 	List<Cookie> sessionIds;
 	
 	public WebApplicationSteps() {
+		
+	}
+	
+	@BeforeStory
+	public void setup() {
 		createApp();
 	}
 	
@@ -77,7 +89,6 @@ public class WebApplicationSteps {
 	
 	@BeforeScenario
 	public void createAppAndCredentials() {
-		log.debug("Creating application ...");
 		createApp();
 		credentials = new UserPassCredentials("", "");
 		sessionIds = new ArrayList<Cookie>();
@@ -108,7 +119,8 @@ public class WebApplicationSteps {
 		((ILogin)app).login(credentials);
 	}
 
-	@Given("the default user logs in: $credentialsTable")
+	@Given("the default user logs in with credentials from: $credentialsTable")
+	@When("the default user logs in with credentials from: $credentialsTable")
 	public void loginFromTable(ExamplesTable credentialsTable) {
 		openLoginPage();
 		credentials = tableToDefaultCredentials(credentialsTable);
@@ -227,11 +239,6 @@ public class WebApplicationSteps {
 		burp.reset();
 	}
 	
-	@Given("the HTTP request containing the password form")
-	public void findPasswordForm() {
-		currentHttp = burp.findInResponseHistory(".*<input.*?type.*?=.*?password.*");
-	}
-	
 	@Given("the HTTP request-response containing the default credentials")
 	public void findRequestWithPassword() {
 		currentHttp = burp.findInRequestHistory(".*"+credentials.getUsername()+".*"+credentials.getPassword()+".*");
@@ -239,9 +246,9 @@ public class WebApplicationSteps {
 		if (currentHttp == null) throw new StepException("Could not find HTTP request with credentials: "+credentials.getUsername()+" "+credentials.getPassword());
 	}
 	
-	@Then("the protocol should be HTTPS")
-	public void protocolHttps() {
-		assertThat(currentHttp.getProtocol(),equalTo("https"));
+	@Then("the protocol of the current URL should be HTTPS")
+	public void protocolUrlHttps() {
+		assertThat(app.getDriver().getCurrentUrl().substring(0, 4),equalTo("https"));
 	}
 	
 	@Then("the response status code should start with 3")
@@ -257,7 +264,7 @@ public class WebApplicationSteps {
 		}
 	}
 	
-	@Then("the session cookies should be different")
+	@Then("the session cookies after authentication should be different from those issued before")
 	public void compareSessionIds() {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
@@ -274,7 +281,7 @@ public class WebApplicationSteps {
 		}
 	}
 	
-	@Then("the session cookies should have the httpOnly flag set")
+	@Then("The session cookie should have the httpOnly flag set")
 	public void sessionCookiesHttpOnlyFlag() {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
@@ -330,9 +337,19 @@ public class WebApplicationSteps {
 		} 
 	}
 	
+	@Then("the password field should have the autocomplete directive set to 'disabled'")
+	public void thenThePasswordFieldShouldHaveTheAutocompleteDirectiveSetTodisabled() {
+		WebElement passwd = app.getDriver().findElement(By.xpath("//input[@type='password']"));
+		assertThat(passwd.getAttribute("autocomplete"),equalToIgnoringCase("disabled"));
+	}
+	
 	@Then("no exceptions are thrown")
 	public void doNothing() {
 		
+	}
+	
+	public WebApplication getWebApplication() {
+		return app;
 	}
 	
 	private Cookie findCookieByName(List<Cookie> cookies, String name) {

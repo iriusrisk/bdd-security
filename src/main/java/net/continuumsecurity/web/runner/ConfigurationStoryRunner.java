@@ -47,8 +47,7 @@ public class ConfigurationStoryRunner extends BaseStoryRunner {
 	public InjectableStepsFactory stepsFactory() {
 		WebApplicationSteps ws = new WebApplicationSteps();
 		return new InstanceStepsFactory(configuration(),
-				ws,
-				new AutomatedScanningSteps(ws));
+				ws);
 	}
 	
 }

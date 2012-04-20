@@ -29,14 +29,13 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 public class DriverFactory {
 	private static DriverFactory dm;
 	private static List<WebDriver> drivers;
-	static Logger log;
+	static Logger log = Logger.getLogger(DriverFactory.class.getName());
 
 	public enum DriverType {
 		FIREFOX, HTMLUNIT, BURPFIREFOX, BURPHTMLUNIT
 	}
 
 	private DriverFactory() {
-		log = Logger.getLogger(DriverFactory.class.getName());
 		drivers = new ArrayList<WebDriver>();
 	}
 
