@@ -17,3 +17,13 @@ Then they should not be able to access the restricted resource <method>
 
 Examples:
 tables/unauthorised.resources.table
+
+Scenario: Verify that un-authenticated users cannot view restricted resources
+Meta:
+@id anon_access_control
+
+Given a fresh application
+Then they should not be able to access the restricted resource <method>
+
+Examples:
+tables/authorised.resources.table

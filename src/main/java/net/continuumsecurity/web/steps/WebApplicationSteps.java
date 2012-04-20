@@ -25,16 +25,17 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.fail;
 
-import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import net.continuumsecurity.burpclient.BurpClient;
-import net.continuumsecurity.restyburp.model.HttpRequestResponseBean;
-import net.continuumsecurity.restyburp.model.ScanIssueBean;
+import net.continuumsecurity.restyburp.model.HttpMessage;
+import net.continuumsecurity.restyburp.model.HttpMessageList;
+import net.continuumsecurity.restyburp.model.MessageType;
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
@@ -65,7 +66,7 @@ public class WebApplicationSteps {
 	Logger log = Logger.getLogger(WebApplicationSteps.class);
 	public WebApplication app;
 	UserPassCredentials credentials;
-	HttpRequestResponseBean currentHttp;
+	HttpMessage currentHttp;
 	BurpClient burp;
 	List<Cookie> sessionIds;
 	
@@ -240,15 +241,24 @@ public class WebApplicationSteps {
 	}
 	
 	@Given("the HTTP request-response containing the default credentials")
-	public void findRequestWithPassword() {
-		currentHttp = burp.findInRequestHistory(".*"+credentials.getUsername()+".*"+credentials.getPassword()+".*");
-		if (currentHttp == null) currentHttp = burp.findInRequestHistory(".*"+credentials.getPassword()+".*"+credentials.getUsername()+".*");
-		if (currentHttp == null) throw new StepException("Could not find HTTP request with credentials: "+credentials.getUsername()+" "+credentials.getPassword());
+	public void findRequestWithPassword() throws UnsupportedEncodingException {
+		String passwd = URLEncoder.encode(credentials.getPassword(),"UTF-8");
+		String username = URLEncoder.encode(credentials.getUsername(),"UTF-8");
+		HttpMessageList messageList = new HttpMessageList();
+		messageList.setMessages(burp.findInRequestHistory(".*"+passwd+".*"));
+		List<HttpMessage> requests = messageList.findInMessages(".*"+username+".*", MessageType.REQUEST);
+		if (requests == null || requests.size() == 0) throw new StepException("Could not find HTTP request with credentials: "+credentials.getUsername()+" "+credentials.getPassword());
+		currentHttp = requests.get(0); 
+	}
+	
+	@Then("the protocol should be HTTPS")
+	public void protocolHttps() {
+		assertThat(currentHttp.getProtocol(),equalToIgnoringCase("https"));
 	}
 	
 	@Then("the protocol of the current URL should be HTTPS")
 	public void protocolUrlHttps() {
-		assertThat(app.getDriver().getCurrentUrl().substring(0, 4),equalTo("https"));
+		assertThat(app.getDriver().getCurrentUrl().substring(0, 4),equalToIgnoringCase("https"));
 	}
 	
 	@Then("the response status code should start with 3")
