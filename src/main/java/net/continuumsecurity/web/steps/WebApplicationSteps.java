@@ -188,16 +188,18 @@ public class WebApplicationSteps {
 
 	@When("the case of the password is changed")
 	public void loginWithWrongCasedPassword() {
-		String wrongCasePassword;
-		if (credentials.getPassword().matches("[a-z]+")) {
-			wrongCasePassword = credentials.getPassword().toUpperCase();
-		} else if (credentials.getPassword().matches("[A-Z]+")) {
+		String wrongCasePassword = credentials.getPassword().toUpperCase();
+		
+		if (wrongCasePassword.equals(credentials.getPassword())) {
 			wrongCasePassword = credentials.getPassword().toLowerCase();
+			if (wrongCasePassword.equals(credentials.getPassword())) {
+				throw new RuntimeException("Password doesn't have alphabetic characters, can't run this test.");
+			} else {
+				credentials.setPassword(wrongCasePassword);
+			}		
 		} else {
-			throw new RuntimeException(
-					"Password doesn't have alphabetic characters, can't run this test.");
+			credentials.setPassword(wrongCasePassword);
 		}
-		credentials.setPassword(wrongCasePassword);
 	}
 
 	@Given("the user logs in from a fresh login page $limit times")
@@ -245,8 +247,8 @@ public class WebApplicationSteps {
 		String passwd = URLEncoder.encode(credentials.getPassword(),"UTF-8");
 		String username = URLEncoder.encode(credentials.getUsername(),"UTF-8");
 		HttpMessageList messageList = new HttpMessageList();
-		messageList.setMessages(burp.findInRequestHistory(".*"+passwd+".*"));
-		List<HttpMessage> requests = messageList.findInMessages(".*"+username+".*", MessageType.REQUEST);
+		messageList.setMessages(burp.findInRequestHistory(passwd));
+		List<HttpMessage> requests = messageList.findInMessages(username, MessageType.REQUEST);
 		if (requests == null || requests.size() == 0) throw new StepException("Could not find HTTP request with credentials: "+credentials.getUsername()+" "+credentials.getPassword());
 		currentHttp = requests.get(0); 
 	}
@@ -256,8 +258,18 @@ public class WebApplicationSteps {
 		assertThat(currentHttp.getProtocol(),equalToIgnoringCase("https"));
 	}
 	
+	@Given("the HTTP request-response containing the login form")
+	public void findResponseWithLoginform() throws UnsupportedEncodingException {
+		String regex = "(?i)input[\\s\\w=:'\"]*type\\s*=\\s*['\"]password['\"]";
+		HttpMessageList messageList = new HttpMessageList();
+		messageList.setMessages(burp.findInResponseHistory(regex));
+		if (messageList.messages == null || messageList.messages.size() == 0) throw new StepException("Could not find HTTP response with password form using regex: "+regex);
+		currentHttp = messageList.messages.get(0); 
+	}
+	
 	@Then("the protocol of the current URL should be HTTPS")
 	public void protocolUrlHttps() {
+		log.debug("URL of login page: "+app.getDriver().getCurrentUrl());
 		assertThat(app.getDriver().getCurrentUrl().substring(0, 4),equalToIgnoringCase("https"));
 	}
 	
@@ -291,7 +303,7 @@ public class WebApplicationSteps {
 		}
 	}
 	
-	@Then("The session cookie should have the httpOnly flag set")
+	@Then("the session cookies should have the httpOnly flag set")
 	public void sessionCookiesHttpOnlyFlag() {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
@@ -347,10 +359,10 @@ public class WebApplicationSteps {
 		} 
 	}
 	
-	@Then("the password field should have the autocomplete directive set to 'disabled'")
+	@Then("the password field should have the autocomplete directive set to 'off'")
 	public void thenThePasswordFieldShouldHaveTheAutocompleteDirectiveSetTodisabled() {
 		WebElement passwd = app.getDriver().findElement(By.xpath("//input[@type='password']"));
-		assertThat(passwd.getAttribute("autocomplete"),equalToIgnoringCase("disabled"));
+		assertThat(passwd.getAttribute("autocomplete"),equalToIgnoringCase("off"));
 	}
 	
 	@Then("no exceptions are thrown")

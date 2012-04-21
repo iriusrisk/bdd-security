@@ -20,6 +20,42 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		super(driver);
 	}
 
+	@Override
+	public Page login(Credentials credentials) {
+		UserPassCredentials creds = new UserPassCredentials(credentials);
+		driver.findElement(By.id("username")).clear();
+		driver.findElement(By.id("username")).sendKeys(creds.getUsername());
+		driver.findElement(By.id("password")).clear();
+		driver.findElement(By.id("password")).sendKeys(creds.getPassword());
+		driver.findElement(By.name("_action_login")).click();
+		return null;
+	}
+
+	@Override
+	public Page openLoginPage() {
+		driver.get(Config.getBaseUrl() + "user/login");
+		verifyTextPresent("Login");
+		return null;
+	}
+
+	@Override
+	public boolean isLoggedIn(String role) {
+		if ("admin".equals(role)) {
+			driver.get(Config.getBaseUrl() + "admin/list");
+			if (driver.getPageSource().contains("Users")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		if (driver.getPageSource().contains("Tasks")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	@SecurityScan
 	public void navigateUser() {
 		openLoginPage();
@@ -81,39 +117,5 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		return null;
 	}
 
-	@Override
-	public Page login(Credentials credentials) {
-		UserPassCredentials creds = new UserPassCredentials(credentials);
-		driver.findElement(By.id("username")).clear();
-		driver.findElement(By.id("username")).sendKeys(creds.getUsername());
-		driver.findElement(By.id("password")).clear();
-		driver.findElement(By.id("password")).sendKeys(creds.getPassword());
-		driver.findElement(By.name("_action_login")).click();
-		return null;
-	}
-
-	@Override
-	public Page openLoginPage() {
-		driver.get(Config.getBaseUrl() + "user/login");
-		return null;
-	}
-
-	@Override
-	public boolean isLoggedIn(String role) {
-		if ("admin".equals(role)) {
-			driver.get(Config.getBaseUrl() + "admin/list");
-			if (driver.getPageSource().contains("Users")) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		if (driver.getPageSource().contains("Tasks")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 }

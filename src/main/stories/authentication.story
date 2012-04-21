@@ -19,8 +19,11 @@ Meta:
 @Rationale By serving the page that contains the login form over SSL, the user can verify that it is your site asking for their credentials, and not a phishing attempt.
 @id auth_login_form_over_ssl
 
-Given the login page
-Then the protocol of the current URL should be HTTPS
+Given an HTTP logging driver
+And clean HTTP logs
+And the login page
+And the HTTP request-response containing the login form
+Then the protocol should be HTTPS
 
 Scenario: Authentication credentials should be transmitted over SSL  
 Meta:
@@ -63,4 +66,4 @@ Meta:
 @id auth_autocomplete
 
 Given the login page
-Then the password field should have the autocomplete directive set to 'disabled'
+Then the password field should have the autocomplete directive set to 'off'

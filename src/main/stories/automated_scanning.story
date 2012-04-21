@@ -9,7 +9,7 @@ Meta:
 @id scan_passive
 
 Given a passive scanning policy
-When the application is navigated
+When the scannable methods of the application are navigated
 And the scanner is run
 Then no vulnerabilities should be present
 

@@ -141,7 +141,7 @@ public class AutomatedScanningSteps {
 		
 	}
 
-	@When("the application is navigated")
+	@When("the scannable methods of the application are navigated")
 	public void navigateApp() throws Exception {
 		// Navigate through the app and record the traffic through the
 		// scanner
