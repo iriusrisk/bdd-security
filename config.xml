@@ -40,6 +40,7 @@
 		<WSProxyHost>127.0.0.1</WSProxyHost>
 		<WSProxyPort>8086</WSProxyPort>
 	</burp>
+	<displayStackTrace>false</displayStackTrace>
 	<storyDir>src/main/stories/</storyDir>
 	<reportsDir>reports</reportsDir>
 	<latestReportsDir>target/jbehave/</latestReportsDir>

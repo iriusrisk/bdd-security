@@ -127,6 +127,10 @@ public class Config {
 	public static String getBurpHost() {
 		return getXml().getString("burp.host");
 	}
+	
+	public static boolean displayStackTrace() {
+		return getXml().getBoolean("displayStackTrace");
+	}
 
 	public static int getBurpPort() {
 		return getXml().getInt("burp.port");

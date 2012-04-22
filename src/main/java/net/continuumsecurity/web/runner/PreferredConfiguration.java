@@ -21,6 +21,8 @@ package net.continuumsecurity.web.runner;
 import java.net.URL;
 import java.util.Properties;
 
+import net.continuumsecurity.web.Config;
+
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryControls;
@@ -48,7 +50,7 @@ public class PreferredConfiguration extends MostUsefulConfiguration {
 				.withDefaultFormats()
 				.withViewResources(viewResources)
 				.withFormats(Format.XML, Format.CONSOLE, Format.HTML, Format.IDE_CONSOLE,Format.TXT)
-				.withFailureTrace(true);
+				.withFailureTrace(Config.displayStackTrace());
 
 		// Setup parameters
 		ParameterConverters parameterConverters = new ParameterConverters()
