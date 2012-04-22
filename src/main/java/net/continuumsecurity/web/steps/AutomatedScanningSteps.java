@@ -22,7 +22,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 import net.continuumsecurity.burpclient.BurpClient;
 import net.continuumsecurity.burpclient.ScanPolicy;
@@ -36,6 +35,7 @@ import net.continuumsecurity.web.reporting.BurpAnalyser;
 import net.continuumsecurity.web.reporting.ScannerReporter;
 
 import org.apache.log4j.Logger;
+import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -65,6 +65,12 @@ public class AutomatedScanningSteps {
 		burp.reset();
 		reporter = new ScannerReporter();
 	}
+	
+	@BeforeScenario
+	public void resetScanner() {
+		burp.clearIssues();
+		scanPolicy = new ScanPolicy();
+	}
 
 	@Given("scanning of all injection points is enabled")
 	public void enableAllInjectionPoints() {
@@ -85,7 +91,6 @@ public class AutomatedScanningSteps {
 	public void setupPassivePolicy() {
 		vulnName = "passive security";
 		log.debug(" configuring " + vulnName + " policy");
-		scanPolicy = new ScanPolicy();
 		scanPolicy.enablePassive();
 	}
 
@@ -93,7 +98,6 @@ public class AutomatedScanningSteps {
 	public void setupSQLinjectionPolicy() {
 		vulnName = "SQL injection";
 		log.debug(" configuring " + vulnName + " policy");
-		scanPolicy = new ScanPolicy();
 		scanPolicy.enableSQLinjection();
 	}
 
@@ -101,7 +105,6 @@ public class AutomatedScanningSteps {
 	public void setupLDAPinjectionPolicy() {
 		vulnName = "LDAP injection";
 		log.debug(" configuring " + vulnName + " policy");
-		scanPolicy = new ScanPolicy();
 		scanPolicy.enableLDAPinjection();
 	}
 
@@ -109,7 +112,6 @@ public class AutomatedScanningSteps {
 	public void setupXMLinjectionPolicy() {
 		vulnName = "XML injection";
 		log.debug(" configuring " + vulnName + " policy");
-		scanPolicy = new ScanPolicy();
 		scanPolicy.enableXMLinjection();
 		
 	}
@@ -118,7 +120,6 @@ public class AutomatedScanningSteps {
 	public void setupMiscPolicy() {
 		vulnName = "general security";
 		log.debug(" configuring " + vulnName + " policy");
-		scanPolicy = new ScanPolicy();
 		scanPolicy.enableMisc();
 		
 	}
@@ -127,18 +128,14 @@ public class AutomatedScanningSteps {
 	public void setupXSSPolicy() {
 		vulnName = "Cross Site Scripting";
 		log.debug(" configuring " + vulnName + " policy");
-		scanPolicy = new ScanPolicy();
 		scanPolicy.enableXSS();
-		
 	}
 
 	@Given("a command injection scanning policy")
 	public void setupCommandInjectionPolicy() {
 		vulnName = "command injection";
 		log.debug(" configuring " + vulnName + " policy");
-		scanPolicy = new ScanPolicy();
 		scanPolicy.enableCommandInjection();
-		
 	}
 
 	@When("the scannable methods of the application are navigated")
@@ -157,16 +154,16 @@ public class AutomatedScanningSteps {
 	public void runScanner(@Named("id") String reference) throws Exception {
 		if (!navigated)
 			navigateApp();
-		log.debug("running scanner for scenario: " + reference);
+		log.debug("Running scanner for scenario: " + reference);
 		burp.setConfig(scanPolicy.getPolicy());
-		int scanId = burp.scan(Config.getBaseUrl());
+		burp.scan(Config.getBaseUrl());
 		int complete = 0;
 		while (complete < 100) {
-			complete = burp.percentComplete(scanId);
+			complete = burp.percentComplete();
 			log.debug("Scan is " + complete + "% complete.");
 			Thread.sleep(3000);
 		}
-		issues = BurpAnalyser.instance().filter(burp.getIssueList(scanId));
+		issues = BurpAnalyser.instance().filter(burp.getIssueList());
 		log.debug(issues.getIssues().size() + " security issues were found.");
 		reporter.write(reference, issues);
 	}
