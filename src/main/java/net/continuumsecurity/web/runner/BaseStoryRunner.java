@@ -30,7 +30,7 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 
 public abstract class BaseStoryRunner extends JUnitStories {
 	Logger log = Logger.getLogger(StoryRunner.class);
-	protected static String storyDir = Config.getStoryUrl();
+	protected static String storyUrl = Config.getStoryUrl();
 	
 	public BaseStoryRunner() {
 		PropertyConfigurator.configure("log4j.properties");
@@ -43,7 +43,7 @@ public abstract class BaseStoryRunner extends JUnitStories {
 	
 	@Override
 	public Configuration configuration() {
-		return new PreferredConfiguration(storyDir);
+		return new PreferredConfiguration(storyUrl);
 	}
 	
 	@Override

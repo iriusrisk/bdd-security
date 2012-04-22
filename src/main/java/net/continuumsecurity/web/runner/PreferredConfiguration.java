@@ -39,8 +39,8 @@ import org.jbehave.core.steps.ParameterConverters.ExamplesTableConverter;
 
 public class PreferredConfiguration extends MostUsefulConfiguration {
 	
-	public PreferredConfiguration(String storyDir) {
-		URL codeLocation = CodeLocations.codeLocationFromURL(storyDir);
+	public PreferredConfiguration(String storyUrl) {
+		URL codeLocation = CodeLocations.codeLocationFromURL(storyUrl);
 		Properties viewResources = new Properties();
 		StoryPathResolver storyPathResolver = new UnderscoredCamelCaseResolver(
 				".story");

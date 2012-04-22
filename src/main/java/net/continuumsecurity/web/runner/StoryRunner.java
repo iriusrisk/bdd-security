@@ -68,6 +68,7 @@ public class StoryRunner extends BaseStoryRunner {
 		super();
 		// configuredEmbedder().useEmbedderControls(new
 		// PropertyBasedEmbedderControls());
+		
 		parser = new CmdLineParser(this);
 	}
 
@@ -82,7 +83,7 @@ public class StoryRunner extends BaseStoryRunner {
 	@Override
 	public List<String> storyPaths() {
 		return new StoryFinder().findPaths(
-				CodeLocations.codeLocationFromURL(storyDir), "**/*.story",
+				CodeLocations.codeLocationFromURL(storyUrl), "**/*.story",
 				"**/configuration_story.story");
 	}
 	

@@ -25,11 +25,12 @@ import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 
+import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.steps.AutomatedScanningSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 
 public class ConfigurationStoryRunner extends BaseStoryRunner {
-	private List<String> filters;
+	List<String> filters;
 	
 	public ConfigurationStoryRunner(List<String> filters) {
 		this.filters = filters;
@@ -39,8 +40,8 @@ public class ConfigurationStoryRunner extends BaseStoryRunner {
 	
 	@Override
 	public List<String> storyPaths() {
-		return new StoryFinder(). findPaths(
-				CodeLocations.codeLocationFromURL(storyDir), "**/configuration_story.story","");
+		configuredEmbedder().useMetaFilters(filters);
+		return new StoryFinder().findPaths(CodeLocations.codeLocationFromURL(storyUrl), "**/configuration.story","");
 	}
 
 	@Override
