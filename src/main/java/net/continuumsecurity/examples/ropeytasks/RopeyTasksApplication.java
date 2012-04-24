@@ -1,7 +1,9 @@
 package net.continuumsecurity.examples.ropeytasks;
 
+import net.continuumsecurity.web.Captcha;
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Credentials;
+import net.continuumsecurity.web.ICaptcha;
 import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
 import net.continuumsecurity.web.Page;
@@ -11,11 +13,13 @@ import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
-		ILogout {
-
+		ILogout, ICaptcha {
+ 
 	public RopeyTasksApplication(WebDriver driver) {
 		super(driver);
 	}
@@ -27,8 +31,16 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		driver.findElement(By.id("username")).sendKeys(creds.getUsername());
 		driver.findElement(By.id("password")).clear();
 		driver.findElement(By.id("password")).sendKeys(creds.getPassword());
+		
+		Captcha.instance().solve(this);
+		
 		driver.findElement(By.name("_action_login")).click();
 		return null;
+	}
+	
+	//Convenience method
+	public Page login(String username,String password) {
+		return login(new UserPassCredentials(username,password));
 	}
 
 	@Override
@@ -56,6 +68,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		}
 	}
 
+	
 	@SecurityScan
 	public void navigateUser() {
 		openLoginPage();
@@ -115,6 +128,24 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	public Page logout() {
 		driver.findElement(By.linkText("Logout")).click();
 		return null;
+	}
+
+	@Override
+	public String getCaptchaImageUrl() {
+		//CAPTCHA is only present on the login page, so we assume we're on the login page
+		WebElement img = null;
+		try {
+			img = driver.findElement(By.xpath("//div[@id='recaptcha_image']/img"));
+			return img.getAttribute("src");
+		} catch (NoSuchElementException nse) {
+			log.warn("No captcha image found");
+			return null;
+		}
+	}
+	
+	@Override
+	public WebElement getCaptchaResponseField() {
+		return driver.findElement(By.id("recaptcha_response_field")); 
 	}
 
 

@@ -67,3 +67,4 @@ Meta:
 
 Given the login page
 Then the password field should have the autocomplete directive set to 'off'
+

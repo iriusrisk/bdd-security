@@ -131,6 +131,14 @@ public class Config {
 	public static boolean displayStackTrace() {
 		return getXml().getBoolean("displayStackTrace");
 	}
+	
+	public static String getIncorrectUsername() {
+		return getXml().getString("incorrectUsername");
+	}
+	
+	public static String getIncorrectPassword() {
+		return getXml().getString("incorrectPassword");
+	}
 
 	public static int getBurpPort() {
 		return getXml().getInt("burp.port");

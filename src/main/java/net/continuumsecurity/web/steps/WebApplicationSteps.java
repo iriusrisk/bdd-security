@@ -67,6 +67,7 @@ public class WebApplicationSteps {
 	public WebApplication app;
 	UserPassCredentials credentials;
 	HttpMessage currentHttp;
+	HttpMessage savedMessage;
 	BurpClient burp;
 	List<Cookie> sessionIds;
 	
@@ -116,6 +117,7 @@ public class WebApplicationSteps {
 	}
 
 	@When("the user logs in")
+	@Given("the user logs in")
 	public void loginWithSetCredentials() {
 		((ILogin)app).login(credentials);
 	}
@@ -132,6 +134,11 @@ public class WebApplicationSteps {
 	public void setUsernameFromExamples(@Named("username") String username) {
 		credentials.setUsername(username);
 	}
+	
+	@Given("an invalid username")
+	public void setInvalidUsername() {
+		credentials.setUsername(Config.getIncorrectUsername());
+	}
 
 	@Given("the password <password>")
 	public void setCredentialsFromExamples(@Named("password") String password) {
@@ -140,7 +147,7 @@ public class WebApplicationSteps {
 
 	@Given("an incorrect password")
 	public void incorrectPassword() {
-		credentials.setPassword("SDFsdfwjx");
+		credentials.setPassword(Config.getIncorrectPassword());
 	}
 
 	@When("the user logs in from a fresh login page")
@@ -267,10 +274,24 @@ public class WebApplicationSteps {
 		currentHttp = messageList.messages.get(0); 
 	}
 	
+	@Given("the request-response is saved")
+	public void saveCurrentHttp() {
+		savedMessage = new HttpMessage(currentHttp);
+	}
+	
 	@Then("the protocol of the current URL should be HTTPS")
 	public void protocolUrlHttps() {
 		log.debug("URL of login page: "+app.getDriver().getCurrentUrl());
 		assertThat(app.getDriver().getCurrentUrl().substring(0, 4),equalToIgnoringCase("https"));
+	}
+	
+	@Then("the response should be the same as the saved response from the invalid username")
+	public void compareResponses() {
+		assertThat(savedMessage.getStatusCode(),equalTo(currentHttp.getStatusCode()));
+		
+		String incorrectUsernameResponse = new String(savedMessage.getResponse()).replaceAll(Config.getIncorrectUsername(), "");
+		String correctUsernameResponse = new String(currentHttp.getResponse()).replaceAll(Config.instance().getUsers().getDefaultCredentials().get("username"),"");
+		assertThat(incorrectUsernameResponse,equalTo(correctUsernameResponse));
 	}
 	
 	@Then("the response status code should start with 3")

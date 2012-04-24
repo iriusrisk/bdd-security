@@ -7,6 +7,8 @@
 </style>
 </head>
 <body>
+<div id="banner"><img src="images/jbehave-logo.png" alt="jbehave" />
+<div class="clear"></div>
 <#if format == "html">
 ${body}
 <#else>
