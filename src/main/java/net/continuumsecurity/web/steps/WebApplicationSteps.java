@@ -20,6 +20,7 @@ package net.continuumsecurity.web.steps;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -37,6 +38,7 @@ import net.continuumsecurity.restyburp.model.HttpMessage;
 import net.continuumsecurity.restyburp.model.HttpMessageList;
 import net.continuumsecurity.restyburp.model.MessageType;
 import net.continuumsecurity.web.Config;
+import net.continuumsecurity.web.ICaptcha;
 import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.ILogout;
 import net.continuumsecurity.web.Page;
@@ -60,6 +62,7 @@ import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.steps.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 public class WebApplicationSteps {
@@ -97,6 +100,7 @@ public class WebApplicationSteps {
 	}
 	
 	@Given("the login page")
+	@When("the login page is displayed")
 	public void openLoginPage() {
 		((ILogin)app).openLoginPage();
 	}
@@ -389,6 +393,17 @@ public class WebApplicationSteps {
 	@Then("no exceptions are thrown")
 	public void doNothing() {
 		
+	}
+	
+	@Then("the CAPTCHA request should be present")
+	public void checkCaptchaRequestPresent() {
+		if (!(app instanceof ICaptcha)) throw new RuntimeException("Application doesn't implement ICaptcha, can't run captcha scenarios");
+		ICaptcha captchaApp = (ICaptcha)app;
+		try {
+			assertThat(captchaApp.getCaptchaImage(),notNullValue());
+		} catch (NoSuchElementException nse) {
+			fail("Captcha image not found.");
+		}
 	}
 	
 	public WebApplication getWebApplication() {

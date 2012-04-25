@@ -3,7 +3,7 @@
     <!-- The settings in this file are for a fictional web application called "ISpatula", you'll need to modify them for your app! -->
     
 	<!-- The HttpAware WebDrivers drivers to use, available drivers can be found in net.continuumsecurity.web.driver.HttpAware*Driver -->
-	<defaultDriver>BurpFirefox</defaultDriver>
+	<defaultDriver>Firefox</defaultDriver>
 	
 	<!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.driver.Burp*Driver -->
 	<burpDriver>BurpHtmlUnit</burpDriver>

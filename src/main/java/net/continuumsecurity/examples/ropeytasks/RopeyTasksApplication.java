@@ -131,16 +131,9 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	}
 
 	@Override
-	public String getCaptchaImageUrl() {
+	public WebElement getCaptchaImage() {
 		//CAPTCHA is only present on the login page, so we assume we're on the login page
-		WebElement img = null;
-		try {
-			img = driver.findElement(By.xpath("//div[@id='recaptcha_image']/img"));
-			return img.getAttribute("src");
-		} catch (NoSuchElementException nse) {
-			log.warn("No captcha image found");
-			return null;
-		}
+		return driver.findElement(By.xpath("//div[@id='recaptcha_image']/img"));
 	}
 	
 	@Override

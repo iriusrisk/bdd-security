@@ -47,19 +47,6 @@ And the default user logs in with credentials from: users.table
 And the HTTP request-response containing the default credentials
 Then the response status code should start with 3
 
-Scenario: The user account should be locked out after 4 incorrect authentication attempts  
-Meta:
-@Rationale This reduces the risk of password guessing or brute force attacks on a specific user account
-@id auth_lockout
-@skip
-
-Given the default username from: users.table
-And an incorrect password
-And the user logs in from a fresh login page 4 times
-When the default password is used from: users.table
-And the user logs in from a fresh login page
-Then the user is not logged in
-
 Scenario: The AUTOCOMPLETE attribute should be disabled on the password field 
 Meta:
 @Rationale The browser will not give the user the option of storing the password if this attribute is set

@@ -67,6 +67,14 @@ public class WebApplication {
 		return methods;
 	}
 	
+	public void pause(long milliSeconds) {
+		try {
+			Thread.sleep(milliSeconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public List<String> getAuthorisedRoles(String methodName) {
 		try {
 			return (List<String>)Arrays.asList(this.getClass().getMethod(methodName, null).getAnnotation(Roles.class).value());
