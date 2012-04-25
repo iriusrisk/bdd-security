@@ -25,14 +25,13 @@ import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import net.continuumsecurity.burpclient.ScanPolicy;
-import net.continuumsecurity.scanner.BurpVulns;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 
@@ -97,6 +96,14 @@ public class Config {
 				roles.add((String) o);
 			}
 			theUser.setRoles(roles);
+			//There's got to be a cleaner way to do this...
+			List names = user.getList("recoverpassword[@name]");
+			List values = user.getList("recoverpassword[@value]");
+			Map<String,String> recoverMap = new HashMap<String,String>();
+			for (int i=0;i < names.size();i++) {
+				recoverMap.put((String)names.get(i), (String)values.get(i));
+			}
+			theUser.setRecoverPasswordMap(recoverMap);
 			users.add(theUser);
 		}
 		return users;

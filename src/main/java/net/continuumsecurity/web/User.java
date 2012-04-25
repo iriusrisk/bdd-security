@@ -20,11 +20,13 @@ package net.continuumsecurity.web;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 public class User {
 	private Credentials credentials;
 	private List<String> roles;
+	private Map<String,String> recoverPasswordMap;
  
 	public User(Credentials credentials,String... roles) {
 		this.roles = (List<String>)Arrays.asList(roles);
@@ -76,5 +78,14 @@ public class User {
 		}
 		return false;
 	}
+
+	public Map<String, String> getRecoverPasswordMap() {
+		return recoverPasswordMap;
+	}
+
+	public void setRecoverPasswordMap(Map<String, String> recoverPassword) {
+		this.recoverPasswordMap = recoverPassword;
+	}
+	
 	
 }

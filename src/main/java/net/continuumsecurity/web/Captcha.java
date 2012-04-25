@@ -36,4 +36,15 @@ public class Captcha {
 			app.getCaptchaResponseField().sendKeys(solved);
 		}
 	}
+	
+	public synchronized boolean isPresent(ICaptcha app) {
+		WebElement img = null;
+		try {
+			img = app.getCaptchaImage();
+			if (img != null) return true;
+		} catch (NoSuchElementException nse) {
+			
+		}
+		return false;
+	}
 }
