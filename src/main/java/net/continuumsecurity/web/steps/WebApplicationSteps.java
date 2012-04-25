@@ -20,10 +20,10 @@ package net.continuumsecurity.web.steps;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.fail;
 
 import java.io.UnsupportedEncodingException;
@@ -36,11 +36,13 @@ import java.util.regex.Pattern;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
+import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.burpclient.BurpClient;
 import net.continuumsecurity.restyburp.model.HttpMessage;
 import net.continuumsecurity.restyburp.model.HttpMessageList;
 import net.continuumsecurity.restyburp.model.MessageType;
 import net.continuumsecurity.web.Config;
+import net.continuumsecurity.web.FakeCaptchaHelper;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.UnexpectedContentException;
 import net.continuumsecurity.web.User;
@@ -395,6 +397,25 @@ public class WebApplicationSteps {
 			assertThat(captchaApp.getCaptchaImage(),notNullValue());
 		} catch (NoSuchElementException nse) {
 			fail("Captcha image not found.");
+		}
+	}
+	
+	@Given("a CAPTCHA solver that always fails")
+	public void setIncorrectCaptchaHelper() {
+		app.setCaptchaHelper(new FakeCaptchaHelper((ICaptcha)app));
+	}
+	
+	@When("the password recovery feature is requested")
+	public void submitPasswordRecovery() {
+		((IRecoverPassword)app).submitRecover(Config.instance().getUsers().getAll().get(0).getRecoverPasswordMap());
+	}
+	
+	@Then("the CAPTCHA should be presented again")
+	public void checkCaptchaPresent() {
+		try {
+			assertThat(((ICaptcha)app).getCaptchaImage(),notNullValue());
+		} catch (NoSuchElementException nse) {
+			fail("CAPTCHA not found");
 		}
 	}
 	

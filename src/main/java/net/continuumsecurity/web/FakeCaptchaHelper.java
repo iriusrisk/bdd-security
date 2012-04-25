@@ -5,9 +5,9 @@ import net.continuumsecurity.behaviour.ICaptcha;
 /*
  * Always fails captcha's
  */
-public class IncorrectCaptchaHelper extends CaptchaFinder implements ICaptchaHelper {
+public class FakeCaptchaHelper extends CaptchaFinder implements ICaptchaHelper {
 
-	public IncorrectCaptchaHelper(ICaptcha app) {
+	public FakeCaptchaHelper(ICaptcha app) {
 		super(app);
 	}
 
