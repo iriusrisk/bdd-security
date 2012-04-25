@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.continuumsecurity.behaviour.ICaptcha;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
@@ -30,13 +32,22 @@ import org.openqa.selenium.WebDriver;
 
 public class WebApplication {
 	public static Logger log;
-	Page currentPage;
 	protected WebDriver driver;
+	protected ICaptchaHelper captchaHelper;
+
+	public ICaptchaHelper getCaptchaHelper() {
+		return captchaHelper;
+	}
+
+	public void setCaptchaHelper(ICaptchaHelper captchaHelper) {
+		this.captchaHelper = captchaHelper;
+	}
 
 	public WebApplication(WebDriver driver) {
 		log = Logger.getLogger(WebApplication.class);
 		log.debug("Constructing new WebApplication");
 		this.driver = driver;
+		if (this instanceof ICaptcha) captchaHelper = new CaptchaHelper((ICaptcha)this);
 	}
 
 	public WebDriver getDriver() {
@@ -91,5 +102,5 @@ public class WebApplication {
 	public void verifyTextPresent(String text) {
 		if (!this.driver.getPageSource().contains(text)) throw new UnexpectedContentException("Expected text: ["+text+"] was not found.");
 	}
-	
+
 }

@@ -33,15 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import net.continuumsecurity.behaviour.ICaptcha;
+import net.continuumsecurity.behaviour.ILogin;
+import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.burpclient.BurpClient;
 import net.continuumsecurity.restyburp.model.HttpMessage;
 import net.continuumsecurity.restyburp.model.HttpMessageList;
 import net.continuumsecurity.restyburp.model.MessageType;
 import net.continuumsecurity.web.Config;
-import net.continuumsecurity.web.ICaptcha;
-import net.continuumsecurity.web.ILogin;
-import net.continuumsecurity.web.ILogout;
-import net.continuumsecurity.web.Page;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.UnexpectedContentException;
 import net.continuumsecurity.web.User;
@@ -341,11 +340,8 @@ public class WebApplicationSteps {
 	@Then("they should be able to access the restricted resource <method>")
 	public void checkAccessToResource(@Named("method") String method) {
 		try {
-			Page page = (Page)app.getClass().getMethod(method, null).invoke(app, null);
-			//If the app is using the PageObjects pattern
-			if (page != null) {
-				page.verify();
-			}
+			app.getClass().getMethod(method, null).invoke(app, null);
+			
 		} catch (UnexpectedContentException e) {
 			fail("User with credentials: "+credentials.getUsername()+" "+credentials.getPassword()+" could not access the method: "+method+"()");
 		} catch (IllegalArgumentException e) {
@@ -369,11 +365,7 @@ public class WebApplicationSteps {
 	@Then("they should not be able to access the restricted resource <method>")
 	public void checkNoAccessToResource(@Named("method") String method) {
 		try {
-			Page page = (Page)app.getClass().getMethod(method, null).invoke(app, null);
-			//If the app is using the PageObjects pattern
-			if (page != null) {
-				page.verify();
-			}
+			app.getClass().getMethod(method, null).invoke(app, null);
 			assertThat("",equalTo("Unauthorised user with credentials: "+credentials.getUsername()+" "+credentials.getPassword()+" could access the method: "+method+"()"));
 		} catch (InvocationTargetException e) {
 			assertThat(e.getCause() instanceof UnexpectedContentException,is(true));

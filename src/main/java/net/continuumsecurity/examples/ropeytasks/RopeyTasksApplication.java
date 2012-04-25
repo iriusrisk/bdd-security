@@ -2,14 +2,12 @@ package net.continuumsecurity.examples.ropeytasks;
 
 import java.util.Map;
 
-import net.continuumsecurity.web.Captcha;
+import net.continuumsecurity.behaviour.ICaptcha;
+import net.continuumsecurity.behaviour.ILogin;
+import net.continuumsecurity.behaviour.ILogout;
+import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Credentials;
-import net.continuumsecurity.web.ICaptcha;
-import net.continuumsecurity.web.ILogin;
-import net.continuumsecurity.web.ILogout;
-import net.continuumsecurity.web.IRecoverPassword;
-import net.continuumsecurity.web.Page;
 import net.continuumsecurity.web.Roles;
 import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.UserPassCredentials;
@@ -27,7 +25,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	}
 
 	@Override
-	public Page login(Credentials credentials) {
+	public void login(Credentials credentials) {
 		// Captcha solving is not 100% accurate, so try a few times if captcha
 		// fails
 		boolean captchaPresent = true;
@@ -38,25 +36,23 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 			driver.findElement(By.id("username")).sendKeys(creds.getUsername());
 			driver.findElement(By.id("password")).clear();
 			driver.findElement(By.id("password")).sendKeys(creds.getPassword());
-			Captcha.instance().solve(this);
+			captchaHelper.solve();
 			driver.findElement(By.name("_action_login")).click();
 
-			captchaPresent = Captcha.instance().isPresent(this);
+			captchaPresent = captchaHelper.isPresent();
 			attempts++;
 		}
-		return null;
 	}
 
 	// Convenience method
-	public Page login(String username, String password) {
-		return login(new UserPassCredentials(username, password));
+	public void login(String username, String password) {
+		login(new UserPassCredentials(username, password));
 	}
 
 	@Override
-	public Page openLoginPage() {
+	public void openLoginPage() {
 		driver.get(Config.getBaseUrl() + "user/login");
 		verifyTextPresent("Login");
-		return null;
 	}
 
 	@Override
@@ -133,9 +129,8 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	}
 
 	@Override
-	public Page logout() {
+	public void logout() {
 		driver.findElement(By.linkText("Logout")).click();
-		return null;
 	}
 
 	@Override
@@ -166,9 +161,9 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		boolean captchaPresent = true;
 		while (captchaPresent && attempts < 4) {
 			driver.findElement(By.id("email")).sendKeys(details.get("email"));
-			Captcha.instance().solve(this);
+			captchaHelper.solve();
 			driver.findElement(By.xpath("//input[@value='Recover']")).click();
-			captchaPresent = Captcha.instance().isPresent(this);
+			captchaPresent = captchaHelper.isPresent();
 			attempts++;
 		}
 	}

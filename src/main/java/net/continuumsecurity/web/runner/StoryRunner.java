@@ -29,8 +29,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.web.Config;
-import net.continuumsecurity.web.ILogin;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.BurpFactory;
 import net.continuumsecurity.web.drivers.DriverFactory;

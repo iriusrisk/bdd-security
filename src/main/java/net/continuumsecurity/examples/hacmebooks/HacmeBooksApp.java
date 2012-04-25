@@ -1,58 +1,68 @@
 package net.continuumsecurity.examples.hacmebooks;
 
+import net.continuumsecurity.behaviour.ILogin;
+import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.Credentials;
-import net.continuumsecurity.web.ILogin;
-import net.continuumsecurity.web.ILogout;
-import net.continuumsecurity.web.Page;
 import net.continuumsecurity.web.SecurityScan;
+import net.continuumsecurity.web.UnexpectedContentException;
 import net.continuumsecurity.web.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-	
+
 public class HacmeBooksApp extends WebApplication implements ILogin, ILogout {
 
-		public HacmeBooksApp(WebDriver driver) {
-			super(driver);
-		}
+	public HacmeBooksApp(WebDriver driver) {
+		super(driver);
+	}
 
-		@SecurityScan
-		public void navigateAll() {
-			UserPassCredentials creds = new UserPassCredentials(Config.instance().getUsers().getDefaultCredentials());
-			HomePage home = (HomePage)openLoginPage().login(creds.getUsername(),creds.getPassword());
-			home.verify(); 
-			SearchResultsPage results = home.search("hacking");
-			results.verify();
-			results.addFirstItemToCart();
-		}
+	@SecurityScan
+	public void navigateAll() {
+		openLoginPage();
+		login(Config.instance().getUsers().getDefaultCredentials());
+		
+		if (!isLoggedIn(null)) throw new UnexpectedContentException("Login failed!");
+		
+		driver.findElement(By.className("loginbutton")).click();
+		driver.findElement(By.id("keyWords")).clear();
+		driver.findElement(By.id("keyWords")).sendKeys("hacking");
+		driver.findElement(By.className("loginbutton")).click();
+		driver.findElement(By.linkText("Add to Cart")).click();
+		driver.findElement(By.linkText("View Cart")).click();
+	}
 
-		@Override
-		public Page logout() {
-			return new HomePage(driver).open().logout();
-		}
+	@Override
+	public void logout() {
+		driver.findElement(By.linkText("Log Out")).click();
+	}
 
-		@Override
-		public Page login(Credentials credentials) {
-			UserPassCredentials creds = new UserPassCredentials(credentials);
-			return openLoginPage().login(creds.getUsername(),creds.getPassword());
-		}
+	@Override
+	public void login(Credentials credentials) {
+		
+		UserPassCredentials creds = new UserPassCredentials(credentials);
+		
+		driver.findElement(By.id("j_username")).clear();
+		driver.findElement(By.id("j_username")).sendKeys(creds.getUsername());
+		driver.findElement(By.id("j_password")).clear();
+		driver.findElement(By.id("j_password")).sendKeys(creds.getPassword());
+		driver.findElement(By.xpath("//input[@name='login' and @value='Login']")).click();
+	}
 
-		@Override
-		public LoginPage openLoginPage() {
-			return new LoginPage(driver).open();
-		}
+	@Override
+	public void openLoginPage() {
+		driver.get(Config.getBaseUrl()+"mainMenu.html");
+	}
 
-		@Override
-		public boolean isLoggedIn(String role) {
-			try {
-				new HomePage(driver).open().verify();
-				return true;
-			} catch (Exception e) {
-				return false;
-			}
+	@Override
+	public boolean isLoggedIn(String role) {
+		driver.get(Config.getBaseUrl()+"browseOrders.html");
+		if (driver.getPageSource().contains("CreditCardNumber")) {
+			return true;
+		} else {
+			return false;
 		}
-
-	
+	}
 
 }
