@@ -1,4 +1,4 @@
-package net.continuumsecurity.web.reporting;
+package net.continuumsecurity.reporting;
 
 import net.continuumsecurity.restyburp.model.ScanIssueBean;
 import net.continuumsecurity.restyburp.model.ScanIssueList;

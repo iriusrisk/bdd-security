@@ -31,8 +31,8 @@ import net.continuumsecurity.web.Config;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.BurpFactory;
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.reporting.BurpAnalyser;
-import net.continuumsecurity.web.reporting.ScannerReporter;
+import net.continuumsecurity.reporting.BurpAnalyser;
+import net.continuumsecurity.reporting.ScannerReporter;
 
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.BeforeScenario;
@@ -99,6 +99,7 @@ public class AutomatedScanningSteps {
 		vulnName = "SQL injection";
 		log.debug(" configuring " + vulnName + " policy");
 		scanPolicy.enableSQLinjection();
+
 	}
 
 	@Given("an LDAP injection scanning policy")

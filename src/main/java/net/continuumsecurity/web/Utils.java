@@ -3,8 +3,6 @@ package net.continuumsecurity.web;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.continuumsecurity.web.reporting.BurpAnalyser;
-
 import org.apache.log4j.Logger;
 
 public class Utils {

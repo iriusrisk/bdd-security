@@ -1,3 +1,4 @@
+
 Description: The automated security scanner should not report any vulnerabilities in the application
 
 Meta:

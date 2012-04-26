@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
-package net.continuumsecurity.web.runner;
+package net.continuumsecurity.runner;
 
 import java.net.URL;
 import java.util.Properties;
 
 import net.continuumsecurity.web.Config;
 
-import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.i18n.LocalizedKeywords;
