@@ -21,7 +21,7 @@ package net.continuumsecurity.web.drivers;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import net.continuumsecurity.web.Config;
+import net.continuumsecurity.Config;
 
 public class BurpHtmlUnitDriver extends HtmlUnitDriver implements BurpDriver {
 	private static Logger log;

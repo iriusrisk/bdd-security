@@ -18,15 +18,14 @@
  ******************************************************************************/
 package net.continuumsecurity.runner;
 
-import java.util.List;
-
-import net.continuumsecurity.web.Config;
-
+import net.continuumsecurity.Config;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.steps.InjectableStepsFactory;
+
+import java.util.List;
 
 public abstract class BaseStoryRunner extends JUnitStories {
 	Logger log = Logger.getLogger(StoryRunner.class);

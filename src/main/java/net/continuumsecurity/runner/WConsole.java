@@ -21,7 +21,7 @@ package net.continuumsecurity.runner;
 
 import groovy.ui.Console;
 
-import net.continuumsecurity.web.Config;
+import net.continuumsecurity.Config;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.BurpFactory;
 import net.continuumsecurity.web.drivers.DriverFactory;

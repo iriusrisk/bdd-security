@@ -3,7 +3,7 @@
     <!-- The settings in this file are for a fictional web application called "ISpatula", you'll need to modify them for your app! -->
     
 	<!-- The HttpAware WebDrivers drivers to use, available drivers can be found in net.continuumsecurity.web.driver.HttpAware*Driver -->
-	<defaultDriver>Firefox</defaultDriver>
+	<defaultDriver>HtmlUnit</defaultDriver>
 	
 	<!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.driver.Burp*Driver -->
 	<burpDriver>BurpHtmlUnit</burpDriver>
@@ -35,15 +35,16 @@
 		</user>
 	</users>
 
-	<!-- The settings below usually don't need to be changed -->
 	<incorrectPassword>SDFsdfwjx1</incorrectPassword>
 	<incorrectUsername>bobbles</incorrectUsername>
     <burp>
 		<host>127.0.0.1</host>
 		<port>8080</port>
 		<WSUrl>http://127.0.0.1:8181/</WSUrl>
-		<WSProxyHost>127.0.0.1</WSProxyHost>
-		<WSProxyPort>8086</WSProxyPort>
+
+        <!-- The proxy between bdd-security and resty-burp -->
+		<WSProxyHost></WSProxyHost>
+		<WSProxyPort></WSProxyPort>
 	</burp>
 	<displayStackTrace>false</displayStackTrace>
 	<storyDir>src/main/stories/</storyDir>

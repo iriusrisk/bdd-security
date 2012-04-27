@@ -18,7 +18,7 @@
  ******************************************************************************/
 package net.continuumsecurity.behaviour;
 
-import net.continuumsecurity.web.Credentials;
+import net.continuumsecurity.Credentials;
 
 public interface ILogin {
 	void login(Credentials credentials);

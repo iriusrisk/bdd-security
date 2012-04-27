@@ -16,28 +16,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
-package net.continuumsecurity.web.drivers;
+package net.continuumsecurity.web;
 
-
-import org.apache.log4j.Logger;
-
-import net.continuumsecurity.burpclient.BurpClient;
 import net.continuumsecurity.Config;
+import net.continuumsecurity.burpclient.BurpClient;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.junit.Test;
 
-public class BurpFactory {
-	private static BurpClient burp;
-	static Logger log = Logger.getLogger(BurpFactory.class);
-	
-	public static BurpClient getBurp() {
-		if (burp == null) burp = new BurpClient(Config.getBurpWSUrl(),Config.getBurpWSProxyHost(),Config.getBurpWSProxyPort());
-		return burp;
+public class BurpWebDriverTest {
+
+	@Test
+	public void test() {
+		PropertyConfigurator.configure("log4j.properties");
+		BurpClient burp = new BurpClient(Config.getBurpWSUrl());
+		burp.reset();
+		
+		//WebDriver driver = DriverFactory.getDriver(DriverType.BURPHTMLUNIT);
+		//driver.get(Config.get().baseUrl);
+		//DriverFactory.closeAll();
 	}
-	
-	public static void destroyAll() {
-		log.debug("destroying Burp clients");
-		getBurp().destroy();
-	}
-	
-	
+
 }

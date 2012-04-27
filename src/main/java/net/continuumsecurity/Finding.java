@@ -16,36 +16,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
-package net.continuumsecurity.web;
+package net.continuumsecurity;
 
-public class UserPassCredentials extends Credentials {
+import net.continuumsecurity.web.FindingType;
+
+class Finding {
+	FindingType id;
+	String url;
+	String detail;
+	String messages[];
 	
-	public UserPassCredentials() {
-		super();
-	}
-	
-	public UserPassCredentials(Credentials creds) {
-		super("username",creds.get("username"),"password",creds.get("password"));
-	}
-	
-	public UserPassCredentials(String username,String password) {
-		super("username",username,"password",password);
-	}
-
-	public String getUsername() {
-		return creds.get("username");
-	}
-
-	public void setUsername(String username) {
-		this.creds.put("username", username);
-	}
-
-	public String getPassword() {
-		return creds.get("password");
-	}
-
-	public void setPassword(String password) {
-		this.creds.put("password", password);
+	public Finding(FindingType id) {
+		this.id = id;
 	}
 	
+	public Finding(FindingType id,String url,String detail) {
+		this.id = id;
+		this.url = url;
+		this.detail = detail;
+	}
+	
+	public Finding(FindingType id,String url,String detail,String[] messages) {
+		this.id = id;
+		this.url = url;
+		this.detail = detail;
+		this.messages = messages;
+	}
 }

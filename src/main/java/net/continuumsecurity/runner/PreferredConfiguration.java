@@ -21,7 +21,7 @@ package net.continuumsecurity.runner;
 import java.net.URL;
 import java.util.Properties;
 
-import net.continuumsecurity.web.Config;
+import net.continuumsecurity.Config;
 
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryControls;

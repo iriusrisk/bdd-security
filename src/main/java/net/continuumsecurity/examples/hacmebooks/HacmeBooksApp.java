@@ -2,11 +2,11 @@ package net.continuumsecurity.examples.hacmebooks;
 
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
-import net.continuumsecurity.web.Config;
-import net.continuumsecurity.web.Credentials;
+import net.continuumsecurity.Config;
+import net.continuumsecurity.Credentials;
 import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.UnexpectedContentException;
-import net.continuumsecurity.web.UserPassCredentials;
+import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 
 import org.openqa.selenium.By;

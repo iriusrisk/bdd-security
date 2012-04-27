@@ -1,4 +1,4 @@
-package net.continuumsecurity.web;
+package net.continuumsecurity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

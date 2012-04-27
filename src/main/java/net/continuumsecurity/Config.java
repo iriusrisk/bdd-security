@@ -16,7 +16,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
-package net.continuumsecurity.web;
+package net.continuumsecurity;
+
+import net.continuumsecurity.web.WebApplication;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,12 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.log4j.PropertyConfigurator;
-import org.openqa.selenium.WebDriver;
 
 public class Config {
 
@@ -184,7 +185,9 @@ public class Config {
 			return getXml().getInt("burp.WSProxyPort");
 		} catch (java.util.NoSuchElementException nse) {
 			return 0;
-		}
+		} catch (org.apache.commons.configuration.ConversionException ce) {
+            return 0;
+        }
 	}
 
 	public static void setXml(XMLConfiguration xml) {

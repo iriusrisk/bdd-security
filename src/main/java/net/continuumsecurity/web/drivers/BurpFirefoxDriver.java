@@ -18,13 +18,11 @@
  ******************************************************************************/
 package net.continuumsecurity.web.drivers;
 
-import net.continuumsecurity.web.Config;
+import net.continuumsecurity.Config;
 
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class BurpFirefoxDriver extends FirefoxDriverFacade implements BurpDriver {
 	
