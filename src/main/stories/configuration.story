@@ -33,6 +33,8 @@ users.table
 
 Scenario: Verify that if users don't login, then they are not logged in (According to the ILogin.isLoggedIn(Role) method)
 Meta:
+@Description The isLoggedIn function should return false if users haven't logged in.
+@Url <a href="http://www.google.com">Google</a>
 @id config_is_logged_in
 
 Given the login page

@@ -180,7 +180,7 @@
                                     <artifactId>jbehave-core</artifactId>
                                     <version>${jbehave.core.version}</version>
                                     <outputDirectory>${project.build.directory}/jbehave/view</outputDirectory>
-                                    <includes>**\/*.css,**\/*.ftl,**\/*.js</includes>
+                                    <includes>**\/*.css,**\/*.ftl,**\/*.js,**\/*.png</includes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
