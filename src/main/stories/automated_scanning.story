@@ -17,6 +17,7 @@ Then no vulnerabilities should be present
 Scenario: Scan for SQL injection vulnerabilities
 Meta:
 @Description SQL injection issues pose serious risks to the confidentiality and integrity of the database since they could be used to read arbitrary data and edit and delete data
+@Reference WASC-19 http://projects.webappsec.org/w/page/13246963/SQL%20Injection
 @id scan_sql
 
 Given an SQL injection scanning policy
@@ -27,6 +28,7 @@ Then no vulnerabilities should be present
 Scenario: Scan for Cross Site Scripting vulnerabilities
 Meta:
 @Description Cross Site Scripting vulnerabilities could allow attackers to steal a users session and then impersonate them or trick users into disclosing sensitive data
+@Reference WASC-8 http://projects.webappsec.org/w/page/13246920/Cross%20Site%20Scripting
 @id scan_xss
 
 Given a Cross Site Scripting scanning policy
@@ -37,6 +39,7 @@ Then no vulnerabilities should be present
 Scenario: Scan for Command Injection vulnerabilities
 Meta:
 @Description These types of vulnerabilities could allow attackers to execute arbitrary commands on the vulnerable server
+@Reference WASC-31 http://projects.webappsec.org/w/page/13246950/OS%20Commanding
 @id scan_cmd
 
 Given a command injection scanning policy
@@ -46,7 +49,8 @@ Then no vulnerabilities should be present
 
 Scenario: Scan for LDAP Injection vulnerabilities
 Meta:
-@Description LDAP injection vulnerabilities could allow attackers to manipulate the logic of LDAP queries and potentially gain unauthorised access to data 
+@Description LDAP injection vulnerabilities could allow attackers to manipulate the logic of LDAP queries and potentially gain unauthorised access to data
+@Reference WASC-29 http://projects.webappsec.org/w/page/13246947/LDAP%20Injection
 @id scan_ldap
 
 Given an LDAP injection scanning policy
@@ -56,7 +60,8 @@ Then no vulnerabilities should be present
 
 Scenario: Scan for XML-SOAP Injection vulnerabilities
 Meta:
-@Description XML injection could allow attackers to change the semantics of XML queries and potentially gain access to unauthorised data, or cause denial of service conditions in the XML parsers
+@Description XML injection could allow attackers to change the semantics of XML queries and potentially gain access to unauthorised data, or cause denial of service conditions in the XML parsers     ]
+@Reference WASC-23 http://projects.webappsec.org/w/page/13247004/XML%20Injection
 @id scan_xml
 
 Given an XML injection scanning policy
