@@ -19,3 +19,15 @@
     SyntaxHighlighter.defaults['toolbar'] = false;    
     SyntaxHighlighter.all();
 </script>
+<script style="text/javascript">
+        var linksCount = document.getElementsByTagName("div").length;
+        for (var i= 0; i < linksCount; i++) {
+            var val = document.getElementsByTagName("div")[i];
+            if(val.className === "property") {
+                function replacer(str) {
+                    return "<a href=" + str  + ">" + str + "</a";
+                }
+                document.getElementsByTagName("div")[i].innerHTML = val.innerHTML.replace(/http:\/\/.*/, replacer);
+            }
+        }
+</script>

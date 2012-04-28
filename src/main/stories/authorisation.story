@@ -1,11 +1,11 @@
-Description: Verify that access control is well implemented
+Description: Access control should be enforced on the server side and should matche the authorisation model for this application
 
 Meta:
 @story Authorisation
 
 Scenario: Verify that only authorised users can view restricted resources
 Meta:
-@Rationale Resources should only be accessible by the user roles authorised to view them.  Access by unauthorised users could lead to a breach of confidentiality/integrity of the data.
+@Description Resources should only be accessible by the user roles authorised to view them.  Access by unauthorised users could lead to a breach of confidentiality/integrity of the data.
 @id access_control_restricted
 
 Given a fresh application
@@ -20,6 +20,7 @@ tables/unauthorised.resources.table
 
 Scenario: Verify that un-authenticated users cannot view restricted resources
 Meta:
+@Description Resources that should only be visible to authenticated users should not be accessible if users have not logged in
 @id anon_access_control
 
 Given a fresh application

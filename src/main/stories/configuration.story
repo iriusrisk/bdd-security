@@ -3,7 +3,7 @@ Description: Verify that the configuration and application definition are sane
 Meta:
 @story Configuration
 
-Scenario: Verify that all users can login correctly 
+Scenario: Verify that all configured user accounts can login correctly
 Meta:
 @id config_login_ok
 
@@ -34,7 +34,6 @@ users.table
 Scenario: Verify that if users don't login, then they are not logged in (According to the ILogin.isLoggedIn(Role) method)
 Meta:
 @Description The isLoggedIn function should return false if users haven't logged in.
-@Url <a href="http://www.google.com">Google</a>
 @id config_is_logged_in
 
 Given the login page

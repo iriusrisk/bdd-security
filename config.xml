@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <web-app>
-    <!-- The settings in this file are for a fictional web application called "ISpatula", you'll need to modify them for your app! -->
+    <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks, you'll need to modify them for your app! -->
     
-	<!-- The HttpAware WebDrivers drivers to use, available drivers can be found in net.continuumsecurity.web.driver.HttpAware*Driver -->
+	<!-- Available drivers can be found in net.continuumsecurity.web.drivers.DriverFactory -->
 	<defaultDriver>HtmlUnit</defaultDriver>
 	
-	<!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.driver.Burp*Driver -->
+	<!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.drivers.Burp*Driver -->
 	<burpDriver>BurpHtmlUnit</burpDriver>
 	
 	<!-- Base URL for the application to test -->

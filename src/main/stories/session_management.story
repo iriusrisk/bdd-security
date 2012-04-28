@@ -1,3 +1,5 @@
+Description: Session management functions should be security implemented.
+
 Meta:
 @story Session Management
  
