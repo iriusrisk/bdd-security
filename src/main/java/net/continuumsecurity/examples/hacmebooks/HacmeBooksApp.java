@@ -5,7 +5,7 @@ import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.Credentials;
 import net.continuumsecurity.web.SecurityScan;
-import net.continuumsecurity.web.UnexpectedContentException;
+import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
 

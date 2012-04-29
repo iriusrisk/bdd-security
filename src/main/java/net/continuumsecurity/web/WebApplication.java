@@ -19,6 +19,7 @@
 package net.continuumsecurity.web;
 
 import net.continuumsecurity.Restricted;
+import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.behaviour.ICaptcha;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;

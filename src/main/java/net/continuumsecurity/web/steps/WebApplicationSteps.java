@@ -19,6 +19,7 @@
 package net.continuumsecurity.web.steps;
 
 import net.continuumsecurity.Config;
+import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.User;
 import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ICaptcha;
@@ -31,7 +32,6 @@ import net.continuumsecurity.restyburp.model.HttpMessageList;
 import net.continuumsecurity.restyburp.model.MessageType;
 import net.continuumsecurity.web.FakeCaptchaHelper;
 import net.continuumsecurity.web.StepException;
-import net.continuumsecurity.web.UnexpectedContentException;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.BurpFactory;
 import net.continuumsecurity.web.drivers.DriverFactory;

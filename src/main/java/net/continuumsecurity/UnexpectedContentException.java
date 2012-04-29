@@ -1,4 +1,4 @@
-package net.continuumsecurity.web;
+package net.continuumsecurity;
 
 public class UnexpectedContentException extends RuntimeException {
 	public UnexpectedContentException(String msg) {
