@@ -1,5 +1,3 @@
-|method		|username		|password		
-|viewUserList		|bob		|password		
-|viewUserList		|alice		|password		
-|viewUserDetails		|bob		|password		
-|viewUserDetails		|alice		|password		
+|method		|username		|password		|verifyString		
+|viewUserList		|bob		|password		|alice@continuumsecurity.net		
+|viewUserDetails		|bob		|password		|alice@continuumsecurity.net		

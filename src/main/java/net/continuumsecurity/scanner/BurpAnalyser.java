@@ -41,7 +41,7 @@ public class BurpAnalyser {
 	public ScanIssueBean filterIssue(ScanIssueBean issue) {
 		if ("Session token in URL".equalsIgnoreCase(issue.getIssueName())) {
 			//If the session ID is not in the URL, then this is a false positive
-			if (Utils.extractSessionID(issue.getIssueDetail()) == null) {
+			if (Utils.extractSessionIDName(issue.getIssueDetail()) == null) {
 				log.trace("session IDs not found in the burp detail, filterIssue() returning null. "+issue.getIssueDetail());
 				return null;
 			}

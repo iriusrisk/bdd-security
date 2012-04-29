@@ -254,6 +254,7 @@ public class Config {
 		row.add("method");
 		row.add("username");
 		row.add("password");
+        row.add("verifyString");
 		table.add(row);
 		for (Method method : app.getRestrictedMethods()) {
 			for (String role : app.getAuthorisedRoles(method.getName())) {
@@ -261,6 +262,7 @@ public class Config {
 				row.add(method.getName());
 				row.add(users.getDefaultCredentials(role).get("username"));
 				row.add(users.getDefaultCredentials(role).get("password"));
+                row.add(method.getAnnotation(Restricted.class).verifyWithText());
 				table.add(row);
 			}
 		}
@@ -278,6 +280,7 @@ public class Config {
 		row.add("method");
 		row.add("username");
 		row.add("password");
+        row.add("verifyString");
 		table.add(row);
 		for (Method method : app.getRestrictedMethods()) {
 			for (User user : users.getAllUsersNotInRoles(app
@@ -286,6 +289,7 @@ public class Config {
 				row.add(method.getName());
 				row.add(user.getCredentials().get("username"));
 				row.add(user.getCredentials().get("password"));
+                row.add(method.getAnnotation(Restricted.class).verifyWithText());
 				table.add(row);
 			}
 		}

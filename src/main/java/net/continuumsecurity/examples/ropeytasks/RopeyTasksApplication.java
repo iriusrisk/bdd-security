@@ -1,21 +1,20 @@
 package net.continuumsecurity.examples.ropeytasks;
 
-import java.util.Map;
-
+import net.continuumsecurity.Config;
+import net.continuumsecurity.Credentials;
+import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
-import net.continuumsecurity.Config;
-import net.continuumsecurity.Credentials;
-import net.continuumsecurity.web.Roles;
+import net.continuumsecurity.Restricted;
 import net.continuumsecurity.web.SecurityScan;
-import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.web.WebApplication;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import java.util.Map;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
 		ILogout, ICaptcha, IRecoverPassword {
@@ -90,32 +89,33 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	}
 
 	/*
-	 * If the method is void or returns null, then there must be a check which
-	 * throws UnexpectedContentException if it doesn't complete successfully.
-	 * This is the equivalent of the verify() method on the Page class.
+	 * The method must throw UnexpectedContentException if it doesn't complete successfully.
 	 */
-	@Roles({ "user" })
+	@Restricted(roles = { "user" },
+                verifyWithText = "Edit User")
 	public void viewProfile() {
 		driver.findElement(By.linkText("Profile")).click();
 		verifyTextPresent("Edit User");
 	}
 
-	@Roles({ "admin" })
+	@Restricted(roles = { "admin" },
+                verifyWithText = "alice@continuumsecurity.net")
 	public void viewUserList() {
 		driver.get(Config.getBaseUrl() + "admin/list");
 		verifyTextPresent("User List");
 	}
 
-	@Roles({ "admin" })
+	@Restricted(roles = {"admin"},
+                verifyWithText = "alice@continuumsecurity.net")
 	public void viewUserDetails() {
 		driver.get(Config.getBaseUrl() + "admin/show/2");
 		verifyTextPresent("Show User");
 	}
 
 	/*
-	 * @Roles annotation can only be used on no-argument methods.
+	 * @Restricted annotation can only be used on no-argument methods.
 	 */
-	@Roles({ "user" })
+	//@Restricted({ "user" })
 	public void testSearch() {
 		search("test");
 		verifyTextPresent("Results for");
@@ -148,9 +148,9 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	/*
 	 * The details map will be created from the name and value attributes of the
 	 * <recoverpassword> tags defined for each user in the config.xml file.
-	 * 
+	 *
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * net.continuumsecurity.web.IRecoverPassword#submitRecover(java.util.Map)
 	 */

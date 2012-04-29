@@ -18,15 +18,15 @@
  ******************************************************************************/
 package net.continuumsecurity.web;
 
+import net.continuumsecurity.Restricted;
+import net.continuumsecurity.behaviour.ICaptcha;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import net.continuumsecurity.behaviour.ICaptcha;
-
-import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
 
 
@@ -71,7 +71,7 @@ public class WebApplication {
 	public List<Method> getRestrictedMethods() {
 		List<Method> methods = new ArrayList<Method>();
 		for (Method method : this.getClass().getMethods()) {
-			if (method.isAnnotationPresent(Roles.class)) {
+			if (method.isAnnotationPresent(Restricted.class)) {
 				methods.add(method);
 			}
 		}
@@ -88,12 +88,12 @@ public class WebApplication {
 	
 	public List<String> getAuthorisedRoles(String methodName) {
 		try {
-			return (List<String>)Arrays.asList(this.getClass().getMethod(methodName, null).getAnnotation(Roles.class).value());
+			return (List<String>)Arrays.asList(this.getClass().getMethod(methodName, null).getAnnotation(Restricted.class).roles());
 		} catch (SecurityException e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			log.error("The method: "+methodName+" is defined with parameters and has been tagged with the @Roles annotation.  Roles can only be defined on no-argument methods.");
+			log.error("The method: "+methodName+" is defined with parameters and has been tagged with the @Restricted annotation.  Restricted can only be defined on no-argument methods.");
 			e.printStackTrace();
 		}
 		return null;

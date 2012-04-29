@@ -24,7 +24,7 @@ public class CaptchaHelper extends CaptchaFinder implements ICaptchaHelper {
 			img = app.getCaptchaImage();
 			solved = solver.solveFromUrl(img.getAttribute("src"));
 		} catch (NoSuchElementException nse) {
-			log.info("No CAPTCHA found");
+			log.debug("No CAPTCHA found, skipping.");
 			return;
 		}
 		if (solved != null) {
