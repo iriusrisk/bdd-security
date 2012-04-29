@@ -45,6 +45,7 @@ Scenario: The session cookie should have the httpOnly flag set
 Meta:
 @id session_cookie_httponly
 
-Given the default user logs in with credentials from: users.table
-And the session cookies
+Given an HTTP logging driver
+And clean HTTP logs
+And the default user logs in with credentials from: users.table
 Then the session cookies should have the httpOnly flag set

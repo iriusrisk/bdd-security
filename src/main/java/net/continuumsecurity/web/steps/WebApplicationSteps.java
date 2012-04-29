@@ -290,8 +290,8 @@ public class WebApplicationSteps {
     public void compareResponses() {
         assertThat(savedMessage.getStatusCode(), equalTo(currentHttp.getStatusCode()));
 
-        String incorrectUsernameResponse = new String(savedMessage.getResponse()).replaceAll(Config.getIncorrectUsername(), "");
-        String correctUsernameResponse = new String(currentHttp.getResponse()).replaceAll(Config.instance().getUsers().getDefaultCredentials().get("username"), "");
+        String incorrectUsernameResponse = savedMessage.getResponseAsString().replaceAll(Config.getIncorrectUsername(), "");
+        String correctUsernameResponse = currentHttp.getResponseAsString().replaceAll(Config.instance().getUsers().getDefaultCredentials().get("username"), "");
         assertThat(incorrectUsernameResponse, equalTo(correctUsernameResponse));
     }
 
@@ -328,18 +328,24 @@ public class WebApplicationSteps {
     @Then("the session cookies should have the httpOnly flag set")
     public void sessionCookiesHttpOnlyFlag() {
         Config.instance();
-        for (String name : Config.getSessionIDs()) {
-            //Welcome to Java's regex matching.  All we want to do is a case insensitive match for httponly in the cookie string
-            Pattern pattern = Pattern.compile(".*httponly.*", Pattern.CASE_INSENSITIVE);
-            assertThat(pattern.matcher(app.getDriver().manage().getCookieNamed(name).toString()).matches(), equalTo(true));
+        int numCookies = Config.getSessionIDs().size();
+        int cookieCount = 0;
+        for (HttpMessage message : burp.getProxyHistory()) {
+            for (String name : Config.getSessionIDs()) {
+                Pattern pattern = Pattern.compile(name+"=.*httponly", Pattern.CASE_INSENSITIVE);
+                if (pattern.matcher(message.getResponseAsString()).find()) {
+                    cookieCount++;
+                }
+            }
         }
+        Assert.assertThat(cookieCount,equalTo(numCookies));
     }
 
     @Then("they should see the word <verifyString> when accessing the restricted resource <method>")
     public void checkAccessToResource(@Named("verifyString") String verifyString, @Named("method") String method) {
         try {
             app.getClass().getMethod(method, null).invoke(app, null);
-            Assert.assertThat(burp.findInResponseHistory(verifyString).size(),greaterThan(0));
+            Assert.assertThat(burp.findInResponseHistory(verifyString).size(), greaterThan(0));
         } catch (UnexpectedContentException e) {
             fail("User with credentials: " + credentials.getUsername() + " " + credentials.getPassword() + " could not access the method: " + method + "()");
         } catch (IllegalArgumentException e) {
@@ -407,7 +413,8 @@ public class WebApplicationSteps {
 
     @Then("the resource name <method> and HTTP requests should be recorded and stored")
     public void recordFlowInAccessControlMap(@Named("method") String method) {
-        if (methodProxyMap.get(method) != null) throw new RuntimeException("The method: "+method+" has already been added to the map, check the restricted method definitions in the WebApplication.");
+        if (methodProxyMap.get(method) != null)
+            throw new RuntimeException("The method: " + method + " has already been added to the map, check the restricted method definitions in the WebApplication.");
         methodProxyMap.put(method, burp.getProxyHistory());
     }
 
@@ -423,19 +430,19 @@ public class WebApplicationSteps {
         getSessionIds();
         for (HttpMessage message : methodProxyMap.get(method)) {
             if (!"".equals(message.getResponseBody())) {
-                log.debug("Original request:\n" + new String(message.getRequest()));
-                log.debug("Original response:\n" + new String(message.getResponse()));
+                log.debug("Original request:\n" + message.getRequestAsString());
+                log.debug("Original response:\n" + message.getResponseAsString());
                 Map<String, String> cookieMap = new HashMap<String, String>();
                 for (Cookie cookie : sessionIds) {
                     cookieMap.put(cookie.getName(), cookie.getValue());
                 }
                 HttpMessage manual = new HttpMessage(message);
                 manual.replaceCookies(cookieMap);
-                log.debug("Replaced request: " + new String(manual.getRequest()));
+                log.debug("Replaced request: " + manual.getRequestAsString());
                 manual = burp.makeRequest(manual);
-                log.debug("Replace response: " + new String(manual.getResponse()));
+                log.debug("Replace response: " + manual.getResponseAsString());
 
-                if (new String(manual.getResponse()).contains(verifyString)) {
+                if (manual.getResponseAsString().contains(verifyString)) {
                     accessible = true;
                     break;
                 }

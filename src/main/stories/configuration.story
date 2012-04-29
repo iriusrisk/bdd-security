@@ -47,16 +47,3 @@ Given the login page
 When the scannable methods of the application are navigated
 Then no exceptions are thrown
 
-Scenario: Verify that authorised users can view restricted resources
-Meta:
-@id config_authorisation
-
-Given a fresh application
-And the login page
-And the username <username> 
-And the password <password>
-When the user logs in
-Then they should be able to access the restricted resource <method>
-
-Examples:
-tables/authorised.resources.table

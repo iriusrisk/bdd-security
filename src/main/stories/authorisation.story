@@ -23,7 +23,6 @@ tables/authorised.resources.table
 
 Scenario: Users must not be able to view resources for which they are not authorised
 Meta:
-@skip
 @Description Resources should only be accessible by the user roles authorised to view them.  Access by unauthorised users could lead to a breach of confidentiality/integrity of the data.
 @Reference WASC-02 http://projects.webappsec.org/w/page/13246940/Insufficient%20Authorization
 @id access_control_restricted
