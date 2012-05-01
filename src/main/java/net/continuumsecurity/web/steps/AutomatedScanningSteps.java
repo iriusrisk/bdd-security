@@ -35,6 +35,7 @@ import java.lang.reflect.Method;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class AutomatedScanningSteps {
 	Logger log = Logger.getLogger(AutomatedScanningSteps.class);
@@ -165,7 +166,8 @@ public class AutomatedScanningSteps {
 
 	@Then("no vulnerabilities should be present")
 	public void checkVulnerabilities() {
-		log.debug("checking for vulnerabilities");
+        assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.",app.getScannableMethods().size(),greaterThan(0));
+        log.debug("checking for vulnerabilities");
 		String detail = "";
 		if (issues.getIssues().size() != 0) {
 			for (ScanIssueBean issue : issues.getIssues()) {

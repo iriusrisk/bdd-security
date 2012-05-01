@@ -114,12 +114,6 @@ public class StoryRunner extends BaseStoryRunner {
 			log.debug(" app doesn't implement ILogin, skipping authentication tests");
 			filters.add("-story Authentication");
 		}
-		if (app.getScannableMethods().size() > 0) {
-			log.debug(" app has scannable methods, Burp scanning enabled.");
-		} else {
-			log.debug(" app doesn't have scannable methods, skipping Burp");
-			filters.add("-story Automated Scanning");
-		}
 		filters.add("-skip");
 		log.debug(" running with filters:");
 		for (String filter : filters) {

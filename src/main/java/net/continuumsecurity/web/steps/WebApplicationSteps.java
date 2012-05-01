@@ -394,6 +394,7 @@ public class WebApplicationSteps {
 
     @Given("a CAPTCHA solver that always fails")
     public void setIncorrectCaptchaHelper() {
+        if (!(app instanceof ICaptcha)) throw new RuntimeException("App does not implement ICaptcha, skipping.");
         app.setCaptchaHelper(new FakeCaptchaHelper((ICaptcha) app));
     }
 
@@ -420,7 +421,7 @@ public class WebApplicationSteps {
 
     @Given("the access control map for authorised users has been populated")
     public void checkIfMapPopulated() {
-        Assert.assertThat(methodProxyMap.size(), greaterThan(0));
+        if (methodProxyMap.size() == 0) throw new RuntimeException("Access control map has not been populated.");
     }
 
     @Then("they should not see the word <verifyString> when accessing the restricted resource <method>")

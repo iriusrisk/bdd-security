@@ -18,15 +18,14 @@
  ******************************************************************************/
 package net.continuumsecurity.runner;
 
-import java.util.List;
-
+import net.continuumsecurity.web.steps.AutomatedScanningSteps;
+import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 
-import net.continuumsecurity.web.steps.AutomatedScanningSteps;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
+import java.util.List;
 
 public class ConfigurationStoryRunner extends BaseStoryRunner {
 	List<String> filters;
@@ -40,7 +39,7 @@ public class ConfigurationStoryRunner extends BaseStoryRunner {
 	@Override
 	public List<String> storyPaths() {
 		configuredEmbedder().useMetaFilters(filters);
-		return new StoryFinder().findPaths(CodeLocations.codeLocationFromURL(storyUrl), "**/configuration.story","");
+		return new StoryFinder().findPaths(CodeLocations.codeLocationFromURL(storyUrl), "**/configuration_story.story","");
 	}
 
 	@Override

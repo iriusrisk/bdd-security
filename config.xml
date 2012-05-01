@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <web-app>
-    <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks, you'll need to modify them for your app! -->
-    
-	<!-- Available drivers can be found in net.continuumsecurity.web.drivers.DriverFactory -->
-	<defaultDriver>BurpHtmlUnit</defaultDriver>
+
+	<defaultDriver>HtmlUnit</defaultDriver>
 	
-	<!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.drivers.Burp*Driver -->
+
 	<burpDriver>BurpHtmlUnit</burpDriver>
 	
 	<!-- Base URL for the application to test -->
 	<baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
 	
 	<!-- The fully qualified class name representing the application under test -->
-	<class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
+	<class>net.continuumsecurity.examples.RopeyApp</class>
 
 	<!-- Names of the session ID cookies -->
 	<sessionIds>
@@ -20,23 +18,12 @@
 	</sessionIds>
 	
 	<users>
-		<user username="bob" password="password">
-				<role>user</role>
-				<recoverpassword name="email" value="bob@continuumsecurity.net"/>
-		</user>
-		<!--<user username="alice" password="password">
-				<role>user</role>
-				<recoverpassword name="email" value="alice@continuumsecurity.net"/>
-		</user>     -->
-		<user username="admin" password="password">
-				<role>admin</role>
-				<role>user</role>
-				<recoverpassword name="email" value="admin@continuumsecurity.net"/>
-		</user>
+        <user username="bob" password="password"/>
 	</users>
 
 	<incorrectPassword>SDFsdfwjx1</incorrectPassword>
 	<incorrectUsername>bobbles</incorrectUsername>
+
     <burp>
 		<host>127.0.0.1</host>
 		<port>8080</port>
