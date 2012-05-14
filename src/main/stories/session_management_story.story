@@ -26,7 +26,7 @@ Then the user is not logged in
 Scenario: Sessions should timeout after a period of inactivity
 Meta:
 @Reference WASC-47 http://projects.webappsec.org/w/page/13246944/Insufficient%20Session%20Expiration
-@id sess_inactive_timeout
+@id session_inactive_timeout
 @skip
 
 When the default user logs in with credentials from: users.table

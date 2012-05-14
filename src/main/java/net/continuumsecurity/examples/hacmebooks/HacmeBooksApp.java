@@ -1,21 +1,19 @@
 package net.continuumsecurity.examples.hacmebooks;
 
-import net.continuumsecurity.behaviour.ILogin;
-import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.Credentials;
-import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.UserPassCredentials;
+import net.continuumsecurity.behaviour.ILogin;
+import net.continuumsecurity.behaviour.ILogout;
+import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.WebApplication;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class HacmeBooksApp extends WebApplication implements ILogin, ILogout {
 
-	public HacmeBooksApp(WebDriver driver) {
-		super(driver);
+	public HacmeBooksApp() {
+		super();
 	}
 
 	@SecurityScan

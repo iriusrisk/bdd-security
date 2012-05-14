@@ -30,11 +30,11 @@ import net.continuumsecurity.burpclient.BurpClient;
 import net.continuumsecurity.restyburp.model.HttpMessage;
 import net.continuumsecurity.restyburp.model.HttpMessageList;
 import net.continuumsecurity.restyburp.model.MessageType;
+import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.FakeCaptchaHelper;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.BurpFactory;
-import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
@@ -60,7 +60,7 @@ import static org.junit.Assert.fail;
 
 public class WebApplicationSteps {
     Logger log = Logger.getLogger(WebApplicationSteps.class);
-    public WebApplication app;
+    public Application app;
     UserPassCredentials credentials;
     HttpMessage currentHttp;
     HttpMessage savedMessage;
@@ -83,7 +83,8 @@ public class WebApplicationSteps {
       */
     @Given("a fresh application")
     public void createApp() {
-        app = Config.createApp(DriverFactory.getDriver(Config.getDefaultDriver()));
+        app = Config.createApp();
+        app.enableDefaultClient();
     }
 
     @BeforeScenario
@@ -238,7 +239,7 @@ public class WebApplicationSteps {
 
     @Given("an HTTP logging driver")
     public void setBurpDriver() {
-        app.setDriver(DriverFactory.getDriver(Config.getBurpDriver()));
+        app.enableHttpLoggingClient();
     }
 
     @Given("clean HTTP logs")
@@ -282,8 +283,8 @@ public class WebApplicationSteps {
 
     @Then("the protocol of the current URL should be HTTPS")
     public void protocolUrlHttps() {
-        log.debug("URL of login page: " + app.getDriver().getCurrentUrl());
-        assertThat(app.getDriver().getCurrentUrl().substring(0, 4), equalToIgnoringCase("https"));
+        log.debug("URL of login page: " + ((WebApplication)app).getDriver().getCurrentUrl());
+        assertThat(((WebApplication)app).getDriver().getCurrentUrl().substring(0, 4), equalToIgnoringCase("https"));
     }
 
     @Then("the response should be the same as the saved response from the invalid username")
@@ -304,7 +305,7 @@ public class WebApplicationSteps {
     public void getSessionIds() {
         Config.instance();
         for (String name : Config.getSessionIDs()) {
-            sessionIds.add(app.getDriver().manage().getCookieNamed(name));
+            sessionIds.add(app.getCookieByName(name));
         }
     }
 
@@ -312,8 +313,13 @@ public class WebApplicationSteps {
     public void compareSessionIds() {
         Config.instance();
         for (String name : Config.getSessionIDs()) {
-            String existingCookieValue = findCookieByName(sessionIds, name).getValue();
-            assertThat(app.getDriver().manage().getCookieNamed(name).getValue(), not(existingCookieValue));
+            Cookie initialSessionCookie = findCookieByName(sessionIds, name);
+            if (initialSessionCookie != null) {
+                String existingCookieValue = findCookieByName(sessionIds, name).getValue();
+                assertThat(app.getCookieByName(name).getValue(), not(initialSessionCookie.getValue()));
+            } else if (app.getCookieByName(name).getValue() == null) {
+                throw new RuntimeException("No session IDs found after login with name: "+name);
+            }
         }
     }
 
@@ -321,7 +327,7 @@ public class WebApplicationSteps {
     public void sessionCookiesSecureFlag() {
         Config.instance();
         for (String name : Config.getSessionIDs()) {
-            assertThat(app.getDriver().manage().getCookieNamed(name).isSecure(), equalTo(true));
+            assertThat(app.getCookieByName(name).isSecure(), equalTo(true));
         }
     }
 
@@ -371,7 +377,7 @@ public class WebApplicationSteps {
 
     @Then("the password field should have the autocomplete directive set to 'off'")
     public void thenThePasswordFieldShouldHaveTheAutocompleteDirectiveSetTodisabled() {
-        WebElement passwd = app.getDriver().findElement(By.xpath("//input[@type='password']"));
+        WebElement passwd = ((WebApplication)app).getDriver().findElement(By.xpath("//input[@type='password']"));
         assertThat(passwd.getAttribute("autocomplete"), equalToIgnoringCase("off"));
     }
 
@@ -395,7 +401,7 @@ public class WebApplicationSteps {
     @Given("a CAPTCHA solver that always fails")
     public void setIncorrectCaptchaHelper() {
         if (!(app instanceof ICaptcha)) throw new RuntimeException("App does not implement ICaptcha, skipping.");
-        app.setCaptchaHelper(new FakeCaptchaHelper((ICaptcha) app));
+        ((ICaptcha)app).setCaptchaHelper(new FakeCaptchaHelper((ICaptcha) app));
     }
 
     @When("the password recovery feature is requested")
@@ -414,8 +420,10 @@ public class WebApplicationSteps {
 
     @Then("the resource name <method> and HTTP requests should be recorded and stored")
     public void recordFlowInAccessControlMap(@Named("method") String method) {
-        if (methodProxyMap.get(method) != null)
-            throw new RuntimeException("The method: " + method + " has already been added to the map, check the restricted method definitions in the WebApplication.");
+        if (methodProxyMap.get(method) != null) {
+            log.info("The method: " + method + " has already been added to the map, using the existing HTTP logs");
+            return;
+        }
         methodProxyMap.put(method, burp.getProxyHistory());
     }
 
@@ -429,6 +437,7 @@ public class WebApplicationSteps {
         Assert.assertThat("No authorised HttpMessages have been stored for " + method, methodProxyMap.get(method), notNullValue());
         boolean accessible = false;
         getSessionIds();
+        Assert.assertThat("No sessionID cookies defined.", sessionIds.size(), greaterThan(0));
         for (HttpMessage message : methodProxyMap.get(method)) {
             if (!"".equals(message.getResponseBody())) {
                 log.debug("Original request:\n" + message.getRequestAsString());
@@ -452,12 +461,14 @@ public class WebApplicationSteps {
         Assert.assertThat("Resource: " + method + " can be accessed.", accessible, equalTo(false));
     }
 
-    public WebApplication getWebApplication() {
+    public Application getWebApplication() {
         return app;
     }
 
     private Cookie findCookieByName(List<Cookie> cookies, String name) {
+        if (cookies.size() == 0) return null;
         for (Cookie cookie : cookies) {
+            if (cookie == null) return null;
             if (cookie.getName().equalsIgnoreCase(name)) return cookie;
         }
         return null;

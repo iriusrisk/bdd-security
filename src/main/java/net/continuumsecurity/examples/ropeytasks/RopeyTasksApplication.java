@@ -19,8 +19,8 @@ import java.util.Map;
 public class RopeyTasksApplication extends WebApplication implements ILogin,
 		ILogout, ICaptcha, IRecoverPassword {
 
-	public RopeyTasksApplication(WebDriver driver) {
-		super(driver);
+	public RopeyTasksApplication() {
+		super();
 	}
 
     @Override
