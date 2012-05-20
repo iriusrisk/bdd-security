@@ -16,7 +16,6 @@ And the password <password>
 When the user logs in
 And the HTTP logs are cleared
 Then they should see the word <verifyString> when accessing the restricted resource <method>
-And the resource name <method> and HTTP requests should be recorded and stored
 
 Examples:
 tables/authorised.resources.table
@@ -30,7 +29,7 @@ Meta:
 Given the access control map for authorised users has been populated
 And a fresh application
 And the login page
-And the username <username> 
+And the username <username>
 And the password <password>
 When the user logs in
 Then they should not see the word <verifyString> when accessing the restricted resource <method>
@@ -44,7 +43,8 @@ Meta:
 @Reference WASC-01 http://projects.webappsec.org/w/page/13246939/Insufficient%20Authentication
 @id anon_access_control
 
-Given a fresh application
+Given the access control map for authorised users has been populated
+And a fresh application
 And the login page
 Then they should not see the word <verifyString> when accessing the restricted resource <method>
 

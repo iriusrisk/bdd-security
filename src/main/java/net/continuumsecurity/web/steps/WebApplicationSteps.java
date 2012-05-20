@@ -19,7 +19,7 @@
 package net.continuumsecurity.web.steps;
 
 import net.continuumsecurity.Config;
-import net.continuumsecurity.UnexpectedContentException;
+import net.continuumsecurity.ConfigurationException;
 import net.continuumsecurity.User;
 import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ICaptcha;
@@ -46,7 +46,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -283,7 +282,7 @@ public class WebApplicationSteps {
 
     @Then("the protocol of the current URL should be HTTPS")
     public void protocolUrlHttps() {
-        log.debug("URL of login page: " + ((WebApplication)app).getDriver().getCurrentUrl());
+        log.debug("URL of login page: " + ((WebApplication) app).getDriver().getCurrentUrl());
         assertThat(((WebApplication)app).getDriver().getCurrentUrl().substring(0, 4), equalToIgnoringCase("https"));
     }
 
@@ -305,7 +304,8 @@ public class WebApplicationSteps {
     public void getSessionIds() {
         Config.instance();
         for (String name : Config.getSessionIDs()) {
-            sessionIds.add(app.getCookieByName(name));
+            Cookie cookie = app.getCookieByName(name);
+            if (cookie != null) sessionIds.add(cookie);
         }
     }
 
@@ -345,33 +345,6 @@ public class WebApplicationSteps {
             }
         }
         Assert.assertThat(cookieCount,equalTo(numCookies));
-    }
-
-    @Then("they should see the word <verifyString> when accessing the restricted resource <method>")
-    public void checkAccessToResource(@Named("verifyString") String verifyString, @Named("method") String method) {
-        try {
-            app.getClass().getMethod(method, null).invoke(app, null);
-            Assert.assertThat(burp.findInResponseHistory(verifyString).size(), greaterThan(0));
-        } catch (UnexpectedContentException e) {
-            fail("User with credentials: " + credentials.getUsername() + " " + credentials.getPassword() + " could not access the method: " + method + "()");
-        } catch (IllegalArgumentException e) {
-
-            e.printStackTrace();
-        } catch (SecurityException e) {
-
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -432,12 +405,34 @@ public class WebApplicationSteps {
         if (methodProxyMap.size() == 0) throw new RuntimeException("Access control map has not been populated.");
     }
 
+    @Then("they should see the word <verifyString> when accessing the restricted resource <method>")
+    public void checkAccessToResource(@Named("verifyString") String verifyString, @Named("method") String method) {
+        try {
+            app.getClass().getMethod(method, null).invoke(app, null);
+            //For web services, calling the method might throw an exception if access is denied.
+        } catch (Exception e) {
+            fail("User with credentials: " + credentials.getUsername() + " " + credentials.getPassword() + " could not access the method: " + method + "()");
+        }
+        if (methodProxyMap.get(method) != null) {
+            log.info("The method: " + method + " has already been added to the map, using the existing HTTP logs");
+            return;
+        }
+        methodProxyMap.put(method, burp.getProxyHistory());
+
+        try {
+            Assert.assertThat(burp.findInResponseHistory(verifyString).size(), greaterThan(0));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+    }
+
     @Then("they should not see the word <verifyString> when accessing the restricted resource <method>")
     public void checkNoAccessToResource(@Named("verifyString") String verifyString, @Named("method") String method) {
-        Assert.assertThat("No authorised HttpMessages have been stored for " + method, methodProxyMap.get(method), notNullValue());
+        if (methodProxyMap == null || methodProxyMap.get(method).size() == 0) throw new ConfigurationException("No HTTP messages were recorded for the method: "+method);
+        Pattern pattern = Pattern.compile(verifyString);
         boolean accessible = false;
         getSessionIds();
-        Assert.assertThat("No sessionID cookies defined.", sessionIds.size(), greaterThan(0));
         for (HttpMessage message : methodProxyMap.get(method)) {
             if (!"".equals(message.getResponseBody())) {
                 log.debug("Original request:\n" + message.getRequestAsString());
@@ -450,11 +445,15 @@ public class WebApplicationSteps {
                 manual.replaceCookies(cookieMap);
                 log.debug("Replaced request: " + manual.getRequestAsString());
                 manual = burp.makeRequest(manual);
-                log.debug("Replace response: " + manual.getResponseAsString());
+                log.debug("Response: " + manual.getResponseAsString());
 
-                if (manual.getResponseAsString().contains(verifyString)) {
+
+                if (pattern.matcher(manual.getResponseAsString()).find()) {
+                    log.debug("Found regex: "+verifyString);
                     accessible = true;
                     break;
+                } else {
+                    log.debug("Did not find regex: "+verifyString);
                 }
             }
         }

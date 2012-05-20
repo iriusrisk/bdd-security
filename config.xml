@@ -42,7 +42,7 @@
         <port>8080</port>
         <WSUrl>http://127.0.0.1:8181/</WSUrl>
 
-        <!-- The proxy between bdd-security and resty-burp -->
+        <!-- The proxy between bdd-security and resty-burp to intercept JSON comms -->
         <WSProxyHost></WSProxyHost>
         <WSProxyPort></WSProxyPort>
     </burp>
