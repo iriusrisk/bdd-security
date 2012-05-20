@@ -2,16 +2,15 @@ package net.continuumsecurity.examples.ropeytasks;
 
 import net.continuumsecurity.Config;
 import net.continuumsecurity.Credentials;
+import net.continuumsecurity.Restricted;
 import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
-import net.continuumsecurity.Restricted;
 import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.WebApplication;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.Map;
@@ -24,6 +23,12 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	}
 
     @Override
+    public void openLoginPage() {
+        driver.get(Config.getBaseUrl() + "user/login");
+        verifyTextPresent("Login");
+    }
+
+    @Override
     public void login(Credentials credentials) {
             UserPassCredentials creds = new UserPassCredentials(credentials);
             driver.findElement(By.id("username")).clear();
@@ -32,8 +37,9 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
             driver.findElement(By.id("password")).sendKeys(creds.getPassword());
             driver.findElement(By.name("_action_login")).click();
     }
+
     /* How to login using a captcha
-        @Override
+     @Override
      public void login(Credentials credentials) {
          // Captcha solving is not 100% accurate, so try a few times if captcha
          // fails
@@ -56,12 +62,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	// Convenience method
 	public void login(String username, String password) {
 		login(new UserPassCredentials(username, password));
-	}
-
-	@Override
-	public void openLoginPage() {
-		driver.get(Config.getBaseUrl() + "user/login");
-		verifyTextPresent("Login");
 	}
 
 	@Override
