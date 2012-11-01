@@ -49,11 +49,6 @@
         </dependency>
         <dependency>
             <groupId>net.continuumsecurity</groupId>
-            <artifactId>burp-client</artifactId>
-            <version>0.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.continuumsecurity</groupId>
             <artifactId>resty-burp</artifactId>
             <version>0.2-SNAPSHOT</version>
         </dependency>
