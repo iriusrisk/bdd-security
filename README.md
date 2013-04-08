@@ -20,6 +20,11 @@ There are likely to be changes to the core and API as it is tested on a wider va
 
 # Install
 
+## Install captchaswerve
+
+It's a CAPTCHA solving library that uses the CaptchaBuster online service.  If you don't need CAPTCHA solving, then the classes that depend on it will have to be removed.
+https://github.com/stephendv/captchaswerve	
+
 ## Install Resty-Burp
 Follow the installation instructions for resty-burp: https://github.com/stephendv/resty-burp#readme
 
