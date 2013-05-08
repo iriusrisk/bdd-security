@@ -3,10 +3,10 @@
     <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks, you'll need to modify them for your app! -->
 
     <!-- Available drivers can be found in net.continuumsecurity.web.drivers.DriverFactory -->
-    <defaultDriver>HtmlUnit</defaultDriver>
+    <defaultDriver>Firefox</defaultDriver>
 
     <!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.drivers.Burp*Driver -->
-    <burpDriver>BurpHtmlUnit</burpDriver>
+    <burpDriver>BurpFirefox</burpDriver>
 
     <!-- Base URL for the application to test -->
     <baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
@@ -24,10 +24,10 @@
             <role>user</role>
             <recoverpassword name="email" value="bob@continuumsecurity.net"/>
         </user>
-        <user username="alice" password="password">
+        <!--<user username="alice" password="password">
                   <role>user</role>
                   <recoverpassword name="email" value="alice@continuumsecurity.net"/>
-          </user>     
+          </user>     -->
         <user username="admin" password="password">
             <role>admin</role>
             <role>user</role>
@@ -42,7 +42,7 @@
         <port>8080</port>
         <WSUrl>http://127.0.0.1:8181/</WSUrl>
 
-        <!-- The proxy between bdd-security and resty-burp to intercept JSON comms -->
+        <!-- The proxy between bdd-security and resty-burp -->
         <WSProxyHost></WSProxyHost>
         <WSProxyPort></WSProxyPort>
     </burp>

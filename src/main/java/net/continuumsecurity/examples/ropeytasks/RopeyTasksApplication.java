@@ -170,7 +170,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 			driver.findElement(By.id("email")).sendKeys(details.get("email"));
 			captchaHelper.solve();
 			driver.findElement(By.xpath("//input[@value='Recover']")).click();
-			captchaPresent = captchaHelper.isPresent();
+			captchaPresent = captchaHelper.isCaptchaPresent();
 			attempts++;
 		}
 	}

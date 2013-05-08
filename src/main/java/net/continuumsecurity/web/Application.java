@@ -21,14 +21,16 @@ package net.continuumsecurity.web;
  * ****************************************************************************
  */
 
-import net.continuumsecurity.Restricted;
-import org.apache.log4j.Logger;
-import org.openqa.selenium.Cookie;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import net.continuumsecurity.Restricted;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
 
 public abstract class Application {
     public static Logger log = Logger.getLogger(Application.class);
@@ -79,5 +81,7 @@ public abstract class Application {
     public abstract void enableHttpLoggingClient();
 
     public abstract void enableDefaultClient();
+    
+    public abstract WebDriver getWebDriver();
 }
 

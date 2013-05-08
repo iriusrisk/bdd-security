@@ -7,7 +7,7 @@ import net.continuumsecurity.behaviour.ICaptcha;
  */
 public class FakeCaptchaHelper extends CaptchaFinder implements ICaptchaHelper {
 
-	public FakeCaptchaHelper(ICaptcha app) {
+	public FakeCaptchaHelper(Application app) {
 		super(app);
 	}
 
@@ -16,7 +16,6 @@ public class FakeCaptchaHelper extends CaptchaFinder implements ICaptchaHelper {
 	 * (non-Javadoc)
 	 * @see net.continuumsecurity.web.ICaptchaHelper#solve()
 	 */
-	@Override
 	public void solve() {
 		
 	}

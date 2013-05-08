@@ -21,7 +21,9 @@ package net.continuumsecurity.web;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.behaviour.ICaptcha;
+import net.continuumsecurity.caption.CBSolveCaptcha;
 import net.continuumsecurity.web.drivers.DriverFactory;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -34,7 +36,7 @@ public class WebApplication extends Application {
 
     public WebApplication() {
         log = Logger.getLogger(WebApplication.class);
-        if (this instanceof ICaptcha) captchaHelper = new CaptchaHelper((ICaptcha)this);
+        if (this instanceof ICaptcha) captchaHelper = new CaptchaHelper(this,new CBSolveCaptcha());
     }
 
     public ICaptchaHelper getCaptchaHelper() {
@@ -45,11 +47,11 @@ public class WebApplication extends Application {
         this.captchaHelper = captchaHelper;
     }
 
-    public WebDriver getDriver() {
+    public WebDriver getWebDriver() {
         return driver;
     }
 
-    public void setDriver(WebDriver driver) {
+    public void setWebDriver(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -64,11 +66,11 @@ public class WebApplication extends Application {
 
     @Override
     public void enableHttpLoggingClient() {
-        setDriver(DriverFactory.getDriver(Config.getBurpDriver()));
+        setWebDriver(DriverFactory.getDriver(Config.getBurpDriver()));
     }
 
     @Override
     public void enableDefaultClient() {
-        setDriver(DriverFactory.getDriver(Config.getDefaultDriver()));
+        setWebDriver(DriverFactory.getDriver(Config.getDefaultDriver()));
     }
 }
