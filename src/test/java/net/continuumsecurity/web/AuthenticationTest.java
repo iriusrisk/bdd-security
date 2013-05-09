@@ -1,4 +1,4 @@
-package java.net.continuumsecurity.web;
+package net.continuumsecurity.web;
 
 import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
