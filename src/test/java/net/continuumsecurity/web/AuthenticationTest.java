@@ -61,7 +61,7 @@ public class AuthenticationTest {
   public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_password_field() {
     for(Object value: this.sqlInjectionsTable) {
       webAppSteps.openLoginPage();
-      System.out.println(this.credentialsTable.toString())
+      System.out.println(this.credentialsTable.toString());
       webAppSteps.defaultUsername(this.credentialsTable);
       webAppSteps.changePasswordTo((String)value);
       webAppSteps.loginWithSetCredentials();
