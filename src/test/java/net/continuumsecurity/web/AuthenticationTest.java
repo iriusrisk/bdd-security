@@ -20,6 +20,11 @@ public class AuthenticationTest {
     this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
     this.sqlInjectionsTable = NgUtils.createListOfValues(workingDirectory+"/src/main/stories/tables/sqlinjection.strings.table");
   }
+  
+  @BeforeTest
+  public void beforeScenario() {
+    webAppSteps.createAppAndCredentials();
+  }
 
   @Test
   public void password_should_be_case_sensitive(){
@@ -61,7 +66,6 @@ public class AuthenticationTest {
   public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_password_field() {
     for(Object value: this.sqlInjectionsTable) {
       webAppSteps.openLoginPage();
-      System.out.println(this.credentialsTable.toString());
       webAppSteps.defaultUsername(this.credentialsTable);
       webAppSteps.changePasswordTo((String)value);
       webAppSteps.loginWithSetCredentials();
