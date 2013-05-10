@@ -5,6 +5,7 @@ import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.jbehave.core.model.ExamplesTable;
 import net.continuumsecurity.web.NgUtils;
 import java.lang.System;
+import java.io.UnsupportedEncodingException;
 
 public class AuthenticationTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
@@ -24,4 +25,13 @@ public class AuthenticationTest {
     webAppSteps.loginFromFreshPage();
     webAppSteps.loginFails();
   }
+  @Test
+  public void the_login_form_itself_should_be_served_over_SSL() throws UnsupportedEncodingException {
+    webAppSteps.setBurpDriver();
+    webAppSteps.resetBurp();
+    webAppSteps.openLoginPage();
+    webAppSteps.findResponseWithLoginform();
+    webAppSteps.protocolHttps();
+  }
+
 }
