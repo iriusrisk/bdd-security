@@ -61,6 +61,7 @@ public class AuthenticationTest {
   public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_password_field() {
     for(Object value: sqlInjectionsTable) {
       webAppSteps.openLoginPage();
+      credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
       webAppSteps.defaultUsername(credentialsTable);
       webAppSteps.changePasswordTo((String)value);
       webAppSteps.loginWithSetCredentials();

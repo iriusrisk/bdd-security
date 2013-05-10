@@ -15,6 +15,7 @@ public class NgUtils {
       br = new BufferedReader(new FileReader(pathToTable));
       String line = br.readLine();
       while (line != null) {
+        line = line.replace("|","");
         ls.add(line);
         line = br.readLine();
       }
