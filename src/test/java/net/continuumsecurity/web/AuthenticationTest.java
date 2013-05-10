@@ -11,7 +11,7 @@ public class AuthenticationTest {
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
-    credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable("../../../../../stories/tables/users.tables"));
+    credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable("../../../../../main/stories/tables/users.tables"));
   }
 
   @Test
