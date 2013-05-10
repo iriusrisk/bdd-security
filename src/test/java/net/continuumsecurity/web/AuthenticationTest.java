@@ -21,5 +21,7 @@ public class AuthenticationTest {
     webAppSteps.loginFromTable(credentialsTable);
     webAppSteps.loginSucceedsVariant2();
     webAppSteps.loginWithWrongCasedPassword();
+    webAppSteps.loginFromFreshPage();
+    webAppSteps.loginFails();
   }
 }
