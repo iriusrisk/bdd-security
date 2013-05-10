@@ -4,6 +4,7 @@ import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.jbehave.core.model.ExamplesTable;
 import net.continuumsecurity.web.NgUtils;
+import java.lang.System;
 
 public class AuthenticationTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
@@ -11,7 +12,8 @@ public class AuthenticationTest {
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
-    credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable("../../../../../main/stories/tables/users.tables"));
+    String workingDirectory = System.getProperty("user.dir"); 
+    credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
   }
 
   @Test
