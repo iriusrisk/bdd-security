@@ -17,13 +17,13 @@ public class AuthenticationTest {
   public void setUp() {
     webAppSteps.createApp();
     String workingDirectory = System.getProperty("user.dir"); 
-    credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
-    sqlInjectionsTable = NgUtils.createListOfValues(workingDirectory+"/src/main/stories/tables/sqlinjection.strings.table");
+    this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
+    this.sqlInjectionsTable = NgUtils.createListOfValues(workingDirectory+"/src/main/stories/tables/sqlinjection.strings.table");
   }
 
   @Test
   public void password_should_be_case_sensitive(){
-    webAppSteps.loginFromTable(credentialsTable);
+    webAppSteps.loginFromTable(this.credentialsTable);
     webAppSteps.loginSucceedsVariant2();
     webAppSteps.loginWithWrongCasedPassword();
     webAppSteps.loginFromFreshPage();
@@ -41,7 +41,7 @@ public class AuthenticationTest {
   public void authentication_credentials_should_be_transmitted_over_SSL() throws UnsupportedEncodingException {
     webAppSteps.setBurpDriver();
     webAppSteps.resetBurp();
-    webAppSteps.loginFromTable(credentialsTable);
+    webAppSteps.loginFromTable(this.credentialsTable);
     webAppSteps.findRequestWithPassword();
     webAppSteps.protocolHttps();
   }
@@ -49,7 +49,7 @@ public class AuthenticationTest {
   public void when_authentication_credentials_are_sent_to_the_server_it_should_respond_with_a_3xx_status_code() {
     webAppSteps.setBurpDriver();
     webAppSteps.resetBurp();
-    webAppSteps.loginFromTable(credentialsTable);
+    webAppSteps.loginFromTable(this.credentialsTable);
     webAppSteps.statusCode3xx();
   }
   @Test
@@ -59,10 +59,9 @@ public class AuthenticationTest {
   }
   @Test
   public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_password_field() {
-    for(Object value: sqlInjectionsTable) {
+    for(Object value: this.sqlInjectionsTable) {
       webAppSteps.openLoginPage();
-      credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
-      webAppSteps.defaultUsername(credentialsTable);
+      webAppSteps.defaultUsername(this.credentialsTable);
       webAppSteps.changePasswordTo((String)value);
       webAppSteps.loginWithSetCredentials();
       webAppSteps.loginFails();
