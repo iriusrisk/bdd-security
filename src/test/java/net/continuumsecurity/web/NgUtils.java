@@ -7,9 +7,9 @@ import java.lang.StringBuilder;
 public class NgUtils {
   
   public static String createStringFromJBehaveTable(String pathToTable){
-    BufferedReader br = new BufferedReader(new FileReader(pathToTable));
     String jbehaveTable;
     try {
+      BufferedReader br = new BufferedReader(new FileReader(pathToTable));
       StringBuilder sb = new StringBuilder();
       String line = br.readLine();
       while (line != null) {
@@ -20,8 +20,13 @@ public class NgUtils {
       jbehaveTable = sb.toString();
     }catch (Exception e){
       jbehaveTable = "";
+      e.printStackTrace();
     } finally {
-        br.close();
+        try{
+          br.close();
+        }catch(Exception e){
+          e.printStackTrace();
+        }
     }
     return jbehaveTable;
   }
