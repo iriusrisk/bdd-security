@@ -33,5 +33,13 @@ public class AuthenticationTest {
     webAppSteps.findResponseWithLoginform();
     webAppSteps.protocolHttps();
   }
+  @Test
+  public void authentication_credentials_should_be_transmitted_over_SSL() {
+    webAppSteps.setBurpDriver();
+    webAppSteps.resetBurp();
+    webAppSteps.loginFromTable(credentialsTable);
+    webAppSteps.findRequestWithPassword();
+    webAppSteps.protocolHttps();
+  }
 
 }
