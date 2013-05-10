@@ -1,12 +1,12 @@
 package net.continuumsecurity.web;
 
-import java.io.File;
-import java.io.BufferReader;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.lang.StringBuilder;
 
 public class NgUtils {
   
-  public static String createStringFromJBehaveTable(File pathToTable){
+  public static String createStringFromJBehaveTable(String pathToTable){
     BufferedReader br = new BufferedReader(new FileReader(pathToTable));
     String jbehaveTable;
     try {
