@@ -18,8 +18,7 @@ public class AuthenticationTest {
     webAppSteps.createApp();
     String workingDirectory = System.getProperty("user.dir"); 
     credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
-    sqlInjectionsTable = NgUtils.createListOfValues(workingDirectory+"/src/main/stories/tables/sqlinjection.strings.table"));
-
+    sqlInjectionsTable = NgUtils.createListOfValues(workingDirectory+"/src/main/stories/tables/sqlinjection.strings.table");
   }
 
   @Test
