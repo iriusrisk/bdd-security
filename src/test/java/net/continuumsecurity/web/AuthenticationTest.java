@@ -72,4 +72,31 @@ public class AuthenticationTest {
       webAppSteps.loginFails();
     }
   }
+  @Test
+  public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_username_field() {
+    for(Object value: this.sqlInjectionsTable) {
+      webAppSteps.openLoginPage();
+      webAppSteps.defaultUsername(this.credentialsTable);
+      webAppSteps.appendValueToUsername((String)value);
+      webAppSteps.loginWithSetCredentials();
+      webAppSteps.loginFails();
+    }
+  }
+  @Test
+  public void The_user_account_should_be_locked_out_after_4_incorrect_authentication_attempts() {
+   webAppSteps.defaultUsername(this.credentialsTable);
+   webAppSteps.incorrectPassword();
+   webAppSteps.whenTheUserLogsInFromAFreshLoginPageXTimes(4);
+   webAppSteps.defaultPassword(this.credentialsTable);
+   webAppSteps.loginFromFreshPage();
+   webAppSteps.loginFails();
+  }
+  @Test
+  public void Captcha_should_be_displayed_after_4_incorrect_authentication_attempts() {
+    webAppSteps.defaultUsername(this.credentialsTable);
+    webAppSteps.incorrectPassword();
+    webAppSteps.whenTheUserLogsInFromAFreshLoginPageXTimes(4);
+    webAppSteps.openLoginPage();
+    webAppSteps.checkCaptchaRequestPresent();
+  }
 }
