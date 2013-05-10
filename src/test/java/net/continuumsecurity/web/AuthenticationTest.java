@@ -17,9 +17,7 @@ public class AuthenticationTest {
   public void setUp() {
     webAppSteps.createApp();
     String workingDirectory = System.getProperty("user.dir");
-    String str = NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table");
-    this.credentialsTable = new ExamplesTable(str);
-    System.out.println(credentialsTable.toString());
+    this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
     this.sqlInjectionsTable = NgUtils.createListOfValues(workingDirectory+"/src/main/stories/tables/sqlinjection.strings.table");
   }
 
@@ -63,6 +61,7 @@ public class AuthenticationTest {
   public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_password_field() {
     for(Object value: this.sqlInjectionsTable) {
       webAppSteps.openLoginPage();
+      System.out.println(this.credentialsTable.toString())
       webAppSteps.defaultUsername(this.credentialsTable);
       webAppSteps.changePasswordTo((String)value);
       webAppSteps.loginWithSetCredentials();
