@@ -34,7 +34,7 @@ public class AuthenticationTest {
     webAppSteps.protocolHttps();
   }
   @Test
-  public void authentication_credentials_should_be_transmitted_over_SSL() {
+  public void authentication_credentials_should_be_transmitted_over_SSL() throws UnsupportedEncodingException {
     webAppSteps.setBurpDriver();
     webAppSteps.resetBurp();
     webAppSteps.loginFromTable(credentialsTable);
