@@ -2,15 +2,20 @@ package net.continuumsecurity.web;
 
 import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+import org.jbehave.core.model.ExamplesTable;
+import net.continuumsecurity.web.NgUtils;
+
 public class AuthenticationTest {
-  public WebApplicationSteps webAppSteps = new WebApplicationSteps();
+  protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
+  ExamplesTable credentialsTable;
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
+    credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable("../../../../../stories/tables/users.tables");
   }
 
   @Test
   public void password_should_be_case_sensitive(){
-  
+        webAppSteps.loginFromTable(credentialsTable);
   }
 }
