@@ -16,8 +16,10 @@ public class AuthenticationTest {
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
-    String workingDirectory = System.getProperty("user.dir"); 
-    this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table"));
+    String workingDirectory = System.getProperty("user.dir");
+    String str = NgUtils.createStringFromJBehaveTable(workingDirectory+"/src/main/stories/users.table");
+    System.out.println(str);
+    this.credentialsTable = new ExamplesTable(str);
     this.sqlInjectionsTable = NgUtils.createListOfValues(workingDirectory+"/src/main/stories/tables/sqlinjection.strings.table");
   }
 
