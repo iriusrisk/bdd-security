@@ -41,7 +41,7 @@ public class AuthorisationTest {
   }
 
   @Test
-  public void users_must_not_be_able_to_view_resources_for_which_they_are_not_authorised{
+  public void users_must_not_be_able_to_view_resources_for_which_they_are_not_authorised(){
     for(HashMap item: NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/unauthorised.resources.table")){
       webAppSteps.createApp();
       webAppSteps.openLoginPage();
@@ -53,7 +53,7 @@ public class AuthorisationTest {
   }
 
   @Test
-  public void un-authenticated_users_should_not_be_able_to_view_restricted_resources{
+  public void un-authenticated_users_should_not_be_able_to_view_restricted_resources(){
     for(HashMap item: this.exampleTable){
       webAppSteps.checkIfMapPopulated();
       webAppSteps.createApp();
