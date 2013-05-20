@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.lang.StringBuilder;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NgUtils {
  
@@ -31,8 +32,41 @@ public class NgUtils {
       }
     }
     return ls;
-
   }
+  
+  public static List<HashMap> createListOfMaps(String pathToTable) {
+    BufferedReader br = null;
+    List<HashMap> listMap = new ArrayList<HashMap>();
+    try {
+      br = new BufferedReader(new FileReader(pathToTable));
+      String line = br.readLine();
+      String[] firstLine = line.split("|");
+      line = br.readLine();
+      while (line != null) {
+        String[] lineList = line.split("|");
+        map = new HashMap();
+        int i = 0;
+        for(Object  item: lineList){
+          map.put(firstLine.get(i),lineList);
+          i = i + 1;
+        }
+        listMap.add(map);
+        line = br.readLine();
+      }
+    }catch (Exception e){
+      e.printStackTrace();
+    } finally {
+      try{
+        if (br != null){
+          br.close();
+        }
+      }catch(Exception e){
+        e.printStackTrace();
+      }
+    }
+    return listMap;
+  }
+
   public static String createStringFromJBehaveTable(String pathToTable){
     String jbehaveTable;
     BufferedReader br = null;
