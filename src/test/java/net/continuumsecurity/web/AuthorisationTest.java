@@ -53,7 +53,7 @@ public class AuthorisationTest {
   }
 
   @Test
-  public void un-authenticated_users_should_not_be_able_to_view_restricted_resources(){
+  public void un_authenticated_users_should_not_be_able_to_view_restricted_resources(){
     for(HashMap item: this.exampleTable){
       webAppSteps.checkIfMapPopulated();
       webAppSteps.createApp();
