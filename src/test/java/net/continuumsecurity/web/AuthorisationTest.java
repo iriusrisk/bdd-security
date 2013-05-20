@@ -42,7 +42,7 @@ public class AuthorisationTest {
 
   @Test
   public void users_must_not_be_able_to_view_resources_for_which_they_are_not_authorised{
-    for(HashMap item: workingDirectory+"/src/main/stories/tables/unauthorised.resources.table"){
+    for(HashMap item: NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/unauthorised.resources.table")){
       webAppSteps.createApp();
       webAppSteps.openLoginPage();
       webAppSteps.setUsernameFromExamples((String)item.get("username"));
