@@ -40,14 +40,14 @@ public class NgUtils {
     try {
       br = new BufferedReader(new FileReader(pathToTable));
       String line = br.readLine();
-      String[] firstLine = line.split("|");
+      String[] firstLine = line.split("\\|");
       line = br.readLine();
       while (line != null) {
-        String[] lineList = line.split("|");
+        String[] lineList = line.split("\\|");
         HashMap map = new HashMap();
         int i = 0;
-        for(Object  item: lineList){
-          map.put(firstLine[i],lineList);
+        for(String item: lineList){
+          map.put(firstLine[i],item);
           i = i + 1;
         }
         listMap.add(map);
