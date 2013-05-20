@@ -59,12 +59,12 @@ public class AuthenticationTest {
     webAppSteps.statusCode3xx();
   }
   @Test
-  public void The_AUTOCOMPLETE_attribute_should_be_disabled_on_the_password_field() {
+  public void the_AUTOCOMPLETE_attribute_should_be_disabled_on_the_password_field() {
     webAppSteps.openLoginPage();
     webAppSteps.thenThePasswordFieldShouldHaveTheAutocompleteDirectiveSetTodisabled();
   }
   @Test
-  public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_password_field() {
+  public void login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_password_field() {
     for(Object value: this.sqlInjectionsTable) {
       webAppSteps.openLoginPage();
       webAppSteps.defaultUsername(this.credentialsTable);
@@ -74,7 +74,7 @@ public class AuthenticationTest {
     }
   }
   @Test
-  public void Login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_username_field() {
+  public void login_should_be_secure_against_SQL_injection_bypass_attacks_in_the_username_field() {
     for(Object value: this.sqlInjectionsTable) {
       webAppSteps.openLoginPage();
       webAppSteps.defaultUsername(this.credentialsTable);
@@ -84,7 +84,7 @@ public class AuthenticationTest {
     }
   }
   @Test
-  public void The_user_account_should_be_locked_out_after_4_incorrect_authentication_attempts() {
+  public void the_user_account_should_be_locked_out_after_4_incorrect_authentication_attempts() {
    webAppSteps.defaultUsername(this.credentialsTable);
    webAppSteps.incorrectPassword();
    webAppSteps.whenTheUserLogsInFromAFreshLoginPageXTimes(4);
@@ -93,7 +93,7 @@ public class AuthenticationTest {
    webAppSteps.loginFails();
   }
   @Test
-  public void Captcha_should_be_displayed_after_4_incorrect_authentication_attempts() {
+  public void captcha_should_be_displayed_after_4_incorrect_authentication_attempts() {
     webAppSteps.defaultUsername(this.credentialsTable);
     webAppSteps.incorrectPassword();
     webAppSteps.whenTheUserLogsInFromAFreshLoginPageXTimes(4);
