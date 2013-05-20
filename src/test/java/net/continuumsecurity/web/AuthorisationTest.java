@@ -12,7 +12,8 @@ import java.util.HashMap;
 
 public class AuthorisationTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
-  protected List<HashMap> exampleTable;
+  protected List<HashMap> authorisedTable;
+  protected List<HashMap> unauthorisedTable;
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
@@ -29,7 +30,7 @@ public class AuthorisationTest {
 
   @Test
   public void authorised_users_can_view_restricted_resources(){
-    for(HashMap item: this.exampleTable){
+    for(HashMap item: this.authorisedTable){
       webAppSteps.createApp();
       webAppSteps.setBurpDriver();
       webAppSteps.resetBurp();
@@ -56,7 +57,7 @@ public class AuthorisationTest {
 
   @Test
   public void un_authenticated_users_should_not_be_able_to_view_restricted_resources(){
-    for(HashMap item: this.exampleTable){
+    for(HashMap item: this.authorisedTable){
       webAppSteps.checkIfMapPopulated();
       webAppSteps.createApp();
       webAppSteps.openLoginPage();
