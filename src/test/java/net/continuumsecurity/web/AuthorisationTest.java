@@ -17,7 +17,7 @@ public class AuthorisationTest {
   public void setUp() {
     webAppSteps.createApp();
     String workingDirectory = System.getProperty("user.dir");
-    this.exampleTable = NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/authorised.resources.table");
+    this.exampleTable = NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/authorised.resources.table");
   }
   
   @BeforeTest
@@ -33,7 +33,7 @@ public class AuthorisationTest {
       webAppSteps.resetBurp();
       webAppSteps.openLoginPage();
       webAppSteps.setUsernameFromExamples((String)item.get("username"));
-      webAppSteps.setPassword((String)item.get("password"));
+      webAppSteps.setCredentialsFromExamples((String)item.get("password"));
       webAppSteps.loginWithSetCredentials();
       webAppSteps.resetBurp();
       webAppSteps.checkAccessToResource((String)item.get("verifyString"),(String)item.get("method"));
