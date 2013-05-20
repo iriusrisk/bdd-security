@@ -44,10 +44,10 @@ public class NgUtils {
       line = br.readLine();
       while (line != null) {
         String[] lineList = line.split("|");
-        map = new HashMap();
+        HashMap map = new HashMap();
         int i = 0;
         for(Object  item: lineList){
-          map.put(firstLine.get(i),lineList);
+          map.put(firstLine[i],lineList);
           i = i + 1;
         }
         listMap.add(map);
