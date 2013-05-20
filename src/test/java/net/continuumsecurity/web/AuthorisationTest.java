@@ -17,7 +17,9 @@ public class AuthorisationTest {
   public void setUp() {
     webAppSteps.createApp();
     String workingDirectory = System.getProperty("user.dir");
-    this.exampleTable = NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/authorised.resources.table");
+    this.authorisedTable = NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/authorised.resources.table");
+    this.unauthorisedTable = NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/unauthorised.resources.table");
+
   }
   
   @BeforeTest
@@ -42,7 +44,7 @@ public class AuthorisationTest {
 
   @Test
   public void users_must_not_be_able_to_view_resources_for_which_they_are_not_authorised(){
-    for(HashMap item: NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/unauthorised.resources.table")){
+    for(HashMap item: this.unauthorisedTable){
       webAppSteps.createApp();
       webAppSteps.openLoginPage();
       webAppSteps.setUsernameFromExamples((String)item.get("username"));
