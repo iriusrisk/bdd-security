@@ -13,6 +13,7 @@ public class AuthenticationTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
   ExamplesTable credentialsTable;
   List<String> sqlInjectionsTable;
+  
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
