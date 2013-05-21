@@ -8,7 +8,7 @@ import java.lang.System;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public class AuthenticationTest {
+public class SessionManagementTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
   ExamplesTable credentialsTable;
   
