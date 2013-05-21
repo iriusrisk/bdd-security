@@ -27,4 +27,52 @@ public class AutomatedScanningTest {
     this.automatedScanningSteps.runScanner("scan_passive");
     this.automatedScanningSteps.checkVulnerabilities();
   }
+
+  @Test
+  public void there_should_be_no_SQL_injection_vulnerabilities_present(){
+    this.automatedScanningSteps.setupSQLinjectionPolicy();
+    this.automatedScanningSteps.enableAllInjectionPoints();
+    this.automatedScanningSteps.runScanner("scan_sql");
+    this.automatedScanningSteps.checkVulnerabilities();
+  }
+
+  @Test
+  public void there_should_be_no_cross_site_scripting_vulnerabilities_present(){
+    this.automatedScanningSteps.setupXSSPolicy();
+    this.automatedScanningSteps.enableAllInjectionPoints();
+    this.automatedScanningSteps.runScanner("scan_xss");
+    this.automatedScanningSteps.checkVulnerabilities();
+  }
+
+  @Test
+  public void there_should_be_no_command_injection_vulnerabilities_present(){
+    this.automatedScanningSteps.setupCommandInjectionPolicy();
+    this.automatedScanningSteps.enableAllInjectionPoints();
+    this.automatedScanningSteps.runScanner("scan_cmd");
+    this.automatedScanningSteps.checkVulnerabilities();
+  }
+
+  @Test
+  public void there_should_be_no_LDAP_Injection_vulnerabilities_present(){
+    this.automatedScanningSteps.setupLDAPinjectionPolicy();
+    this.automatedScanningSteps.enableAllInjectionPoints();
+    this.automatedScanningSteps.runScanner("scan_ldap");
+    this.automatedScanningSteps.checkVulnerabilities();
+  }
+  
+  @Test
+  public void there_should_be_no_XML-SOAP_Injection_vulnerabilities_present(){
+   this.automatedScanningSteps.setupXMLinjectionPolicy();
+   this.automatedScanningSteps.enableAllInjectionPoints();
+   this.automatedScanningSteps.runScanner("scan_xml");
+   this.automatedScanningSteps.checkVulnerabilities();
+  }
+
+  @Test
+  public void there_should_be_no_Miscellaneous_header_and_server_vulnerabilities_present(){
+    this.automatedScanningSteps.setupMiscPolicy();
+    this.automatedScanningSteps.enableAllInjectionPoints();
+    this.automatedScanningSteps.runScanner("scan_misc");
+    this.automatedScanningSteps.checkVulnerabilities();
+  }
 }
