@@ -2,6 +2,7 @@ package net.continuumsecurity.web;
 
 import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+import net.continuumsecurity.web.steps.AutomatedScanningSteps;
 import net.continuumsecurity.web.NgUtils;
 import java.lang.System;
 import java.util.List;
