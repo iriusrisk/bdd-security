@@ -2,12 +2,9 @@ package net.continuumsecurity.web;
 
 import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
-import org.jbehave.core.model.ExamplesTable;
 import net.continuumsecurity.web.NgUtils;
 import java.lang.System;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AuthorisationTest {

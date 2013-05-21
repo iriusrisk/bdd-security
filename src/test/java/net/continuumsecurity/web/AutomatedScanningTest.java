@@ -2,11 +2,6 @@ package net.continuumsecurity.web;
 
 import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.AutomatedScanningSteps;
-import net.continuumsecurity.web.NgUtils;
-import java.lang.System;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AutomatedScanningTest {
   protected AutomatedScanningSteps automatedScanningSteps = new AutomatedScanningSteps();

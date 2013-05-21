@@ -7,7 +7,6 @@ import net.continuumsecurity.web.NgUtils;
 import java.lang.System;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.ArrayList;
 
 public class AuthenticationTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
