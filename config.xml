@@ -5,8 +5,8 @@
     <!-- Available drivers can be found in net.continuumsecurity.web.drivers.DriverFactory -->
     <defaultDriver>Firefox</defaultDriver>
 
-    <!-- The driver that the automated tests will use to point at Burp, available drivers can be found in net.continuumsecurity.web.drivers.Burp*Driver -->
-    <burpDriver>BurpFirefox</burpDriver>
+    <!-- The driver that the automated tests will use to point at ZAP, available drivers can be found in net.continuumsecurity.web.drivers.*Driver -->
+    <proxyDriver>ProxyFirefox</proxyDriver>
 
     <!-- Base URL for the application to test -->
     <baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
@@ -37,15 +37,10 @@
 
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>
     <incorrectUsername>bobbles</incorrectUsername>
-    <burp>
+    <proxy>
         <host>127.0.0.1</host>
-        <port>8080</port>
-        <WSUrl>http://127.0.0.1:8181/</WSUrl>
-
-        <!-- The proxy between bdd-security and resty-burp -->
-        <WSProxyHost></WSProxyHost>
-        <WSProxyPort></WSProxyPort>
-    </burp>
+        <port>8888</port>
+    </proxy>
     <displayStackTrace>false</displayStackTrace>
     <storyDir>src/main/stories/</storyDir>
     <reportsDir>reports</reportsDir>

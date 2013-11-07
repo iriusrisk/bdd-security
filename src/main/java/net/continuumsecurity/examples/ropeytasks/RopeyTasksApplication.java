@@ -4,19 +4,17 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.Credentials;
 import net.continuumsecurity.Restricted;
 import net.continuumsecurity.UserPassCredentials;
-import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.WebApplication;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.util.Map;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
-		ILogout, ICaptcha, IRecoverPassword {
+		ILogout, IRecoverPassword {
 
 	public RopeyTasksApplication() {
 		super();
@@ -87,7 +85,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		openLoginPage();
 		login(Config.instance().getUsers().getDefaultCredentials("user"));
 		verifyTextPresent("Welcome");
-		viewProfile();
+		//viewProfile();
 		search("test");
 	}
 
@@ -95,12 +93,12 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		openLoginPage();
 		login(Config.instance().getUsers().getDefaultCredentials("admin"));
 		verifyTextPresent("Welcome");
-		viewUserList();
+		//viewUserList();
 	}
 
 	/*
 	 * The method must throw UnexpectedContentException if it doesn't complete successfully.
-	 */
+
 	@Restricted(roles = { "user" },
                 verifyWithText = "Edit User")
 	public void viewProfile() {
@@ -118,6 +116,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	public void viewUserDetails() {
 		driver.get(Config.getBaseUrl() + "admin/show/2");
 	}
+	*/
 
 	/*
 	 * @Restricted annotation can only be used on no-argument methods.
@@ -140,18 +139,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		driver.findElement(By.linkText("Logout")).click();
 	}
 
-	@Override
-	public WebElement getCaptchaImage() {
-		// CAPTCHA is only present on the login page, so we assume we're on the
-		// login page
-		return driver.findElement(By.xpath("//div[@id='recaptcha_image']/img"));
-	}
-
-	@Override
-	public WebElement getCaptchaResponseField() {
-		return driver.findElement(By.id("recaptcha_response_field"));
-	}
-
 	/*
 	 * The details map will be created from the name and value attributes of the
 	 * <recoverpassword> tags defined for each user in the config.xml file.
@@ -164,15 +151,8 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	@Override
 	public void submitRecover(Map<String, String> details) {
 		driver.get(Config.getBaseUrl() + "user/recover");
-		int attempts = 0;
-		boolean captchaPresent = true;
-		while (captchaPresent && attempts < 4) {
-			driver.findElement(By.id("email")).sendKeys(details.get("email"));
-			captchaHelper.solve();
-			driver.findElement(By.xpath("//input[@value='Recover']")).click();
-			captchaPresent = captchaHelper.isCaptchaPresent();
-			attempts++;
-		}
+        driver.findElement(By.id("email")).sendKeys(details.get("email"));
+        driver.findElement(By.xpath("//input[@value='Recover']")).click();
 	}
 
 }

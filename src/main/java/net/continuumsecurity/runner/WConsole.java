@@ -22,7 +22,7 @@ package net.continuumsecurity.runner;
 import groovy.ui.Console;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.web.Application;
-import net.continuumsecurity.web.drivers.BurpFactory;
+import net.continuumsecurity.web.drivers.ProxyFactory;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -41,8 +41,9 @@ public class WConsole {
         console.setVariable("app",app);
         //TODO fixme
         //console.setVariable("driver",app.getDriver());
-        console.setVariable("burpDriver",DriverFactory.getDriver(Config.getBurpDriver()));
-        console.setVariable("burp",BurpFactory.getBurp());
+        console.setVariable("burpDriver",DriverFactory.getDriver(Config.getProxyDriver()));
+        console.setVariable("proxy", ProxyFactory.getLoggingProxy());
+        console.setVariable("scanner", ProxyFactory.getScanningProxy());
         console.run();
     }
 

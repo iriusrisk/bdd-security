@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="net.continuumsecurity"
+		module="bdd-security"
+		revision="0.2-SNAPSHOT"
+		status="integration">
+		<description homepage="http://maven.apache.org" />
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:properties__jbehave.core.version>3.8</m:properties__jbehave.core.version>
+		<m:maven.plugins>org.apache.maven.plugins__maven-compiler-plugin__3.1|org.codehaus.mojo__exec-maven-plugin__1.2.1|org.codehaus.mojo__build-helper-maven-plugin__1.7|org.apache.maven.plugins__maven-dependency-plugin__null</m:maven.plugins>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="private" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+		<artifact name="bdd-security" type="jar" ext="jar" conf="master"/>
+	</publications>
+	<dependencies>
+		<dependency org="org.jbehave" name="jbehave-core" rev="3.8" />
+		<dependency org="junit" name="junit" rev="4.4" />
+		<dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.32.0" />
+		<dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.32.0" />
+		<dependency org="log4j" name="log4j" rev="1.2.16" />
+		<dependency org="args4j" name="args4j" rev="2.0.16" />
+		<dependency org="org.codehaus.groovy" name="groovy-all" rev="1.8.5" />
+		<dependency org="commons-configuration" name="commons-configuration" rev="1.8" />
+		<dependency org="uk.com.robust-it" name="cloning" rev="1.9.0" />
+		<dependency org="jline" name="jline" rev="2.6" />
+		<dependency org="javax.xml.bind" name="jaxb-api" rev="2.2.6" />
+		<dependency org="com.sun.xml.bind" name="jaxb-impl" rev="2.2.5" />
+		<dependency org="com.googlecode.java-diff-utils" name="diffutils" rev="1.2.1" />
+		<dependency org="org.apache.httpcomponents" name="httpcore" rev="4.2.3" />
+		<dependency org="org.testng" name="testng" rev="6.1.1" force="true" />
+		<dependency org="org.mortbay.jetty" name="jetty" rev="6.1.26" force="true" />
+		<dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.12" />
+	</dependencies>
+</ivy-module>

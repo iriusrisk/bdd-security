@@ -1,10 +1,11 @@
 package net.continuumsecurity.web;
 
-import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.jbehave.core.model.ExamplesTable;
-import net.continuumsecurity.web.NgUtils;
-import java.lang.System;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -34,26 +35,27 @@ public class AuthenticationTest {
     webAppSteps.loginFromFreshPage();
     webAppSteps.loginFails();
   }
+
   @Test
   public void the_login_form_itself_should_be_served_over_SSL() throws UnsupportedEncodingException {
-    webAppSteps.setBurpDriver();
-    webAppSteps.resetBurp();
+    webAppSteps.enableLoggingDriver();
+    webAppSteps.resetProxy();
     webAppSteps.openLoginPage();
     webAppSteps.findResponseWithLoginform();
     webAppSteps.protocolHttps();
   }
   @Test
   public void authentication_credentials_should_be_transmitted_over_SSL() throws UnsupportedEncodingException {
-    webAppSteps.setBurpDriver();
-    webAppSteps.resetBurp();
+    webAppSteps.enableLoggingDriver();
+    webAppSteps.resetProxy();
     webAppSteps.loginFromTable(this.credentialsTable);
     webAppSteps.findRequestWithPassword();
     webAppSteps.protocolHttps();
   }
   @Test
   public void when_authentication_credentials_are_sent_to_the_server_it_should_respond_with_a_3xx_status_code() {
-    webAppSteps.setBurpDriver();
-    webAppSteps.resetBurp();
+    webAppSteps.enableLoggingDriver();
+    webAppSteps.resetProxy();
     webAppSteps.loginFromTable(this.credentialsTable);
     webAppSteps.statusCode3xx();
   }

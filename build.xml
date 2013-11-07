@@ -1,0 +1,67 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="all">
+    <path id="antlib.classpath">
+        <fileset dir="lib/" includes="ivy-2.3.0.jar"/>
+    </path>
+
+    <property name="src.dir" location="src/main/java" />
+    <property name="build.dir" location="target/classes" />
+    <property name="dist.dir" location="target" />
+    <property name="story.dir" location="src/main/stories" />
+    <property name="lib.dir" location="lib" />
+    <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
+    <property name="reports.resources" location="src/main/resources"/>
+
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+
+    <!-- Deletes the existing build, docs and dist directory-->
+    <target name="clean">
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+
+    <target name="makedir">
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${dist.dir}" />
+    </target>
+
+    <!-- Compiles the java code (including the usage of library for JUnit -->
+    <target name="compile" depends="clean, makedir">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" includeAntRuntime="false">
+        </javac>
+    </target>
+
+    <target name="test-security" depends="compile">
+        <java classname="net.continuumsecurity.runner.StoryRunner"
+              fork="true"
+              failonerror="true"
+              maxmemory="128m"
+              >
+            <!-- <arg line="${args}"/> -->
+            <classpath>
+                <path refid="build.classpath"/>
+                <fileset dir="${story.dir}">
+                    <include name="**/*.story" />
+                </fileset>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </java>
+
+    </target>
+
+    <target name="resolve" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve />
+    </target>
+
+    <target name="all" depends="compile">
+    </target>
+
+    <target name="clean-cache" description="--> clean the ivy cache">
+        <ivy:cleancache />
+    </target>
+
+</project>

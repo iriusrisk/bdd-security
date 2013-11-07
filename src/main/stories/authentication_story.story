@@ -31,7 +31,6 @@ Meta:
 @Reference WASC-04 http://projects.webappsec.org/w/page/13246945/Insufficient%20Transport%20Layer%20Protection
 @id auth_https
 
-
 Given an HTTP logging driver
 And clean HTTP logs
 And the default user logs in with credentials from: users.table

@@ -43,8 +43,6 @@ public class Config {
             app = appClass.newInstance();
 
             return (Application) app;
-
-
         } catch (Exception e) {
             System.err.println("FATAL error instantiating the class: "
                     + Config.getClassName());
@@ -108,27 +106,33 @@ public class Config {
     protected XMLConfiguration xml;
 
     public static String getClassName() {
-        return getXml().getString("class");
+        return validateAndGetString("class");
     }
 
     public static String getBaseUrl() {
-        return getXml().getString("baseUrl");
+        return validateAndGetString("baseUrl");
     }
 
     public static String getSecureBaseUrl() {
-        return getXml().getString("secureBaseUrl");
+        return validateAndGetString("secureBaseUrl");
     }
 
     public static String getDefaultDriver() {
-        return getXml().getString("defaultDriver");
+        return validateAndGetString("defaultDriver");
     }
 
-    public static String getBurpDriver() {
-        return getXml().getString("burpDriver");
+    public static String getProxyDriver() {
+        return validateAndGetString("proxyDriver");
     }
 
-    public static String getBurpHost() {
-        return getXml().getString("burp.host");
+    private static String validateAndGetString(String value) {
+        String ret = getXml().getString(value);
+        if (ret == null) throw new RuntimeException(value+" not defined in config.xml");
+        return ret;
+    }
+
+    public static String getProxyHost() {
+        return validateAndGetString("proxy.host");
     }
 
     public static boolean displayStackTrace() {
@@ -136,27 +140,23 @@ public class Config {
     }
 
     public static String getIncorrectUsername() {
-        return getXml().getString("incorrectUsername");
+        return validateAndGetString("incorrectUsername");
     }
 
     public static String getIncorrectPassword() {
-        return getXml().getString("incorrectPassword");
+        return validateAndGetString("incorrectPassword");
     }
 
-    public static int getBurpPort() {
-        return getXml().getInt("burp.port");
-    }
-
-    public static String getBurpWSUrl() {
-        return getXml().getString("burp.WSUrl");
+    public static int getProxyPort() {
+        return getXml().getInt("proxy.port");
     }
 
     public static String getLatestReportsDir() {
-        return getXml().getString("latestReportsDir");
+        return validateAndGetString("latestReportsDir");
     }
 
     public static String getReportsDir() {
-        return getXml().getString("reportsDir");
+        return validateAndGetString("reportsDir");
     }
 
     public static List<String> getSessionIDs() {
@@ -167,36 +167,9 @@ public class Config {
         return ids;
     }
 
-    public static String getBurpWSProxyHost() {
-        try {
-            return getXml().getString("burp.WSProxyHost");
-        } catch (java.util.NoSuchElementException nse) {
-            return null;
-        }
-    }
-
-    public static int getBurpWSProxyPort() {
-        try {
-            return getXml().getInt("burp.WSProxyPort");
-        } catch (java.util.NoSuchElementException nse) {
-            return 0;
-        } catch (org.apache.commons.configuration.ConversionException ce) {
-            return 0;
-        }
-    }
 
     public static void setXml(XMLConfiguration xml) {
         instance().xml = xml;
-    }
-
-    //Not used yet
-    public static String getUpstreamProxyHost() {
-        return getXml().getString("upstreamproxyHost");
-    }
-
-    //Not used yet
-    public static int getUpstreamProxyPort() {
-        return getXml().getInt("upstreamproxyPort");
     }
 
 

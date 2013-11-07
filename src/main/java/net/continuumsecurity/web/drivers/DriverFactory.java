@@ -18,13 +18,13 @@
  ******************************************************************************/
 package net.continuumsecurity.web.drivers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DriverFactory {
 	private static DriverFactory dm;
@@ -32,7 +32,7 @@ public class DriverFactory {
 	static Logger log = Logger.getLogger(DriverFactory.class.getName());
 
 	public enum DriverType {
-		FIREFOX, HTMLUNIT, BURPFIREFOX, BURPHTMLUNIT
+		FIREFOX, HTMLUNIT, PROXYFIREFOX, PROXYHTMLUNIT
 	}
 
 	private DriverFactory() {
@@ -75,10 +75,10 @@ public class DriverFactory {
 	}
 
 	private WebDriver findOrCreate(String type) {
-		if (type.equalsIgnoreCase("burpfirefox"))
-			return (findOrCreateClass(BurpFirefoxDriver.class));
-		if (type.equalsIgnoreCase("burphtmlunit"))
-			return (findOrCreateClass(BurpHtmlUnitDriver.class));
+		if (type.equalsIgnoreCase("proxyfirefox"))
+			return (findOrCreateClass(ProxyFirefoxDriver.class));
+		if (type.equalsIgnoreCase("proxyhtmlunit"))
+			return (findOrCreateClass(ProxyHtmlUnitDriver.class));
 		if (type.equalsIgnoreCase("firefox"))
 			return (findOrCreateClass(FirefoxDriver.class));
 		if (type.equalsIgnoreCase("htmlunit"))

@@ -19,7 +19,6 @@
 package net.continuumsecurity.runner;
 
 import net.continuumsecurity.Config;
-import net.continuumsecurity.web.drivers.BurpFactory;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AutomatedScanningSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
@@ -45,11 +44,11 @@ public class StoryRunner extends BaseStoryRunner {
     private static final String RESOURCES_DIR = "src"+File.separator+"main"+File.separator+"resources";
     private static final String REPORTS_DIR = Config.getReportsDir();
 
-    @Option(name = "-m", usage = "append meta filters")
-    private String useFilters;
+    @Option(name = "-story", usage = "Name of story meta-tag to run")
+    private String storyName;
 
-    @Option(name = "-s")
-    private boolean skipConfigurationStories = false;
+    @Option(name = "-id", usage = "ID of scenario meta-tag to run")
+    private String idName;
 
     @Option(name = "-c")
     private boolean justRunConfig = false;
@@ -80,10 +79,6 @@ public class StoryRunner extends BaseStoryRunner {
                 "**/configuration_story.story");
     }
 
-    private List<String> parseMetaFilters() {
-        return Arrays.asList(useFilters.split("\\,"));
-    }
-
     private void prepareReportsDir() throws IOException {
         FileUtils.deleteQuietly(new File(LATEST_REPORTS));
         File viewDir = new File(LATEST_REPORTS + File.separator+"view");
@@ -102,8 +97,10 @@ public class StoryRunner extends BaseStoryRunner {
       */
     protected List<String> createFilters() {
         List<String> filters = new ArrayList<String>();
-        if (useFilters != null)
-            filters.addAll(parseMetaFilters());
+        if (storyName != null)
+            filters.add("-m \"+story "+storyName+"\"");
+        if (idName != null)
+            filters.add("-m \"+id "+idName+"\"");
         filters.add("-skip");
         log.debug(" running with filters:");
         for (String filter : filters) {
@@ -124,7 +121,7 @@ public class StoryRunner extends BaseStoryRunner {
         List<String> filters = createFilters();
         configuredEmbedder().useMetaFilters(filters);
 
-        if (!skipConfigurationStories) {
+        if (justRunConfig) {
             try {
                 log.debug("Running configuration stories");
                 ConfigurationStoryRunner configRunner = new ConfigurationStoryRunner(filters);
@@ -140,8 +137,6 @@ public class StoryRunner extends BaseStoryRunner {
                 wrapUp();
                 System.exit(1);
             }
-        }
-        if (justRunConfig) {
             wrapUp();
             System.exit(0);
         }
@@ -153,7 +148,6 @@ public class StoryRunner extends BaseStoryRunner {
             log.debug("Caught exception from StoryRunner.run()");
             e.printStackTrace();
         } finally {
-
             wrapUp();
         }
         System.exit(0);
@@ -167,7 +161,6 @@ public class StoryRunner extends BaseStoryRunner {
             log.error(e.getMessage());
             e.printStackTrace();
         }
-        BurpFactory.destroyAll();
         DriverFactory.quitAll();
     }
 

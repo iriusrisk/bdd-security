@@ -19,18 +19,15 @@
 package net.continuumsecurity.web.steps;
 
 import net.continuumsecurity.Config;
-import net.continuumsecurity.burpclient.BurpClient;
-import net.continuumsecurity.burpclient.ScanPolicy;
-import net.continuumsecurity.reporting.BurpAnalyser;
-import net.continuumsecurity.reporting.ScannerReporter;
-import net.continuumsecurity.restyburp.model.ScanIssueBean;
-import net.continuumsecurity.restyburp.model.ScanIssueList;
+import net.continuumsecurity.proxy.ScanningProxy;
 import net.continuumsecurity.web.Application;
-import net.continuumsecurity.web.drivers.BurpFactory;
+import net.continuumsecurity.web.drivers.ProxyFactory;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
+import org.zaproxy.clientapi.core.Alert;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -38,13 +35,11 @@ import static org.hamcrest.Matchers.greaterThan;
 
 public class AutomatedScanningSteps {
     Logger log = Logger.getLogger(AutomatedScanningSteps.class);
-    BurpClient burp;
+    ScanningProxy scanner;
     Application app;
-    ScanPolicy scanPolicy;
-    ScanIssueList issues;
     String vulnName;
+    List<Alert> alerts;
     private boolean navigated = false;
-    ScannerReporter reporter;
 
     public AutomatedScanningSteps() {
 
@@ -54,84 +49,14 @@ public class AutomatedScanningSteps {
     public void createScanner() {
         app = Config.createApp();
         app.enableHttpLoggingClient();
-        scanPolicy = new ScanPolicy();
-        log.debug("Resetting Burp state");
-        this.burp = BurpFactory.getBurp();
-        burp.reset();
-        reporter = new ScannerReporter();
+        log.debug("Resetting scanner state");
+        scanner = ProxyFactory.getScanningProxy();
+        scanner.clear();
     }
 
     @BeforeScenario
     public void resetScanner() {
-        burp.clearIssues();
-        scanPolicy = new ScanPolicy();
-    }
-
-    @Given("scanning of all injection points is enabled")
-    public void enableAllInjectionPoints() {
-        assert scanPolicy != null : "scanPolicy first needs to be created before injection points are set.";
-        log.debug(" enabling all injection points");
-        scanPolicy.enableAllInjectionPoints();
-    }
-
-    @Given("scanning of REST-style URL parameters is enabled")
-    public void enableRESTparams() {
-        assert scanPolicy != null : "scanPolicy first needs to be created before injection points are set.";
-        log.debug(" enabling REST-style parameters");
-        scanPolicy.enableRESTparams();
-
-    }
-
-    @Given("a passive scanning policy")
-    public void setupPassivePolicy() {
-        vulnName = "passive security";
-        log.debug(" configuring " + vulnName + " policy");
-        scanPolicy.enablePassive();
-    }
-
-    @Given("an SQL injection scanning policy")
-    public void setupSQLinjectionPolicy() {
-        vulnName = "SQL injection";
-        log.debug(" configuring " + vulnName + " policy");
-        scanPolicy.enableSQLinjection();
-
-    }
-
-    @Given("an LDAP injection scanning policy")
-    public void setupLDAPinjectionPolicy() {
-        vulnName = "LDAP injection";
-        log.debug(" configuring " + vulnName + " policy");
-        scanPolicy.enableLDAPinjection();
-    }
-
-    @Given("an XML injection scanning policy")
-    public void setupXMLinjectionPolicy() {
-        vulnName = "XML injection";
-        log.debug(" configuring " + vulnName + " policy");
-        scanPolicy.enableXMLinjection();
-
-    }
-
-    @Given("a policy containing miscellaneous header and server checks")
-    public void setupMiscPolicy() {
-        vulnName = "general security";
-        log.debug(" configuring " + vulnName + " policy");
-        scanPolicy.enableMisc();
-
-    }
-
-    @Given("a Cross Site Scripting scanning policy")
-    public void setupXSSPolicy() {
-        vulnName = "Cross Site Scripting";
-        log.debug(" configuring " + vulnName + " policy");
-        scanPolicy.enableXSS();
-    }
-
-    @Given("a command injection scanning policy")
-    public void setupCommandInjectionPolicy() {
-        vulnName = "command injection";
-        log.debug(" configuring " + vulnName + " policy");
-        scanPolicy.enableCommandInjection();
+        scanner.clear();
     }
 
     @When("the scannable methods of the application are navigated")
@@ -147,21 +72,18 @@ public class AutomatedScanningSteps {
     }
 
     @When("the scanner is run")
-    public void runScanner(@Named("id") String reference) throws Exception {
+    public void runScanner() throws Exception {
         if (!navigated)
             navigateApp();
-        log.debug("Running scanner for scenario: " + reference);
-        burp.setConfig(scanPolicy.getPolicy());
-        burp.scan(Config.getBaseUrl());
+        scanner.scan(Config.getBaseUrl());
         int complete = 0;
         while (complete < 100) {
-            complete = burp.percentComplete();
+            complete = scanner.getPercentComplete();
             log.debug("Scan is " + complete + "% complete.");
             Thread.sleep(3000);
         }
-        issues = BurpAnalyser.instance().filter(burp.getIssueList());
-        log.debug(issues.getIssues().size() + " security issues were found.");
-        reporter.write(reference, issues);
+        alerts = scanner.getAlerts();
+        log.debug(alerts.size() + " security issues were found.");
     }
 
     @Then("no vulnerabilities should be present")
@@ -169,14 +91,15 @@ public class AutomatedScanningSteps {
         assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.",app.getScannableMethods().size(),greaterThan(0));
         log.debug("checking for vulnerabilities");
         String detail = "";
-        if (issues.getIssues().size() != 0) {
-            for (ScanIssueBean issue : issues.getIssues()) {
-                detail = detail + issue.getUrl() + "\n"
-                        + issue.getIssueDetail() + "\n\n";
+        if (alerts.size() != 0) {
+            for (Alert alert : alerts) {
+                detail = detail + alert.getUrl() + "\n"
+                        + alert.getParam() + "\n"
+                        + alert.getAlert() + "\n\n";
             }
         }
-        assertThat(issues.getIssues().size() + " " + vulnName
-                + " vulnerabilities found.\n" + detail, issues.getIssues().size(),
+        assertThat(alerts.size() + " " + vulnName
+                + " vulnerabilities found.\n" + detail, alerts.size(),
                 equalTo(0));
     }
 }

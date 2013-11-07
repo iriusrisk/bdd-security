@@ -1,16 +1,18 @@
 package net.continuumsecurity.web;
 
-import org.testng.annotations.*;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
-import net.continuumsecurity.web.NgUtils;
-import java.lang.System;
-import java.util.List;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
 import java.util.HashMap;
+import java.util.List;
 
 public class AuthorisationTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
   protected List<HashMap> authorisedTable;
   protected List<HashMap> unauthorisedTable;
+
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
@@ -29,13 +31,13 @@ public class AuthorisationTest {
   public void authorised_users_can_view_restricted_resources(){
     for(HashMap item: this.authorisedTable){
       webAppSteps.createApp();
-      webAppSteps.setBurpDriver();
-      webAppSteps.resetBurp();
+      webAppSteps.enableLoggingDriver();
+      webAppSteps.resetProxy();
       webAppSteps.openLoginPage();
-      webAppSteps.setUsernameFromExamples((String)item.get("username"));
-      webAppSteps.setCredentialsFromExamples((String)item.get("password"));
+      webAppSteps.setUsernameFromExamples((String) item.get("username"));
+      webAppSteps.setCredentialsFromExamples((String) item.get("password"));
       webAppSteps.loginWithSetCredentials();
-      webAppSteps.resetBurp();
+      webAppSteps.resetProxy();
       webAppSteps.checkAccessToResource((String)item.get("verifyString"),(String)item.get("method"));
     }
   }
