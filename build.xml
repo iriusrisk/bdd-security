@@ -10,6 +10,7 @@
     <property name="lib.dir" location="lib" />
     <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
     <property name="reports.resources" location="src/main/resources"/>
+    <property name="arg" value="${args}"/>
 
     <path id="build.classpath">
         <fileset dir="${lib.dir}">
@@ -41,7 +42,8 @@
               failonerror="true"
               maxmemory="128m"
               >
-            <!-- <arg line="${args}"/> -->
+
+            <arg line="${arg}"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <fileset dir="${story.dir}">

@@ -33,3 +33,21 @@ Then they should not see the word <verifyString> when accessing the restricted r
 
 Examples:
 tables/authorised.resources.table
+
+Scenario: Users must not be able to view resources for which they are not authorised
+Meta:
+@Description Resources should only be accessible by the user roles authorised to view them.  Access by unauthorised users could lead to a breach of confidentiality/integrity of the data.
+@Reference WASC-02 http://projects.webappsec.org/w/page/13246940/Insufficient%20Authorization
+@id access_control_restricted
+
+Given the access control map for authorised users has been populated
+And a fresh application
+And the login page
+And the username <username>
+And the password <password>
+When the user logs in
+Then they should not see the word <verifyString> when accessing the restricted resource <method>
+
+Examples:
+tables/unauthorised.resources.table
+

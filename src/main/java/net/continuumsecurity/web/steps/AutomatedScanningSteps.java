@@ -59,14 +59,14 @@ public class AutomatedScanningSteps {
         scanner.clear();
     }
 
-    @When("the scannable methods of the application are navigated")
+    @Given("the scannable methods of the application are navigated")
     public void navigateApp() throws Exception {
         // Navigate through the app and record the traffic through the
         // scanner
         for (Method method : app.getScannableMethods()) {
             app.enableHttpLoggingClient();
             log.debug("Navigating method: "+method.getName());
-            app.getClass().getMethod(method.getName(), null).invoke(app, null);
+            app.getClass().getMethod(method.getName()).invoke(app);
         }
         navigated = true;
     }

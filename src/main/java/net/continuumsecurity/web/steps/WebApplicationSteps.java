@@ -270,8 +270,7 @@ public class WebApplicationSteps {
 
 	@Then("the protocol should be HTTPS")
 	public void protocolHttps() {
-        //TODO verify that connection is the right field to use
-		assertThat(currentHar.getConnection(), equalToIgnoringCase("https"));
+		assertThat(currentHar.getRequest().getUrl().substring(0,4), equalToIgnoringCase("https"));
 	}
 
 	@Given("the HTTP request-response containing the login form")
@@ -283,6 +282,7 @@ public class WebApplicationSteps {
 					"Could not find HTTP response with password form using regex: "
 							+ regex);
 		currentHar = responses.get(0);
+        log.info("Login form: "+currentHar);
 	}
 
 	@Given("the request-response is saved")
@@ -327,6 +327,7 @@ public class WebApplicationSteps {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
 			Cookie cookie = app.getCookieByName(name);
+            log.info("Getting cookie from browser with value: "+cookie.getValue());
 			if (cookie != null)
 				sessionIds.add(cookie);
 		}
@@ -364,8 +365,6 @@ public class WebApplicationSteps {
 		int cookieCount = 0;
 		for (HarEntry entry : proxy.getHistory()) {
 			for (String name : Config.getSessionIDs()) {
-				Pattern pattern = Pattern.compile(name + "=.*httponly",
-						Pattern.CASE_INSENSITIVE);
                 for (HarCookie cookie : entry.getResponse().getCookies().getCookies()) {
                     if (cookie.getName().equalsIgnoreCase(name) && cookie.isHttpOnly()) {
                         cookieCount++;
@@ -448,7 +447,7 @@ public class WebApplicationSteps {
 			@Named("verifyString") String verifyString,
 			@Named("method") String method) {
 		try {
-			app.getClass().getMethod(method, null).invoke(app, null);
+			app.getClass().getMethod(method).invoke(app);
 			// For web services, calling the method might throw an exception if
 			// access is denied.
 		} catch (Exception e) {
@@ -465,7 +464,6 @@ public class WebApplicationSteps {
 		methodProxyMap.put(method, proxy.getHistory());
         Assert.assertThat(proxy.findInResponseHistory(verifyString).size(),
                 greaterThan(0));
-
 	}
 
 	@Then("they should not see the word <verifyString> when accessing the restricted resource <method>")
@@ -483,7 +481,6 @@ public class WebApplicationSteps {
 				Map<String, String> cookieMap = new HashMap<String, String>();
 				for (Cookie cookie : sessionIds) {
 					cookieMap.put(cookie.getName(), cookie.getValue());
-                    log.info(">>>>> Cookie: "+cookie.getName()+"="+cookie.getValue());
 				}
 
                 HarRequest manual = null;
@@ -493,11 +490,10 @@ public class WebApplicationSteps {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     throw new RuntimeException("Could not copy Har request");
                 }
-
 				List<HarEntry> results = proxy.makeRequest(manual,true);
 
                 for (HarEntry resultHar : results) {
-                    if (pattern.matcher(resultHar.getResponse().getContent().getText()).find()) {
+                    if (resultHar.getResponse().getContent().getText() != null && pattern.matcher(resultHar.getResponse().getContent().getText()).find()) {
                         accessible = true;
                         break;
                     }

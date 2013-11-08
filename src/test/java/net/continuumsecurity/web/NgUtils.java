@@ -17,7 +17,7 @@ public class NgUtils {
       String line = br.readLine();
       while (line != null) {
         line = line.replace("|","");
-        ls.add(line);
+        ls.add(line.trim());
         line = br.readLine();
       }
     }catch (Exception e){
@@ -47,7 +47,7 @@ public class NgUtils {
         HashMap map = new HashMap();
         int i = 0;
         for(String item: lineList){
-          map.put(firstLine[i],item);
+          map.put(firstLine[i].trim(),item.trim());
           i = i + 1;
         }
         listMap.add(map);

@@ -56,36 +56,6 @@ Meta:
 Given the login page
 Then the password field should have the autocomplete directive set to 'off'
 
-Scenario: Login should be secure against SQL injection bypass attacks in the password field
-Meta:
-@Description SQL injection vulnerabilities could be used to bypass the login
-@Reference WASC-19 http://projects.webappsec.org/w/page/13246963/SQL%20Injection
-@id auth_sql_bypass_password
-
-Given the login page
-And the default username from: users.table
-When the password is changed to values from <value>
-And the user logs in
-Then the user is not logged in
-
-Examples:
-tables/sqlinjection.strings.table
-
-Scenario: Login should be secure against SQL injection bypass attacks in the username field
-Meta:
-@Description SQL injection vulnerabilities could be used to bypass the login
-@Reference WASC-19 http://projects.webappsec.org/w/page/13246963/SQL%20Injection
-@id auth_sql_bypass_username
-
-Given the login page
-And the default username from: users.table
-When an SQL injection <value> is appended to the username
-And the user logs in
-Then the user is not logged in
-
-Examples:
-tables/sqlinjection.strings.table
-
 Scenario: The user account should be locked out after 4 incorrect authentication attempts  
 Meta:
 @Description This reduces the risk of password guessing or brute force attacks on a specific user account

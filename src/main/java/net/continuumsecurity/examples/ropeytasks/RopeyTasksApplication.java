@@ -98,7 +98,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 
 	/*
 	 * The method must throw UnexpectedContentException if it doesn't complete successfully.
-
+    */
 	@Restricted(roles = { "user" },
                 verifyWithText = "Edit User")
 	public void viewProfile() {
@@ -116,7 +116,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	public void viewUserDetails() {
 		driver.get(Config.getBaseUrl() + "admin/show/2");
 	}
-	*/
+
 
 	/*
 	 * @Restricted annotation can only be used on no-argument methods.
