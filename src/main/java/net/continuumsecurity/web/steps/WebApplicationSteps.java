@@ -238,7 +238,7 @@ public class WebApplicationSteps {
 
 	@Given("the proxy logs are cleared")
 	@When("the proxy logs are cleared")
-	public void resetProxy() {
+	public void clearProxy() {
 		proxy = ProxyFactory.getLoggingProxy();
 		proxy.clear();
 	}
@@ -270,7 +270,6 @@ public class WebApplicationSteps {
 					"Could not find HTTP response with password form using regex: "
 							+ regex);
 		currentHar = responses.get(0);
-        log.info("Login form: "+currentHar);
 	}
 
 	@Given("the request-response is saved")
@@ -285,8 +284,6 @@ public class WebApplicationSteps {
 
 	@Then("the protocol of the current URL should be HTTPS")
 	public void protocolUrlHttps() {
-		log.debug("URL of login page: "
-				+ ((WebApplication) app).getWebDriver().getCurrentUrl());
 		assertThat(((WebApplication) app).getWebDriver().getCurrentUrl()
 				.substring(0, 4), equalToIgnoringCase("https"));
 	}
@@ -315,7 +312,6 @@ public class WebApplicationSteps {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
 			Cookie cookie = app.getCookieByName(name);
-            log.info("Getting cookie from browser with value: "+cookie.getValue());
 			if (cookie != null)
 				sessionIds.add(cookie);
 		}
@@ -362,6 +358,15 @@ public class WebApplicationSteps {
 		}
 		Assert.assertEquals(cookieCount, numCookies);
 	}
+
+    @When("the session is inactive for $minutes minutes")
+    public void waitForTime(int minutes) {
+        try {
+            Thread.sleep(minutes*60*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 
 	@Then("the password field should have the autocomplete directive set to 'off'")
 	public void thenThePasswordFieldShouldHaveTheAutocompleteDirectiveSetTodisabled() {

@@ -36,7 +36,7 @@ Then the protocol should be HTTPS
 	
 Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code.  
 Meta:
-@id auth_return_3xx
+@id auth_return_redirect
 
 Given a browser configured to use an intercepting proxy
 And the proxy logs are cleared

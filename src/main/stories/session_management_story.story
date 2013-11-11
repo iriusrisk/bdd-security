@@ -29,7 +29,7 @@ Meta:
 @skip
 
 When the default user logs in with credentials from: users.table
-And the session is inactive for 30 minutes
+And the session is inactive for 15 minutes
 Then the user is not logged in
 
 Scenario: The session cookie should have the secure flag set

@@ -26,12 +26,12 @@ public class AuthorisationTest {
         for (HashMap item : this.authorisedTable) {
             webAppSteps.createApp();
             webAppSteps.enableLoggingDriver();
-            webAppSteps.resetProxy();
+            webAppSteps.clearProxy();
             webAppSteps.openLoginPage();
             webAppSteps.setUsernameFromExamples((String) item.get("username"));
             webAppSteps.setCredentialsFromExamples((String) item.get("password"));
             webAppSteps.loginWithSetCredentials();
-            webAppSteps.resetProxy();
+            webAppSteps.clearProxy();
             webAppSteps.checkAccessToResource((String) item.get("verifyString"), (String) item.get("method"));
         }
     }

@@ -1,7 +1,9 @@
 package net.continuumsecurity.web;
 
+import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AutomatedScanningSteps;
 import org.jbehave.core.model.ExamplesTable;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -12,6 +14,11 @@ public class AutomatedScanningTest {
     @BeforeClass
     public void setUp() {
         this.automatedScanningSteps.createScanner();
+    }
+
+    @AfterClass
+    public void tearDown() {
+        DriverFactory.quitAll();
     }
 
     @BeforeTest

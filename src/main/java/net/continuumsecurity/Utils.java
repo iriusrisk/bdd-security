@@ -78,7 +78,6 @@ public class Utils {
 
     public static HarRequest replaceCookies(HarRequest request, Map<String, String> cookieMap) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         for (String name : cookieMap.keySet()) {
-            System.out.println("Changing cookie name: " + name + " to Value: " + cookieMap.get(name));
             request = changeCookieValue(request, name, cookieMap.get(name));
         }
         return request;

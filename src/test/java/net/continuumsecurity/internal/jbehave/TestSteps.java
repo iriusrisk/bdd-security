@@ -27,7 +27,7 @@ public class TestSteps {
     public void authorised_users_can_view_restricted_resources() {
             webAppSteps.createApp();
             webAppSteps.enableLoggingDriver();
-            webAppSteps.resetProxy();
+            webAppSteps.clearProxy();
             webAppSteps.openLoginPage();
 
             webAppSteps.createApp();

@@ -1,17 +1,21 @@
 package net.continuumsecurity.web;
 
-import org.testng.annotations.*;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
+import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AutomatedScanningSteps;
-import net.continuumsecurity.web.NgUtils;
-import java.lang.System;
-import java.util.List;
+import net.continuumsecurity.web.steps.WebApplicationSteps;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
 import java.util.HashMap;
+import java.util.List;
 
 public class ConfigurationTest {
   protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
   protected AutomatedScanningSteps automatedScanningSteps = new AutomatedScanningSteps();
   protected List<HashMap> usersTable;
+
   @BeforeClass
   public void setUp() {
     webAppSteps.createApp();
@@ -19,11 +23,15 @@ public class ConfigurationTest {
     this.usersTable = NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/users.table");
     this.automatedScanningSteps.createScanner();
   }
+
+  @AfterClass
+  public void tearDown() {
+      DriverFactory.quitAll();
+  }
   
   @BeforeTest
   public void beforeScenario() {
     webAppSteps.createAppAndCredentials();
-    this.automatedScanningSteps.resetScanner();
   }
 
   @Test
@@ -58,7 +66,6 @@ public class ConfigurationTest {
   
   @Test
   public void verify_that_the_methods_tagged_with_SecurityScan_can_be_navigated_without_errors() throws Exception{
-    webAppSteps.openLoginPage();
     automatedScanningSteps.navigateApp();
     webAppSteps.doNothing();
   }
