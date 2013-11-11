@@ -33,7 +33,6 @@ users.table
 
 Scenario: Verify that if users don't login, then they are not logged in (According to the ILogin.isLoggedIn(Role) method)
 Meta:
-@Description The isLoggedIn function should return false if users haven't logged in.
 @id config_is_logged_in
 
 Given the login page
@@ -43,6 +42,6 @@ Scenario: Verify that the methods tagged with @SecurityScan can be navigated wit
 Meta:
 @id config_navigate_all
 
-Given the scannable methods of the application are navigated
+Given the scannable methods of the application are navigated through the proxy
 Then no exceptions are thrown
 

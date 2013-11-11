@@ -6,10 +6,9 @@ Meta:
 
 Scenario: The application should not contain vulnerabilities found through automated scanning
 Meta:
-@Description These vulnerabilities typically include risks to the confidentiality of the user's session, or attacks which can be launched in shared browser environments
-@id scan_passive
+@id scan_active
 
-Given the scannable methods of the application are navigated
+Given the scannable methods of the application are navigated through the proxy
 When the scanner is run
 And false positives described in: false_positives.table are removed
 Then no HIGH risk vulnerabilities should be present

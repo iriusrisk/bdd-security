@@ -1,18 +1,17 @@
 
 Description: Session management functions should be security implemented.
 Meta:
-@story Session Management
+@story SessionManagement
 
 Scenario: The session ID should be changed after authentication
 Meta:
-@Description If the session cookies are not changed after authentication, then an attacker with access to the victim's browser could navigate to the login form and note the session IDs, then wait for a victim to login using that browser, and then impersonate them on the site using the noted IDs.
 @Reference WASC-37 http://projects.webappsec.org/w/page/13246960/Session%20Fixation
 @id session_fixation
 
 Given the login page
-And the session cookies
+And the value of the session cookie is noted
 When the default user logs in with credentials from: users.table
-Then the session cookies after authentication should be different from those issued before
+Then the value of the session cookie issued after authentication should be different from that of the previously noted session ID
 
 Scenario: When the user logs out then the session should no longer be valid
 Meta:
@@ -38,14 +37,14 @@ Meta:
 @id session_cookie_secure
 
 Given the default user logs in with credentials from: users.table
-And the session cookies
-Then the session cookies should have the secure flag set
+And the value of the session cookie is noted
+Then the session cookie should have the secure flag set
 
 Scenario: The session cookie should have the httpOnly flag set
 Meta:
 @id session_cookie_httponly
 
-Given an HTTP logging driver
-And clean HTTP logs
+Given a browser configured to use an intercepting proxy
+And the proxy logs are cleared
 And the default user logs in with credentials from: users.table
-Then the session cookies should have the httpOnly flag set
+Then the session cookie should have the httpOnly flag set

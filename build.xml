@@ -1,4 +1,4 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="all">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="test-security">
     <path id="antlib.classpath">
         <fileset dir="lib/" includes="ivy-2.3.0.jar"/>
     </path>
@@ -10,7 +10,9 @@
     <property name="lib.dir" location="lib" />
     <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
     <property name="reports.resources" location="src/main/resources"/>
-    <property name="arg" value="${args}"/>
+    <condition property="arguments" value="${args}" else="">
+        <isset property="arguments" />
+    </condition>
 
     <path id="build.classpath">
         <fileset dir="${lib.dir}">
@@ -43,7 +45,7 @@
               maxmemory="128m"
               >
 
-            <arg line="${arg}"/>
+            <arg line="${arguments}"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <fileset dir="${story.dir}">

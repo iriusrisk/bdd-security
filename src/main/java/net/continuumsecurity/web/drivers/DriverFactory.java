@@ -65,7 +65,6 @@ public class DriverFactory {
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
-            // log.debug("Url: "+retVal.getCurrentUrl()+" Source:\n"+retVal.getPageSource());
         }
         return retVal;
     }

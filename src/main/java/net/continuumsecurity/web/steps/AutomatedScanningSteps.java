@@ -63,7 +63,7 @@ public class AutomatedScanningSteps {
         scanner.clear();
     }
 
-    @Given("the scannable methods of the application are navigated")
+    @Given("the scannable methods of the application are navigated through the proxy")
     public void navigateApp() throws Exception {
         // Navigate through the app and record the traffic through the
         // scanner

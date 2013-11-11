@@ -231,19 +231,19 @@ public class WebApplicationSteps {
 		((ILogout) app).logout();
 	}
 
-	@Given("an HTTP logging driver")
+	@Given("a browser configured to use an intercepting proxy")
 	public void enableLoggingDriver() {
 		app.enableHttpLoggingClient();
 	}
 
-	@Given("clean HTTP logs")
-	@When("the HTTP logs are cleared")
+	@Given("the proxy logs are cleared")
+	@When("the proxy logs are cleared")
 	public void resetProxy() {
 		proxy = ProxyFactory.getLoggingProxy();
 		proxy.clear();
 	}
 
-	@Given("the HTTP request-response containing the default credentials")
+	@Given("the HTTP request-response containing the default credentials is inspected")
 	public void findRequestWithPassword() throws UnsupportedEncodingException {
 		String passwd = URLEncoder.encode(credentials.getPassword(), "UTF-8");
 		String username = URLEncoder.encode(credentials.getUsername(), "UTF-8");
@@ -310,7 +310,7 @@ public class WebApplicationSteps {
 		assertThat(Integer.toString(currentHar.getResponse().getStatus()).substring(0,1), equalTo("3"));
 	}
 
-	@Given("the session cookies")
+	@Given("the value of the session cookie is noted")
 	public void getSessionIds() {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
@@ -321,7 +321,7 @@ public class WebApplicationSteps {
 		}
 	}
 
-	@Then("the session cookies after authentication should be different from those issued before")
+	@Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
 	public void compareSessionIds() {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
@@ -338,7 +338,7 @@ public class WebApplicationSteps {
 		}
 	}
 
-	@Then("the session cookies should have the secure flag set")
+	@Then("the session cookie should have the secure flag set")
 	public void sessionCookiesSecureFlag() {
 		Config.instance();
 		for (String name : Config.getSessionIDs()) {
@@ -346,7 +346,7 @@ public class WebApplicationSteps {
 		}
 	}
 
-	@Then("the session cookies should have the httpOnly flag set")
+	@Then("the session cookie should have the httpOnly flag set")
 	public void sessionCookiesHttpOnlyFlag() {
 		Config.instance();
 		int numCookies = Config.getSessionIDs().size();
@@ -360,7 +360,7 @@ public class WebApplicationSteps {
                 }
 			}
 		}
-		Assert.assertThat(cookieCount, greaterThanOrEqualTo(numCookies));
+		Assert.assertEquals(cookieCount, numCookies);
 	}
 
 	@Then("the password field should have the autocomplete directive set to 'off'")
@@ -430,7 +430,7 @@ public class WebApplicationSteps {
 					"Access control map has not been populated.");
 	}
 
-	@Then("they should see the word <verifyString> when accessing the restricted resource <method>")
+	@Then("when they access the restricted resource <method> they should see the string: <verifyString>")
 	public void checkAccessToResource(
 			@Named("verifyString") String verifyString,
 			@Named("method") String method) {
@@ -454,7 +454,7 @@ public class WebApplicationSteps {
                 greaterThan(0));
 	}
 
-	@Then("they should not see the word <verifyString> when accessing the restricted resource <method>")
+	@Then("when they access the restricted resource <method> they should not see the string: <verifyString>")
 	public void checkNoAccessToResource(
 			@Named("verifyString") String verifyString,
 			@Named("method") String method) {
