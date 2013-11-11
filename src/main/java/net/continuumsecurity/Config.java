@@ -35,13 +35,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Config {
+    protected XMLConfiguration xml;
 
     public static Application createApp() {
         Object app = null;
         try {
             Class appClass = Class.forName(Config.getClassName());
             app = appClass.newInstance();
-
             return (Application) app;
         } catch (Exception e) {
             System.err.println("FATAL error instantiating the class: "
@@ -103,7 +103,6 @@ public class Config {
         return users;
     }
 
-    protected XMLConfiguration xml;
 
     public static String getClassName() {
         return validateAndGetString("class");
@@ -121,8 +120,16 @@ public class Config {
         return validateAndGetString("defaultDriver");
     }
 
+    public static String getDefaultDriverPath() {
+        return validateAndGetString("defaultDriver[@path]");
+    }
+
     public static String getProxyDriver() {
         return validateAndGetString("proxyDriver");
+    }
+
+    public static String getProxyDriverPath() {
+        return validateAndGetString("proxyDriver[@path]");
     }
 
     private static String validateAndGetString(String value) {

@@ -42,5 +42,6 @@
 		<dependency org="org.testng" name="testng" rev="6.1.1" force="true" />
 		<dependency org="org.mortbay.jetty" name="jetty" rev="6.1.26" force="true" />
 		<dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.12" />
+        <dependency org="commons-jxpath" name="commons-jxpath" rev="1.3"/>
 	</dependencies>
 </ivy-module>

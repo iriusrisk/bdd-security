@@ -19,14 +19,18 @@
 package net.continuumsecurity.web.steps;
 
 import net.continuumsecurity.Config;
+import net.continuumsecurity.FalsePositive;
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.proxy.ScanningProxy;
 import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.drivers.ProxyFactory;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
+import org.jbehave.core.model.ExamplesTable;
 import org.zaproxy.clientapi.core.Alert;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -82,24 +86,67 @@ public class AutomatedScanningSteps {
             log.debug("Scan is " + complete + "% complete.");
             Thread.sleep(3000);
         }
-        alerts = scanner.getAlerts();
-        log.debug(alerts.size() + " security issues were found.");
     }
 
-    @Then("no vulnerabilities should be present")
-    public void checkVulnerabilities() {
-        assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.",app.getScannableMethods().size(),greaterThan(0));
-        log.debug("checking for vulnerabilities");
+    @When("false positives described in: $falsePositives are removed")
+    public void removeFalsePositives(ExamplesTable falsePositives) {
+        alerts = scanner.getAlerts();
+        List<Alert> clean = new ArrayList<Alert>();
+
+        for (Alert alert : alerts) {
+            boolean falsePositive = false;
+            for (FalsePositive falsep : Utils.getFalsePositivesFromTable(falsePositives)) {
+                if (falsep.matches(alert.getUrl(),alert.getParam(),Integer.toString(alert.getCweId()))) {
+                    falsePositive = true;
+                }
+            }
+            if (!falsePositive) clean.add(alert);
+        }
+        alerts = clean;
+    }
+
+    @Then("no HIGH risk vulnerabilities should be present")
+    public void checkHighRiskVulnerabilities() {
+        assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.", app.getScannableMethods().size(), greaterThan(0));
+        String detail = "";
+
+        List<Alert> high = getAllAlertsByRiskRating(alerts, Alert.Risk.High);
+        detail = getAlertDetails(high);
+
+        assertThat(high.size() + " high risk vulnerabilities found.\n" + detail, high.size(),
+                equalTo(0));
+    }
+
+    @Then("no MEDIUM risk vulnerabilities should be present")
+    public void checkMediumRiskVulnerabilities() {
+        assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.", app.getScannableMethods().size(), greaterThan(0));
+        String detail = "";
+
+        List<Alert> medium = getAllAlertsByRiskRating(alerts, Alert.Risk.High);
+        detail = getAlertDetails(medium);
+
+        assertThat(medium.size() + " medium risk vulnerabilities found.\n" + detail, medium.size(),
+                equalTo(0));
+    }
+
+    private List<Alert> getAllAlertsByRiskRating(List<Alert> alerts, Alert.Risk rating) {
+        List<Alert> results = new ArrayList<Alert>();
+        for (Alert alert : alerts) {
+            if (alert.getRisk().equals(rating)) results.add(alert);
+        }
+        return results;
+    }
+
+    private String getAlertDetails(List<Alert> alerts) {
         String detail = "";
         if (alerts.size() != 0) {
             for (Alert alert : alerts) {
+
                 detail = detail + alert.getUrl() + "\n"
                         + alert.getParam() + "\n"
                         + alert.getAlert() + "\n\n";
             }
         }
-        assertThat(alerts.size() + " " + vulnName
-                + " vulnerabilities found.\n" + detail, alerts.size(),
-                equalTo(0));
+        return detail;
     }
 }

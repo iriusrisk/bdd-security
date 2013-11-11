@@ -2,11 +2,12 @@
 <web-app>
     <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks, you'll need to modify them for your app! -->
 
-    <!-- Available drivers can be found in net.continuumsecurity.web.drivers.DriverFactory -->
-    <defaultDriver>Firefox</defaultDriver>
+    <!-- The default driver for tests that don't require a proxy.
+         Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver -->
+    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>
 
-    <!-- The driver that the automated tests will use to point at ZAP, available drivers can be found in net.continuumsecurity.web.drivers.*Driver -->
-    <proxyDriver>ProxyFirefox</proxyDriver>
+    <!-- The driver configured to use ZAP as the proxy -->
+    <proxyDriver path="drivers/chromedriver-mac">Chrome</proxyDriver>
 
     <!-- Base URL for the application to test -->
     <baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
@@ -24,10 +25,10 @@
             <role>user</role>
             <recoverpassword name="email" value="bob@continuumsecurity.net"/>
         </user>
-        <!--<user username="alice" password="password">
-                  <role>user</role>
-                  <recoverpassword name="email" value="alice@continuumsecurity.net"/>
-          </user>     -->
+        <user username="alice" password="password">
+            <role>user</role>
+            <recoverpassword name="email" value="alice@continuumsecurity.net"/>
+        </user>
         <user username="admin" password="password">
             <role>admin</role>
             <role>user</role>
@@ -44,5 +45,5 @@
     <displayStackTrace>false</displayStackTrace>
     <storyDir>src/main/stories/</storyDir>
     <reportsDir>reports</reportsDir>
-    <latestReportsDir>target/jbehave/</latestReportsDir>
+    <latestReportsDir>reports/latest</latestReportsDir>
 </web-app>

@@ -18,11 +18,7 @@
  ******************************************************************************/
 package net.continuumsecurity.runner;
 
-import java.net.URL;
-import java.util.Properties;
-
 import net.continuumsecurity.Config;
-
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.i18n.LocalizedKeywords;
@@ -35,8 +31,12 @@ import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.ParameterConverters;
-import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.core.steps.ParameterConverters.ExamplesTableConverter;
+import org.jbehave.core.steps.SilentStepMonitor;
+
+import java.io.File;
+import java.net.URL;
+import java.util.Properties;
 
 public class PreferredConfiguration extends MostUsefulConfiguration {
 	
@@ -48,7 +48,8 @@ public class PreferredConfiguration extends MostUsefulConfiguration {
 		StoryReporterBuilder srb = new StoryReporterBuilder()
 				.withDefaultFormats()
 				.withViewResources(viewResources)
-				.withFormats(Format.XML, Format.CONSOLE, Format.HTML, Format.IDE_CONSOLE,Format.TXT)
+                .withRelativeDirectory(".." + File.separator + Config.getLatestReportsDir())
+				.withFormats(Format.XML, Format.CONSOLE, Format.HTML, Format.IDE_CONSOLE, Format.TXT)
 				.withFailureTrace(Config.displayStackTrace());
 
 		// Setup parameters

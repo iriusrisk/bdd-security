@@ -7,8 +7,11 @@ import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarHeader;
 import edu.umass.cs.benchlab.har.HarRequest;
 import org.apache.log4j.Logger;
+import org.jbehave.core.model.ExamplesTable;
+import org.jbehave.core.steps.Parameters;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,27 @@ public class Utils {
         log.trace("\t Not found.");
         return null;
     }
+
+    // Returns just the first row in the users' credentials table
+    public static UserPassCredentials getDefaultCredentialsFromTable(
+            ExamplesTable credentialsTable) {
+        assert credentialsTable.getRowCount() > 0 : "user table must have at least 1 row";
+        Parameters firstRow = credentialsTable.getRowAsParameters(0);
+        String username = firstRow.valueAs("username", String.class);
+        String password = firstRow.valueAs("password", String.class);
+
+        return new UserPassCredentials(username, password);
+    }
+
+    public static List<FalsePositive> getFalsePositivesFromTable(ExamplesTable falseps) {
+        List<FalsePositive> falsePositives = new ArrayList<FalsePositive>();
+
+        for (Map<String,String> row : falseps.getRows()) {
+            falsePositives.add(new FalsePositive(row.get("url"),row.get("parameter"),row.get("cweid")));
+        }
+        return falsePositives;
+    }
+
 
     public static String stripTags(String html) {
         return html.replaceAll("<.*?>", "");

@@ -43,7 +43,6 @@ Scenario: Verify that the methods tagged with @SecurityScan can be navigated wit
 Meta:
 @id config_navigate_all
 
-Given the login page
-When the scannable methods of the application are navigated
+Given the scannable methods of the application are navigated
 Then no exceptions are thrown
 

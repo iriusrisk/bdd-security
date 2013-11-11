@@ -36,27 +36,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
             driver.findElement(By.name("_action_login")).click();
     }
 
-    /* How to login using a captcha
-     @Override
-     public void login(Credentials credentials) {
-         // Captcha solving is not 100% accurate, so try a few times if captcha
-         // fails
-         boolean captchaPresent = true;
-         int attempts = 0;
-         while (captchaPresent && attempts < 3) {
-             UserPassCredentials creds = new UserPassCredentials(credentials);
-             driver.findElement(By.id("username")).clear();
-             driver.findElement(By.id("username")).sendKeys(creds.getUsername());
-             driver.findElement(By.id("password")).clear();
-             driver.findElement(By.id("password")).sendKeys(creds.getPassword());
-             captchaHelper.solve();
-             driver.findElement(By.name("_action_login")).click();
-
-             captchaPresent = captchaHelper.isPresent();
-             attempts++;
-         }
-     }      */
-
 	// Convenience method
 	public void login(String username, String password) {
 		login(new UserPassCredentials(username, password));
@@ -85,7 +64,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		openLoginPage();
 		login(Config.instance().getUsers().getDefaultCredentials("user"));
 		verifyTextPresent("Welcome");
-		//viewProfile();
+		viewProfile();
 		search("test");
 	}
 
@@ -93,12 +72,10 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		openLoginPage();
 		login(Config.instance().getUsers().getDefaultCredentials("admin"));
 		verifyTextPresent("Welcome");
-		//viewUserList();
+		viewUserList();
 	}
 
-	/*
-	 * The method must throw UnexpectedContentException if it doesn't complete successfully.
-    */
+
 	@Restricted(roles = { "user" },
                 verifyWithText = "Edit User")
 	public void viewProfile() {
@@ -106,15 +83,15 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 	}
 
 	@Restricted(roles = { "admin" },
-                verifyWithText = "alice@continuumsecurity.net")
+                verifyWithText = "admin@continuumsecurity.net")
 	public void viewUserList() {
 		driver.get(Config.getBaseUrl() + "admin/list");
 	}
 
 	@Restricted(roles = {"admin"},
-                verifyWithText = "alice@continuumsecurity.net")
+                verifyWithText = "admin@continuumsecurity.net")
 	public void viewUserDetails() {
-		driver.get(Config.getBaseUrl() + "admin/show/2");
+		driver.get(Config.getBaseUrl() + "admin/show/3");
 	}
 
 
@@ -154,5 +131,27 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.id("email")).sendKeys(details.get("email"));
         driver.findElement(By.xpath("//input[@value='Recover']")).click();
 	}
+
+
+    /* How to login using a captcha
+     @Override
+     public void login(Credentials credentials) {
+         // Captcha solving is not 100% accurate, so try a few times if captcha
+         // fails
+         boolean captchaPresent = true;
+         int attempts = 0;
+         while (captchaPresent && attempts < 3) {
+             UserPassCredentials creds = new UserPassCredentials(credentials);
+             driver.findElement(By.id("username")).clear();
+             driver.findElement(By.id("username")).sendKeys(creds.getUsername());
+             driver.findElement(By.id("password")).clear();
+             driver.findElement(By.id("password")).sendKeys(creds.getPassword());
+             captchaHelper.solve();
+             driver.findElement(By.name("_action_login")).click();
+
+             captchaPresent = captchaHelper.isPresent();
+             attempts++;
+         }
+     }      */
 
 }

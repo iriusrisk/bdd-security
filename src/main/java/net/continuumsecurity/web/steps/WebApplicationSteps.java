@@ -35,7 +35,6 @@ import net.continuumsecurity.web.drivers.ProxyFactory;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
-import org.jbehave.core.steps.Parameters;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -101,7 +100,7 @@ public class WebApplicationSteps {
 
 	@Given("the default username from: $credentialsTable")
 	public void defaultUsername(ExamplesTable credentialsTable) {
-		credentials.setUsername(tableToDefaultCredentials(credentialsTable)
+		credentials.setUsername(Utils.getDefaultCredentialsFromTable(credentialsTable)
 				.getUsername());
 		log.debug("username=" + credentials.getUsername());
 	}
@@ -109,7 +108,7 @@ public class WebApplicationSteps {
 	@Given("the default password from: $credentialsTable")
 	@When("the default password is used from: $credentialsTable")
 	public void defaultPassword(ExamplesTable credentialsTable) {
-		credentials.setPassword(tableToDefaultCredentials(credentialsTable)
+		credentials.setPassword(Utils.getDefaultCredentialsFromTable(credentialsTable)
 				.getPassword());
 		log.debug("password=" + credentials.getPassword());
 	}
@@ -126,7 +125,7 @@ public class WebApplicationSteps {
 	public void loginFromTable(ExamplesTable credentialsTable) {
 		assert credentialsTable != null;
 		openLoginPage();
-		credentials = tableToDefaultCredentials(credentialsTable);
+		credentials = Utils.getDefaultCredentialsFromTable(credentialsTable);
 		loginWithSetCredentials();
 	}
 
@@ -155,17 +154,6 @@ public class WebApplicationSteps {
 		createApp();
 		openLoginPage();
 		loginWithSetCredentials();
-	}
-
-	// Returns just the first row in the users' credentials table
-	private UserPassCredentials tableToDefaultCredentials(
-			ExamplesTable credentialsTable) {
-		assert credentialsTable.getRowCount() > 0 : "user table must have at least 1 row";
-		Parameters firstRow = credentialsTable.getRowAsParameters(0);
-		String username = firstRow.valueAs("username", String.class);
-		String password = firstRow.valueAs("password", String.class);
-
-		return new UserPassCredentials(username, password);
 	}
 
 	private String findRoleByUsername(String username) {

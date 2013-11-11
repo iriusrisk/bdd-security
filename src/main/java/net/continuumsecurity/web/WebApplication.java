@@ -66,7 +66,7 @@ public class WebApplication extends Application {
 
     @Override
     public void enableHttpLoggingClient() {
-        setWebDriver(DriverFactory.getDriver(Config.getProxyDriver()));
+        setWebDriver(DriverFactory.getProxyDriver(Config.getProxyDriver()));
     }
 
     @Override

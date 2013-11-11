@@ -75,6 +75,7 @@ Meta:
 @Description Reduces the risk of automated brute force or dictionary attacks against the authentication form, but still allows manual password guessing attacks
 @Reference WASC-21 http://projects.webappsec.org/w/page/13246938/Insufficient%20Anti-automation
 @id auth_login_captcha
+@skip
 
 Given the default username from: users.table
 And an incorrect password
