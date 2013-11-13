@@ -1,3 +1,8 @@
+# NOTICE
+
+BDD-Security is currently undergoing a refresh and a switch to OWASP ZAP.  The transition should be done by the end of November 2013.  The master git branch now points to the new ZAP version, and the current documentation is out of date.  Please check back soon for updated docs and code.
+
+
 # Overview
 
 BDD-Security is a framework written in Java and based on JBehave and Selenium 2 (WebDriver) that uses predefined security tests and an integrated security scanner to perform automated security assessments of web applications.
