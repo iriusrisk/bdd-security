@@ -1,1 +1,1 @@
-ant test-security -Dargs="-id $1"
+ant test -Dargs="-id $1"

@@ -1,1 +1,1 @@
-ant test-security -Dargs="-story $1"
+ant test -Dargs="-story $1"

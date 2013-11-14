@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <web-app>
-    <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks, you'll need to modify them for your app! -->
+    <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks,
+         you'll need to modify them for your app -->
 
     <!-- The default driver for tests that don't require a proxy.
-         Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver -->
-    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>
+         Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
+    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver> -->
+    <defaultDriver>firefox</defaultDriver>
 
     <!-- The driver configured to use ZAP as the proxy -->
-    <proxyDriver path="drivers/chromedriver-mac">Chrome</proxyDriver>
+    <proxyDriver>firefox</proxyDriver>
 
     <!-- Base URL for the application to test -->
-    <baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
+    <baseUrl>http://localhost:9090/</baseUrl>
 
     <!-- The fully qualified class name representing the application under test -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
@@ -38,10 +40,12 @@
 
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>
     <incorrectUsername>bobbles</incorrectUsername>
+
     <proxy>
         <host>127.0.0.1</host>
         <port>8888</port>
     </proxy>
+
     <displayStackTrace>false</displayStackTrace>
     <storyDir>src/main/stories/</storyDir>
     <reportsDir>reports</reportsDir>

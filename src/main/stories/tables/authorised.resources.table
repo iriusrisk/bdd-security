@@ -1,5 +1,5 @@
 |method		|username		|password		|verifyString		
-|testSearch		|bob		|password		|Results for		
+|viewProfile		|bob		|password		|Edit User		
 |viewUserList		|admin		|password		|admin@continuumsecurity.net		
 |viewUserDetails		|admin		|password		|admin@continuumsecurity.net		
-|viewProfile		|bob		|password		|Edit User		
+|testSearch		|bob		|password		|Results for		

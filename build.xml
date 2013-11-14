@@ -1,7 +1,4 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="test-security">
-    <path id="antlib.classpath">
-        <fileset dir="lib/" includes="ivy-2.3.0.jar"/>
-    </path>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="test.all">
 
     <property name="src.dir" location="src/main/java" />
     <property name="build.dir" location="target/classes" />
@@ -10,9 +7,6 @@
     <property name="lib.dir" location="lib" />
     <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
     <property name="reports.resources" location="src/main/resources"/>
-    <property name="arguments" value="${args}"/>
-    <property name="arguments" value=""/>
-
 
     <path id="build.classpath">
         <fileset dir="${lib.dir}">
@@ -20,6 +14,11 @@
         </fileset>
     </path>
 
+    <path id="ivy.lib.path">
+        <fileset dir="lib/" includes="ivy-2.3.0.jar"/>
+    </path>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml"
+             uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
 
     <!-- Deletes the existing build, docs and dist directory-->
     <target name="clean">
@@ -38,14 +37,12 @@
         </javac>
     </target>
 
-    <target name="test-security" depends="compile">
+    <target name="test.all" depends="compile">
         <java classname="net.continuumsecurity.runner.StoryRunner"
               fork="true"
               failonerror="true"
-              maxmemory="128m"
+              maxmemory="512m"
               >
-
-            <arg line="${arguments}"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <fileset dir="${story.dir}">
@@ -54,7 +51,25 @@
                 <pathelement location="${build.dir}"/>
             </classpath>
         </java>
+    </target>
 
+    <target name="test" depends="compile">
+        <java classname="net.continuumsecurity.runner.StoryRunner"
+              fork="true"
+              failonerror="true"
+              maxmemory="512m"
+                >
+
+            <arg line="${args}"/>
+
+            <classpath>
+                <path refid="build.classpath"/>
+                <fileset dir="${story.dir}">
+                    <include name="**/*.story" />
+                </fileset>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </java>
     </target>
 
     <target name="resolve" description="--> retrieve dependencies with ivy">
@@ -67,5 +82,20 @@
     <target name="clean-cache" description="--> clean the ivy cache">
         <ivy:cleancache />
     </target>
+
+
+    <target name="demo.run">
+        <parallel>
+            <java jar="${lib.dir}/jetty-runner-8.1.14.v20131031.jar" fork="true">
+                <arg line="--port 9090 src/test/resources/ropeytasks-0.1.war"/>
+            </java>
+            <sequential>
+                <sleep seconds="20"/>
+                <antcall target="test.all"/>
+            </sequential>
+        </parallel>
+    </target>
+
+
 
 </project>
