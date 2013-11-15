@@ -9,12 +9,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 public class AuthenticationTest {
     protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
     ExamplesTable credentialsTable;
-    List<String> sqlInjectionsTable;
 
     @BeforeClass
     public void setUp() {
@@ -49,6 +47,16 @@ public class AuthenticationTest {
         webAppSteps.openLoginPage();
         webAppSteps.findResponseWithLoginform();
         webAppSteps.protocolHttps();
+    }
+
+    @Test
+    public void the_login_form_must_not_be_available_over_clear_text_HTTP() throws UnsupportedEncodingException {
+        webAppSteps.enableLoggingDriver();
+        webAppSteps.clearProxy();
+        webAppSteps.openLoginPage();
+        webAppSteps.findResponseWithLoginform();
+        webAppSteps.submitLoginOverHttp();
+        webAppSteps.protocolBrowserUrlHttps();
     }
 
     @Test

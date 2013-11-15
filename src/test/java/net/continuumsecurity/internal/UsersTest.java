@@ -23,7 +23,6 @@ import net.continuumsecurity.User;
 import net.continuumsecurity.Users;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class UsersTest {
 	Users users;
@@ -46,21 +45,10 @@ public class UsersTest {
 	
 	@Test
 	public void testAddUsers() {
-		assert users.getDefaultCredentials("user").get("username").equals("bob");
-		assert users.getDefaultCredentials("user").get("password").equals("password");
-		assert users.getDefaultCredentials("admin").get("username").equals("alice");
+		assert users.getDefaultCredentials().get("username").equals("bob");
+		assert users.getDefaultCredentials().get("password").equals("password");
 	}
-	
-	@Test
-	public void testUsersNotInRole() {
-		//for (User user : users.getAllUsersNotInRoles("admin")) {
-		//	System.out.println(user.getCredentials().get("username"));
-		//}
-		assert users.getAllUsersNotInRoles("admin").contains(bob);
-		assert users.getAllUsersNotInRoles("admin").contains(tom);
-		assertFalse(users.getAllUsersNotInRoles("admin").contains(alice));
-		assertFalse(users.getAllUsersNotInRoles("admin").contains(admin));
-	}
+
 
 }
 

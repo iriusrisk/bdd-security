@@ -18,10 +18,14 @@
  ******************************************************************************/
 package net.continuumsecurity.web.steps;
 
+import com.continuumsecurity.utils.TestSSL;
 import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarRequest;
-import net.continuumsecurity.*;
+import net.continuumsecurity.Config;
+import net.continuumsecurity.ConfigurationException;
+import net.continuumsecurity.UserPassCredentials;
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
@@ -41,7 +45,9 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +66,7 @@ public class WebApplicationSteps {
 	HarEntry savedHar;
 	LoggingProxy proxy;
 	List<Cookie> sessionIds;
+    TestSSL testSSL;
 	Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
 
 	public WebApplicationSteps() {
@@ -185,6 +192,14 @@ public class WebApplicationSteps {
 		}
 	}
 
+    @When("the request for the login form is submitted over HTTP")
+    public void submitLoginOverHttp() {
+        HarRequest request = currentHar.getRequest();
+        String url = currentHar.getRequest().getUrl().replaceFirst("https","http");
+        ((WebApplication) app).getWebDriver().get(url);
+
+    }
+
 	@Given("the user logs in from a fresh login page $limit times")
 	public void whenTheUserLogsInFromAFreshLoginPageXTimes(int limit) {
 		for (int i = 0; i < limit; i++) {
@@ -248,7 +263,8 @@ public class WebApplicationSteps {
 	@Given("the HTTP request-response containing the login form")
 	public void findResponseWithLoginform() throws UnsupportedEncodingException {
 		String regex = "(?i)input[\\s\\w=:'\"]*type\\s*=\\s*['\"]password['\"]";
-		List<HarEntry> responses = proxy.findInResponseHistory(regex);
+        List<HarEntry> responses = proxy.getHistory();
+		 responses = proxy.findInResponseHistory(regex);
 		if (responses == null || responses.size() == 0)
 			throw new StepException(
 					"Could not find HTTP response with password form using regex: "
@@ -267,7 +283,7 @@ public class WebApplicationSteps {
     }
 
 	@Then("the protocol of the current URL should be HTTPS")
-	public void protocolUrlHttps() {
+	public void protocolBrowserUrlHttps() {
 		assertThat(((WebApplication) app).getWebDriver().getCurrentUrl()
 				.substring(0, 4), equalToIgnoringCase("https"));
 	}
@@ -505,4 +521,40 @@ public class WebApplicationSteps {
 		}
 		return null;
 	}
+
+    @When("SSL tests are executed")
+    public void runSSLTestsOnCurrentRequest() throws IOException {
+        testSSL = new TestSSL();
+        URL url = new URL(currentHar.getRequest().getUrl());
+        int port = url.getPort();
+        if (port == -1) port = 443;
+        testSSL.test(url.getHost(),port);
+    }
+
+    @Then("the service must not be vulnerable to the CRIME attack")
+    public void sslServiceNotVulnerableToCRIME() {
+        assertThat(testSSL.isVulnCRIME(),is(false));
+    }
+
+    @Then("the service must not be vulnerable to the BEAST attack")
+    public void sslServiceNotVulnerableToBEAST() {
+        assertThat(testSSL.isVulnBEAST(),is(false));
+    }
+
+    @Then("the minimum ciphers strength must be 128 bit")
+    public void sslMinimum128bitCiphers() {
+        assertThat(testSSL.getMinEncryptionStrength(),greaterThanOrEqualTo(3));
+    }
+
+    @Then("SSL version 2 must not be supported")
+    public void sslNoV2() {
+        boolean isV2 = false;
+        for (String version : testSSL.getSupportedProtocols()) {
+            if (version.contains("SSLv2")) {
+                isV2 = true;
+                break;
+            }
+        }
+        assertThat(isV2,equalTo(false));
+    }
 }

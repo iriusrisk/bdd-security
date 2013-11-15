@@ -12,7 +12,7 @@
     <proxyDriver>firefox</proxyDriver>
 
     <!-- Base URL for the application to test -->
-    <baseUrl>http://localhost:9090/</baseUrl>
+    <baseUrl>http://localhost:8080/ropeytasks-0.1/</baseUrl>
 
     <!-- The fully qualified class name representing the application under test -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>

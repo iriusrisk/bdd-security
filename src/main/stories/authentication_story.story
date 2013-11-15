@@ -23,6 +23,17 @@ And the login page
 And the HTTP request-response containing the login form
 Then the protocol should be HTTPS
 
+Scenario: The login form must not be available over clear text HTTP
+Meta:
+@id auth_login_form_ssl_enforced
+
+Given a browser configured to use an intercepting proxy
+And the proxy logs are cleared
+And the login page
+And the HTTP request-response containing the login form
+When the request for the login form is submitted over HTTP
+Then the protocol of the current URL should be HTTPS
+
 Scenario: Authentication credentials should be transmitted over SSL  
 Meta:
 @Reference WASC-04 http://projects.webappsec.org/w/page/13246945/Insufficient%20Transport%20Layer%20Protection
