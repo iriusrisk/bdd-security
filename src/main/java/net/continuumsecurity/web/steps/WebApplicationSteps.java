@@ -172,7 +172,7 @@ public class WebApplicationSteps {
 	}
 
 	@Then("the user is logged in")
-	public void loginSucceedsVariant2() {
+	public void loginSucceeds() {
 		assertThat(((ILogin) app).isLoggedIn(findRoleByUsername(credentials
 				.getUsername())), is(true));
 	}

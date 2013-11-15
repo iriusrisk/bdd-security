@@ -1,1 +1,1 @@
-ant test-security -Dargs="-c"
+ant test -Dargs="-c"

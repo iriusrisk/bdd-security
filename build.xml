@@ -83,12 +83,15 @@
         <ivy:cleancache />
     </target>
 
+    <target name="ropey.run">
+        <java jar="${lib.dir}/jetty-runner-8.1.14.v20131031.jar" fork="true">
+            <arg line="--port 9090 src/test/resources/ropeytasks-0.1.war"/>
+        </java>
+    </target>
 
     <target name="demo.run">
         <parallel>
-            <java jar="${lib.dir}/jetty-runner-8.1.14.v20131031.jar" fork="true">
-                <arg line="--port 9090 src/test/resources/ropeytasks-0.1.war"/>
-            </java>
+            <antcall target="ropey.run"/>
             <sequential>
                 <sleep seconds="20"/>
                 <antcall target="test.all"/>

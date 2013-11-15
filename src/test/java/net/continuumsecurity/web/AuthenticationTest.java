@@ -36,7 +36,7 @@ public class AuthenticationTest {
     @Test
     public void password_should_be_case_sensitive() {
         webAppSteps.loginFromTable(this.credentialsTable);
-        webAppSteps.loginSucceedsVariant2();
+        webAppSteps.loginSucceeds();
         webAppSteps.loginWithWrongCasedPassword();
         webAppSteps.loginFromFreshPage();
         webAppSteps.loginFails();
