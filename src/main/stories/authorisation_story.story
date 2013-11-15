@@ -3,7 +3,7 @@ Description: Access control should be enforced on the server side and should mat
 Meta:
 @story Authorisation
 
-Scenario: Authorised users can view restricted resources
+Scenario: Users can view restricted resources for which they are authorised
 Meta:
 @id config_authorised_resources
 

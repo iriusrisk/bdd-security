@@ -62,9 +62,9 @@ public abstract class Application {
         }
     }
 
-    public List<String> getAuthorisedRoles(String methodName) {
+    public List<String> getAuthorisedUsernames(String methodName) {
         try {
-            return (List<String>) Arrays.asList(this.getClass().getMethod(methodName).getAnnotation(Restricted.class).roles());
+            return (List<String>) Arrays.asList(this.getClass().getMethod(methodName).getAnnotation(Restricted.class).users());
         } catch (SecurityException e) {
             log.error(e.getMessage());
             e.printStackTrace();

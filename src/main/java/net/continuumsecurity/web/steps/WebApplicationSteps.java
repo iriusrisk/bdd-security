@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -156,32 +155,17 @@ public class WebApplicationSteps {
 		loginWithSetCredentials();
 	}
 
-	private String findRoleByUsername(String username) {
-		User user = Config.instance().getUsers()
-				.findByCredential("username", username);
-		if (user != null) {
-			return user.getDefaultRole();
-		}
-		return null;
-	}
-
-	@Then("the user with the role <role> should be logged in")
-	public void isLoggedIn(@Named("role") String role) {
-		log.debug("checking whether logged in");
-		assertThat(((ILogin) app).isLoggedIn(role), is(true));
-	}
-
 	@Then("the user is logged in")
 	public void loginSucceeds() {
-		assertThat(((ILogin) app).isLoggedIn(findRoleByUsername(credentials
-				.getUsername())), is(true));
+		assertThat("The user is logged in",((ILogin) app).isLoggedIn(credentials
+				.getUsername()), is(true));
 	}
 
 	@Then("login fails")
 	@Alias("the user is not logged in")
 	public void loginFails() {
-		assertThat(((ILogin) app).isLoggedIn(findRoleByUsername(credentials
-				.getUsername())), is(false));
+		assertThat("The user is not logged in",((ILogin) app).isLoggedIn(credentials
+				.getUsername()), is(false));
 	}
 
 	@When("the case of the password is changed")
@@ -455,8 +439,11 @@ public class WebApplicationSteps {
 			return;
 		}
 		methodProxyMap.put(method, proxy.getHistory());
-        Assert.assertThat(proxy.findInResponseHistory(verifyString).size(),
-                greaterThan(0));
+        boolean accessible = proxy.findInResponseHistory(verifyString).size() > 0;
+        if (accessible) {
+            log.debug("User: "+credentials.getUsername()+" can access resource: "+method);
+        }
+        Assert.assertTrue("User: "+credentials.getUsername()+" could not access resource: "+method+" because the text: "+verifyString+" was not present in the responses",accessible);
 	}
 
 	@Then("when they access the restricted resource <method> they should not see the string: <verifyString>")
@@ -466,7 +453,7 @@ public class WebApplicationSteps {
 		if (methodProxyMap == null || methodProxyMap.get(method).size() == 0)
 			throw new ConfigurationException(
 					"No HTTP messages were recorded for the method: " + method);
-		Pattern pattern = Pattern.compile(verifyString);
+		//Pattern pattern = Pattern.compile(verifyString);
 		boolean accessible = false;
 		getSessionIds();
 		for (HarEntry entry : methodProxyMap.get(method)) {
@@ -483,21 +470,24 @@ public class WebApplicationSteps {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     throw new RuntimeException("Could not copy Har request");
                 }
+                proxy.clear();
 				List<HarEntry> results = proxy.makeRequest(manual,true);
-
-                for (HarEntry resultHar : results) {
-                    if (resultHar.getResponse().getContent().getText() != null && pattern.matcher(resultHar.getResponse().getContent().getText()).find()) {
+                results = proxy.findInResponseHistory(verifyString);
+                accessible = results != null && results.size() > 0;
+                if (accessible) break;
+                /*for (HarEntry resultHar : results) {
+                    if (resultHar.getResponse().getContent().getText() != null && resultHar.getResponse().getContent().getText().contains(verifyString)) {
                         accessible = true;
                         break;
                     }
-                }
-                if (accessible == false) {
-                    log.debug("Did not find regex: " + verifyString);
-                }
+                } */
             }
 		}
-		Assert.assertThat("Resource: " + method + " can be accessed.",
-				accessible, equalTo(false));
+        if (!accessible) {
+            log.debug("User: "+credentials.getUsername()+" has no access to resource: "+method);
+        }
+		Assert.assertFalse("Resource: " + method + " can be accessed by user: "+credentials.getUsername()+" because the text: "+verifyString+" was present in the responses.",
+				accessible);
 	}
 
 	public Application getWebApplication() {

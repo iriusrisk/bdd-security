@@ -40,5 +40,5 @@ public interface ILogin {
         To improve robustness, the call to the resource should be possible from any location
         in the application.
      */
-	boolean isLoggedIn(String role);
+	boolean isLoggedIn(String user);
 }

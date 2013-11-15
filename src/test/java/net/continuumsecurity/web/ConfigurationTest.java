@@ -54,12 +54,14 @@ public class ConfigurationTest {
 
     @Test
     public void verify_that_if_users_do_not_login_then_they_are_not_logged_in_According_to_the_ILogin_isLoggedIn_Role_method() {
+        webAppSteps.createApp();
         webAppSteps.openLoginPage();
         webAppSteps.loginFails();
     }
 
     @Test
     public void verify_that_the_methods_tagged_with_SecurityScan_can_be_navigated_without_errors() throws Exception {
+        webAppSteps.createApp();
         automatedScanningSteps.navigateApp();
         webAppSteps.doNothing();
     }

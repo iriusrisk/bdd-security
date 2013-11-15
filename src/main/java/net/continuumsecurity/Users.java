@@ -19,7 +19,6 @@
 package net.continuumsecurity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Users {
@@ -35,43 +34,20 @@ public class Users {
 		return this;
 	}
 	
-	public String getDefaultRole() {
-		assert users.size() > 0;
-		if (users.get(0).getRoles().size() > 0) {
-			return users.get(0).getRoles().get(0);
-		} else { 
-			return null;
-		}
-	}
-	
 	public Credentials getDefaultCredentials() {
-		return getDefaultCredentials(getDefaultRole());
+        if (users == null || users.size() == 0) throw new RuntimeException("No users defined!");
+		return users.get(0).getCredentials();
 	}
-	
-	public Credentials getDefaultCredentials(String role) {
-		assert users.size() > 0;
-		for (User user : users) {
-			if (role == null) {
-				return user.getCredentials();
-			}
-			if (user.getRoles().contains(role)) {
-				return user.getCredentials();
-			}
-		}
-		throw new RuntimeException("Role: "+role+" not found.");
-	}
-	
-	public List<User> getAllUsersNotInRoles(List<String> roles) {
-		List<User> theUsers = new ArrayList<User>();
-		for (User user : users) {
-			if (!user.hasRole(roles)) theUsers.add(user);
-		}
-		return theUsers;
-	}
-	
-	public List<User> getAllUsersNotInRoles(String... roles) {
-		return getAllUsersNotInRoles(Arrays.asList(roles));
-	}
+
+    public List<User> getAllUsersExcept(List<String> exclude) {
+        List<User> theUsers = new ArrayList<User>();
+        for (User user : users) {
+            if (!exclude.contains(user.getCredentials().get("username"))) {
+                theUsers.add(user);
+            }
+        }
+        return theUsers;
+    }
 	
 	public List<User> getAll() {
 		return users;

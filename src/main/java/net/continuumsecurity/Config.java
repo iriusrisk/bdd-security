@@ -232,11 +232,13 @@ public class Config {
         row.add("verifyString");
         table.add(row);
         for (Method method : app.getRestrictedMethods()) {
-            for (String role : app.getAuthorisedRoles(method.getName())) {
+            for (String username : app.getAuthorisedUsernames(method.getName())) {
                 row = new ArrayList<String>();
                 row.add(method.getName());
-                row.add(users.getDefaultCredentials(role).get("username"));
-                row.add(users.getDefaultCredentials(role).get("password"));
+                row.add(username);
+                User user = users.findByCredential("username", username);
+                if (user == null) throw new RuntimeException("User with username: "+username+" not found.  This username is required for executing the method: "+method.getName());
+                row.add(users.findByCredential("username",username).getCredentials().get("password"));
                 row.add(method.getAnnotation(Restricted.class).verifyWithText());
                 table.add(row);
             }
@@ -258,8 +260,7 @@ public class Config {
         row.add("verifyString");
         table.add(row);
         for (Method method : app.getRestrictedMethods()) {
-            for (User user : users.getAllUsersNotInRoles(app
-                    .getAuthorisedRoles(method.getName()))) {
+            for (User user : users.getAllUsersExcept(app.getAuthorisedUsernames(method.getName()))) {
                 row = new ArrayList<String>();
                 row.add(method.getName());
                 row.add(user.getCredentials().get("username"));

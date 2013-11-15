@@ -24,16 +24,12 @@
 
     <users>
         <user username="bob" password="password">
-            <role>user</role>
             <recoverpassword name="email" value="bob@continuumsecurity.net"/>
         </user>
         <user username="alice" password="password">
-            <role>user</role>
             <recoverpassword name="email" value="alice@continuumsecurity.net"/>
         </user>
         <user username="admin" password="password">
-            <role>admin</role>
-            <role>user</role>
             <recoverpassword name="email" value="admin@continuumsecurity.net"/>
         </user>
     </users>
@@ -46,7 +42,7 @@
         <port>8888</port>
     </proxy>
 
-    <displayStackTrace>false</displayStackTrace>
+    <displayStackTrace>true</displayStackTrace>
     <storyDir>src/main/stories/</storyDir>
     <reportsDir>reports</reportsDir>
     <latestReportsDir>reports/latest</latestReportsDir>

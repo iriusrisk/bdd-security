@@ -42,7 +42,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     }
 
     @Override
-    public boolean isLoggedIn(String role) {
+    public boolean isLoggedIn(String user) {
         if (driver.getPageSource().contains("Tasks")) {
             return true;
         } else {
@@ -50,49 +50,31 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         }
     }
 
-    @SecurityScan
-    public void navigateUser() {
-        openLoginPage();
-        login(Config.instance().getUsers().getDefaultCredentials("user"));
-        verifyTextPresent("Welcome");
-        viewProfile();
-        search("test");
-    }
-
-    public void navigateAdmin() {
-        openLoginPage();
-        login(Config.instance().getUsers().getDefaultCredentials("admin"));
-        verifyTextPresent("Welcome");
-        viewUserList();
-    }
-
-
-    @Restricted(roles = { "user" },
-            verifyWithText = "Edit User")
     public void viewProfile() {
         driver.findElement(By.linkText("Profile")).click();
     }
 
-    @Restricted(roles = { "admin" },
-            verifyWithText = "admin@continuumsecurity.net")
+    @Restricted(users = {"bob","admin"},
+            verifyWithText = "Robert")
+    public void viewProfileForBob() {
+        viewProfile();
+    }
+
+    @Restricted(users = {"alice","admin"},
+            verifyWithText = "alice@continuumsecurity.net")
+    public void viewProfileForAlice() {
+        viewProfile();
+    }
+
+    @Restricted(users = {"admin"},
+            verifyWithText = "User List")
     public void viewUserList() {
         driver.get(Config.getBaseUrl() + "admin/list");
     }
 
-    @Restricted(roles = {"admin"},
-            verifyWithText = "admin@continuumsecurity.net")
-    public void viewUserDetails() {
-        driver.get(Config.getBaseUrl() + "admin/show/3");
-    }
-
-
-    /*
-     * @Restricted annotation can only be used on no-argument methods.
-     */
-    @Restricted(roles = {"user"},
-            verifyWithText = "Results for")
-    public void testSearch() {
-        search("test");
+    @Override
+    public void logout() {
+        driver.findElement(By.linkText("Logout")).click();
     }
 
     public void search(String query) {
@@ -102,9 +84,13 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.xpath("//input[@id='search']")).click();
     }
 
-    @Override
-    public void logout() {
-        driver.findElement(By.linkText("Logout")).click();
+    @SecurityScan
+    public void navigateUser() {
+        openLoginPage();
+        login(Config.instance().getUsers().getDefaultCredentials());
+        verifyTextPresent("Welcome");
+        viewProfile();
+        search("test");
     }
 
     /*
