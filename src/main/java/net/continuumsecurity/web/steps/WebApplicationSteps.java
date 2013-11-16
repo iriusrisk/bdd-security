@@ -45,10 +45,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -81,10 +78,10 @@ public class WebApplicationSteps {
 	@Given("a fresh application")
 	public void createApp() {
 		app = Config.createApp();
-		app.enableDefaultClient();
-		assert app.getWebDriver() != null;
+        app.enableDefaultClient();
+        assert app.getWebDriver() != null;
         app.getWebDriver().manage().deleteAllCookies();
-	}
+    }
 
 	@BeforeScenario
 	public void createAppAndCredentials() {
@@ -189,7 +186,6 @@ public class WebApplicationSteps {
 
     @When("the request for the login form is submitted over HTTP")
     public void submitLoginOverHttp() {
-        HarRequest request = currentHar.getRequest();
         String url = currentHar.getRequest().getUrl().replaceFirst("https","http");
         ((WebApplication) app).getWebDriver().get(url);
 
@@ -233,9 +229,9 @@ public class WebApplicationSteps {
 	@Given("the proxy logs are cleared")
 	@When("the proxy logs are cleared")
 	public void clearProxy() {
-		proxy = ProxyFactory.getLoggingProxy();
-		proxy.clear();
-	}
+        proxy = ProxyFactory.getLoggingProxy();
+        proxy.clear();
+    }
 
 	@Given("the HTTP request-response containing the default credentials is inspected")
 	public void findRequestWithPassword() throws UnsupportedEncodingException {
@@ -430,7 +426,7 @@ public class WebApplicationSteps {
         if (accessible) {
             log.debug("User: "+credentials.getUsername()+" can access resource: "+method);
         }
-        assertThat("User: "+credentials.getUsername()+" could access resource: "+method+" because the text: "+verifyString+" was present in the responses",accessible,equalTo(true));
+        assertThat("User: " + credentials.getUsername() + " could access resource: " + method + " because the text: " + verifyString + " was present in the responses", accessible, equalTo(true));
 	}
 
 	@Then("when they access the restricted resource <method> they should not see the string: <verifyString>")
@@ -467,8 +463,8 @@ public class WebApplicationSteps {
         if (!accessible) {
             log.debug("User: "+credentials.getUsername()+" has no access to resource: "+method);
         }
-		assertThat("Resource: " + method + " can not be accessed by user: "+credentials.getUsername()+" because the text: "+verifyString+" was not present in the responses.",
-				accessible,equalTo(false));
+		assertThat("Resource: " + method + " can not be accessed by user: " + credentials.getUsername() + " because the text: " + verifyString + " was not present in the responses.",
+                accessible, equalTo(false));
 	}
 
 	public Application getWebApplication() {

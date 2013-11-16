@@ -135,6 +135,7 @@ public class DriverFactory {
         }
         myProfile.setAcceptUntrustedCertificates(true);
         myProfile.setAssumeUntrustedCertificateIssuer(true);
+        myProfile.setPreference("webdriver.load.strategy", "unstable");
         if (capabilities == null) {
             capabilities = new DesiredCapabilities();
         }
