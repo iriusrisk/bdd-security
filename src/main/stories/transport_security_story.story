@@ -2,6 +2,8 @@ Description: The data transport layer should be secure
 
 Meta:
 @story Transport
+@skip
+@status UNTESTED CODE DUE TO AN SSL BUG IN ZAP
 
 Scenario: The SSL service should use strong cryptographic ciphers and protocols
 Meta:
