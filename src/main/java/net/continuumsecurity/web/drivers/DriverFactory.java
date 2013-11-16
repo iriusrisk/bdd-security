@@ -23,7 +23,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
@@ -99,15 +98,6 @@ public class DriverFactory {
         }
     }
 
-    public Class getDriverClassFromString(String type) {
-        if (type.equalsIgnoreCase(FIREFOX))
-            return FirefoxDriver.class;
-        if (type.equalsIgnoreCase(CHROME))
-            return ChromeDriver.class;
-        throw new RuntimeException(
-                "Internal error, no suitable WebDriver found for: " + type);
-    }
-
     private WebDriver createDriver(String type) {
         if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(null);
         else if (type.equalsIgnoreCase(FIREFOX)) return createFirefoxDriver(null);
@@ -145,11 +135,11 @@ public class DriverFactory {
         }
         myProfile.setAcceptUntrustedCertificates(true);
         myProfile.setAssumeUntrustedCertificateIssuer(true);
-        if (capabilities != null) {
-            return new FirefoxDriver(new FirefoxBinary(), myProfile, capabilities);
-        } else {
-            return new FirefoxDriver(myProfile);
+        if (capabilities == null) {
+            capabilities = new DesiredCapabilities();
         }
+        capabilities.setCapability(FirefoxDriver.PROFILE, myProfile);
+        return new FirefoxDriver(capabilities);
     }
 
     public DesiredCapabilities createProxyCapabilities() {
