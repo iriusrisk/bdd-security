@@ -6,6 +6,7 @@ import difflib.Patch;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarHeader;
 import edu.umass.cs.benchlab.har.HarRequest;
+import edu.umass.cs.benchlab.har.HarResponse;
 import org.apache.log4j.Logger;
 import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.steps.Parameters;
@@ -99,6 +100,35 @@ public class Utils {
             }
         }
         return request;
+    }
+
+    public static boolean responseContainsHeader(HarResponse response, String headerName) {
+        for (HarHeader header : response.getHeaders().getHeaders()) {
+            if (header.getName().equalsIgnoreCase(headerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String getResponseHeaderValue(HarResponse response, String headerName) {
+        for (HarHeader header : response.getHeaders().getHeaders()) {
+            if (header.getName().equalsIgnoreCase(headerName)) {
+                return header.getValue();
+            }
+        }
+        return null;
+    }
+
+    public static boolean responseHeaderValueIsOneOf(HarResponse response, String headerName,String[] permittedValues) {
+        for (HarHeader header : response.getHeaders().getHeaders()) {
+            if (header.getName().equalsIgnoreCase(headerName)) {
+                for (String permitted : permittedValues) {
+                    if (permitted.equalsIgnoreCase(header.getValue())) return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -37,7 +37,7 @@ public abstract class BaseStoryRunner extends JUnitStories {
 		.doGenerateViewAfterStories(false) //We'll generate it manually after the stories are done
 		.doIgnoreFailureInStories(true)
 		.doIgnoreFailureInView(true)
-		.useStoryTimeoutInSecs(30*60);
+		.useStoryTimeoutInSecs(60*60);
 	}
 	
 	@Override

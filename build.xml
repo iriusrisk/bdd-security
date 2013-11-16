@@ -5,6 +5,8 @@
     <property name="dist.dir" location="target" />
     <property name="story.dir" location="src/main/stories" />
     <property name="lib.dir" location="lib" />
+    <property name="ivy.provided.lib.dir" location="lib/ivy" />
+
     <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
     <property name="reports.resources" location="src/main/resources"/>
 
@@ -12,11 +14,15 @@
         <fileset dir="${lib.dir}">
             <include name="**/*.jar" />
         </fileset>
+        <fileset dir="${ivy.provided.lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
     </path>
 
     <path id="ivy.lib.path">
-        <fileset dir="lib/" includes="ivy-2.3.0.jar"/>
+        <fileset dir="${ivy.provided.lib.dir}" includes="ivy-2.3.0.jar"/>
     </path>
+
     <taskdef resource="org/apache/ivy/ant/antlib.xml"
              uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
 
@@ -73,7 +79,7 @@
     </target>
 
     <target name="resolve" description="--> retrieve dependencies with ivy">
-        <ivy:retrieve />
+        <ivy:retrieve/>
     </target>
 
     <target name="all" depends="compile">

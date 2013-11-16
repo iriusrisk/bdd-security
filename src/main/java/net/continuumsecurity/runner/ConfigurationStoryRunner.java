@@ -39,7 +39,7 @@ public class ConfigurationStoryRunner extends BaseStoryRunner {
 	@Override
 	public List<String> storyPaths() {
 		configuredEmbedder().useMetaFilters(filters);
-		return new StoryFinder().findPaths(CodeLocations.codeLocationFromURL(storyUrl), "**/configuration_story.story","");
+		return new StoryFinder().findPaths(CodeLocations.codeLocationFromURL(storyUrl), "**/configuration.story","");
 	}
 
 	@Override

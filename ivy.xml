@@ -26,7 +26,6 @@
 	</publications>
 	<dependencies>
 		<dependency org="org.jbehave" name="jbehave-core" rev="3.8" />
-		<dependency org="junit" name="junit" rev="4.4" />
 		<dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.32.0" />
 		<dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.32.0" />
 		<dependency org="log4j" name="log4j" rev="1.2.16" />

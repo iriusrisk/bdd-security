@@ -84,7 +84,7 @@ public class AutomatedScanningSteps {
         while (complete < 100) {
             complete = scanner.getPercentComplete();
             log.debug("Scan is " + complete + "% complete.");
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         }
     }
 

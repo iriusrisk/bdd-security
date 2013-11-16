@@ -76,7 +76,7 @@ public class StoryRunner extends BaseStoryRunner {
     public List<String> storyPaths() {
         return new StoryFinder().findPaths(
                 CodeLocations.codeLocationFromURL(storyUrl), "**/*.story",
-                "**/configuration_story.story");
+                "**/configuration.story");
     }
 
     private void prepareReportsDir() throws IOException {

@@ -22,10 +22,7 @@ import com.continuumsecurity.utils.TestSSL;
 import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarRequest;
-import net.continuumsecurity.Config;
-import net.continuumsecurity.ConfigurationException;
-import net.continuumsecurity.UserPassCredentials;
-import net.continuumsecurity.Utils;
+import net.continuumsecurity.*;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
@@ -39,7 +36,6 @@ import net.continuumsecurity.web.drivers.ProxyFactory;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
@@ -63,7 +59,6 @@ public class WebApplicationSteps {
 	public Application app;
 	UserPassCredentials credentials;
 	HarEntry currentHar;
-	HarEntry savedHar;
 	LoggingProxy proxy;
 	List<Cookie> sessionIds;
     TestSSL testSSL;
@@ -272,34 +267,10 @@ public class WebApplicationSteps {
 		currentHar = responses.get(0);
 	}
 
-	@Given("the request-response is saved")
-	public void saveCurrentHttp() {
-        try {
-            savedHar = Utils.copyHarEntry(currentHar);
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        throw new RuntimeException("Could not copy Har");
-    }
-
 	@Then("the protocol of the current URL should be HTTPS")
 	public void protocolBrowserUrlHttps() {
 		assertThat(((WebApplication) app).getWebDriver().getCurrentUrl()
 				.substring(0, 4), equalToIgnoringCase("https"));
-	}
-
-	@Then("the response should be the same as the saved response from the invalid username")
-	public void compareResponses() {
-		assertThat(savedHar.getResponse().getStatus(),
-				equalTo(currentHar.getResponse().getStatus()));
-
-		String incorrectUsernameResponse = savedHar.getResponse().getContent().getText()
-				.replaceAll(Config.getIncorrectUsername(), "");
-		String correctUsernameResponse = currentHar.getResponse().getContent().getText()
-				.replaceAll(
-						Config.instance().getUsers().getDefaultCredentials()
-								.get("username"), "");
-		assertThat(incorrectUsernameResponse, equalTo(correctUsernameResponse));
 	}
 
 	@Then("the response status code should start with 3")
@@ -356,7 +327,7 @@ public class WebApplicationSteps {
                 }
 			}
 		}
-		Assert.assertEquals(cookieCount, numCookies);
+		assertThat(cookieCount, equalTo(numCookies));
 	}
 
     @When("the session is inactive for $minutes minutes")
@@ -459,7 +430,7 @@ public class WebApplicationSteps {
         if (accessible) {
             log.debug("User: "+credentials.getUsername()+" can access resource: "+method);
         }
-        Assert.assertTrue("User: "+credentials.getUsername()+" could not access resource: "+method+" because the text: "+verifyString+" was not present in the responses",accessible);
+        assertThat("User: "+credentials.getUsername()+" could access resource: "+method+" because the text: "+verifyString+" was present in the responses",accessible,equalTo(true));
 	}
 
 	@Then("when they access the restricted resource <method> they should not see the string: <verifyString>")
@@ -469,7 +440,6 @@ public class WebApplicationSteps {
 		if (methodProxyMap == null || methodProxyMap.get(method).size() == 0)
 			throw new ConfigurationException(
 					"No HTTP messages were recorded for the method: " + method);
-		//Pattern pattern = Pattern.compile(verifyString);
 		boolean accessible = false;
 		getSessionIds();
 		for (HarEntry entry : methodProxyMap.get(method)) {
@@ -491,19 +461,14 @@ public class WebApplicationSteps {
                 results = proxy.findInResponseHistory(verifyString);
                 accessible = results != null && results.size() > 0;
                 if (accessible) break;
-                /*for (HarEntry resultHar : results) {
-                    if (resultHar.getResponse().getContent().getText() != null && resultHar.getResponse().getContent().getText().contains(verifyString)) {
-                        accessible = true;
-                        break;
-                    }
-                } */
+
             }
 		}
         if (!accessible) {
             log.debug("User: "+credentials.getUsername()+" has no access to resource: "+method);
         }
-		Assert.assertFalse("Resource: " + method + " can be accessed by user: "+credentials.getUsername()+" because the text: "+verifyString+" was present in the responses.",
-				accessible);
+		assertThat("Resource: " + method + " can not be accessed by user: "+credentials.getUsername()+" because the text: "+verifyString+" was not present in the responses.",
+				accessible,equalTo(false));
 	}
 
 	public Application getWebApplication() {
@@ -522,10 +487,10 @@ public class WebApplicationSteps {
 		return null;
 	}
 
-    @When("SSL tests are executed")
-    public void runSSLTestsOnCurrentRequest() throws IOException {
+    @When("SSL tests are executed on the secure base Url")
+    public void runSSLTestsOnSecureBaseUrl() throws IOException {
         testSSL = new TestSSL();
-        URL url = new URL(currentHar.getRequest().getUrl());
+        URL url = new URL(Config.getBaseSecureUrl());
         int port = url.getPort();
         if (port == -1) port = 443;
         testSSL.test(url.getHost(),port);
@@ -556,5 +521,32 @@ public class WebApplicationSteps {
             }
         }
         assertThat(isV2,equalTo(false));
+    }
+
+    @When("the first HTTP request-response is saved")
+    public void recordFirstHarEntry() {
+        List<HarEntry> history = proxy.getHistory();
+        if (history == null || history.size() == 0) throw new RuntimeException("No HTTP requests-responses recorded");
+        currentHar = history.get(0);
+    }
+
+    @Then("the Strict-Transport-Security header is set")
+    public void checkIfHSTSHeaderIsSet() {
+        assertThat(Utils.responseContainsHeader(currentHar.getResponse(), Constants.HSTS),equalTo(true));
+    }
+
+    @Then("the X-Frame-Options header is either $sameorigin or $deny")
+    public void checkIfXFrameOptionsHeaderIsSet(@Named("sameorigin")String sameOrigin, @Named("deny") String deny) {
+        assertThat(Utils.responseHeaderValueIsOneOf(currentHar.getResponse(), Constants.XFRAMEOPTIONS,new String[]{sameOrigin,deny}),equalTo(true));
+    }
+
+    @Then("the X-XSS-Protection header contains the value: $value")
+    public void checkIfXSSProtectionHeaderIsSet(@Named("value") String value) {
+        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),Constants.XXSSPROTECTION),equalTo(value));
+    }
+
+    @When("the secure base Url for the application is accessed")
+    public void openBaseSecureUrl() {
+        app.getWebDriver().get(Config.getBaseSecureUrl());
     }
 }
