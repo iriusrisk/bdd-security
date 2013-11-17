@@ -55,7 +55,6 @@ public class AutomatedScanningSteps {
         app.enableHttpLoggingClient();
         log.debug("Resetting scanner state");
         scanner = ProxyFactory.getScanningProxy();
-        scanner.clear();
     }
 
     @BeforeScenario

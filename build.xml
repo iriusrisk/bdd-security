@@ -20,7 +20,7 @@
     </path>
 
     <path id="ivy.lib.path">
-        <fileset dir="${ivy.provided.lib.dir}" includes="ivy-2.3.0.jar"/>
+        <fileset dir="${lib.dir}" includes="ivy-2.3.0.jar"/>
     </path>
 
     <taskdef resource="org/apache/ivy/ant/antlib.xml"
@@ -79,7 +79,12 @@
     </target>
 
     <target name="resolve" description="--> retrieve dependencies with ivy">
-        <ivy:retrieve/>
+        <ivy:retrieve sync="true" pattern="${ivy.provided.lib.dir}/[artifact]-[type]-[revision].[ext]"/>
+    </target>
+
+    <target name="dependency-report">
+        <ivy:retrieve sync="true" pattern="${ivy.provided.lib.dir}/[artifact]-[type]-[revision].[ext]"/>
+        <ivy:report conf="compile" graph="false" />
     </target>
 
     <target name="all" depends="compile">
@@ -90,7 +95,7 @@
     </target>
 
     <target name="ropey.run">
-        <java jar="${lib.dir}/jetty-runner-8.1.14.v20131031.jar" fork="true">
+        <java jar="${ivy.provided.lib.dir}/jetty-runner-jar-8.1.14.v20131031.jar" fork="true">
             <arg line="--port 9090 src/test/resources/ropeytasks-0.1.war"/>
         </java>
     </target>

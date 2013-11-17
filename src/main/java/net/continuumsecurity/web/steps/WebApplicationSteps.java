@@ -248,7 +248,7 @@ public class WebApplicationSteps {
 
 	@Then("the protocol should be HTTPS")
 	public void protocolHttps() {
-		assertThat(currentHar.getRequest().getUrl().substring(0,4), equalToIgnoringCase("https"));
+		assertThat(currentHar.getRequest().getUrl().substring(0,4).equalsIgnoreCase("https"), equalTo(true));
 	}
 
 	@Given("the HTTP request-response containing the login form")
