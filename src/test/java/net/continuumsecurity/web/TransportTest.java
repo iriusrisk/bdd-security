@@ -56,6 +56,8 @@ public class TransportTest {
         webAppSteps.checkIfHSTSHeaderIsSet();
         webAppSteps.checkIfXFrameOptionsHeaderIsSet(Constants.SAMEORIGIN,Constants.DENY);
         webAppSteps.checkIfXSSProtectionHeaderIsSet(Constants.XXSSPROTECTION_VALUE);
+        webAppSteps.checkThatAccessControlAllowOriginIsNotStar(Constants.STAR);
+        webAppSteps.checkThatXContentTypeHeaderIsNoSniff(Constants.NOSNIFF);
     }
 
 }

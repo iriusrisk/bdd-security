@@ -23,4 +23,6 @@ And the first HTTP request-response is saved
 Then the X-Frame-Options header is either SAMEORIGIN or DENY
 And the X-XSS-Protection header contains the value: 1; mode=block
 And the Strict-Transport-Security header is set
+And the Access-Control-Allow-Origin header must not be: *
+And the X-Content-Type-Options header contains the value: nosniff
 

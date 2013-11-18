@@ -545,4 +545,14 @@ public class WebApplicationSteps {
     public void openBaseSecureUrl() {
         app.getWebDriver().get(Config.getBaseSecureUrl());
     }
+
+    @Then("the Access-Control-Allow-Origin header must not be: $value")
+    public void checkThatAccessControlAllowOriginIsNotStar(@Named("value") String star) {
+        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),Constants.XXSSPROTECTION),not(star));
+    }
+
+    @Then("the X-Content-Type-Options header contains the value: $value")
+    public void checkThatXContentTypeHeaderIsNoSniff(@Named("value") String value) {
+        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),Constants.XCONTENTTYPEOPTIONS),equalTo(value));
+    }
 }
