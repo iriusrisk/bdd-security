@@ -11,5 +11,4 @@ Meta:
 Given the scannable methods of the application are navigated through the proxy
 When the scanner is run
 And false positives described in: false_positives.table are removed
-Then no HIGH risk vulnerabilities should be present
-And no MEDIUM risk vulnerabilities should be present
+Then no HIGH or MEDIUM risk vulnerabilities should be present

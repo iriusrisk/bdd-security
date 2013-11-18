@@ -104,27 +104,17 @@ public class AutomatedScanningSteps {
         alerts = clean;
     }
 
-    @Then("no HIGH risk vulnerabilities should be present")
-    public void checkHighRiskVulnerabilities() {
+    @Then("no HIGH or MEDIUM risk vulnerabilities should be present")
+    public void checkHighAndMediumRiskVulnerabilities() {
         assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.", app.getScannableMethods().size(), greaterThan(0));
-        String detail = "";
 
         List<Alert> high = getAllAlertsByRiskRating(alerts, Alert.Risk.High);
-        detail = getAlertDetails(high);
-
-        assertThat(high.size() + " high risk vulnerabilities found.\n" + detail, high.size(),
-                equalTo(0));
-    }
-
-    @Then("no MEDIUM risk vulnerabilities should be present")
-    public void checkMediumRiskVulnerabilities() {
-        assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.", app.getScannableMethods().size(), greaterThan(0));
-        String detail = "";
+        String highDetail = getAlertDetails(high);
 
         List<Alert> medium = getAllAlertsByRiskRating(alerts, Alert.Risk.High);
-        detail = getAlertDetails(medium);
+        String mediumDetail = getAlertDetails(medium);
 
-        assertThat(medium.size() + " medium risk vulnerabilities found.\n" + detail, medium.size(),
+        assertThat(high.size() + " high risk and "+medium.size()+" medium risk vulnerabilities.\nHigh Risk:\n" + highDetail + "\nMedium Risk:"+mediumDetail, high.size()+medium.size(),
                 equalTo(0));
     }
 

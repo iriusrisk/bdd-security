@@ -10,5 +10,5 @@ public class Constants {
     public static final String ACESSCONTROLALLOWORIGIN = "Access-Control-Allow-Origin";
     public static final String STAR = "*";
     public static final String XCONTENTTYPEOPTIONS = "X-Content-Type-Options";
-    public static final Object NOSNIFF = "nosniff";
+    public static final String NOSNIFF = "nosniff";
 }
