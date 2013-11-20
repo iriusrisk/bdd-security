@@ -131,4 +131,13 @@ public class Utils {
         return false;
     }
 
+    public static boolean mapOfStringListContainsString(Map<String, List<String>>map, String target) {
+        for (List<String> list : map.values()) {
+            for (String value : list) {
+                if (value.contains(target)) return true;
+            }
+        }
+        return false;
+    }
+
 }

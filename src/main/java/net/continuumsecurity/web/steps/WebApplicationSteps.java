@@ -519,6 +519,11 @@ public class WebApplicationSteps {
         assertThat(isV2,equalTo(false));
     }
 
+    @Then("$cipher ciphers must not be supported")
+    public void sslNoCipher(@Named("cipher") String cipher) {
+        assertThat(Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(),cipher),is(false));
+    }
+
     @When("the first HTTP request-response is saved")
     public void recordFirstHarEntry() {
         List<HarEntry> history = proxy.getHistory();

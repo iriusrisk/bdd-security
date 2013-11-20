@@ -45,6 +45,7 @@ public class TransportTest {
         webAppSteps.sslServiceNotVulnerableToBEAST();
         webAppSteps.sslMinimum128bitCiphers();
         webAppSteps.sslNoV2();
+        webAppSteps.sslNoCipher(Constants.RC4);
     }
 
     @Test

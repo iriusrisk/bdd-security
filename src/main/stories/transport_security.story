@@ -11,6 +11,7 @@ Then the service must not be vulnerable to the CRIME attack
 And the service must not be vulnerable to the BEAST attack
 And the minimum ciphers strength must be 128 bit
 And SSL version 2 must not be supported
+And RC4 ciphers must not be supported
 
 Scenario: The HTTP headers should protect users from common attacks
 Meta:
