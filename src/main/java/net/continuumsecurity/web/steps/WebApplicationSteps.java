@@ -47,6 +47,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 
+import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -60,6 +61,7 @@ public class WebApplicationSteps {
 	List<Cookie> sessionIds;
     TestSSL testSSL;
 	Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
+    List<HarEntry> recordedEntries;
 
 	public WebApplicationSteps() {
 
@@ -402,9 +404,9 @@ public class WebApplicationSteps {
 					"Access control map has not been populated.");
 	}
 
-	@Then("when they access the restricted resource <method> they should see the string: <verifyString>")
+	@Then("when they access the restricted resource: <method> they should see the string: <sensitiveData>")
 	public void checkAccessToResource(
-			@Named("verifyString") String verifyString,
+			@Named("sensitiveData") String sensitiveData,
 			@Named("method") String method) {
 		try {
 			app.getClass().getMethod(method).invoke(app);
@@ -422,16 +424,39 @@ public class WebApplicationSteps {
 			return;
 		}
 		methodProxyMap.put(method, proxy.getHistory());
-        boolean accessible = proxy.findInResponseHistory(verifyString).size() > 0;
+        boolean accessible = proxy.findInResponseHistory(sensitiveData).size() > 0;
         if (accessible) {
             log.debug("User: "+credentials.getUsername()+" can access resource: "+method);
         }
-        assertThat("User: " + credentials.getUsername() + " could access resource: " + method + " because the text: " + verifyString + " was present in the responses", accessible, equalTo(true));
+        assertThat("User: " + credentials.getUsername() + " could access resource: " + method + " because the text: " + sensitiveData + " was present in the responses", accessible, equalTo(true));
 	}
 
-	@Then("when they access the restricted resource <method> they should not see the string: <verifyString>")
+    @When("they access the restricted resource: <method> and the response that contains the string: <sensitiveData> is recorded")
+    public void recordSensitiveResponse(
+            @Named("sensitiveData") String sensitiveData,
+            @Named("method") String method) {
+        try {
+            app.getClass().getMethod(method).invoke(app);
+            // For web services, calling the method might throw an exception if
+            // access is denied.
+        } catch (Exception e) {
+            fail("User with credentials: " + credentials.getUsername() + " "
+                    + credentials.getPassword()
+                    + " could not access the method: " + method + "()");
+        }
+        recordedEntries = proxy.findInResponseHistory(sensitiveData);
+        assertThat("The string: "+sensitiveData+" was not found in the HTTP responses",recordedEntries.size(),greaterThan(0));
+        currentHar = recordedEntries.get(0);
+    }
+
+    @Then("the HTTP Cache-control header should contain the values:")
+    public void checkCacheControlHeaders(@Named("value") String value) {
+        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),Constants.CACHECONTROL),equalTo(value));
+    }
+
+	@Then("when they access the restricted resource: <method> they should not see the string: <sensitiveData>")
 	public void checkNoAccessToResource(
-			@Named("verifyString") String verifyString,
+			@Named("sensitiveData") String sensitiveData,
 			@Named("method") String method) {
 		if (methodProxyMap == null || methodProxyMap.get(method).size() == 0)
 			throw new ConfigurationException(
@@ -454,7 +479,7 @@ public class WebApplicationSteps {
                 }
                 proxy.clear();
 				List<HarEntry> results = proxy.makeRequest(manual,true);
-                results = proxy.findInResponseHistory(verifyString);
+                results = proxy.findInResponseHistory(sensitiveData);
                 accessible = results != null && results.size() > 0;
                 if (accessible) break;
 
@@ -463,7 +488,7 @@ public class WebApplicationSteps {
         if (!accessible) {
             log.debug("User: "+credentials.getUsername()+" has no access to resource: "+method);
         }
-		assertThat("Resource: " + method + " can not be accessed by user: " + credentials.getUsername() + " because the text: " + verifyString + " was not present in the responses.",
+		assertThat("Resource: " + method + " can not be accessed by user: " + credentials.getUsername() + " because the text: " + sensitiveData + " was not present in the responses.",
                 accessible, equalTo(false));
 	}
 
@@ -524,7 +549,7 @@ public class WebApplicationSteps {
         assertThat(Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(),cipher),is(false));
     }
 
-    @When("the first HTTP request-response is saved")
+    @When("the first HTTP request-response is recorded")
     public void recordFirstHarEntry() {
         List<HarEntry> history = proxy.getHistory();
         if (history == null || history.size() == 0) throw new RuntimeException("No HTTP requests-responses recorded");
@@ -541,9 +566,10 @@ public class WebApplicationSteps {
         assertThat(Utils.responseHeaderValueIsOneOf(currentHar.getResponse(), Constants.XFRAMEOPTIONS,new String[]{sameOrigin,deny}),equalTo(true));
     }
 
-    @Then("the X-XSS-Protection header contains the value: $value")
-    public void checkIfXSSProtectionHeaderIsSet(@Named("value") String value) {
-        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),Constants.XXSSPROTECTION),equalTo(value));
+    @Then("the HTTP $name header has the value: $value")
+    public void checkHeaderValue(@Named("name") String name, @Named("value") String value) {
+        assertNotNull("No HTTP header named: "+name+" was found.",Utils.getResponseHeaderValue(currentHar.getResponse(),name));
+        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),name),equalTo(value));
     }
 
     @When("the secure base Url for the application is accessed")
@@ -556,8 +582,4 @@ public class WebApplicationSteps {
         assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),Constants.XXSSPROTECTION),not(star));
     }
 
-    @Then("the X-Content-Type-Options header contains the value: $value")
-    public void checkThatXContentTypeHeaderIsNoSniff(@Named("value") String value) {
-        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(),Constants.XCONTENTTYPEOPTIONS),equalTo(value));
-    }
 }

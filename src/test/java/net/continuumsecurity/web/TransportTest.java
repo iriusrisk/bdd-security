@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.testng.AssertJUnit.assertEquals;
+
 public class TransportTest {
     protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
     ExamplesTable credentialsTable;
@@ -26,6 +28,7 @@ public class TransportTest {
         String workingDirectory = System.getProperty("user.dir");
         this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
         this.authorisedTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
+        webAppSteps.createAppAndCredentials();
     }
 
     @AfterClass
@@ -56,9 +59,33 @@ public class TransportTest {
         webAppSteps.recordFirstHarEntry();
         webAppSteps.checkIfHSTSHeaderIsSet();
         webAppSteps.checkIfXFrameOptionsHeaderIsSet(Constants.SAMEORIGIN,Constants.DENY);
-        webAppSteps.checkIfXSSProtectionHeaderIsSet(Constants.XXSSPROTECTION_VALUE);
+        webAppSteps.checkHeaderValue(Constants.XXSSPROTECTION, Constants.XXSSPROTECTION_VALUE);
         webAppSteps.checkThatAccessControlAllowOriginIsNotStar(Constants.STAR);
-        webAppSteps.checkThatXContentTypeHeaderIsNoSniff(Constants.NOSNIFF);
+        webAppSteps.checkHeaderValue(Constants.XCONTENTTYPEOPTIONS, Constants.NOSNIFF);
     }
 
+    @Test
+    public void cache_controls_are_set_on_sensitive_content() {
+        msg = "";
+        failures = 0;
+        for (HashMap item : this.authorisedTable) {
+            webAppSteps.createApp();
+            webAppSteps.enableLoggingDriver();
+            webAppSteps.clearProxy();
+            webAppSteps.openLoginPage();
+            webAppSteps.setUsernameFromExamples((String) item.get("username"));
+            webAppSteps.setCredentialsFromExamples((String) item.get("password"));
+            webAppSteps.loginWithSetCredentials();
+            webAppSteps.clearProxy();
+            try {
+                webAppSteps.recordSensitiveResponse((String) item.get("sensitiveData"), (String) item.get("method"));
+                webAppSteps.checkHeaderValue("Cache-control", "no-cache, no-store, must-revalidate");
+                webAppSteps.checkHeaderValue("Pragma", "no-cache");
+            } catch (AssertionError e) {
+                failures++;
+                msg = msg + e.getMessage()+"\n";
+            }
+        }
+        assertEquals(msg, 0, failures);
+    }
 }

@@ -5,11 +5,11 @@
 
     <!-- The default driver for tests that don't require a proxy.
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
-    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver> -->
-    <defaultDriver>firefox</defaultDriver>
+    <defaultDriver>firefox</defaultDriver> -->
+    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>
 
     <!-- The driver configured to use ZAP as the proxy -->
-    <proxyDriver>firefox</proxyDriver>
+    <proxyDriver path="drivers/chromedriver-mac">Chrome</proxyDriver>
 
     <!-- Base URL for the application to test -->
     <baseUrl>http://localhost:9090/</baseUrl>
@@ -26,11 +26,11 @@
     </sessionIds>
 
     <users>
-        <user username="bob" password="password">
-            <recoverpassword name="email" value="bob@continuumsecurity.net"/>
-        </user>
         <user username="alice" password="password">
             <recoverpassword name="email" value="alice@continuumsecurity.net"/>
+        </user>
+        <user username="bob" password="password">
+            <recoverpassword name="email" value="bob@continuumsecurity.net"/>
         </user>
         <user username="admin" password="password">
             <recoverpassword name="email" value="admin@continuumsecurity.net"/>

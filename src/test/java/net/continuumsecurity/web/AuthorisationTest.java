@@ -46,7 +46,7 @@ public class AuthorisationTest {
             webAppSteps.loginWithSetCredentials();
             webAppSteps.clearProxy();
             try {
-                webAppSteps.checkAccessToResource((String) item.get("verifyString"), (String) item.get("method"));
+                webAppSteps.checkAccessToResource((String) item.get("sensitiveData"), (String) item.get("method"));
             } catch (AssertionError e) {
                 failures++;
                 msg = msg + e.getMessage()+"\n";
@@ -66,7 +66,7 @@ public class AuthorisationTest {
             webAppSteps.setCredentialsFromExamples((String) item.get("password"));
             webAppSteps.loginWithSetCredentials();
             try {
-                webAppSteps.checkNoAccessToResource((String) item.get("verifyString"), (String) item.get("method"));
+                webAppSteps.checkNoAccessToResource((String) item.get("sensitiveData"), (String) item.get("method"));
             } catch (AssertionError e) {
                 failures++;
                 msg = msg + e.getMessage()+"\n";
@@ -84,7 +84,7 @@ public class AuthorisationTest {
             webAppSteps.createApp();
             webAppSteps.openLoginPage();
             try {
-                webAppSteps.checkNoAccessToResource((String) item.get("verifyString"), (String) item.get("method"));
+                webAppSteps.checkNoAccessToResource((String) item.get("sensitiveData"), (String) item.get("method"));
             } catch (AssertionError e) {
                 failures++;
                 msg = msg + e.getMessage()+"\n";

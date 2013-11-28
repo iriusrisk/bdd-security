@@ -12,4 +12,5 @@ public class Constants {
     public static final String XCONTENTTYPEOPTIONS = "X-Content-Type-Options";
     public static final String NOSNIFF = "nosniff";
     public static final String RC4 = "RC4";
+    public static String CACHECONTROL = "Cache-control";
 }

@@ -55,19 +55,19 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     }
 
     @Restricted(users = {"bob","admin"},
-            verifyWithText = "Robert")
+            sensitiveData = "Robert")
     public void viewProfileForBob() {
-        viewProfile();
+        driver.get(Config.getBaseUrl() + "user/edit/1");
     }
 
     @Restricted(users = {"alice","admin"},
-            verifyWithText = "alice@continuumsecurity.net")
+            sensitiveData = "alice@continuumsecurity.net")
     public void viewProfileForAlice() {
-        viewProfile();
+        driver.get(Config.getBaseUrl() + "user/edit/2");
     }
 
     @Restricted(users = {"admin"},
-            verifyWithText = "User List")
+            sensitiveData = "User List")
     public void viewUserList() {
         driver.get(Config.getBaseUrl() + "admin/list");
     }
