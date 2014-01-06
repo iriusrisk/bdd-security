@@ -22,7 +22,6 @@ tables/authorised.resources.table
 
 Scenario: Un-authenticated users should not be able to view restricted resources
 Meta:
-@Reference WASC-01 http://projects.webappsec.org/w/page/13246939/Insufficient%20Authentication
 @id anon_access_control
 
 Given the access control map for authorised users has been populated
@@ -35,7 +34,6 @@ tables/authorised.resources.table
 
 Scenario: Users must not be able to view resources for which they are not authorised
 Meta:
-@Reference WASC-02 http://projects.webappsec.org/w/page/13246940/Insufficient%20Authorization
 @id access_control_restricted
 
 Given the access control map for authorised users has been populated

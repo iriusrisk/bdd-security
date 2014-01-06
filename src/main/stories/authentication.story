@@ -66,7 +66,6 @@ Scenario: The user account should be locked out after 4 incorrect authentication
 Meta:
 @Reference WASC-21 http://projects.webappsec.org/w/page/13246938/Insufficient%20Anti-automation
 @id auth_lockout
-@skip
 
 Given the default username from: users.table
 And an incorrect password
