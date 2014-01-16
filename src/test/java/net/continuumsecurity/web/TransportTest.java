@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,7 +27,6 @@ public class TransportTest {
         String workingDirectory = System.getProperty("user.dir");
         this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
         this.authorisedTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
-        webAppSteps.createAppAndCredentials();
     }
 
     @AfterClass
@@ -39,16 +37,6 @@ public class TransportTest {
     @BeforeTest
     public void beforeScenario() {
         webAppSteps.createAppAndCredentials();
-    }
-
-    @Test
-    public void ssl_service_should_employ_strong_ciphers_and_protocols() throws IOException {
-        webAppSteps.runSSLTestsOnSecureBaseUrl();
-        webAppSteps.sslServiceNotVulnerableToCRIME();
-        webAppSteps.sslServiceNotVulnerableToBEAST();
-        webAppSteps.sslMinimum128bitCiphers();
-        webAppSteps.sslNoV2();
-        webAppSteps.sslNoCipher(Constants.RC4);
     }
 
     @Test
