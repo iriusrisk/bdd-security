@@ -18,7 +18,7 @@
  ******************************************************************************/
 package net.continuumsecurity.web.steps;
 
-import com.continuumsecurity.utils.TestSSL;
+import net.continuumsecurity.utils.TestSSL;
 import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarRequest;
@@ -549,9 +549,28 @@ public class WebApplicationSteps {
         assertThat(isV2, equalTo(false));
     }
 
+    @Then("$protocol should be supported")
+    public void sslSupportProtocol(@Named("protocol")String protocol) {
+        boolean found = false;
+        for (String version : testSSL.getSupportedProtocols()) {
+            if (version.contains(protocol)) {
+                found = true;
+            }
+        }
+        assertThat(testSSL.getSupportedProtocols().toString(), found, equalTo(true));
+    }
+
     @Then("$cipher ciphers must not be supported")
     public void sslNoCipher(@Named("cipher") String cipher) {
         assertThat(testSSL.getSupportedCiphers().toString(),Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(), cipher), is(false));
+    }
+
+    //@Then("a $cipherType cipher should be supported")
+    @Then("a $cipher cipher must be enabled")
+    public void sslSupportAtLeastOneCipher(@Named("cipher") String cipher) {
+        System.out.println(">>>>>>>>");
+        System.out.println(testSSL.getSupportedCiphers().toString());
+        assertThat(testSSL.getSupportedCiphers().toString(),Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(), cipher), is(true));
     }
 
     @When("the first HTTP request-response is recorded")

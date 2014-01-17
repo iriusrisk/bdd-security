@@ -23,7 +23,7 @@ public class AutomatedScanningTest {
     @Test
     public void testActiveSecurityScan() throws Exception {
         String workingDirectory = System.getProperty("user.dir");
-        ExamplesTable falsePositives = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/false_positives.table"));
+        ExamplesTable falsePositives = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/tables/false_positives.table"));
 
         this.automatedScanningSteps.navigateApp();
         this.automatedScanningSteps.runScanner();

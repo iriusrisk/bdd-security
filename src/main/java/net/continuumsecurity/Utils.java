@@ -131,9 +131,11 @@ public class Utils {
         return false;
     }
 
-    public static boolean mapOfStringListContainsString(Map<String, List<String>>map, String target) {
+    public static boolean mapOfStringListContainsString(Map<String, List<String>> map, String target) {
+        log.info("Searching ciphers for: "+target);
         for (List<String> list : map.values()) {
             for (String value : list) {
+                log.info(value);
                 if (value.contains(target)) return true;
             }
         }

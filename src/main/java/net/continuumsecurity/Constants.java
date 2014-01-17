@@ -13,4 +13,6 @@ public class Constants {
     public static final String NOSNIFF = "nosniff";
     public static final String RC4 = "RC4";
     public static String CACHECONTROL = "Cache-control";
+    public static String ECDHE_CIPHER = "ECDHE";
+    public static String DHE_CIPHER = "DHE";
 }

@@ -49,5 +49,11 @@ public class SslTest {
         webAppSteps.sslNoCipher(Constants.RC4);
     }
 
+    @Test
+    public void ssl_support_perfect_forward_secrecy() {
+        webAppSteps.sslSupportAtLeastOneCipher(Constants.ECDHE_CIPHER);
+        webAppSteps.sslSupportAtLeastOneCipher(Constants.DHE_CIPHER);
+    }
+
 }
 
