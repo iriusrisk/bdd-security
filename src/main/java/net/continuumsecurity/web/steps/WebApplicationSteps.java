@@ -346,8 +346,7 @@ public class WebApplicationSteps {
         String xpath = "//input[@type='password']";
         List<WebElement> passwds = ((WebApplication) app).getWebDriver().findElements(
                 By.xpath(xpath));
-        if (passwds.size() > 1) throw new UnexpectedContentException("More than one password field found using XPath: "+xpath);
-        if (passwds == null) throw new UnexpectedContentException("Did not find password field using XPath: "+xpath);
+        if (passwds.size() != 1) throw new UnexpectedContentException("Found "+passwds.size()+" password fields using XPath: "+xpath);
         currentElement = passwds.get(0);
     }
 
@@ -357,8 +356,7 @@ public class WebApplicationSteps {
         String xpath = "//form[.//input[@type='password']]";
         List<WebElement> loginForms = ((WebApplication) app).getWebDriver().findElements(
                 By.xpath(xpath));
-        if (loginForms.size() > 1) throw new UnexpectedContentException("More than one login form found using XPath: "+xpath);
-        if (loginForms == null) throw new UnexpectedContentException("No login form found using XPath: "+xpath);
+        if (loginForms.size() != 1) throw new UnexpectedContentException("Found "+loginForms.size()+" login forms using XPath: "+xpath);
         currentElement = loginForms.get(0);
     }
 
@@ -587,8 +585,6 @@ public class WebApplicationSteps {
     //@Then("a $cipherType cipher should be supported")
     @Then("a $cipher cipher must be enabled")
     public void sslSupportAtLeastOneCipher(@Named("cipher") String cipher) {
-        System.out.println(">>>>>>>>");
-        System.out.println(testSSL.getSupportedCiphers().toString());
         assertThat(testSSL.getSupportedCiphers().toString(),Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(), cipher), is(true));
     }
 

@@ -145,7 +145,7 @@ public class StoryRunner extends BaseStoryRunner {
             run();
             log.debug("Completed StoryRunner.run() successfully.");
         } catch (Throwable e) {
-            log.debug("Caught exception from StoryRunner.run()");
+            log.debug("Caught exception from StoryRunner.execute()");
             e.printStackTrace();
         } finally {
             wrapUp();
