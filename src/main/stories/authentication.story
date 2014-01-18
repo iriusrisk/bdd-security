@@ -47,10 +47,20 @@ And the HTTP request-response containing the default credentials is inspected
 Then the response status code should start with 3
 
 
-Scenario: The AUTOCOMPLETE attribute should be disabled on the password field 
-Meta: @id auth_autocomplete
+Scenario: The AUTOCOMPLETE attribute should be disabled on the login form
+Meta: @id auth_autocomplete_login_form
 Given the login page
-Then the password field should have the autocomplete directive set to 'off'
+When the login form is inspected
+Then it should have the autocomplete attribute set to 'off'
+
+
+Scenario: The AUTOCOMPLETE attribute should be disabled on the password field
+Meta: @id auth_autocomplete_password
+@Skip
+Given the login page
+When the password field is insepected
+Then it should have the autocomplete attribute set to 'off'
+
 
 Scenario: The user account should be locked out after 4 incorrect authentication attempts  
 Meta: @id auth_lockout

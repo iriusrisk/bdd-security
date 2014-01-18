@@ -65,6 +65,7 @@ public class WebApplicationSteps {
     TestSSL testSSL;
     Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     List<HarEntry> recordedEntries;
+    WebElement currentElement;
 
     public WebApplicationSteps() {
 
@@ -340,12 +341,30 @@ public class WebApplicationSteps {
         }
     }
 
-    @Then("the password field should have the autocomplete directive set to 'off'")
-    public void thenThePasswordFieldShouldHaveTheAutocompleteDirectiveSetTodisabled() {
-        WebElement passwd = ((WebApplication) app).getWebDriver().findElement(
-                By.xpath("//input[@type='password']"));
-        assertThat(passwd.getAttribute("autocomplete"),
-                equalToIgnoringCase("off"));
+    @When("the password field is insepected")
+    public void selectPasswordField() {
+        String xpath = "//input[@type='password']";
+        List<WebElement> passwds = ((WebApplication) app).getWebDriver().findElements(
+                By.xpath(xpath));
+        if (passwds.size() > 1) throw new UnexpectedContentException("More than one password field found using XPath: "+xpath);
+        if (passwds == null) throw new UnexpectedContentException("Did not find password field using XPath: "+xpath);
+        currentElement = passwds.get(0);
+    }
+
+
+    @When("the login form is inspected")
+    public void selectLoginFormElement() {
+        String xpath = "//form[.//input[@type='password']]";
+        List<WebElement> loginForms = ((WebApplication) app).getWebDriver().findElements(
+                By.xpath(xpath));
+        if (loginForms.size() > 1) throw new UnexpectedContentException("More than one login form found using XPath: "+xpath);
+        if (loginForms == null) throw new UnexpectedContentException("No login form found using XPath: "+xpath);
+        currentElement = loginForms.get(0);
+    }
+
+    @Then("it should have the autocomplete attribute set to 'off'")
+    public void thenTheLogonFormShouldHaveTheAutocompleteDirectiveSetToOff() {
+        assertThat("Autocomplete set to off", currentElement.getAttribute("autocomplete"), equalToIgnoringCase("off"));
     }
 
     @Then("no exceptions are thrown")
