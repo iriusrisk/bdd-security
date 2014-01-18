@@ -58,7 +58,7 @@ Scenario: The AUTOCOMPLETE attribute should be disabled on the password field
 Meta: @id auth_autocomplete_password
 @Skip
 Given the login page
-When the password field is insepected
+When the password field is inspected
 Then it should have the autocomplete attribute set to 'off'
 
 

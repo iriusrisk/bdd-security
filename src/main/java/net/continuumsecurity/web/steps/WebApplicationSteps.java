@@ -341,7 +341,7 @@ public class WebApplicationSteps {
         }
     }
 
-    @When("the password field is insepected")
+    @When("the password field is inspected")
     public void selectPasswordField() {
         String xpath = "//input[@type='password']";
         List<WebElement> passwds = ((WebApplication) app).getWebDriver().findElements(
