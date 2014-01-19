@@ -15,4 +15,5 @@ public class Constants {
     public static String CACHECONTROL = "Cache-control";
     public static String ECDHE_CIPHER = "ECDHE";
     public static String DHE_CIPHER = "DHE";
+    public static String XSSPOLICY = "Cross-Site-Scripting";
 }

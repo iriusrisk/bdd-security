@@ -20,12 +20,16 @@ package net.continuumsecurity.web.steps;
 
 import net.continuumsecurity.Config;
 import net.continuumsecurity.FalsePositive;
+import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.Utils;
 import net.continuumsecurity.proxy.ScanningProxy;
 import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.drivers.ProxyFactory;
 import org.apache.log4j.Logger;
-import org.jbehave.core.annotations.*;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
 import org.zaproxy.clientapi.core.Alert;
 
@@ -41,24 +45,17 @@ public class AutomatedScanningSteps {
     Logger log = Logger.getLogger(AutomatedScanningSteps.class);
     ScanningProxy scanner;
     Application app;
-    String vulnName;
     List<Alert> alerts;
-    private boolean navigated = false;
 
     public AutomatedScanningSteps() {
-
-    }
-
-    @BeforeStory
-    public void createScanner() {
         app = Config.createApp();
         app.enableHttpLoggingClient();
-        log.debug("Resetting scanner state");
         scanner = ProxyFactory.getScanningProxy();
     }
 
-    @BeforeScenario
-    public void resetScanner() {
+
+    @Given("a new scanning session")
+    public void createNewScanSession() {
         scanner.clear();
     }
 
@@ -68,16 +65,67 @@ public class AutomatedScanningSteps {
         // scanner
         for (Method method : app.getScannableMethods()) {
             app.enableHttpLoggingClient();
-            log.debug("Navigating method: "+method.getName());
+            log.debug("Navigating method: " + method.getName());
             app.getClass().getMethod(method.getName()).invoke(app);
         }
-        navigated = true;
     }
+
+    @Given("the passive scanner is enabled")
+    public void enablePassiveScanner() {
+        scanner.setEnablePassiveScan(true);
+    }
+
+    @Given("all scan policies are disabled")
+    public void disableAllScanPolicies() {
+        scanner.disableAllScanners();
+    }
+
+    @Given("the $policyName policy is enabled")
+    public void enablePolicy(@Named("policyName") String policyName) {
+        String ids = null;
+        switch (policyName.toLowerCase()) {
+            case "cross-site-scripting":
+                ids = "40012,40014,40016,40017";  break;
+            case "sql-injection":
+                ids = "40018";   break;
+            case "mysql-sql-injection":
+                ids = "40019";  break;
+            case "hypersonic-sql-injection":
+                ids = "40020";  break;
+            case "oracle-sql-injection":
+                ids = "40021"; break;
+            case "postgresql-sql-injection":
+                ids = "40022"; break;
+            case "path-traversal":
+                ids = "6"; break;
+            case "remote-file-inclusion":
+                ids = "7"; break;
+            case "source-code-disclosure":
+                ids = "40"; break;
+            case "url-redirector-abuse":
+                ids = "20010"; break;
+            case "server-side-include":
+                ids = "40009"; break;
+            case "ldap-injection":
+                ids = "40015"; break;
+            case "server-side-code-injection-plugin":
+                ids = "90019";  break;
+            case "remote-os-command-injection-plugin":
+                ids = "90020"; break;
+            case "xpath-injection-plugin":
+                ids = "90021"; break;
+            case "external-redirect":
+                ids = "30000"; break;
+            case "crlf-injection":
+                ids = "40003"; break;
+        }
+        if (ids == null) throw new UnexpectedContentException("No matching policy found for: "+policyName);
+        scanner.setEnableScanners(ids, true);
+    }
+
 
     @When("the scanner is run")
     public void runScanner() throws Exception {
-        if (!navigated)
-            navigateApp();
         scanner.scan(Config.getBaseUrl());
         int complete = 0;
         while (complete < 100) {
@@ -95,7 +143,7 @@ public class AutomatedScanningSteps {
         for (Alert alert : alerts) {
             boolean falsePositive = false;
             for (FalsePositive falsep : Utils.getFalsePositivesFromTable(falsePositives)) {
-                if (falsep.matches(alert.getUrl(),alert.getParam(),Integer.toString(alert.getCweId()))) {
+                if (falsep.matches(alert.getUrl(), alert.getParam(), Integer.toString(alert.getCweId()))) {
                     falsePositive = true;
                 }
             }
@@ -104,17 +152,23 @@ public class AutomatedScanningSteps {
         alerts = clean;
     }
 
-    @Then("no HIGH or MEDIUM risk vulnerabilities should be present")
-    public void checkHighAndMediumRiskVulnerabilities() {
+    @Then("no $riskRating risk vulnerabilities should be present")
+    public void checkVulnerabilities(@Named("riskRating") String risk) {
         assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.", app.getScannableMethods().size(), greaterThan(0));
+        List<Alert> filteredAlerts = null;
+        Alert.Risk riskLevel = Alert.Risk.High;
 
-        List<Alert> high = getAllAlertsByRiskRating(alerts, Alert.Risk.High);
-        String highDetail = getAlertDetails(high);
+        if ("HIGH".equalsIgnoreCase(risk)) {
+            riskLevel = Alert.Risk.High;
+        } else if ("MEDIUM".equalsIgnoreCase(risk)) {
+            riskLevel = Alert.Risk.Medium;
+        } else if ("LOW".equalsIgnoreCase(risk)) {
+            riskLevel = Alert.Risk.Low;
+        }
+        filteredAlerts = getAllAlertsByRiskRating(alerts, riskLevel);
+        String details = getAlertDetails(filteredAlerts);
 
-        List<Alert> medium = getAllAlertsByRiskRating(alerts, Alert.Risk.High);
-        String mediumDetail = getAlertDetails(medium);
-
-        assertThat(high.size() + " high risk and "+medium.size()+" medium risk vulnerabilities.\nHigh Risk:\n" + highDetail + "\nMedium Risk:"+mediumDetail, high.size()+medium.size(),
+        assertThat(filteredAlerts.size() + " " + risk + " vulnerabilities found.\nDetails:\n" + details, filteredAlerts.size(),
                 equalTo(0));
     }
 
