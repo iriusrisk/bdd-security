@@ -54,9 +54,10 @@ public class AutomatedScanningSteps {
     }
 
 
-    @Given("a new scanning session")
+    @Given("a fresh scanner with all policies disabled")
     public void createNewScanSession() {
         scanner.clear();
+        scanner.disableAllScanners();
     }
 
     @Given("the scannable methods of the application are navigated through the proxy")
@@ -75,10 +76,6 @@ public class AutomatedScanningSteps {
         scanner.setEnablePassiveScan(true);
     }
 
-    @Given("all scan policies are disabled")
-    public void disableAllScanPolicies() {
-        scanner.disableAllScanners();
-    }
 
     @Given("the $policyName policy is enabled")
     public void enablePolicy(@Named("policyName") String policyName) {
@@ -108,11 +105,11 @@ public class AutomatedScanningSteps {
                 ids = "40009"; break;
             case "ldap-injection":
                 ids = "40015"; break;
-            case "server-side-code-injection-plugin":
+            case "server-side-code-injection":
                 ids = "90019";  break;
-            case "remote-os-command-injection-plugin":
+            case "remote-os-command-injection":
                 ids = "90020"; break;
-            case "xpath-injection-plugin":
+            case "xpath-injection":
                 ids = "90021"; break;
             case "external-redirect":
                 ids = "30000"; break;
@@ -152,7 +149,7 @@ public class AutomatedScanningSteps {
         alerts = clean;
     }
 
-    @Then("no $riskRating risk vulnerabilities should be present")
+    @Then("no $riskRating or higher risk vulnerabilities should be present")
     public void checkVulnerabilities(@Named("riskRating") String risk) {
         assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.", app.getScannableMethods().size(), greaterThan(0));
         List<Alert> filteredAlerts = null;
@@ -175,7 +172,7 @@ public class AutomatedScanningSteps {
     private List<Alert> getAllAlertsByRiskRating(List<Alert> alerts, Alert.Risk rating) {
         List<Alert> results = new ArrayList<Alert>();
         for (Alert alert : alerts) {
-            if (alert.getRisk().equals(rating)) results.add(alert);
+            if (alert.getRisk().ordinal() >= rating.ordinal() ) results.add(alert);
         }
         return results;
     }
