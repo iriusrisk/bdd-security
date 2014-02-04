@@ -27,5 +27,6 @@ And the proxy logs are cleared
 And they access the restricted resource: <method> and the response that contains the string: <sensitiveData> is recorded
 Then the HTTP Cache-control header has the value: no-cache, no-store, must-revalidate
 And the HTTP Pragma header has the value: no-cache
+
 Examples:
 tables/authorised.resources.table
