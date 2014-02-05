@@ -21,6 +21,7 @@ package net.continuumsecurity.runner;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AutomatedScanningSteps;
+import net.continuumsecurity.web.steps.InfrastructureSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.apache.commons.io.FileUtils;
 import org.jbehave.core.io.CodeLocations;
@@ -69,6 +70,7 @@ public class StoryRunner extends BaseStoryRunner {
         WebApplicationSteps ws = new WebApplicationSteps();
         return new InstanceStepsFactory(configuration(),
                 ws,
+                new InfrastructureSteps(),
                 new AutomatedScanningSteps());
     }
 

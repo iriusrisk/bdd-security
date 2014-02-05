@@ -1,0 +1,3 @@
+01-06 16:41:44 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "TASK" not found; SQL statement:
+alter table task drop constraint FK3635853BB10338 [42102-164]

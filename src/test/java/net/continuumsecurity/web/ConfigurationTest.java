@@ -25,7 +25,7 @@ public class ConfigurationTest {
         webAppSteps.createAppAndCredentials();
         String workingDirectory = System.getProperty("user.dir");
         this.usersTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/users.table");
-        this.automatedScanningSteps.createScanner();
+        this.automatedScanningSteps.createNewScanSession();
     }
 
     @Test

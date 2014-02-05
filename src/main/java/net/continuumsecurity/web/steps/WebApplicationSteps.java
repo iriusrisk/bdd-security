@@ -18,7 +18,6 @@
  ******************************************************************************/
 package net.continuumsecurity.web.steps;
 
-import net.continuumsecurity.utils.TestSSL;
 import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarRequest;
@@ -41,9 +40,7 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +59,6 @@ public class WebApplicationSteps {
     HarEntry currentHar;
     LoggingProxy proxy;
     List<Cookie> sessionIds;
-    TestSSL testSSL;
     Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     List<HarEntry> recordedEntries;
     WebElement currentElement;
@@ -526,66 +522,6 @@ public class WebApplicationSteps {
                 return cookie;
         }
         return null;
-    }
-
-    @Given("SSL tests have been run on the secure base Url")
-    public void runSSLTestsOnSecureBaseUrl() throws IOException {
-        if (testSSL == null) {
-            testSSL = new TestSSL();
-            URL url = new URL(Config.getBaseSecureUrl());
-            int port = url.getPort();
-            if (port == -1) port = 443;
-            testSSL.test(url.getHost(), port);
-        }
-    }
-
-    @Then("the service must not support SSL compression")
-    public void sslServiceNotVulnerableToCRIME() {
-        assertThat(testSSL.isVulnCRIME(), is(false));
-    }
-
-    @Then("the service must not be vulnerable to the BEAST attack")
-    public void sslServiceNotVulnerableToBEAST() {
-        assertThat(testSSL.isVulnBEAST(), is(false));
-    }
-
-    @Then("the minimum ciphers strength must be 128 bit")
-    public void sslMinimum128bitCiphers() {
-        assertThat(testSSL.getMinEncryptionStrength(), greaterThanOrEqualTo(3));
-    }
-
-    @Then("SSL version 2 must not be supported")
-    public void sslNoV2() {
-        boolean isV2 = false;
-        for (String version : testSSL.getSupportedProtocols()) {
-            if (version.contains("SSLv2")) {
-                isV2 = true;
-                break;
-            }
-        }
-        assertThat(isV2, equalTo(false));
-    }
-
-    @Then("$protocol should be supported")
-    public void sslSupportProtocol(@Named("protocol")String protocol) {
-        boolean found = false;
-        for (String version : testSSL.getSupportedProtocols()) {
-            if (version.contains(protocol)) {
-                found = true;
-            }
-        }
-        assertThat(testSSL.getSupportedProtocols().toString(), found, equalTo(true));
-    }
-
-    @Then("$cipher ciphers must not be supported")
-    public void sslNoCipher(@Named("cipher") String cipher) {
-        assertThat(testSSL.getSupportedCiphers().toString(),Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(), cipher), is(false));
-    }
-
-    //@Then("a $cipherType cipher should be supported")
-    @Then("a $cipher cipher must be enabled")
-    public void sslSupportAtLeastOneCipher(@Named("cipher") String cipher) {
-        assertThat(testSSL.getSupportedCiphers().toString(),Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(), cipher), is(true));
     }
 
     @When("the first HTTP request-response is recorded")

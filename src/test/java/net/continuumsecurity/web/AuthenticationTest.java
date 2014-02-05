@@ -80,7 +80,7 @@ public class AuthenticationTest {
     @Test
     public void the_AUTOCOMPLETE_attribute_should_be_disabled_on_the_password_field() {
         webAppSteps.openLoginPage();
-        webAppSteps.thenThePasswordFieldShouldHaveTheAutocompleteDirectiveSetTodisabled();
+        webAppSteps.thenTheLogonFormShouldHaveTheAutocompleteDirectiveSetToOff();
     }
 
     @Test

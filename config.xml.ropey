@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<web-app>
+    <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks,
+         you'll need to modify them for your app -->
+
+    <!-- The default driver for tests that don't require a proxy.
+         Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
+    <defaultDriver>firefox</defaultDriver> -->
+    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>
+
+    <!-- The driver configured to use ZAP as the proxy -->
+    <proxyDriver path="drivers/chromedriver-mac">Chrome</proxyDriver>
+
+    <!-- Base URL for the application to test -->
+    <baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
+
+    <!-- Used for the SSL and the HTTP header tests -->
+    <baseSecureUrl>http://localhost:9110/ropeytasks/</baseSecureUrl>
+
+    <!-- The fully qualified class name representing the application under test -->
+    <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
+
+    <!-- Names of the session ID cookies -->
+    <sessionIds>
+        <name>JSESSIONID</name>
+    </sessionIds>
+
+    <users>
+        <user username="alice" password="password">
+            <recoverpassword name="email" value="alice@continuumsecurity.net"/>
+        </user>
+        <user username="bob" password="password">
+            <recoverpassword name="email" value="bob@continuumsecurity.net"/>
+        </user>
+        <user username="admin" password="password">
+            <recoverpassword name="email" value="admin@continuumsecurity.net"/>
+        </user>
+    </users>
+
+    <incorrectPassword>SDFsdfwjx1</incorrectPassword>
+    <incorrectUsername>bobbles</incorrectUsername>
+
+    <proxy>
+        <host>127.0.0.1</host>
+        <port>8888</port>
+    </proxy>
+
+    <displayStackTrace>true</displayStackTrace>
+    <storyDir>src/main/stories/</storyDir>
+    <reportsDir>reports</reportsDir>
+    <latestReportsDir>reports/latest</latestReportsDir>
+</web-app>
