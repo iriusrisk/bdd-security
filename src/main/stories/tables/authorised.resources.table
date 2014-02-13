@@ -1,6 +1,6 @@
-|method		|username		|password		|sensitiveData		
-|viewUserList		|admin		|password		|User List		
-|viewProfileForAlice		|alice		|password		|alice@continuumsecurity.net		
-|viewProfileForAlice		|admin		|password		|alice@continuumsecurity.net		
-|viewProfileForBob		|bob		|password		|Robert		
-|viewProfileForBob		|admin		|password		|Robert		
+|method		|username		|password		|sensitiveData		|
+|viewUserList		|admin		|password		|User List		|
+|viewProfileForAlice		|alice		|password		|alice@continuumsecurity.net		|
+|viewProfileForAlice		|admin		|password		|alice@continuumsecurity.net		|
+|viewProfileForBob		|bob		|password		|Robert		|
+|viewProfileForBob		|admin		|password		|Robert		|

@@ -214,13 +214,11 @@ public class Config {
         List<String> row = new ArrayList<String>();
         row.add("username");
         row.add("password");
-        row.add("roles");
         table.add(row);
         for (User user : users.getAll()) {
             row = new ArrayList<String>();
             row.add(user.getCredentials().get("username"));
             row.add(user.getCredentials().get("password"));
-            row.add(user.getRolesAsCSV());
             table.add(row);
         }
         return table;
@@ -287,6 +285,7 @@ public class Config {
                 for (String col : row) {
                     sb.append("|").append(col).append("\t\t");
                 }
+                sb.append("|");
                 writer.println(sb.toString());
             }
         } catch (IOException e) {

@@ -181,10 +181,10 @@ public class AutomatedScanningSteps {
         String detail = "";
         if (alerts.size() != 0) {
             for (Alert alert : alerts) {
-
-                detail = detail + alert.getUrl() + "\n"
-                        + alert.getParam() + "\n"
-                        + alert.getAlert() + "\n\n";
+                detail = detail + alert.getAlert()+"\n"
+                        + "URL: "+alert.getUrl() + "\n"
+                        + "Parameter: "+alert.getParam() + "\n"
+                        + "CWE: " + alert.getCweId() + "\n";
             }
         }
         return detail;

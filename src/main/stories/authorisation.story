@@ -37,4 +37,3 @@ When the user logs in
 Then when they access the restricted resource: <method> they should not see the string: <sensitiveData>
 Examples:
 tables/unauthorised.resources.table
-
