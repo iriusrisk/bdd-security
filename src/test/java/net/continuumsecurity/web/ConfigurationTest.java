@@ -59,11 +59,5 @@ public class ConfigurationTest {
         webAppSteps.loginFails();
     }
 
-    @Test
-    public void verify_that_the_methods_tagged_with_SecurityScan_can_be_navigated_without_errors() throws Exception {
-        webAppSteps.createApp();
-        automatedScanningSteps.navigateApp();
-        webAppSteps.doNothing();
-    }
 }
 

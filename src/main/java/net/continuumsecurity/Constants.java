@@ -16,4 +16,5 @@ public class Constants {
     public static String ECDHE_CIPHER = "ECDHE";
     public static String DHE_CIPHER = "DHE";
     public static String XSSPOLICY = "Cross-Site-Scripting";
+    public static String SQLINJPOLICY = "sql-injection";
 }

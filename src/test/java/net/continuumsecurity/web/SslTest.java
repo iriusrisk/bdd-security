@@ -2,7 +2,7 @@ package net.continuumsecurity.web;
 
 import net.continuumsecurity.Constants;
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
+import net.continuumsecurity.web.steps.InfrastructureSteps;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 
 public class SslTest {
-    protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
+    protected InfrastructureSteps webAppSteps = new InfrastructureSteps();
 
     @AfterClass
     public void tearDown() {
@@ -20,7 +20,6 @@ public class SslTest {
 
     @BeforeTest
     public void beforeScenario() throws IOException {
-        webAppSteps.createAppAndCredentials();
         webAppSteps.runSSLTestsOnSecureBaseUrl();
     }
 

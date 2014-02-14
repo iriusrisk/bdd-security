@@ -39,35 +39,44 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
 
 public class AutomatedScanningSteps {
     Logger log = Logger.getLogger(AutomatedScanningSteps.class);
     ScanningProxy scanner;
     Application app;
-    List<Alert> alerts;
+    List<Alert> alerts  = new ArrayList<>();
+    private List<Alert> alertsFromPreviousScenarios = new ArrayList<>();
+    boolean scannerCleared = false, navigated = false;
 
     public AutomatedScanningSteps() {
-        app = Config.createApp();
-        app.enableHttpLoggingClient();
-        scanner = ProxyFactory.getScanningProxy();
+
     }
 
 
     @Given("a fresh scanner with all policies disabled")
     public void createNewScanSession() {
-        scanner.clear();
+        app = Config.createApp();
+        app.enableHttpLoggingClient();
+        scanner = ProxyFactory.getScanningProxy();
+        //Nasty hack.  ZAP has no way to delete only the Alerts, so if we clear it we lose the HTTP history and re-navigate it for every scenario.
+        //To avoid this, we clear it once only and then store a list of previously found alerts and remove them from the current alerts
+        if (!scannerCleared) {
+            scanner.clear();
+            scannerCleared = true;
+        }
         scanner.disableAllScanners();
+        addToAlertsFromPreviousScenarios(alerts);
     }
 
-    @Given("the scannable methods of the application are navigated through the proxy")
-    public void navigateApp() throws Exception {
-        // Navigate through the app and record the traffic through the
-        // scanner
-        for (Method method : app.getScannableMethods()) {
+    @Given("the page flow described in the method: $methodName is performed through the proxy")
+    public void navigateApp(@Named("methodName") String methodName) throws Exception {
+        //Only navigate the app once
+        if (!navigated) {
+            Method method = app.getClass().getMethod(methodName);
             app.enableHttpLoggingClient();
             log.debug("Navigating method: " + method.getName());
-            app.getClass().getMethod(method.getName()).invoke(app);
+            method.invoke(app);
+            navigated = true;
         }
     }
 
@@ -82,41 +91,58 @@ public class AutomatedScanningSteps {
         String ids = null;
         switch (policyName.toLowerCase()) {
             case "cross-site-scripting":
-                ids = "40012,40014,40016,40017";  break;
+                ids = "40012,40014,40016,40017";
+                break;
             case "sql-injection":
-                ids = "40018";   break;
+                ids = "40018";
+                break;
             case "mysql-sql-injection":
-                ids = "40019";  break;
+                ids = "40019";
+                break;
             case "hypersonic-sql-injection":
-                ids = "40020";  break;
+                ids = "40020";
+                break;
             case "oracle-sql-injection":
-                ids = "40021"; break;
+                ids = "40021";
+                break;
             case "postgresql-sql-injection":
-                ids = "40022"; break;
+                ids = "40022";
+                break;
             case "path-traversal":
-                ids = "6"; break;
+                ids = "6";
+                break;
             case "remote-file-inclusion":
-                ids = "7"; break;
+                ids = "7";
+                break;
             case "source-code-disclosure":
-                ids = "40"; break;
+                ids = "40";
+                break;
             case "url-redirector-abuse":
-                ids = "20010"; break;
+                ids = "20010";
+                break;
             case "server-side-include":
-                ids = "40009"; break;
+                ids = "40009";
+                break;
             case "ldap-injection":
-                ids = "40015"; break;
+                ids = "40015";
+                break;
             case "server-side-code-injection":
-                ids = "90019";  break;
+                ids = "90019";
+                break;
             case "remote-os-command-injection":
-                ids = "90020"; break;
+                ids = "90020";
+                break;
             case "xpath-injection":
-                ids = "90021"; break;
+                ids = "90021";
+                break;
             case "external-redirect":
-                ids = "30000"; break;
+                ids = "30000";
+                break;
             case "crlf-injection":
-                ids = "40003"; break;
+                ids = "40003";
+                break;
         }
-        if (ids == null) throw new UnexpectedContentException("No matching policy found for: "+policyName);
+        if (ids == null) throw new UnexpectedContentException("No matching policy found for: " + policyName);
         scanner.setEnableScanners(ids, true);
     }
 
@@ -128,13 +154,14 @@ public class AutomatedScanningSteps {
         while (complete < 100) {
             complete = scanner.getPercentComplete();
             log.debug("Scan is " + complete + "% complete.");
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         }
     }
 
     @When("false positives described in: $falsePositives are removed")
     public void removeFalsePositives(ExamplesTable falsePositives) {
-        alerts = scanner.getAlerts();
+        List<Alert> allAlerts = scanner.getAlerts();
+        alerts = removeAlertsFromPreviousScenarios(allAlerts);
         List<Alert> clean = new ArrayList<Alert>();
 
         for (Alert alert : alerts) {
@@ -151,7 +178,6 @@ public class AutomatedScanningSteps {
 
     @Then("no $riskRating or higher risk vulnerabilities should be present")
     public void checkVulnerabilities(@Named("riskRating") String risk) {
-        assertThat("No methods found annotated with @SecurityScan.  Nothing scanned.", app.getScannableMethods().size(), greaterThan(0));
         List<Alert> filteredAlerts = null;
         Alert.Risk riskLevel = Alert.Risk.High;
 
@@ -172,7 +198,7 @@ public class AutomatedScanningSteps {
     private List<Alert> getAllAlertsByRiskRating(List<Alert> alerts, Alert.Risk rating) {
         List<Alert> results = new ArrayList<Alert>();
         for (Alert alert : alerts) {
-            if (alert.getRisk().ordinal() >= rating.ordinal() ) results.add(alert);
+            if (alert.getRisk().ordinal() >= rating.ordinal()) results.add(alert);
         }
         return results;
     }
@@ -181,12 +207,58 @@ public class AutomatedScanningSteps {
         String detail = "";
         if (alerts.size() != 0) {
             for (Alert alert : alerts) {
-                detail = detail + alert.getAlert()+"\n"
-                        + "URL: "+alert.getUrl() + "\n"
-                        + "Parameter: "+alert.getParam() + "\n"
+                detail = detail + alert.getAlert() + "\n"
+                        + "URL: " + alert.getUrl() + "\n"
+                        + "Parameter: " + alert.getParam() + "\n"
                         + "CWE: " + alert.getCweId() + "\n";
             }
         }
         return detail;
+    }
+
+    public boolean alertsMatchByValue(Alert first, Alert second) {
+        //The built in Alert.matches(Alert) method includes risk, reliability and alert, but not cweid.
+        if (first.getCweId() != second.getCweId()) return false;
+        if (!first.getParam().equals(second.getParam())) return false;
+        if (!first.getUrl().equals(second.getUrl())) return false;
+        if (!first.matches(second)) return false;
+        return true;
+    }
+
+    public void addToAlertsFromPreviousScenarios(List<Alert> toAdd) {
+        for (Alert alert : toAdd) {
+            if (!containsAlertByValue(alertsFromPreviousScenarios, alert)) {
+                alertsFromPreviousScenarios.add(alert);
+            }
+        }
+    }
+
+    public List<Alert> getAlertsFromPreviousScenarios() {
+        return alertsFromPreviousScenarios;
+    }
+
+    public boolean containsAlertByValue(List<Alert> alerts, Alert alert) {
+        boolean found = false;
+        for (Alert existing : alerts) {
+            if (alertsMatchByValue(alert,existing)) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+
+    public List<Alert> removeAlertsFromPreviousScenarios(List<Alert> theAlerts) {
+        List<Alert> filtered = new ArrayList<>();
+        for (Alert alert : theAlerts) {
+            if (!containsAlertByValue(alertsFromPreviousScenarios,alert)) {
+                filtered.add(alert);
+            }
+        }
+        return filtered;
+    }
+
+    public void setAlertsFromPreviousScenarios(List<Alert> alertsFromPreviousScenarios) {
+        this.alertsFromPreviousScenarios = alertsFromPreviousScenarios;
     }
 }

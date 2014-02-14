@@ -7,7 +7,6 @@ import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
-import net.continuumsecurity.web.SecurityScan;
 import net.continuumsecurity.web.WebApplication;
 import org.openqa.selenium.By;
 
@@ -84,8 +83,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.xpath("//input[@id='search']")).click();
     }
 
-    @SecurityScan
-    public void navigateUser() {
+    public void navigate() {
         openLoginPage();
         login(Config.instance().getUsers().getDefaultCredentials());
         verifyTextPresent("Welcome");
