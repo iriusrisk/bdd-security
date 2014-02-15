@@ -32,18 +32,18 @@ import org.openqa.selenium.WebDriver;
 
 public class WebApplication extends Application {
     protected WebDriver driver;
-    protected ICaptchaHelper captchaHelper;
+    protected ICaptchaSolver captchaHelper;
 
     public WebApplication() {
         log = Logger.getLogger(WebApplication.class);
-        if (this instanceof ICaptcha) captchaHelper = new CaptchaHelper(this,new CBSolveCaptcha());
+        if (this instanceof ICaptcha) captchaHelper = new CaptchaSolver(this,new CBSolveCaptcha());
     }
 
-    public ICaptchaHelper getCaptchaHelper() {
+    public ICaptchaSolver getCaptchaHelper() {
         return captchaHelper;
     }
 
-    public void setCaptchaHelper(ICaptchaHelper captchaHelper) {
+    public void setCaptchaHelper(ICaptchaSolver captchaHelper) {
         this.captchaHelper = captchaHelper;
     }
 

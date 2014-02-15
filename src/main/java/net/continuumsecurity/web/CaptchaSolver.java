@@ -2,7 +2,6 @@ package net.continuumsecurity.web;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -17,11 +16,11 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 
-public class CaptchaHelper extends CaptchaFinder implements ICaptchaHelper {
+public class CaptchaSolver extends CaptchaFinder implements ICaptchaSolver {
 	private ISolveCaptcha solver;
-	public static Logger log = Logger.getLogger(CaptchaHelper.class);
+	public static Logger log = Logger.getLogger(CaptchaSolver.class);
 	
-	public CaptchaHelper(Application app,ISolveCaptcha solver) {
+	public CaptchaSolver(Application app, ISolveCaptcha solver) {
 		super(app);
 		this.solver = solver;
 	}

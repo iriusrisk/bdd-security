@@ -1,7 +1,7 @@
 package net.continuumsecurity.web;
 
 
-public interface ICaptchaHelper {
+public interface ICaptchaSolver {
 	public void solve();
 	public boolean isCaptchaPresent();
 }

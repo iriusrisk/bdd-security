@@ -28,7 +28,7 @@ import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.proxy.LoggingProxy;
 import net.continuumsecurity.web.Application;
-import net.continuumsecurity.web.FakeCaptchaHelper;
+import net.continuumsecurity.web.FakeCaptchaSolver;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.WebApplication;
 import net.continuumsecurity.web.drivers.ProxyFactory;
@@ -158,15 +158,13 @@ public class WebApplicationSteps {
 
     @Then("the user is logged in")
     public void loginSucceeds() {
-        assertThat("The user is logged in", ((ILogin) app).isLoggedIn(credentials
-                .getUsername()), is(true));
+        assertThat("The user is logged in", ((ILogin) app).isLoggedIn(), is(true));
     }
 
     @Then("login fails")
     @Alias("the user is not logged in")
     public void loginFails() {
-        assertThat("The user is not logged in", ((ILogin) app).isLoggedIn(credentials
-                .getUsername()), is(false));
+        assertThat("The user is not logged in", ((ILogin) app).isLoggedIn(), is(false));
     }
 
     @When("the case of the password is changed")
@@ -384,7 +382,7 @@ public class WebApplicationSteps {
         if (!(app instanceof ICaptcha))
             throw new RuntimeException(
                     "App does not implement ICaptcha, skipping.");
-        ((ICaptcha) app).setCaptchaHelper(new FakeCaptchaHelper(app));
+        ((ICaptcha) app).setCaptchaHelper(new FakeCaptchaSolver(app));
     }
 
     @When("the password recovery feature is requested")

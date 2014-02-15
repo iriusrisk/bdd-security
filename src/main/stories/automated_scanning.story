@@ -27,7 +27,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain path traversal vulnerabilities
-Meta: @id scan_path_traversal  @skip
+Meta: @id scan_path_traversal
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the Path-traversal policy is enabled
@@ -37,7 +37,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain Server side include vulnerabilities
-Meta: @id scan_ssi         @skip
+Meta: @id scan_ssi
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the Server-side-include policy is enabled
@@ -47,7 +47,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain LDAP injection vulnerabilities
-Meta: @id scan_ldap_injection  @skip
+Meta: @id scan_ldap_injection
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the LDAP-Injection policy is enabled
@@ -57,7 +57,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain Operating System command injection vulnerabilities
-Meta: @id scan_os_injection  @skip
+Meta: @id scan_os_injection
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the Remote-OS-Command-Injection policy is enabled
@@ -67,7 +67,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain XPATH injection vulnerabilities
-Meta: @id scan_xpath_injection  @skip
+Meta: @id scan_xpath_injection
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the XPath-Injection policy is enabled
@@ -77,7 +77,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain external redirect vulnerabilities
-Meta: @id scan_external_redirect @skip
+Meta: @id scan_external_redirect
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the External-redirect policy is enabled
@@ -87,7 +87,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain URL Redirector vulnerabilities
-Meta: @id scan_url_redirector @skip
+Meta: @id scan_url_redirector
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the URL-Redirector-Abuse policy is enabled
@@ -97,7 +97,7 @@ Then no Medium or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain source code disclosure vulnerabilities
-Meta: @id scan_source_disclosure  @skip
+Meta: @id scan_source_disclosure
 Given a fresh scanner with all policies disabled
 And the page flow described in the method: navigate is performed through the proxy
 And the Source-Code-Disclosure policy is enabled

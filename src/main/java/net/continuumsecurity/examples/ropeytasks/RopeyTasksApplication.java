@@ -41,7 +41,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     }
 
     @Override
-    public boolean isLoggedIn(String user) {
+    public boolean isLoggedIn() {
         if (driver.getPageSource().contains("Tasks")) {
             return true;
         } else {
