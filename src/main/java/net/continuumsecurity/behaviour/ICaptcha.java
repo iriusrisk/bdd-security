@@ -6,5 +6,5 @@ import org.openqa.selenium.WebElement;
 public interface ICaptcha {
 	WebElement getCaptchaImage();
 	WebElement getCaptchaResponseField();
-    public void setCaptchaHelper(ICaptchaSolver helper);
+    public void setCaptchaSolver(ICaptchaSolver helper);
 }

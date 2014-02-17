@@ -23,6 +23,7 @@ import net.continuumsecurity.FalsePositive;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.Utils;
 import net.continuumsecurity.proxy.ScanningProxy;
+import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.drivers.ProxyFactory;
 import org.apache.log4j.Logger;
@@ -36,6 +37,7 @@ import org.zaproxy.clientapi.core.Alert;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -43,6 +45,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class AutomatedScanningSteps {
     Logger log = Logger.getLogger(AutomatedScanningSteps.class);
     ScanningProxy scanner;
+    Spider spider;
     Application app;
     List<Alert> alerts  = new ArrayList<>();
     private List<Alert> alertsFromPreviousScenarios = new ArrayList<>();
@@ -58,7 +61,8 @@ public class AutomatedScanningSteps {
         app = Config.createApp();
         app.enableHttpLoggingClient();
         scanner = ProxyFactory.getScanningProxy();
-        //Nasty hack.  ZAP has no way to delete only the Alerts, so if we clear it we lose the HTTP history and re-navigate it for every scenario.
+        spider = ProxyFactory.getSpider();
+        //Nasty hack.  ZAP has no way to delete only the Alerts, so if we clear it we lose the HTTP history and have to re-navigate it for every scenario.
         //To avoid this, we clear it once only and then store a list of previously found alerts and remove them from the current alerts
         if (!scannerCleared) {
             scanner.clear();
@@ -77,6 +81,48 @@ public class AutomatedScanningSteps {
             log.debug("Navigating method: " + method.getName());
             method.invoke(app);
             navigated = true;
+        }
+    }
+
+    @When("the following URLs are spidered: $urlsTable")
+    public void spiderUrls(ExamplesTable urlsTable) throws InterruptedException {
+        for (Map<String,String> row : urlsTable.getRows()) {
+            String url = row.get("url");
+            if (url.equalsIgnoreCase("baseurl")) url = Config.getBaseUrl();
+            else if (url.equalsIgnoreCase("basesecureurl")) url = Config.getBaseSecureUrl();
+            spider(url);
+        }
+    }
+
+    @Given("the spider is configured for a maximum depth of $depth")
+    public void setSpiderDepth(@Named("depth") int depth) {
+        spider.setMaxDepth(depth);
+    }
+
+    @Given("the following URL regular expressions are excluded from the spider: $excludedUrlsTable")
+    public void setExcludedRegex(ExamplesTable exRegex) {
+        for (Map<String,String> row : exRegex.getRows()) {
+            spider.excludeFromScan(row.get("regex"));
+        }
+    }
+
+
+    @Given("the spider is configured for $threads concurrent threads")
+    public void setSpiderThreads(@Named("threads")int threads) {
+        spider.setThreadCount(threads);
+    }
+
+
+    private void spider(String url) throws InterruptedException {
+        spider.spider(url);
+        int complete = spider.getSpiderStatus();
+        while (complete < 100) {
+            complete = spider.getSpiderStatus();
+            log.debug("Spidering of: "+url+" is " + complete + "% complete.");
+            Thread.sleep(1000);
+        }
+        for (String result : spider.getSpiderResults()) {
+            log.debug("Found Url: "+result);
         }
     }
 
@@ -152,7 +198,7 @@ public class AutomatedScanningSteps {
         scanner.scan(Config.getBaseUrl());
         int complete = 0;
         while (complete < 100) {
-            complete = scanner.getPercentComplete();
+            complete = scanner.getScanStatus();
             log.debug("Scan is " + complete + "% complete.");
             Thread.sleep(1000);
         }
@@ -233,10 +279,6 @@ public class AutomatedScanningSteps {
         }
     }
 
-    public List<Alert> getAlertsFromPreviousScenarios() {
-        return alertsFromPreviousScenarios;
-    }
-
     public boolean containsAlertByValue(List<Alert> alerts, Alert alert) {
         boolean found = false;
         for (Alert existing : alerts) {
@@ -256,6 +298,10 @@ public class AutomatedScanningSteps {
             }
         }
         return filtered;
+    }
+
+    public List<Alert> getAlertsFromPreviousScenarios() {
+        return alertsFromPreviousScenarios;
     }
 
     public void setAlertsFromPreviousScenarios(List<Alert> alertsFromPreviousScenarios) {

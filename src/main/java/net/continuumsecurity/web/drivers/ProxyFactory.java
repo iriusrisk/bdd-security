@@ -20,21 +20,23 @@ package net.continuumsecurity.web.drivers;
 
 
 import net.continuumsecurity.Config;
-import net.continuumsecurity.proxy.LoggingProxy;
-import net.continuumsecurity.proxy.ProxyException;
-import net.continuumsecurity.proxy.ScanningProxy;
-import net.continuumsecurity.proxy.ZAProxyScanner;
+import net.continuumsecurity.proxy.*;
 import org.apache.log4j.Logger;
 
 
 public class ProxyFactory {
-    private static ScanningProxy proxy;
+    private static ZAProxyScanner proxy;
 	static Logger log = Logger.getLogger(ProxyFactory.class);
 	
 	public static ScanningProxy getScanningProxy() throws ProxyException {
 		if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort());
 		return proxy;
 	}
+
+    public static Spider getSpider() throws ProxyException {
+        if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort());
+        return proxy;
+    }
     
     public static LoggingProxy getLoggingProxy() throws ProxyException {
         if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort());

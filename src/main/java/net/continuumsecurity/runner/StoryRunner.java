@@ -76,9 +76,16 @@ public class StoryRunner extends BaseStoryRunner {
 
     @Override
     public List<String> storyPaths() {
+        List<String> includes = new ArrayList<>();
+        includes.add("**/*.story");
+        includes.add("given/*.story");
+
+        List<String> excludes = new ArrayList<>();
+        excludes.add("**/configuration.story");
+        excludes.add("**/navigate_app.story");
         return new StoryFinder().findPaths(
-                CodeLocations.codeLocationFromURL(storyUrl), "**/*.story",
-                "**/configuration.story");
+                CodeLocations.codeLocationFromURL(storyUrl), includes,
+                excludes);
     }
 
     private void prepareReportsDir() throws IOException {
@@ -99,10 +106,16 @@ public class StoryRunner extends BaseStoryRunner {
       */
     protected List<String> createFilters() {
         List<String> filters = new ArrayList<String>();
-        if (storyName != null)
-            filters.add("-m \"+story "+storyName+"\"");
-        if (idName != null)
-            filters.add("-m \"+id "+idName+"\"");
+        if (storyName != null) {
+            if (storyName.equalsIgnoreCase("AutomatedScanning")) {
+                filters.add("-m \"+pre navigate +story "+storyName+"\"");
+            } else filters.add("-m \"+story "+storyName+"\"");
+        }
+        if (idName != null) {
+            if (idName.startsWith("scan")) {
+                filters.add("-m \"+pre navigate +id "+idName+"\"");
+            } else filters.add("-m \"+id "+idName+"\"");
+        }
         filters.add("-skip");
         log.debug(" running with filters:");
         for (String filter : filters) {

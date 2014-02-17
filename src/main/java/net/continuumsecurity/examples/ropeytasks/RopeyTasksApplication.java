@@ -98,7 +98,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
      * (non-Javadoc)
      *
      * @see
-     * net.continuumsecurity.web.IRecoverPassword#submitRecover(java.util.Map)
+     * net.continuumsecurity.behaviour.IRecoverPassword#submitRecover(java.util.Map)
      */
     @Override
     public void submitRecover(Map<String, String> details) {

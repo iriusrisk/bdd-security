@@ -382,7 +382,7 @@ public class WebApplicationSteps {
         if (!(app instanceof ICaptcha))
             throw new RuntimeException(
                     "App does not implement ICaptcha, skipping.");
-        ((ICaptcha) app).setCaptchaHelper(new FakeCaptchaSolver(app));
+        ((ICaptcha) app).setCaptchaSolver(new FakeCaptchaSolver(app));
     }
 
     @When("the password recovery feature is requested")
@@ -391,7 +391,7 @@ public class WebApplicationSteps {
                 .getAll().get(0).getRecoverPasswordMap());
     }
 
-    @Then("the CAPTCHA should be presented again")
+    @Then("the CAPTCHA should be presented")
     public void checkCaptchaPresent() {
         try {
             assertThat(((ICaptcha) app).getCaptchaImage(), notNullValue());
