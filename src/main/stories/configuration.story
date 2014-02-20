@@ -25,7 +25,7 @@ Examples:
 users.table
 
 
-Scenario: Verify that if users don't login, then they are not logged in (According to the ILogin.isLoggedIn(Role) method)
+Scenario: Verify that if users don't login, then they are not logged in (According to the ILogin.isLoggedIn() method)
 Meta: @id config_is_logged_in
 Given the login page
 Then the user is not logged in

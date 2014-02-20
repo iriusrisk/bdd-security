@@ -1,7 +1,7 @@
-Description: The password recovery feature should be securely implemented
-Meta: @story Password Recovery
+Description: The password reset feature should not leak user data
+Meta: @story PasswordRecovery
 
-Scenario: A CAPTCHA should be required for the password recovery feature
+Scenario: Display a CAPTCHA on the password reset page
 Meta: @id recover_captcha
 @skip
 Given a CAPTCHA solver that always fails

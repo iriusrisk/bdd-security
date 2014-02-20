@@ -1,7 +1,7 @@
 /*******************************************************************************
  *    BDD-Security, application security testing framework
  *
- * Copyright (C) `2012 Stephen de Vries`
+ * Copyright (C) `2014 Stephen de Vries`
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -106,10 +106,11 @@ public class StoryRunner extends BaseStoryRunner {
       */
     protected List<String> createFilters() {
         List<String> filters = new ArrayList<String>();
+        //JBehave doesn't propagate meta tags to givenstories, so we have to fix them manually
         if (storyName != null) {
             if (storyName.equalsIgnoreCase("AutomatedScanning")) {
                 filters.add("-m \"+pre navigate +story "+storyName+"\"");
-            } else filters.add("-m \"+story "+storyName+"\"");
+            }  else filters.add("-m \"+story "+storyName+"\"");
         }
         if (idName != null) {
             if (idName.startsWith("scan")) {

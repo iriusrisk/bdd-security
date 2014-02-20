@@ -10,7 +10,7 @@ And the user logs in from a fresh login page
 Then the user is not logged in
 
 
-Scenario: The login form itself should be served over SSL  
+Scenario: Present the login form itself over an HTTPS connection
 Meta: @id auth_login_form_over_ssl
 Given a browser configured to use an intercepting proxy
 And the proxy logs are cleared
@@ -19,7 +19,7 @@ And the HTTP request-response containing the login form
 Then the protocol should be HTTPS
 
 
-Scenario: Authentication credentials should be transmitted over SSL  
+Scenario: Transmit authentication credentials over HTTPS
 Meta: @id auth_https
 Given a browser configured to use an intercepting proxy
 And the proxy logs are cleared
@@ -37,21 +37,21 @@ And the HTTP request-response containing the default credentials is inspected
 Then the response status code should start with 3
 
 
-Scenario: The AUTOCOMPLETE attribute should be disabled on the login form
+Scenario: Disable browser auto-completion on the login form
 Meta: @id auth_autocomplete_login_form
 Given the login page
 When the login form is inspected
 Then it should have the autocomplete attribute set to 'off'
 
 
-Scenario: The AUTOCOMPLETE attribute should be disabled on the password field
+Scenario: Disable browser auto-completion on the password field
 Meta: @id auth_autocomplete_password @skip
 Given the login page
 When the password field is inspected
 Then it should have the autocomplete attribute set to 'off'
 
 
-Scenario: The user account should be locked out after 4 incorrect authentication attempts  
+Scenario: Lock the user account out after 4 incorrect authentication attempts
 Meta: @id auth_lockout
 Given the default username from: users.table
 And an incorrect password
@@ -60,7 +60,7 @@ When the default password is used from: users.table
 And the user logs in from a fresh login page
 Then the user is not logged in
 
-Scenario: Captcha should be displayed after 4 incorrect authentication attempts
+Scenario: Display a Captcha after 4 failed authentication attempts
 Meta: @id auth_login_captcha
 @skip
 Given the default username from: users.table

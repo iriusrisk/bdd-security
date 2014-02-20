@@ -12,3 +12,4 @@ And the spider is configured for 10 concurrent threads
 When the following URLs are spidered:
 |url|
 |baseUrl|
+|baseSecureUrl|

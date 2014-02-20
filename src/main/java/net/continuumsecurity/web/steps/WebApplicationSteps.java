@@ -1,7 +1,7 @@
 /*******************************************************************************
  *    BDD-Security, application security testing framework
  *
- * Copyright (C) `2012 Stephen de Vries`
+ * Copyright (C) `2014 Stephen de Vries`
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -62,6 +62,7 @@ public class WebApplicationSteps {
     Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     List<HarEntry> recordedEntries;
     WebElement currentElement;
+    private boolean httpHeadersRecorded = false;
 
     public WebApplicationSteps() {
 
@@ -248,7 +249,7 @@ public class WebApplicationSteps {
 
     @Then("the protocol should be HTTPS")
     public void protocolHttps() {
-        assertThat(currentHar.getRequest().getUrl(),currentHar.getRequest().getUrl().substring(0, 4),equalTo("https"));
+        assertThat(currentHar.getRequest().getUrl(), currentHar.getRequest().getUrl().substring(0, 4), equalTo("https"));
     }
 
     @Given("the HTTP request-response containing the login form")
@@ -266,7 +267,7 @@ public class WebApplicationSteps {
     @Then("the protocol of the current URL should be HTTPS")
     public void protocolBrowserUrlHttps() {
         String currentUrl = ((WebApplication) app).getWebDriver().getCurrentUrl();
-        assertThat(currentUrl,currentUrl.substring(0, 4), equalToIgnoringCase("https"));
+        assertThat(currentUrl, currentUrl.substring(0, 4), equalToIgnoringCase("https"));
     }
 
     @Then("the response status code should start with 3")
@@ -340,7 +341,8 @@ public class WebApplicationSteps {
         String xpath = "//input[@type='password']";
         List<WebElement> passwds = ((WebApplication) app).getWebDriver().findElements(
                 By.xpath(xpath));
-        if (passwds.size() != 1) throw new UnexpectedContentException("Found "+passwds.size()+" password fields using XPath: "+xpath);
+        if (passwds.size() != 1)
+            throw new UnexpectedContentException("Found " + passwds.size() + " password fields using XPath: " + xpath);
         currentElement = passwds.get(0);
     }
 
@@ -350,7 +352,8 @@ public class WebApplicationSteps {
         String xpath = "//form[.//input[@type='password']]";
         List<WebElement> loginForms = ((WebApplication) app).getWebDriver().findElements(
                 By.xpath(xpath));
-        if (loginForms.size() != 1) throw new UnexpectedContentException("Found "+loginForms.size()+" login forms using XPath: "+xpath);
+        if (loginForms.size() != 1)
+            throw new UnexpectedContentException("Found " + loginForms.size() + " login forms using XPath: " + xpath);
         currentElement = loginForms.get(0);
     }
 
@@ -553,6 +556,17 @@ public class WebApplicationSteps {
     @Then("the Access-Control-Allow-Origin header must not be: $value")
     public void checkThatAccessControlAllowOriginIsNotStar(@Named("value") String star) {
         assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), Constants.XXSSPROTECTION), not(star));
+    }
+
+    @When("the secure base Url is accessed and the HTTP response recorded")
+    public void accessSecureBaseUrlAndRecordHTTPResponse() {
+        if (!httpHeadersRecorded) {
+            enableLoggingDriver();
+            clearProxy();
+            openBaseSecureUrl();
+            recordFirstHarEntry();
+            httpHeadersRecorded = true;
+        }
     }
 
 }
