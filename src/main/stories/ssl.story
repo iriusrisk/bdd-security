@@ -1,4 +1,8 @@
-Description: The SSL service should support strong ciphers and protocols and provide protection against legacy clients
+Narrative: 
+In order to protect user data transmitted over the network
+As an engineer responsible for the security of the SSL service
+I want to implement good SSL practices and avoid known vulnerabilities 
+
 Meta: @story Ssl
 
 Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack

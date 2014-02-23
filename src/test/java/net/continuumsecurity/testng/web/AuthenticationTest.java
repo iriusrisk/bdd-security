@@ -1,14 +1,16 @@
-package net.continuumsecurity.web;
+package net.continuumsecurity.testng.web;
 
+import java.io.UnsupportedEncodingException;
+
+import net.continuumsecurity.testng.web.NgUtils;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+
 import org.jbehave.core.model.ExamplesTable;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import java.io.UnsupportedEncodingException;
 
 public class AuthenticationTest {
     protected WebApplicationSteps webAppSteps = new WebApplicationSteps();

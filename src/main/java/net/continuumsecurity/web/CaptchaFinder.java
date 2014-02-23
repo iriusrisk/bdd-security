@@ -1,9 +1,6 @@
 package net.continuumsecurity.web;
 
-import jline.internal.Log;
 import net.continuumsecurity.behaviour.ICaptcha;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;

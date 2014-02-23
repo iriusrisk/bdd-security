@@ -1,4 +1,8 @@
-Description: The host should be securely deployed and only expose the minimum services and ports required
+Narrative: 
+In order to reduce the risk of vulnerabilities introduced through software running on the host 
+As an engineer responsible for the configuration of the host system and network
+I want to ensure that the configuration of the host and network are as expected 
+
 Meta: @story Host
 
 Scenario: Only the required ports should be open

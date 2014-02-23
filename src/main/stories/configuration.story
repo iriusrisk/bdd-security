@@ -1,4 +1,8 @@
-Description: Verify that the configuration and application definition are sane
+Narrative: 
+In order to avoid running tests with a broken configuration
+As a user of this BDD-Security project
+I want to identify configuration errors 
+
 Meta: @story Configuration
 
 Scenario: Verify that all configured user accounts can login correctly

@@ -1,4 +1,8 @@
-Description: Access control should be enforced on the server side and should matche the authorisation model for this application
+Narrative: 
+In order to protect sensitive user data from unauthorised access
+As a developer responsible for the security of the application
+I want to ensure that only the authorised users have access to their data 
+
 Meta: @story Authorisation
 
 Scenario: Users can view restricted resources for which they are authorised

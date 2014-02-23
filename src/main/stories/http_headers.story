@@ -1,4 +1,8 @@
-Description: Set HTTP headers that enable built in browser security controls, and prevent common attacks
+Narrative: 
+In order to protect user data
+As a developer responsible for the security of the application
+I want to make use of HTTP headers to prevent common web based attacks 
+
 Meta: @story http_headers
 
 Scenario: Restrict other sites from placing it in an iframe in order to prevent ClickJacking attacks

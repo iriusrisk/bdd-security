@@ -1,5 +1,8 @@
+Narrative: 
+In order to protect user's sessions
+As a developer responsible for the security of the application
+I want to build a robust session management implementation 
 
-Description: Session management functions should be security implemented.
 Meta: @story SessionManagement
 
 Scenario: Issue a new session ID after authentication

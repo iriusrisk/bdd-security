@@ -1,7 +1,8 @@
 package net.continuumsecurity.internal.jbehave;
 
-import net.continuumsecurity.web.NgUtils;
+import net.continuumsecurity.testng.web.NgUtils;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 

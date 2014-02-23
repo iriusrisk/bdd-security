@@ -1,4 +1,4 @@
-package net.continuumsecurity.web;
+package net.continuumsecurity.testng.web;
 
 import net.continuumsecurity.Constants;
 import net.continuumsecurity.web.drivers.DriverFactory;

@@ -1,4 +1,4 @@
-package net.continuumsecurity.web;
+package net.continuumsecurity.testng.web;
 
 import java.io.FileReader;
 import java.io.BufferedReader;

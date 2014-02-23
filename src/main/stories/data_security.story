@@ -1,6 +1,9 @@
-Description: Sensitive data should be adequately protected
-Meta: @story DataSecurity
+Narrative: 
+In order to protect the confidentiality of sensitive user data
+As a developer responsible for the security of the application
+I want to ensure that appropriate controls are in place to prevent disclosure of this data both on the client and server side 
 
+Meta: @story DataSecurity
 
 Scenario: Prevent browser caching of sensitive data
 Meta: @id cache_control_headers

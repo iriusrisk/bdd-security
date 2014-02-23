@@ -1,4 +1,8 @@
-Description: The automated security scanner should not report serious vulnerabilities in the application
+Narrative: 
+In order to protect the integrity of the data, the database, the system and the user's session
+As a developer responsible for the security of the application
+I want to ensure that no common security vulnerabilities have been introduced to the application 
+
 Meta: @story AutomatedScanning
 
 GivenStories: navigate_app.story

@@ -130,7 +130,7 @@ public class WebApplicationSteps {
         loginWithSetCredentials();
     }
 
-    @Given("the username <username>")
+    @Given("the username $username")
     public void setUsernameFromExamples(@Named("username") String username) {
         credentials.setUsername(username);
     }
@@ -140,7 +140,7 @@ public class WebApplicationSteps {
         credentials.setUsername(Config.getIncorrectUsername());
     }
 
-    @Given("the password <password>")
+    @Given("the password $password")
     public void setCredentialsFromExamples(@Named("password") String password) {
         credentials.setPassword(password);
     }
@@ -394,7 +394,7 @@ public class WebApplicationSteps {
                 .getAll().get(0).getRecoverPasswordMap());
     }
 
-    @Then("the CAPTCHA should be presented")
+    @Then("the CAPTCHA should be present")
     public void checkCaptchaPresent() {
         try {
             assertThat(((ICaptcha) app).getCaptchaImage(), notNullValue());
