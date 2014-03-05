@@ -42,8 +42,8 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class AutomatedScanningSteps {
-    Logger log = Logger.getLogger(AutomatedScanningSteps.class);
+public class AppScanningSteps {
+    Logger log = Logger.getLogger(AppScanningSteps.class);
     ScanningProxy scanner;
     Spider spider;
     Application app;
@@ -51,7 +51,7 @@ public class AutomatedScanningSteps {
     private List<Alert> alertsFromPreviousScenarios = new ArrayList<>();
     boolean scannerCleared = false, navigated = false;
 
-    public AutomatedScanningSteps() {
+    public AppScanningSteps() {
 
     }
 

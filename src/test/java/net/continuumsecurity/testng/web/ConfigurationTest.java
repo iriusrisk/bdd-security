@@ -1,7 +1,7 @@
 package net.continuumsecurity.testng.web;
 
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.steps.AutomatedScanningSteps;
+import net.continuumsecurity.web.steps.AppScanningSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ConfigurationTest {
     protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
-    protected AutomatedScanningSteps automatedScanningSteps = new AutomatedScanningSteps();
+    protected AppScanningSteps automatedScanningSteps = new AppScanningSteps();
     protected List<HashMap> usersTable;
 
     @AfterClass

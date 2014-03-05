@@ -1,6 +1,6 @@
 package net.continuumsecurity.internal.jbehave;
 
-import net.continuumsecurity.web.steps.AutomatedScanningSteps;
+import net.continuumsecurity.web.steps.AppScanningSteps;
 import org.junit.Before;
 import org.junit.Test;
 import org.zaproxy.clientapi.core.Alert;
@@ -17,7 +17,7 @@ public class TestAutomatedScannerSteps {
     Alert first;
     Alert second;
     Alert third;
-    AutomatedScanningSteps steps;
+    AppScanningSteps steps;
 
     @Before
     public void setup() {
@@ -25,7 +25,7 @@ public class TestAutomatedScannerSteps {
         second = new Alert("alert2", "url2", Alert.Risk.High, Alert.Reliability.Warning, "param2", "other2");
         third = new Alert("alert3", "url3", Alert.Risk.High, Alert.Reliability.Warning, "param3", "other3");
 
-        steps = new AutomatedScanningSteps();
+        steps = new AppScanningSteps();
     }
 
     @Test

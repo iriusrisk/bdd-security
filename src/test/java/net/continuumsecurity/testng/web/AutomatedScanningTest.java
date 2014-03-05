@@ -2,7 +2,7 @@ package net.continuumsecurity.testng.web;
 
 import net.continuumsecurity.Constants;
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.steps.AutomatedScanningSteps;
+import net.continuumsecurity.web.steps.AppScanningSteps;
 import org.jbehave.core.model.ExamplesTable;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 
 public class AutomatedScanningTest {
-    protected AutomatedScanningSteps automatedScanningSteps = new AutomatedScanningSteps();
+    protected AppScanningSteps automatedScanningSteps = new AppScanningSteps();
     ExamplesTable falsePositives;
 
 

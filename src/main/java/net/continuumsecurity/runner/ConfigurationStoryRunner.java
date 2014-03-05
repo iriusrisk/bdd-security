@@ -18,7 +18,7 @@
  ******************************************************************************/
 package net.continuumsecurity.runner;
 
-import net.continuumsecurity.web.steps.AutomatedScanningSteps;
+import net.continuumsecurity.web.steps.AppScanningSteps;
 import net.continuumsecurity.web.steps.InfrastructureSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.jbehave.core.io.CodeLocations;
@@ -49,7 +49,7 @@ public class ConfigurationStoryRunner extends BaseStoryRunner {
 		return new InstanceStepsFactory(configuration(),
 				ws,
                 new InfrastructureSteps(),
-				new AutomatedScanningSteps());
+				new AppScanningSteps());
 	}
 	
 }

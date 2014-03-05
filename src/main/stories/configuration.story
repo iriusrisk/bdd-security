@@ -1,3 +1,5 @@
+Configuration of the test project
+
 Narrative: 
 In order to avoid running tests with a broken configuration
 As a user of this BDD-Security project
