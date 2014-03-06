@@ -21,6 +21,7 @@ package net.continuumsecurity.runner;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AppScanningSteps;
+import net.continuumsecurity.web.steps.HostScanningSteps;
 import net.continuumsecurity.web.steps.InfrastructureSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.apache.commons.io.FileUtils;
@@ -71,16 +72,17 @@ public class StoryRunner extends BaseStoryRunner {
         return new InstanceStepsFactory(configuration(),
                 ws,
                 new InfrastructureSteps(),
+                new HostScanningSteps(),
                 new AppScanningSteps());
     }
 
     @Override
     public List<String> storyPaths() {
-        List<String> includes = new ArrayList<>();
+        List<String> includes = new ArrayList<String>();
         includes.add("**/*.story");
         includes.add("given/*.story");
 
-        List<String> excludes = new ArrayList<>();
+        List<String> excludes = new ArrayList<String>();
         excludes.add("**/configuration.story");
         excludes.add("**/navigate_app.story");
         return new StoryFinder().findPaths(
