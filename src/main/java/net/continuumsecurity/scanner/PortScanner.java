@@ -23,12 +23,12 @@ public class PortScanner {
         final ExecutorService es = Executors.newFixedThreadPool(threads);
         final String ip = host;
         final int timeout = msTimeout;
-        final List<Future<PortResult>> futures = new ArrayList<>();
+        final List<Future<PortResult>> futures = new ArrayList<Future<PortResult>>();
         for (int port = startPort; port <= endPort; port++) {
             futures.add(scanPort(es, ip, port, timeout));
         }
         es.shutdown();
-        List<PortResult> results = new ArrayList<>();
+        List<PortResult> results = new ArrayList<PortResult>();
         for (Future<PortResult> future : futures) {
             results.add(future.get());
         }

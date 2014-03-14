@@ -80,7 +80,6 @@ public class StoryRunner extends BaseStoryRunner {
     public List<String> storyPaths() {
         List<String> includes = new ArrayList<String>();
         includes.add("**/*.story");
-        includes.add("given/*.story");
 
         List<String> excludes = new ArrayList<String>();
         excludes.add("**/configuration.story");
@@ -110,7 +109,7 @@ public class StoryRunner extends BaseStoryRunner {
         List<String> filters = new ArrayList<String>();
         //JBehave doesn't propagate meta tags to givenstories, so we have to fix them manually
         if (storyName != null) {
-            if (storyName.equalsIgnoreCase("AutomatedScanning")) {
+            if (storyName.equalsIgnoreCase("AppScanning")) {
                 filters.add("-m \"+pre navigate +story "+storyName+"\"");
             }  else filters.add("-m \"+story "+storyName+"\"");
         }

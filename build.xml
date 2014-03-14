@@ -39,7 +39,7 @@
 
     <!-- Compiles the java code (including the usage of library for JUnit -->
     <target name="compile" depends="clean, makedir">
-        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" includeAntRuntime="false">
+        <javac target="1.7" source="1.7" srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" includeAntRuntime="false">
         </javac>
     </target>
 

@@ -111,7 +111,7 @@ public class InfrastructureSteps {
 
     @When("the $state ports are selected")
     public void selectOpenPorts(String state) {
-        selectedPorts = new ArrayList<>();
+        selectedPorts = new ArrayList<Integer>();
         for (PortResult result : portScanResults) {
             if (result.getState().equals(PortResult.PortState.fromString(state))) {
                 selectedPorts.add(result.getPort());
@@ -121,7 +121,7 @@ public class InfrastructureSteps {
 
     @Then("only the following ports should be open: $portsTable")
     public void checkOpenPorts(ExamplesTable portsTable) {
-        expectedPorts = new ArrayList<>();
+        expectedPorts = new ArrayList<Integer>();
         for (Map<String,String> row : portsTable.getRows()) {
              expectedPorts.add(Integer.parseInt(row.get("port")));
         }

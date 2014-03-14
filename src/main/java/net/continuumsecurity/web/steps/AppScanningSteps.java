@@ -47,8 +47,8 @@ public class AppScanningSteps {
     ScanningProxy scanner;
     Spider spider;
     Application app;
-    List<Alert> alerts  = new ArrayList<>();
-    private List<Alert> alertsFromPreviousScenarios = new ArrayList<>();
+    List<Alert> alerts  = new ArrayList<Alert>();
+    private List<Alert> alertsFromPreviousScenarios = new ArrayList<Alert>();
     boolean scannerCleared = false, navigated = false;
 
     public AppScanningSteps() {
@@ -291,7 +291,7 @@ public class AppScanningSteps {
     }
 
     public List<Alert> removeAlertsFromPreviousScenarios(List<Alert> theAlerts) {
-        List<Alert> filtered = new ArrayList<>();
+        List<Alert> filtered = new ArrayList<Alert>();
         for (Alert alert : theAlerts) {
             if (!containsAlertByValue(alertsFromPreviousScenarios,alert)) {
                 filtered.add(alert);
