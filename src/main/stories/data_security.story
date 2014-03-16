@@ -1,9 +1,9 @@
 Confidentiality of sensitive user data
 
 Narrative: 
-In order to protect the confidentiality of sensitive user data
-As a developer responsible for the security of the application
-I want to ensure that appropriate controls are in place to prevent disclosure of this data both on the client and server side 
+In order to protect the confidentiality of my sensitive data
+As a user
+I want to verify that the application does not allow the browser to cache my sensitive data 
 
 Meta: @story DataSecurity
 

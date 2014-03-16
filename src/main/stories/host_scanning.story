@@ -3,7 +3,7 @@ Automated host scanning
 Meta: @story HostScan @skip
 
 Narrative:
-In order to reduce the risk of vulnerabilities on the hosts
+In order to identify security vulnerabilities on the hosts
 As an operations engineer responsible for the configuration of the host systems
 I want to scan the hosts for known security vulnerabilities
 					 

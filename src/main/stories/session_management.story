@@ -1,7 +1,9 @@
+
 Narrative: 
-In order to protect user's sessions
-As a developer responsible for the security of the application
-I want to build a robust session management implementation 
+
+In order to protect my session and my data
+As a user
+I want to verify that weaknesses in the session management do not expose my session or data
 
 Meta: @story SessionManagement
 

@@ -1,7 +1,9 @@
+
 Narrative: 
-In order to protect user data transmitted over the network
-As an engineer responsible for the security of the SSL service
-I want to implement good SSL practices and avoid known vulnerabilities 
+
+In order to protect my data transmitted over the network
+As a user
+I want to verify that good SSL practices have been implemented and known weaknesses have been avoided
 
 Meta: @story Ssl
 

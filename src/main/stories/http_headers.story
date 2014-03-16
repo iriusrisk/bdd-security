@@ -1,8 +1,8 @@
 
 Narrative: 
-In order to protect user data
-As a developer responsible for the security of the application
-I want to make use of HTTP headers to prevent common web based attacks 
+In order to protect my data
+As a user
+I want to verify that HTTP headers adequately protect my data from attackers 
 
 Meta: @story http_headers
 

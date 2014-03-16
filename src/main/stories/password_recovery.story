@@ -1,5 +1,6 @@
+
 Narrative: 
-In order to protect user data
+In order to protect my data
 As a developer responsible for the security of the application
 I want to build a password reset system that meets my security requirements 
 

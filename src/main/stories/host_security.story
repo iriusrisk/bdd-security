@@ -1,4 +1,5 @@
 Narrative: 
+
 In order to reduce the risk of vulnerabilities introduced through software running on the host 
 As an engineer responsible for the configuration of the host system and network
 I want to ensure that the configuration of the host and network are as expected 

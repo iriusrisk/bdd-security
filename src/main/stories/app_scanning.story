@@ -1,9 +1,9 @@
 Automated Application Security Scanning
 
 Narrative: 
-In order to protect the integrity of the data, the database, the system and the user's session
-As a developer responsible for the security of the application
-I want to ensure that no common security vulnerabilities have been introduced to the application 
+In order to protect my data
+As a user
+I want to identify common security vulnerabilities in the application
 
 
 Meta: @story AppScanning

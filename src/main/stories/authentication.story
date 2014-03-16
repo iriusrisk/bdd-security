@@ -2,8 +2,8 @@ Authentication
 
 Narrative: 
 In order to protect user data
-As a developer responsible for the security of the application
-I want to build a robust authentication system 
+As a user
+I want to have a robust authentication system
 
 Meta: @story Authentication
 
