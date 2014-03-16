@@ -45,7 +45,7 @@
         <port>8888</port>
     </proxy>
 
-    <displayStackTrace>false</displayStackTrace>
+    <displayStackTrace>true</displayStackTrace>
     <storyDir>src/main/stories/</storyDir>
     <reportsDir>reports</reportsDir>
     <latestReportsDir>reports/latest</latestReportsDir>

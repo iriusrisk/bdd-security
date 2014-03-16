@@ -9,7 +9,8 @@ And the following URL regular expressions are excluded from the spider:
 |regex|
 |nothing|
 And the spider is configured for 10 concurrent threads
-When the following URLs are spidered:
+And the following URLs are spidered:
 |url|
 |baseUrl|
 |baseSecureUrl|
+And the spider status reaches 100% complete

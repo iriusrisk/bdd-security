@@ -84,7 +84,7 @@ public class AppScanningSteps {
         }
     }
 
-    @When("the following URLs are spidered: $urlsTable")
+    @Given("the following URLs are spidered: $urlsTable")
     public void spiderUrls(ExamplesTable urlsTable) throws InterruptedException {
         for (Map<String,String> row : urlsTable.getRows()) {
             String url = row.get("url");
@@ -239,6 +239,19 @@ public class AppScanningSteps {
 
         assertThat(filteredAlerts.size() + " " + risk + " vulnerabilities found.\nDetails:\n" + details, filteredAlerts.size(),
                 equalTo(0));
+    }
+
+    @Given("the spider status reaches 100% complete")
+    public void waitForSpiderToComplete() {
+        int status = 0;
+        while (status < 100) {
+            status = spider.getSpiderStatus();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private List<Alert> getAllAlertsByRiskRating(List<Alert> alerts, Alert.Risk rating) {

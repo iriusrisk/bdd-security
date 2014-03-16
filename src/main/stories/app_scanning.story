@@ -5,6 +5,7 @@ In order to protect the integrity of the data, the database, the system and the 
 As a developer responsible for the security of the application
 I want to ensure that no common security vulnerabilities have been introduced to the application 
 
+
 Meta: @story AppScanning
 
 GivenStories: navigate_app.story
