@@ -230,15 +230,19 @@ public class WebApplicationSteps {
     @Given("the proxy logs are cleared")
     @When("the proxy logs are cleared")
     public void clearProxy() {
-        proxy = ProxyFactory.getLoggingProxy();
-        proxy.clear();
+        getProxy().clear();
+    }
+    
+    public LoggingProxy getProxy() {
+    	if (proxy == null) proxy = ProxyFactory.getLoggingProxy();
+    	return proxy;
     }
 
     @Given("the HTTP request-response containing the default credentials is inspected")
     public void findRequestWithPassword() throws UnsupportedEncodingException {
         String passwd = URLEncoder.encode(credentials.getPassword(), "UTF-8");
         String username = URLEncoder.encode(credentials.getUsername(), "UTF-8");
-        List<HarEntry> requests = proxy.findInRequestHistory(credentials.getPassword());
+        List<HarEntry> requests = getProxy().findInRequestHistory(credentials.getPassword());
         if (requests == null || requests.size() == 0)
             throw new StepException(
                     "Could not find HTTP request with credentials: "
@@ -255,8 +259,8 @@ public class WebApplicationSteps {
     @Given("the HTTP request-response containing the login form")
     public void findResponseWithLoginform() throws UnsupportedEncodingException {
         String regex = "(?i)input[\\s\\w=:'\"]*type\\s*=\\s*['\"]password['\"]";
-        List<HarEntry> responses = proxy.getHistory();
-        responses = proxy.findInResponseHistory(regex);
+        List<HarEntry> responses = getProxy().getHistory();
+        responses = getProxy().findInResponseHistory(regex);
         if (responses == null || responses.size() == 0)
             throw new StepException(
                     "Could not find HTTP response with password form using regex: "
@@ -277,7 +281,6 @@ public class WebApplicationSteps {
 
     @Given("the value of the session cookie is noted")
     public void getSessionIds() {
-        Config.instance();
         for (String name : Config.getSessionIDs()) {
             Cookie cookie = app.getCookieByName(name);
             if (cookie != null)
@@ -315,7 +318,7 @@ public class WebApplicationSteps {
         Config.instance();
         int numCookies = Config.getSessionIDs().size();
         int cookieCount = 0;
-        for (HarEntry entry : proxy.getHistory()) {
+        for (HarEntry entry : getProxy().getHistory()) {
             for (String name : Config.getSessionIDs()) {
                 for (HarCookie cookie : entry.getResponse().getCookies().getCookies()) {
                     if (cookie.getName().equalsIgnoreCase(name) && cookie.isHttpOnly()) {
@@ -411,7 +414,7 @@ public class WebApplicationSteps {
                     + " has already been added to the map, using the existing HTTP logs");
             return;
         }
-        methodProxyMap.put(method, proxy.getHistory());
+        methodProxyMap.put(method, getProxy().getHistory());
     }
 
     @Given("the access control map for authorised users has been populated")
@@ -440,8 +443,8 @@ public class WebApplicationSteps {
                     + " has already been added to the map, using the existing HTTP logs");
             return;
         }
-        methodProxyMap.put(method, proxy.getHistory());
-        boolean accessible = proxy.findInResponseHistory(sensitiveData).size() > 0;
+        methodProxyMap.put(method, getProxy().getHistory());
+        boolean accessible = getProxy().findInResponseHistory(sensitiveData).size() > 0;
         if (accessible) {
             log.debug("User: " + credentials.getUsername() + " can access resource: " + method);
         }
@@ -461,7 +464,7 @@ public class WebApplicationSteps {
                     + credentials.getPassword()
                     + " could not access the method: " + method + "()");
         }
-        recordedEntries = proxy.findInResponseHistory(sensitiveData);
+        recordedEntries = getProxy().findInResponseHistory(sensitiveData);
         assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", recordedEntries.size(), greaterThan(0));
         currentHar = recordedEntries.get(0);
     }
@@ -494,9 +497,9 @@ public class WebApplicationSteps {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     throw new RuntimeException("Could not copy Har request");
                 }
-                proxy.clear();
-                List<HarEntry> results = proxy.makeRequest(manual, true);
-                results = proxy.findInResponseHistory(sensitiveData);
+                getProxy().clear();
+                List<HarEntry> results = getProxy().makeRequest(manual, true);
+                results = getProxy().findInResponseHistory(sensitiveData);
                 accessible = results != null && results.size() > 0;
                 if (accessible) break;
 
@@ -527,7 +530,7 @@ public class WebApplicationSteps {
 
     @When("the first HTTP request-response is recorded")
     public void recordFirstHarEntry() {
-        List<HarEntry> history = proxy.getHistory();
+        List<HarEntry> history = getProxy().getHistory();
         if (history == null || history.size() == 0) throw new RuntimeException("No HTTP requests-responses recorded");
         currentHar = history.get(0);
     }

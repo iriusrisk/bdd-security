@@ -14,3 +14,4 @@ And the following URLs are spidered:
 |baseUrl|
 |baseSecureUrl|
 And the spider status reaches 100% complete
+

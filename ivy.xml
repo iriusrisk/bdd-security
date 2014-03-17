@@ -48,15 +48,12 @@
         </dependency>
         <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.39.0"/>
         <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.39.0"/>
-        <dependency org="com.github.detro.ghostdriver" name="phantomjsdriver" rev="1.0.4"/>
-        <dependency org="log4j" name="log4j" rev="1.2.16"/>
+        <dependency org="log4j" name="log4j" rev="1.2.17"/>
         <dependency org="args4j" name="args4j" rev="2.0.16"/>
         <dependency org="org.codehaus.groovy" name="groovy-all" rev="1.8.5"/>
         <dependency org="commons-configuration" name="commons-configuration" rev="1.8"/>
         <dependency org="uk.com.robust-it" name="cloning" rev="1.9.0"/>
         <dependency org="jline" name="jline" rev="2.6"/>
-        <!--<dependency org="javax.xml.bind" name="jaxb-api" rev="2.2.6" />
-        <dependency org="com.sun.xml.bind" name="jaxb-impl" rev="2.2.5" />      -->
         <dependency org="com.googlecode.java-diff-utils" name="diffutils" rev="1.2.1"/>
         <dependency org="org.apache.httpcomponents" name="httpcore" rev="4.2.3"/>
         <dependency org="org.testng" name="testng" rev="6.1.1" force="true"/>
