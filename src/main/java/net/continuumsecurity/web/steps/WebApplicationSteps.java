@@ -59,6 +59,7 @@ public class WebApplicationSteps {
     HarEntry currentHar;
     LoggingProxy proxy;
     List<Cookie> sessionIds;
+    String methodName;
     Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     List<HarEntry> recordedEntries;
     WebElement currentElement;
@@ -280,7 +281,7 @@ public class WebApplicationSteps {
     }
 
     @Given("the value of the session cookie is noted")
-    public void getSessionIds() {
+    public void findAndSetSessionIds() {
         for (String name : Config.getSessionIDs()) {
             Cookie cookie = app.getCookieByName(name);
             if (cookie != null)
@@ -370,7 +371,7 @@ public class WebApplicationSteps {
 
     }
 
-    @Then("the CAPTCHA request should be present")
+    @Then("the CAPTCHA should be present")
     public void checkCaptchaRequestPresent() {
         if (!(app instanceof ICaptcha))
             throw new RuntimeException(
@@ -397,7 +398,7 @@ public class WebApplicationSteps {
                 .getAll().get(0).getRecoverPasswordMap());
     }
 
-    @Then("the CAPTCHA should be present")
+    @Then("the CAPTCHA is displayed")
     public void checkCaptchaPresent() {
         try {
             assertThat(((ICaptcha) app).getCaptchaImage(), notNullValue());
@@ -473,23 +474,25 @@ public class WebApplicationSteps {
     public void checkCacheControlHeaders(@Named("value") String value) {
         assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), Constants.CACHECONTROL), equalTo(value));
     }
+    
+    @When("they access the restricted resource: <method>")
+    public void setMethodName(@Named("method") String method) {
+    	methodName = method;
+    }
 
-    @Then("when they access the restricted resource: <method> they should not see the string: <sensitiveData>")
-    public void checkNoAccessToResource(
-            @Named("sensitiveData") String sensitiveData,
-            @Named("method") String method) {
-        if (methodProxyMap == null || methodProxyMap.get(method).size() == 0)
+    @Then("they should not see the string: <sensitiveData>")
+    public void checkNoAccessToResource(@Named("sensitiveData") String sensitiveData) {
+        if (methodProxyMap == null || methodProxyMap.get(methodName).size() == 0)
             throw new ConfigurationException(
-                    "No HTTP messages were recorded for the method: " + method);
+                    "No HTTP messages were recorded for the method: " + methodName);
         boolean accessible = false;
-        getSessionIds();
-        for (HarEntry entry : methodProxyMap.get(method)) {
+        findAndSetSessionIds();
+        for (HarEntry entry : methodProxyMap.get(methodName)) {
             if (entry.getResponse().getBodySize() > 0) {
                 Map<String, String> cookieMap = new HashMap<String, String>();
                 for (Cookie cookie : sessionIds) {
                     cookieMap.put(cookie.getName(), cookie.getValue());
                 }
-
                 HarRequest manual = null;
                 try {
                     manual = Utils.replaceCookies(entry.getRequest(), cookieMap);
@@ -502,13 +505,12 @@ public class WebApplicationSteps {
                 results = getProxy().findInResponseHistory(sensitiveData);
                 accessible = results != null && results.size() > 0;
                 if (accessible) break;
-
             }
         }
         if (!accessible) {
-            log.debug("User: " + credentials.getUsername() + " has no access to resource: " + method);
+            log.debug("User: " + credentials.getUsername() + " has no access to resource: " + methodName);
         }
-        assertThat("Resource: " + method + " can not be accessed by user: " + credentials.getUsername() + " because the text: " + sensitiveData + " was not present in the responses.",
+        assertThat("Resource: " + methodName + " can not be accessed by user: " + credentials.getUsername() + " because the text: " + sensitiveData + " was not present in the responses.",
                 accessible, equalTo(false));
     }
 

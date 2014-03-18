@@ -7,7 +7,7 @@ And the page flow described in the method: navigate is performed through the pro
 And the spider is configured for a maximum depth of 10
 And the following URL regular expressions are excluded from the spider:
 |regex|
-|nothing|
+|.*logout.*|
 And the spider is configured for 10 concurrent threads
 And the following URLs are spidered:
 |url|

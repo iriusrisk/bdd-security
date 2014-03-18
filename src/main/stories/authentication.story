@@ -73,4 +73,4 @@ Given the default username from: users.table
 And an incorrect password
 And the user logs in from a fresh login page 4 times
 When the login page is displayed
-Then the CAPTCHA request should be present
+Then the CAPTCHA is displayed

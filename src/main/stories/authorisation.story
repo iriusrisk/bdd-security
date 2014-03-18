@@ -27,7 +27,8 @@ Meta: @id anon_access_control
 Given the access control map for authorised users has been populated
 And a fresh application
 And the login page
-Then when they access the restricted resource: <method> they should not see the string: <sensitiveData>
+When they access the restricted resource: <method>
+Then they should not see the string: <sensitiveData>
 Examples:
 tables/authorised.resources.table
 
@@ -36,10 +37,11 @@ Scenario: Users must not be able to view resources for which they are not author
 Meta: @id access_control_restricted
 Given the access control map for authorised users has been populated
 And a fresh application
-And the login page
 And the username <username>
 And the password <password>
+And the login page
 When the user logs in
-Then when they access the restricted resource: <method> they should not see the string: <sensitiveData>
+And they access the restricted resource: <method>
+Then they should not see the string: <sensitiveData>
 Examples:
 tables/unauthorised.resources.table

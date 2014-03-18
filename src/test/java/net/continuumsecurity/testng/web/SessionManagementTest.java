@@ -32,7 +32,7 @@ public class SessionManagementTest {
     @Test
     public void the_session_ID_should_be_changed_after_authentication() {
         webAppSteps.openLoginPage();
-        webAppSteps.getSessionIds();
+        webAppSteps.findAndSetSessionIds();
         webAppSteps.loginFromTable(this.credentialsTable);
         webAppSteps.compareSessionIds();
     }
@@ -52,7 +52,7 @@ public class SessionManagementTest {
     @Test
     public void the_session_cookie_should_have_the_secure_flag_set() {
         webAppSteps.loginFromTable(this.credentialsTable);
-        webAppSteps.getSessionIds();
+        webAppSteps.findAndSetSessionIds();
         webAppSteps.sessionCookiesSecureFlag();
     }
 

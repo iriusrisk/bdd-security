@@ -26,19 +26,23 @@ import net.continuumsecurity.proxy.ScanningProxy;
 import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.drivers.ProxyFactory;
+
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
+import org.junit.internal.runners.statements.Fail;
 import org.zaproxy.clientapi.core.Alert;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -78,9 +82,9 @@ public class AppScanningSteps {
         if (!navigated) {
             Method method = app.getClass().getMethod(methodName);
             app.enableHttpLoggingClient();
-            log.debug("Navigating method: " + method.getName());
-            method.invoke(app);
-            navigated = true;
+            log.debug("Navigating method: " + method.getName());            
+			method.invoke(app);
+			navigated = true;			
         }
     }
 

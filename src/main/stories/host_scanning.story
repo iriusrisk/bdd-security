@@ -1,6 +1,6 @@
 Automated host scanning
 
-Meta: @story HostScan
+Meta: @story HostScan @skip
 
 Narrative:
 In order to identify security vulnerabilities on the hosts
@@ -13,12 +13,16 @@ Given a nessus server at https://localhost:8834
 And the nessus username continuum and the password continuum
 And the scanning policy named test
 And the target hosts
-|hostname|
-|localhost|
+
+|hostname			|
+|localhost			|
+
 When the scanner is run with scan name bddscan
 And the list of issues is stored
 And the following false positives are removed
-|pluginID		|hostname		|
-|43111          |127.0.0.1      |
+
+|PluginID		|Hostname		|Reason															|
+|43111          |127.0.0.1      |Example of how to add a false positive to this story			|
+
 Then no severity: 2 or higher issues should be present
 

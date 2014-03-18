@@ -10,9 +10,9 @@ Meta: @story Configuration
 Scenario: Verify that all configured user accounts can login correctly
 Meta: @id config_login_ok
 Given a fresh application
-And the login page
 And the username <username> 
 And the password <password>
+And the login page
 When the user logs in
 Then the user is logged in
 Examples:

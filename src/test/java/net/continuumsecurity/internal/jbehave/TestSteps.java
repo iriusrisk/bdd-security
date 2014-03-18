@@ -33,6 +33,7 @@ public class TestSteps {
 
             webAppSteps.createApp();
             webAppSteps.openLoginPage();
-            webAppSteps.checkNoAccessToResource("Results for","testSearch");
+            webAppSteps.setMethodName("testSearch");
+            webAppSteps.checkNoAccessToResource("Results for");
     }
 }

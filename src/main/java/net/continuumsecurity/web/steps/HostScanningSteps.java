@@ -86,8 +86,8 @@ public class HostScanningSteps {
     @When("the following false positives are removed $falsep")
     public void removeFalsePositives(ExamplesTable falsePositivesTable) {
         for (Map<String,String> row : falsePositivesTable.getRows()) {
-            Integer pluginId = Integer.parseInt(row.get("pluginID"));
-            String hostname = row.get("hostname");
+            Integer pluginId = Integer.parseInt(row.get("PluginID"));
+            String hostname = row.get("Hostname");
 
             Issue issue = issues.get(pluginId);
             if (issue != null) {
