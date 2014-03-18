@@ -80,7 +80,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.linkText("Tasks")).click();
         driver.findElement(By.id("q")).clear();
         driver.findElement(By.id("q")).sendKeys(query);
-        driver.findElement(By.id("searchbtn")).click();
+        driver.findElement(By.id("search")).click();
     }
 
     public void navigate() {

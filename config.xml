@@ -18,7 +18,7 @@
     <baseSecureUrl>https://www.yahoo.com/</baseSecureUrl>
 
     <!-- The fully qualified class name representing the application under test -->
-    <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
+    <class>net.continuumsecurity.examples.ropeytasks.OWASPDemo</class>
 
     <!-- Names of the session ID cookies -->
     <sessionIds>
@@ -26,15 +26,9 @@
     </sessionIds>
 
     <users>
-        <user username="alice" password="password">
-            <recoverpassword name="email" value="alice@continuumsecurity.net"/>
-        </user>
-        <user username="bob" password="password">
-            <recoverpassword name="email" value="bob@continuumsecurity.net"/>
-        </user>
-        <user username="admin" password="password">
-            <recoverpassword name="email" value="admin@continuumsecurity.net"/>
-        </user>
+        <user username="alice" password="password"></user>
+        <user username="bob" password="password"></user>
+        <user username="admin" password="password"></user>
     </users>
 
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>

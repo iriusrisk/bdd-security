@@ -1,6 +1,6 @@
 Automated host scanning
 
-Meta: @story HostScan @skip
+Meta: @story HostScan
 
 Narrative:
 In order to identify security vulnerabilities on the hosts

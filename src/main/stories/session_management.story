@@ -3,7 +3,7 @@ Narrative:
 
 In order to protect my session and my data
 As a user
-I want to verify that weaknesses in the session management do not expose my session or data
+I want to verify that there are no weaknesses in the session management implementation
 
 Meta: @story SessionManagement
 
