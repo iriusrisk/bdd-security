@@ -2,7 +2,7 @@ package net.continuumsecurity.testng.web;
 
 import java.io.UnsupportedEncodingException;
 
-import net.continuumsecurity.testng.web.NgUtils;
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 
@@ -20,7 +20,7 @@ public class AuthenticationTest {
     public void setUp() {
         webAppSteps.createApp();
         String workingDirectory = System.getProperty("user.dir");
-        this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
+        this.credentialsTable = new ExamplesTable(Utils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
     }
 
     @AfterClass

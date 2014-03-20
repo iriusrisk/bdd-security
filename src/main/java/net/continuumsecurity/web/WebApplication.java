@@ -21,9 +21,7 @@ package net.continuumsecurity.web;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.behaviour.ICaptcha;
-import net.continuumsecurity.caption.CBSolveCaptcha;
 import net.continuumsecurity.web.drivers.DriverFactory;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -32,19 +30,21 @@ import org.openqa.selenium.WebDriver;
 
 public class WebApplication extends Application {
     protected WebDriver driver;
-    protected ICaptchaSolver captchaHelper;
+    protected ICaptchaSolver captchaSolver;
 
     public WebApplication() {
         log = Logger.getLogger(WebApplication.class);
-        if (this instanceof ICaptcha) captchaHelper = new CaptchaSolver(this,new CBSolveCaptcha());
+        if (this instanceof ICaptcha) {
+        	((ICaptcha)this).setDefaultSolver();
+        }
     }
 
-    public ICaptchaSolver getCaptchaHelper() {
-        return captchaHelper;
+    public ICaptchaSolver getCaptchaSolver() {
+        return captchaSolver;
     }
 
-    public void setCaptchaHelper(ICaptchaSolver captchaHelper) {
-        this.captchaHelper = captchaHelper;
+    public void setCaptchaSolver(ICaptchaSolver captchaHelper) {
+        this.captchaSolver = captchaHelper;
     }
 
     public WebDriver getWebDriver() {

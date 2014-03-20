@@ -159,6 +159,8 @@ public class WebApplicationSteps {
     }
 
     @Then("the user is logged in")
+    @Given("the user is logged in")
+    @When("the user is logged in")
     public void loginSucceeds() {
         assertThat("The user is logged in", ((ILogin) app).isLoggedIn(), is(true));
     }
@@ -291,7 +293,6 @@ public class WebApplicationSteps {
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
-        Config.instance();
         for (String name : Config.getSessionIDs()) {
             Cookie initialSessionCookie = findCookieByName(sessionIds, name);
             if (initialSessionCookie != null) {
@@ -308,7 +309,6 @@ public class WebApplicationSteps {
 
     @Then("the session cookie should have the secure flag set")
     public void sessionCookiesSecureFlag() {
-        Config.instance();
         for (String name : Config.getSessionIDs()) {
             assertThat(app.getCookieByName(name).isSecure(), equalTo(true));
         }
@@ -316,7 +316,6 @@ public class WebApplicationSteps {
 
     @Then("the session cookie should have the httpOnly flag set")
     public void sessionCookiesHttpOnlyFlag() {
-        Config.instance();
         int numCookies = Config.getSessionIDs().size();
         int cookieCount = 0;
         for (HarEntry entry : getProxy().getHistory()) {
@@ -394,7 +393,7 @@ public class WebApplicationSteps {
 
     @When("the password recovery feature is requested")
     public void submitPasswordRecovery() {
-        ((IRecoverPassword) app).submitRecover(Config.instance().getUsers()
+        ((IRecoverPassword) app).submitRecover(Config.getUsers()
                 .getAll().get(0).getRecoverPasswordMap());
     }
 

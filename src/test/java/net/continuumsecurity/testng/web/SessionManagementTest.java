@@ -1,7 +1,9 @@
 package net.continuumsecurity.testng.web;
 
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+
 import org.jbehave.core.model.ExamplesTable;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -16,7 +18,7 @@ public class SessionManagementTest {
     public void setUp() {
         webAppSteps.createApp();
         String workingDirectory = System.getProperty("user.dir");
-        this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
+        this.credentialsTable = new ExamplesTable(Utils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
     }
 
     @AfterClass

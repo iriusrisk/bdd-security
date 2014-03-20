@@ -1,8 +1,10 @@
 package net.continuumsecurity.testng.web;
 
 import net.continuumsecurity.Constants;
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AppScanningSteps;
+
 import org.jbehave.core.model.ExamplesTable;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
@@ -19,7 +21,7 @@ public class AutomatedScanningTest {
     @BeforeClass
     public void beforeStory() throws Exception {
         String workingDirectory = System.getProperty("user.dir");
-        falsePositives = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/tables/false_positives.table"));
+        falsePositives = new ExamplesTable(Utils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/tables/false_positives.table"));
     }
 
     @AfterClass

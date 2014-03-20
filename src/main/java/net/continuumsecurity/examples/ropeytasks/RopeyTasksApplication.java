@@ -4,16 +4,23 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.Credentials;
 import net.continuumsecurity.Restricted;
 import net.continuumsecurity.UserPassCredentials;
+import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
+import net.continuumsecurity.web.CaptchaSolver;
 import net.continuumsecurity.web.WebApplication;
-import org.openqa.selenium.By;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
-        ILogout, IRecoverPassword {
+        ILogout, IRecoverPassword, ICaptcha {
 
     public RopeyTasksApplication() {
         super();
@@ -28,11 +35,19 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     @Override
     public void login(Credentials credentials) {
         UserPassCredentials creds = new UserPassCredentials(credentials);
-        driver.findElement(By.id("username")).clear();
-        driver.findElement(By.id("username")).sendKeys(creds.getUsername());
-        driver.findElement(By.id("password")).clear();
-        driver.findElement(By.id("password")).sendKeys(creds.getPassword());
-        driver.findElement(By.name("_action_login")).click();
+        int attempts = 0;
+        boolean captchaPresent = true;
+        while (attempts < 4 && captchaPresent) {
+			driver.findElement(By.id("username")).clear();
+			driver.findElement(By.id("username")).sendKeys(creds.getUsername());
+			driver.findElement(By.id("password")).clear();
+			driver.findElement(By.id("password")).sendKeys(creds.getPassword());
+			if (captchaPresent) {
+				captchaSolver.solve();
+			}
+			driver.findElement(By.name("_action_login")).click();
+        	captchaPresent = captchaSolver.isCaptchaPresent();
+		}
     }
 
     // Convenience method
@@ -85,7 +100,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 
     public void navigate() {
         openLoginPage();
-        login(Config.instance().getUsers().getDefaultCredentials());
+        login(Config.getUsers().getDefaultCredentials());
         verifyTextPresent("Welcome");
         viewProfile();
         search("test");
@@ -106,28 +121,29 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.id("email")).sendKeys(details.get("email"));
         driver.findElement(By.xpath("//input[@value='Recover']")).click();
     }
+    
+    @Override
+	public WebElement getCaptchaImage() {
+		return driver.findElement(By.id("recaptcha_challenge_image"));		
+	}
 
+	@Override
+	public WebElement getCaptchaResponseField() {
+		return driver.findElement(By.id("recaptcha_response_field"));
+	}
 
-    /* How to login using a captcha
-     @Override
-     public void login(Credentials credentials) {
-         // Captcha solving is not 100% accurate, so try a few times if captcha
-         // fails
-         boolean captchaPresent = true;
-         int attempts = 0;
-         while (captchaPresent && attempts < 3) {
-             UserPassCredentials creds = new UserPassCredentials(credentials);
-             driver.findElement(By.id("username")).clear();
-             driver.findElement(By.id("username")).sendKeys(creds.getUsername());
-             driver.findElement(By.id("password")).clear();
-             driver.findElement(By.id("password")).sendKeys(creds.getPassword());
-             captchaHelper.solve();
-             driver.findElement(By.name("_action_login")).click();
+	@Override
+	public void setDefaultSolver() {
+		Properties props = new Properties();
+		try {
+			props.load(new FileInputStream("deathbycaptcha.properties"));
+			super.setCaptchaSolver(new CaptchaSolver(this, props));
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 
-             captchaPresent = captchaHelper.isPresent();
-             attempts++;
-         }
-     }      */
+	}
 
 }
 

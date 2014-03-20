@@ -1,8 +1,10 @@
 package net.continuumsecurity.testng.web;
 
 import net.continuumsecurity.Constants;
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+
 import org.jbehave.core.model.ExamplesTable;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -25,8 +27,8 @@ public class TransportTest {
     public void setUp() {
         webAppSteps.createApp();
         String workingDirectory = System.getProperty("user.dir");
-        this.credentialsTable = new ExamplesTable(NgUtils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
-        this.authorisedTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
+        this.credentialsTable = new ExamplesTable(Utils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
+        this.authorisedTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
     }
 
     @AfterClass

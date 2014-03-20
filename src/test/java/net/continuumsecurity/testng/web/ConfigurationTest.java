@@ -1,8 +1,10 @@
 package net.continuumsecurity.testng.web;
 
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AppScanningSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -24,7 +26,7 @@ public class ConfigurationTest {
     public void beforeScenario() {
         webAppSteps.createAppAndCredentials();
         String workingDirectory = System.getProperty("user.dir");
-        this.usersTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/users.table");
+        this.usersTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/users.table");
         this.automatedScanningSteps.createNewScanSession();
     }
 

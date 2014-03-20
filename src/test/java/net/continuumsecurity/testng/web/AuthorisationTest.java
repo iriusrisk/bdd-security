@@ -1,7 +1,9 @@
 package net.continuumsecurity.testng.web;
 
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -22,8 +24,8 @@ public class AuthorisationTest {
     public void beforeScenario() {
         webAppSteps.createApp();
         String workingDirectory = System.getProperty("user.dir");
-        this.authorisedTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
-        this.unauthorisedTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/tables/unauthorised.resources.table");
+        this.authorisedTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
+        this.unauthorisedTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/tables/unauthorised.resources.table");
         webAppSteps.createAppAndCredentials();
     }
 

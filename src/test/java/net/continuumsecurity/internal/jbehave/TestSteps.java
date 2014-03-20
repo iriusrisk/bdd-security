@@ -1,6 +1,6 @@
 package net.continuumsecurity.internal.jbehave;
 
-import net.continuumsecurity.testng.web.NgUtils;
+import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 
 import org.testng.annotations.BeforeTest;
@@ -20,8 +20,8 @@ public class TestSteps {
         webAppSteps.createAppAndCredentials();
         webAppSteps.createApp();
         String workingDirectory = System.getProperty("user.dir");
-        this.authorisedTable = NgUtils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
-        this.unauthorisedTable = NgUtils.createListOfMaps(workingDirectory+"/src/main/stories/tables/unauthorised.resources.table");
+        this.authorisedTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
+        this.unauthorisedTable = Utils.createListOfMaps(workingDirectory+"/src/main/stories/tables/unauthorised.resources.table");
     }
 
     @Test

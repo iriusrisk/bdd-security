@@ -29,15 +29,6 @@ public class InfrastructureSteps {
     List<Integer> selectedPorts;
     List<Integer> expectedPorts;
 
-    public InfrastructureSteps() {
-
-    }
-
-    @BeforeStory
-    public void setup() {
-
-    }
-
     @Given("SSL tests have been run on the secure base Url")
     public void runSSLTestsOnSecureBaseUrl() throws IOException {
         if (testSSL == null) {

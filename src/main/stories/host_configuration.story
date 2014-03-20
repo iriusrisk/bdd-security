@@ -7,7 +7,7 @@ I want to ensure that the configuration of the host and network are as expected
 Meta: @story HostConfig
 
 Scenario: Only the required ports should be open
-Meta: @id open_ports
+Meta: @id open_ports @skip
 
 Given the target host from the base URL
 When TCP ports from 1 to 65535 are scanned using 100 threads and a timeout of 300 milliseconds

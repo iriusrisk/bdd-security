@@ -31,12 +31,6 @@ Given SSL tests have been run on the secure base Url
 Then SSL version 2 must not be supported
 
 
-Scenario: Disable RC4 ciphers
-Meta: @id ssl_rc4_disabled
-Given SSL tests have been run on the secure base Url
-Then RC4 ciphers must not be supported
-
-
 Scenario: Enable Perfect forward secrecy
 Meta: @id ssl_perfect_forward_secrecy
 Given SSL tests have been run on the secure base Url

@@ -52,7 +52,7 @@ public class Config {
         return (Application) app;
     }
 
-    public static Config instance() {
+    private synchronized static Config getInstance() {
         if (config == null) {
             config = new Config();
             config.initialiseTables();
@@ -76,10 +76,10 @@ public class Config {
 
     protected static Config config;
 
-    public synchronized Users getUsers() {
+    public static synchronized Users getUsers() {
         Users users = new Users();
 
-        List<HierarchicalConfiguration> usersInXml = xml
+        List<HierarchicalConfiguration> usersInXml = getXml()
                 .configurationsAt("users.user");
         for (HierarchicalConfiguration user : usersInXml) {
             User theUser = new User(new UserPassCredentials(
@@ -180,7 +180,7 @@ public class Config {
 
 
     public static void setXml(XMLConfiguration xml) {
-        instance().xml = xml;
+        getInstance().xml = xml;
     }
 
 
@@ -195,7 +195,7 @@ public class Config {
     }
 
     public synchronized static XMLConfiguration getXml() {
-        return instance().xml;
+        return getInstance().xml;
     }
 
     public void loadConfig(String file) {
