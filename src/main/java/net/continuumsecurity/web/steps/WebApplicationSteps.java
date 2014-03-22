@@ -79,7 +79,7 @@ public class WebApplicationSteps {
      * start with a fresh browser instance, because @BeforeScenario is only
      * called once for the whole scenario, not each example.
      */
-    @Given("a fresh application")
+    @Given("a new browser instance")
     public void createApp() {
         app = Config.createApp();
         app.enableDefaultClient();
@@ -225,7 +225,7 @@ public class WebApplicationSteps {
         ((ILogout) app).logout();
     }
 
-    @Given("a browser configured to use an intercepting proxy")
+    @Given("the browser is configured to use an intercepting proxy")
     public void enableLoggingDriver() {
         app.enableHttpLoggingClient();
     }

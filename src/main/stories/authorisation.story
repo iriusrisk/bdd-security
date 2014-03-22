@@ -9,8 +9,8 @@ Meta: @story Authorisation
 
 Scenario: Users can view restricted resources for which they are authorised
 Meta: @id config_authorised_resources
-Given a fresh application
-And a browser configured to use an intercepting proxy
+Given a new browser instance
+And the browser is configured to use an intercepting proxy
 And the proxy logs are cleared
 And the login page
 And the username <username>
@@ -22,21 +22,10 @@ Examples:
 tables/authorised.resources.table
 
 
-Scenario: Un-authenticated users should not be able to view restricted resources
-Meta: @id anon_access_control
-Given the access control map for authorised users has been populated
-And a fresh application
-And the login page
-When they access the restricted resource: <method>
-Then they should not see the string: <sensitiveData>
-Examples:
-tables/authorised.resources.table
-
-
 Scenario: Users must not be able to view resources for which they are not authorised
 Meta: @id access_control_restricted
 Given the access control map for authorised users has been populated
-And a fresh application
+And a new browser instance
 And the username <username>
 And the password <password>
 And the login page
@@ -45,3 +34,14 @@ And they access the restricted resource: <method>
 Then they should not see the string: <sensitiveData>
 Examples:
 tables/unauthorised.resources.table
+
+
+Scenario: Un-authenticated users should not be able to view restricted resources
+Meta: @id anon_access_control
+Given the access control map for authorised users has been populated
+And a new browser instance
+And the login page
+When they access the restricted resource: <method>
+Then they should not see the string: <sensitiveData>
+Examples:
+tables/authorised.resources.table

@@ -18,7 +18,7 @@ Then the user is not logged in
 
 Scenario: Present the login form itself over an HTTPS connection
 Meta: @id auth_login_form_over_ssl
-Given a browser configured to use an intercepting proxy
+Given the browser is configured to use an intercepting proxy
 And the proxy logs are cleared
 And the login page
 And the HTTP request-response containing the login form
@@ -27,7 +27,7 @@ Then the protocol should be HTTPS
 
 Scenario: Transmit authentication credentials over HTTPS
 Meta: @id auth_https
-Given a browser configured to use an intercepting proxy
+Given the browser is configured to use an intercepting proxy
 And the proxy logs are cleared
 And the default user logs in with credentials from: users.table
 And the HTTP request-response containing the default credentials is inspected
@@ -36,7 +36,7 @@ Then the protocol should be HTTPS
 
 Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code.  
 Meta: @id auth_return_redirect
-Given a browser configured to use an intercepting proxy
+Given the browser is configured to use an intercepting proxy
 And the proxy logs are cleared
 And the default user logs in with credentials from: users.table
 And the HTTP request-response containing the default credentials is inspected

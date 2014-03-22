@@ -9,8 +9,8 @@ Meta: @story DataSecurity
 
 Scenario: Prevent browser caching of sensitive data
 Meta: @id cache_control_headers
-Given a fresh application
-And a browser configured to use an intercepting proxy
+Given a new browser instance
+And the browser is configured to use an intercepting proxy
 And the login page
 And the username <username>
 And the password <password>

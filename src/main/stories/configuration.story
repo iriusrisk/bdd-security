@@ -1,4 +1,3 @@
-Configuration of the test project
 
 Narrative: 
 In order to avoid running tests with a broken configuration
@@ -9,7 +8,7 @@ Meta: @story Configuration
 
 Scenario: Verify that all configured user accounts can login correctly
 Meta: @id config_login_ok
-Given a fresh application
+Given a new browser instance
 And the username <username> 
 And the password <password>
 And the login page
@@ -21,7 +20,7 @@ users.table
 
 Scenario: Verify that users are not logged in when using an incorrect password
 Meta: @id config_wrong_password
-Given a fresh application
+Given a new browser instance
 And the login page
 And the username <username>
 And an incorrect password
