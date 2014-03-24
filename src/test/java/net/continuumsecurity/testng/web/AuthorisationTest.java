@@ -48,7 +48,8 @@ public class AuthorisationTest {
             webAppSteps.loginWithSetCredentials();
             webAppSteps.clearProxy();
             try {
-                webAppSteps.checkAccessToResource((String) item.get("sensitiveData"), (String) item.get("method"));
+            	webAppSteps.setMethodName((String) item.get("method"));
+                webAppSteps.checkAccessToResource((String) item.get("sensitiveData"));
             } catch (AssertionError e) {
                 failures++;
                 msg = msg + e.getMessage()+"\n";

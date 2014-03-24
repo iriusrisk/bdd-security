@@ -424,45 +424,43 @@ public class WebApplicationSteps {
                     "Access control map has not been populated.");
     }
 
-    @Then("when they access the restricted resource: <method> they should see the string: <sensitiveData>")
+    @Then("the string: <sensitiveData> should be present in one of the HTTP responses")
     public void checkAccessToResource(
-            @Named("sensitiveData") String sensitiveData,
-            @Named("method") String method) {
+            @Named("sensitiveData") String sensitiveData) {
         try {
-            app.getClass().getMethod(method).invoke(app);
+            app.getClass().getMethod(methodName).invoke(app);
             // For web services, calling the method might throw an exception if
             // access is denied.
         } catch (Exception e) {
             fail("User with credentials: " + credentials.getUsername() + " "
                     + credentials.getPassword()
-                    + " could not access the method: " + method + "()");
+                    + " could not access the method: " + methodName + "()");
         }
-        if (methodProxyMap.get(method) != null) {
+        if (methodProxyMap.get(methodName) != null) {
             log.info("The method: "
-                    + method
+                    + methodName
                     + " has already been added to the map, using the existing HTTP logs");
             return;
         }
-        methodProxyMap.put(method, getProxy().getHistory());
+        methodProxyMap.put(methodName, getProxy().getHistory());
         boolean accessible = getProxy().findInResponseHistory(sensitiveData).size() > 0;
         if (accessible) {
-            log.debug("User: " + credentials.getUsername() + " can access resource: " + method);
+            log.debug("User: " + credentials.getUsername() + " can access resource: " + methodName);
         }
-        assertThat("User: " + credentials.getUsername() + " could access resource: " + method + " because the text: " + sensitiveData + " was present in the responses", accessible, equalTo(true));
+        assertThat("User: " + credentials.getUsername() + " could access resource: " + methodName + " because the text: " + sensitiveData + " was present in the responses", accessible, equalTo(true));
     }
 
-    @When("they access the restricted resource: <method> and the response that contains the string: <sensitiveData> is recorded")
+    @When("the response that contains the string: <sensitiveData> is recorded")
     public void recordSensitiveResponse(
-            @Named("sensitiveData") String sensitiveData,
-            @Named("method") String method) {
+            @Named("sensitiveData") String sensitiveData) {
         try {
-            app.getClass().getMethod(method).invoke(app);
+            app.getClass().getMethod(methodName).invoke(app);
             // For web services, calling the method might throw an exception if
             // access is denied.
         } catch (Exception e) {
             fail("User with credentials: " + credentials.getUsername() + " "
                     + credentials.getPassword()
-                    + " could not access the method: " + method + "()");
+                    + " could not access the method: " + methodName + "()");
         }
         recordedEntries = getProxy().findInResponseHistory(sensitiveData);
         assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", recordedEntries.size(), greaterThan(0));
@@ -475,11 +473,18 @@ public class WebApplicationSteps {
     }
     
     @When("they access the restricted resource: <method>")
+    @Alias("the previously recorded HTTP Requests for <method> are replayed using the current session ID")
     public void setMethodName(@Named("method") String method) {
     	methodName = method;
     }
+        
+    
+    @When("the HTTP requests and responses on recorded")
+    public void noActionForRecordingHttpRequestResponses() {
+    	
+    }
 
-    @Then("they should not see the string: <sensitiveData>")
+    @Then("the string: <sensitiveData> should not be present in any of the HTTP responses")
     public void checkNoAccessToResource(@Named("sensitiveData") String sensitiveData) {
         if (methodProxyMap == null || methodProxyMap.get(methodName).size() == 0)
             throw new ConfigurationException(

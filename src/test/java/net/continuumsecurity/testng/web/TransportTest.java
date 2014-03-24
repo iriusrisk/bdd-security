@@ -68,7 +68,8 @@ public class TransportTest {
             webAppSteps.loginWithSetCredentials();
             webAppSteps.clearProxy();
             try {
-                webAppSteps.recordSensitiveResponse((String) item.get("sensitiveData"), (String) item.get("method"));
+            	webAppSteps.setMethodName((String) item.get("method"));
+                webAppSteps.recordSensitiveResponse((String) item.get("sensitiveData"));
                 webAppSteps.checkHeaderValue("Cache-control", "no-cache, no-store, must-revalidate");
                 webAppSteps.checkHeaderValue("Pragma", "no-cache");
             } catch (AssertionError e) {

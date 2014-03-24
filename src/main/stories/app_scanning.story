@@ -3,8 +3,7 @@ Automated Application Security Scanning
 Narrative: 
 In order to protect my data
 As a user
-I want to identify common security vulnerabilities in the application
-
+I want to ensure that the application does not suffer from common security vulnerabilities
 
 Meta: @story AppScanning
 

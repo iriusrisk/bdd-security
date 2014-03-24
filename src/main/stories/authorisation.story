@@ -17,7 +17,9 @@ And the username <username>
 And the password <password>
 When the user logs in
 And the proxy logs are cleared
-Then when they access the restricted resource: <method> they should see the string: <sensitiveData>
+And they access the restricted resource: <method>
+And the HTTP requests and responses on recorded
+Then the string: <sensitiveData> should be present in one of the HTTP responses
 Examples:
 tables/authorised.resources.table
 
@@ -30,8 +32,8 @@ And the username <username>
 And the password <password>
 And the login page
 When the user logs in
-And they access the restricted resource: <method>
-Then they should not see the string: <sensitiveData>
+And the previously recorded HTTP Requests for <method> are replayed using the current session ID
+Then the string: <sensitiveData> should not be present in any of the HTTP responses
 Examples:
 tables/unauthorised.resources.table
 
@@ -41,7 +43,7 @@ Meta: @id anon_access_control
 Given the access control map for authorised users has been populated
 And a new browser instance
 And the login page
-When they access the restricted resource: <method>
-Then they should not see the string: <sensitiveData>
+When the previously recorded HTTP Requests for <method> are replayed using the current session ID
+Then the string: <sensitiveData> should not be present in any of the HTTP responses
 Examples:
 tables/authorised.resources.table

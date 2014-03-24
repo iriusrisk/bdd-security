@@ -137,7 +137,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream("deathbycaptcha.properties"));
-			super.setCaptchaSolver(new CaptchaSolver(this, props));
+			setCaptchaSolver(new CaptchaSolver(this, props));
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
