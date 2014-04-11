@@ -17,8 +17,8 @@ And the username <username>
 And the password <password>
 When the user logs in
 And the proxy logs are cleared
-And they access the restricted resource: <method>
 And the HTTP requests and responses on recorded
+And they access the restricted resource: <method>
 Then the string: <sensitiveData> should be present in one of the HTTP responses
 Examples:
 tables/authorised.resources.table

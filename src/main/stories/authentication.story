@@ -1,7 +1,7 @@
 Authentication
 
 Narrative: 
-In order to protect user data
+In order to protect sensitive user data
 As a user
 I want to have a robust authentication system
 

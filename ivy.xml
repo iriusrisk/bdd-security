@@ -62,5 +62,6 @@
         <dependency org="org.mortbay.jetty" name="jetty-runner" rev="8.1.14.v20131031"/>
         <dependency org="org.glassfish.jersey.core" name="jersey-client" rev="2.6"/>
         <dependency org="org.glassfish.jersey.connectors" name="jersey-apache-connector" rev="2.6" />
+        <dependency org="net.htmlparser.jericho" name="jericho-html" rev="3.3"/>
     </dependencies>
 </ivy-module>

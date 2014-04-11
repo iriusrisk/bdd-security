@@ -6,6 +6,7 @@
     <!-- The default driver for tests that don't require a proxy.
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
     <defaultDriver>firefox</defaultDriver> -->
+    
     <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>
 
     <!-- The driver configured to use ZAP as the proxy -->

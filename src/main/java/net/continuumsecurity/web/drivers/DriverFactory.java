@@ -40,7 +40,7 @@ public class DriverFactory {
     static Logger log = Logger.getLogger(DriverFactory.class.getName());
 
 
-    public static DriverFactory get() {
+    public static DriverFactory instance() {
         if (dm == null)
             dm = new DriverFactory();
         return dm;
@@ -57,7 +57,7 @@ public class DriverFactory {
 
     // Return the desired driver and clear all its cookies
     private static WebDriver getDriver(String type, boolean isProxyDriver) {
-        WebDriver retVal = get().findOrCreate(type, isProxyDriver);
+        WebDriver retVal = instance().findOrCreate(type, isProxyDriver);
         try {
             if (!retVal.getCurrentUrl().equals("about:blank")) {
                 retVal.manage().deleteAllCookies();
