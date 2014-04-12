@@ -140,23 +140,14 @@ public class AppScanningSteps {
     public void enablePolicy(@Named("policyName") String policyName) {
         String ids = null;
         switch (policyName.toLowerCase()) {
+            case "directory-browsing":
+                ids = "0";
+                break;
             case "cross-site-scripting":
                 ids = "40012,40014,40016,40017";
                 break;
             case "sql-injection":
                 ids = "40018";
-                break;
-            case "mysql-sql-injection":
-                ids = "40019";
-                break;
-            case "hypersonic-sql-injection":
-                ids = "40020";
-                break;
-            case "oracle-sql-injection":
-                ids = "40021";
-                break;
-            case "postgresql-sql-injection":
-                ids = "40022";
                 break;
             case "path-traversal":
                 ids = "6";
@@ -164,26 +155,14 @@ public class AppScanningSteps {
             case "remote-file-inclusion":
                 ids = "7";
                 break;
-            case "source-code-disclosure":
-                ids = "40";
-                break;
-            case "url-redirector-abuse":
-                ids = "20010";
-                break;
             case "server-side-include":
                 ids = "40009";
                 break;
-            case "ldap-injection":
-                ids = "40015";
+            case "script-active-scan-rules":
+                ids = "50000";
                 break;
             case "server-side-code-injection":
                 ids = "90019";
-                break;
-            case "remote-os-command-injection":
-                ids = "90020";
-                break;
-            case "xpath-injection":
-                ids = "90021";
                 break;
             case "external-redirect":
                 ids = "30000";
@@ -196,6 +175,10 @@ public class AppScanningSteps {
         scanner.setEnableScanners(ids, true);
     }
 
+    @Given("the attack strength is set to $strength")
+    public void setAttackStrength(String strength) {
+        scanner.setAttackStrength(strength.toUpperCase());
+    }
 
     @When("the scanner is run")
     public void runScanner() throws Exception {
