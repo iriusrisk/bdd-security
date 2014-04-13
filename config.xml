@@ -6,7 +6,6 @@
     <!-- The default driver for tests that don't require a proxy.
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
     <defaultDriver>firefox</defaultDriver> -->
-    
     <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>
 
     <!-- The driver configured to use ZAP as the proxy -->
@@ -27,9 +26,15 @@
     </sessionIds>
 
     <users>
-        <user username="alice" password="password"></user>
-        <user username="bob" password="password"></user>
-        <user username="admin" password="password"></user>
+        <user username="alice" password="password">
+            <recoverpassword name="email" value="alice@continuumsecurity.net"/>
+        </user>
+        <user username="bob" password="password">
+            <recoverpassword name="email" value="bob@continuumsecurity.net"/>
+        </user>
+        <user username="admin" password="password">
+            <recoverpassword name="email" value="admin@continuumsecurity.net"/>
+        </user>
     </users>
 
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>
@@ -40,7 +45,7 @@
         <port>8888</port>
     </proxy>
 
-    <displayStackTrace>false</displayStackTrace>
+    <displayStackTrace>true</displayStackTrace>
     <storyDir>src/main/stories/</storyDir>
     <reportsDir>reports</reportsDir>
     <latestReportsDir>reports/latest</latestReportsDir>

@@ -42,3 +42,8 @@ Scenario: Support TLSv1.2
 Meta: @id ssl_support_tlsv1.2
 Given SSL tests have been run on the secure base Url
 Then TLSv1.2 should be supported
+
+Scenario: Patch OpenSSL against the Heartbleed vulnerability
+Meta: @id ssl_heartbleed
+Given SSL tests have been run on the secure base Url
+Then the service should not be vulnerable to the Heartbleed attack

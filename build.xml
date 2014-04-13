@@ -80,6 +80,7 @@
 
     <target name="resolve" description="--> retrieve dependencies with ivy">
         <ivy:retrieve sync="true" pattern="${ivy.provided.lib.dir}/[artifact]-[type]-[revision].[ext]"/>
+        <ivy:report todir="${ivy.provided.lib.dir}" />
     </target>
 
     <target name="dependency-report">

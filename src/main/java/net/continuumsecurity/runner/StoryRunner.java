@@ -21,7 +21,7 @@ package net.continuumsecurity.runner;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import net.continuumsecurity.web.steps.AppScanningSteps;
-import net.continuumsecurity.web.steps.HostScanningSteps;
+import net.continuumsecurity.web.steps.NessusScanningSteps;
 import net.continuumsecurity.web.steps.InfrastructureSteps;
 import net.continuumsecurity.web.steps.WebApplicationSteps;
 import org.apache.commons.io.FileUtils;
@@ -72,7 +72,7 @@ public class StoryRunner extends BaseStoryRunner {
         return new InstanceStepsFactory(configuration(),
                 ws,
                 new InfrastructureSteps(),
-                new HostScanningSteps(),
+                new NessusScanningSteps(),
                 new AppScanningSteps());
     }
 

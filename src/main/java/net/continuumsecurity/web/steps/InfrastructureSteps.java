@@ -4,7 +4,7 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.Utils;
 import net.continuumsecurity.scanner.PortResult;
 import net.continuumsecurity.scanner.PortScanner;
-import net.continuumsecurity.utils.TestSSL;
+import net.continuumsecurity.utils.SSLTester;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.*;
 
 public class InfrastructureSteps {
     Logger log = Logger.getLogger(WebApplicationSteps.class);
-    TestSSL testSSL;
+    SSLTester sslTester;
     String targetHost;
     PortScanner portScanner;
     List<PortResult> portScanResults;
@@ -31,34 +31,34 @@ public class InfrastructureSteps {
 
     @Given("SSL tests have been run on the secure base Url")
     public void runSSLTestsOnSecureBaseUrl() throws IOException {
-        if (testSSL == null) {
-            testSSL = new TestSSL();
+        if (sslTester == null) {
+            sslTester = new SSLTester();
             URL url = new URL(Config.getBaseSecureUrl());
             int port = url.getPort();
             if (port == -1) port = 443;
-            testSSL.test(url.getHost(), port);
+            sslTester.test(url.getHost(), port);
         }
     }
 
     @Then("the service must not support SSL compression")
     public void sslServiceNotVulnerableToCRIME() {
-        assertThat(testSSL.isVulnCRIME(), is(false));
+        assertThat(sslTester.isVulnCRIME(), is(false));
     }
 
     @Then("the service must not be vulnerable to the BEAST attack")
     public void sslServiceNotVulnerableToBEAST() {
-        assertThat(testSSL.isVulnBEAST(), is(false));
+        assertThat(sslTester.isVulnBEAST(), is(false));
     }
 
     @Then("the minimum ciphers strength must be 128 bit")
     public void sslMinimum128bitCiphers() {
-        assertThat(testSSL.getMinEncryptionStrength(), greaterThanOrEqualTo(3));
+        assertThat(sslTester.getMinEncryptionStrength(), greaterThanOrEqualTo(3));
     }
 
     @Then("SSL version 2 must not be supported")
     public void sslNoV2() {
         boolean isV2 = false;
-        for (String version : testSSL.getSupportedProtocols()) {
+        for (String version : sslTester.getSupportedProtocols()) {
             if (version.contains("SSLv2")) {
                 isV2 = true;
                 break;
@@ -70,23 +70,28 @@ public class InfrastructureSteps {
     @Then("$protocol should be supported")
     public void sslSupportProtocol(@Named("protocol") String protocol) {
         boolean found = false;
-        for (String version : testSSL.getSupportedProtocols()) {
+        for (String version : sslTester.getSupportedProtocols()) {
             if (version.contains(protocol)) {
                 found = true;
             }
         }
-        assertThat(testSSL.getSupportedProtocols().toString(), found, equalTo(true));
+        assertThat(sslTester.getSupportedProtocols().toString(), found, equalTo(true));
     }
 
     @Then("$cipher ciphers must not be supported")
     public void sslNoCipher(@Named("cipher") String cipher) {
-        assertThat(testSSL.getSupportedCiphers().toString(), Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(), cipher), is(false));
+        assertThat(sslTester.getSupportedCiphers().toString(), Utils.mapOfStringListContainsString(sslTester.getSupportedCiphers(), cipher), is(false));
+    }
+
+    @Then("the service should not be vulnerable to the Heartbleed attack")
+    public void checkHeartbleed() {
+        assertThat("Vulnerable protocols: "+sslTester.getHeartbleedDetails(), sslTester.isVulnHeartbleed(), is(true));
     }
 
     //@Then("a $cipherType cipher should be supported")
     @Then("a $cipher cipher must be enabled")
     public void sslSupportAtLeastOneCipher(@Named("cipher") String cipher) {
-        assertThat(testSSL.getSupportedCiphers().toString(), Utils.mapOfStringListContainsString(testSSL.getSupportedCiphers(), cipher), is(true));
+        assertThat(sslTester.getSupportedCiphers().toString(), Utils.mapOfStringListContainsString(sslTester.getSupportedCiphers(), cipher), is(true));
     }
 
     @Given("the target host from the base URL")
@@ -118,5 +123,7 @@ public class InfrastructureSteps {
         }
         assertThat("Only the expected ports are open",selectedPorts, hasItems(expectedPorts.toArray(new Integer[expectedPorts.size()])));
     }
+
+
 
 }
