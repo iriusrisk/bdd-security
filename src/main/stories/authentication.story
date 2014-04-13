@@ -5,7 +5,7 @@ In order to protect sensitive user data
 As a user
 I want to have a robust authentication system
 
-Meta: @story Authentication
+Meta: @story authentication
 
 Scenario: Passwords should be case sensitive
 Meta: @id auth_case

@@ -5,7 +5,7 @@ In order to protect the confidentiality of my sensitive data
 As a user
 I want to verify that the application does not allow the browser to cache my sensitive data 
 
-Meta: @story DataSecurity
+Meta: @story data_security
 
 Scenario: Prevent browser caching of sensitive data
 Meta: @id cache_control_headers

@@ -5,7 +5,7 @@ In order to protect the integrity of my session and the confidentiality of my da
 As a user
 I want to verify that there are no weaknesses in the session management implementation
 
-Meta: @story SessionManagement
+Meta: @story session_management
 
 Scenario: Issue a new session ID after authentication
 Meta: @id session_fixation

@@ -5,7 +5,7 @@ In order to protect my sensitive data
 As a user
 I want to ensure that only the authorised users have access to my data 
 
-Meta: @story Authorisation
+Meta: @story authorisation
 
 Scenario: Users can view restricted resources for which they are authorised
 Meta: @id config_authorised_resources

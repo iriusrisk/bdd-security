@@ -5,7 +5,7 @@ In order to protect my data transmitted over the network
 As a user
 I want to verify that good SSL practices have been implemented and known weaknesses have been avoided
 
-Meta: @story Ssl
+Meta: @story ssl
 
 Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack
 Meta: @id ssl_crime
@@ -46,4 +46,4 @@ Then TLSv1.2 should be supported
 Scenario: Patch OpenSSL against the Heartbleed vulnerability
 Meta: @id ssl_heartbleed
 Given SSL tests have been run on the secure base Url
-Then the service should not be vulnerable to the Heartbleed attack
+Then the service should be patched against the Heartbleed (CVE-2014-0160) vulnerability

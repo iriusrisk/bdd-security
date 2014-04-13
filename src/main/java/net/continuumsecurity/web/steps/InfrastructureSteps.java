@@ -83,7 +83,7 @@ public class InfrastructureSteps {
         assertThat(sslTester.getSupportedCiphers().toString(), Utils.mapOfStringListContainsString(sslTester.getSupportedCiphers(), cipher), is(false));
     }
 
-    @Then("the service should not be vulnerable to the Heartbleed attack")
+    @Then("the service should be patched against the Heartbleed (CVE-2014-0160) vulnerability")
     public void checkHeartbleed() {
         assertThat("Vulnerable protocols: "+sslTester.getHeartbleedDetails(), sslTester.isVulnHeartbleed(), is(true));
     }
