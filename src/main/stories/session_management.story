@@ -38,7 +38,6 @@ Scenario: Set the 'secure' flag on the session cookie
 Meta: @id session_cookie_secure
 Given the default user logs in with credentials from: users.table
 And the user is logged in
-And the value of the session cookie is noted
 Then the session cookie should have the secure flag set
 
 
