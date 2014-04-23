@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
-        ILogout, IRecoverPassword, ICaptcha {
+        ILogout, IRecoverPassword {
 
     public RopeyTasksApplication() {
         super();
@@ -122,6 +122,12 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.xpath("//input[@value='Recover']")).click();
     }
     
+    /*
+        To enable CAPTCHA solving, there should be a deathbycaptcha.properties file in the project root with the format:
+        type=DeathByCaptcha
+        username=deathbycaptcha.com username
+        password=my password
+
     @Override
 	public WebElement getCaptchaImage() {
 		return driver.findElement(By.id("recaptcha_challenge_image"));		
@@ -144,6 +150,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 		}
 
 	}
-
+    */
 }
 
