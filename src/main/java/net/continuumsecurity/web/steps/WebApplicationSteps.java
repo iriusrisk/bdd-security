@@ -256,7 +256,7 @@ public class WebApplicationSteps {
 
     @Then("the protocol should be HTTPS")
     public void protocolHttps() {
-        assertThat(currentHar.getRequest().getUrl(), currentHar.getRequest().getUrl().substring(0, 4), equalTo("https"));
+        assertThat(currentHar.getRequest().getUrl(), currentHar.getRequest().getUrl().substring(0, 5), equalTo("https"));
     }
 
     @Given("the HTTP request-response containing the login form")
@@ -514,8 +514,7 @@ public class WebApplicationSteps {
         if (!accessible) {
             log.debug("User: " + credentials.getUsername() + " has no access to resource: " + methodName);
         }
-        assertThat("Resource: " + methodName + " can not be accessed by user: " + credentials.getUsername() + " because the text: " + sensitiveData + " was not present in the responses.",
-                accessible, equalTo(false));
+        assertThat(accessible, equalTo(false));
     }
 
     public Application getWebApplication() {
