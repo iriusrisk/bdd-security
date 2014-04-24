@@ -43,6 +43,7 @@
     <proxy>
         <host>127.0.0.1</host>
         <port>8888</port>
+        <api></api>
     </proxy>
 
     <displayStackTrace>true</displayStackTrace>

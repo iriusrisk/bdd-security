@@ -29,17 +29,17 @@ public class ProxyFactory {
 	static Logger log = Logger.getLogger(ProxyFactory.class);
 	
 	public static ScanningProxy getScanningProxy() throws ProxyException {
-		if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort());
+		if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort(),Config.getProxyApi());
 		return proxy;
 	}
 
     public static Spider getSpider() throws ProxyException {
-        if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort());
+        if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort(),Config.getProxyApi());
         return proxy;
     }
     
     public static LoggingProxy getLoggingProxy() throws ProxyException {
-        if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort());
+        if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort(),Config.getProxyApi());
         return proxy;
     }
 	

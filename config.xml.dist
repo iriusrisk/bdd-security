@@ -26,15 +26,9 @@
     </sessionIds>
 
     <users>
-        <user username="alice" password="password">
-            <recoverpassword name="email" value="alice@continuumsecurity.net"/>
-        </user>
-        <user username="bob" password="password">
-            <recoverpassword name="email" value="bob@continuumsecurity.net"/>
-        </user>
-        <user username="admin" password="password">
-            <recoverpassword name="email" value="admin@continuumsecurity.net"/>
-        </user>
+        <user username="alice" password="password"/>
+        <user username="bob" password="password"/>
+        <user username="admin" password="password"/>
     </users>
 
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>
@@ -43,6 +37,7 @@
     <proxy>
         <host>127.0.0.1</host>
         <port>8888</port>
+        <api></api>
     </proxy>
 
     <displayStackTrace>true</displayStackTrace>

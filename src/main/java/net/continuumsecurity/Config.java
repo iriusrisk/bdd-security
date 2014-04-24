@@ -112,6 +112,10 @@ public class Config {
         return validateAndGetString("baseUrl");
     }
 
+    public static String getProxyApi() {
+        return validateAndGetString("proxy.api");
+    }
+
     public static String getSecureBaseUrl() {
         return validateAndGetString("secureBaseUrl");
     }

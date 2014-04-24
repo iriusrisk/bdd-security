@@ -35,19 +35,11 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     @Override
     public void login(Credentials credentials) {
         UserPassCredentials creds = new UserPassCredentials(credentials);
-        int attempts = 0;
-        boolean captchaPresent = true;
-        while (attempts < 4 && captchaPresent) {
-			driver.findElement(By.id("username")).clear();
-			driver.findElement(By.id("username")).sendKeys(creds.getUsername());
-			driver.findElement(By.id("password")).clear();
-			driver.findElement(By.id("password")).sendKeys(creds.getPassword());
-			if (captchaPresent) {
-				captchaSolver.solve();
-			}
-			driver.findElement(By.name("_action_login")).click();
-        	captchaPresent = captchaSolver.isCaptchaPresent();
-		}
+        driver.findElement(By.id("username")).clear();
+        driver.findElement(By.id("username")).sendKeys(creds.getUsername());
+        driver.findElement(By.id("password")).clear();
+        driver.findElement(By.id("password")).sendKeys(creds.getPassword());
+        driver.findElement(By.name("_action_login")).click();
     }
 
     // Convenience method
@@ -68,13 +60,13 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.linkText("Profile")).click();
     }
 
-    @Restricted(users = {"bob","admin"},
+    @Restricted(users = {"bob", "admin"},
             sensitiveData = "Robert")
     public void viewProfileForBob() {
         driver.get(Config.getBaseUrl() + "user/edit/1");
     }
 
-    @Restricted(users = {"alice","admin"},
+    @Restricted(users = {"alice", "admin"},
             sensitiveData = "alice@continuumsecurity.net")
     public void viewProfileForAlice() {
         driver.get(Config.getBaseUrl() + "user/edit/2");
