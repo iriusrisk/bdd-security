@@ -15,7 +15,7 @@
     <baseUrl>http://localhost:9090/</baseUrl>
 
     <!-- Used for the SSL and the HTTP header tests -->
-    <baseSecureUrl>http://localhost:9090/</baseSecureUrl>
+    <baseSecureUrl>https://www.cloudflarechallenge.com</baseSecureUrl>
 
     <!-- The fully qualified class name representing the application under test -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>

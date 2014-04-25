@@ -12,6 +12,7 @@ import edu.umass.cs.benchlab.har.HarResponse;
 import org.apache.log4j.Logger;
 import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.steps.Parameters;
+import org.zaproxy.clientapi.core.Alert;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -232,5 +233,6 @@ public class Utils {
         }
         return jbehaveTable;
       }
+
 
 }
