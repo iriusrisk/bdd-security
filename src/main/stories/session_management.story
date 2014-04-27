@@ -13,8 +13,8 @@ Given the login page
 And the value of the session cookie is noted
 When the default user logs in with credentials from: users.table
 And the user is logged in
-Then the value of the session cookie issued after authentication should be 
-		different from that of the previously noted session ID
+Then the value of the session cookie issued after authentication should
+        be different from that of the previously noted session ID
 
 
 Scenario: Invalidate the session when the user logs out
