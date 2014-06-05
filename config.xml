@@ -12,10 +12,10 @@
     <proxyDriver path="drivers/chromedriver-mac">Chrome</proxyDriver>
 
     <!-- Base URL for the application to test -->
-    <baseUrl>http://localhost:9090/</baseUrl>
+    <baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
 
     <!-- Used for the SSL and the HTTP header tests -->
-    <baseSecureUrl>https://www.cloudflarechallenge.com</baseSecureUrl>
+    <baseSecureUrl>https://www.cloudflarechallenge.com/</baseSecureUrl>
 
     <!-- The fully qualified class name representing the application under test -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
@@ -26,9 +26,15 @@
     </sessionIds>
 
     <users>
-        <user username="alice" password="password"/>
-        <user username="bob" password="password"/>
-        <user username="admin" password="password"/>
+        <user username="alice" password="password">
+            <recoverpassword name="email" value="alice@continuumsecurity.net"/>
+        </user>
+        <user username="bob" password="password">
+            <recoverpassword name="email" value="bob@continuumsecurity.net"/>
+        </user>
+        <user username="admin" password="password">
+            <recoverpassword name="email" value="admin@continuumsecurity.net"/>
+        </user>
     </users>
 
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>

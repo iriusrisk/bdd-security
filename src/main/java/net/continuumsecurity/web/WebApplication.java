@@ -18,11 +18,13 @@
  ******************************************************************************/
 package net.continuumsecurity.web;
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
