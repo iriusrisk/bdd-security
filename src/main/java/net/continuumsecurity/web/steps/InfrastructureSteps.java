@@ -55,16 +55,16 @@ public class InfrastructureSteps {
         assertThat(sslTester.getMinEncryptionStrength(), greaterThanOrEqualTo(3));
     }
 
-    @Then("SSL version 2 must not be supported")
-    public void sslNoV2() {
-        boolean isV2 = false;
+    @Then("SSL version $version must not be supported")
+    public void sslNoV2(String disallowVersion) {
+        boolean isSupported = false;
         for (String version : sslTester.getSupportedProtocols()) {
-            if (version.contains("SSLv2")) {
-                isV2 = true;
+            if (version.contains("SSLv"+disallowVersion)) {
+                isSupported = true;
                 break;
             }
         }
-        assertThat(isV2, equalTo(false));
+        assertThat(isSupported, equalTo(false));
     }
 
     @Then("$protocol should be supported")

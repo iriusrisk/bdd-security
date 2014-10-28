@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
@@ -88,7 +89,6 @@ public class DriverFactory {
     private WebDriver findOrCreate(String type, boolean isProxyDriver) {
         if (isProxyDriver) {
             if (proxyDriver != null) return proxyDriver;
-
             proxyDriver = createProxyDriver(type);
             return proxyDriver;
         } else {
@@ -99,21 +99,24 @@ public class DriverFactory {
     }
 
     private WebDriver createDriver(String type) {
-        if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(null);
+        if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(new DesiredCapabilities());
         else if (type.equalsIgnoreCase(FIREFOX)) return createFirefoxDriver(null);
-        throw new RuntimeException("Unknown WebDriver browser: "+type);
+        throw new RuntimeException("Unsupported WebDriver browser: "+type);
     }
 
     private WebDriver createProxyDriver(String type) {
         if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(createProxyCapabilities());
         else if (type.equalsIgnoreCase(FIREFOX)) return createFirefoxDriver(createProxyCapabilities());
-        throw new RuntimeException("Unknown WebDriver browser: "+type);
+        throw new RuntimeException("Unsupported WebDriver browser: "+type);
     }
 
     public WebDriver createChromeDriver(DesiredCapabilities capabilities) {
         System.setProperty("webdriver.chrome.driver", Config.getDefaultDriverPath());
         if (capabilities != null) {
             capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--test-type");
+            capabilities.setCapability(ChromeOptions.CAPABILITY,options);
             return new ChromeDriver(capabilities);
         } else return new ChromeDriver();
 

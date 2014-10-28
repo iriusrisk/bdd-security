@@ -12,31 +12,36 @@ Meta: @id ssl_crime
 Given SSL tests have been run on the secure base Url
 Then the service must not support SSL compression
 
-
 Scenario: The SSL service should either support TLSv1.1+ or prefer RC4 ciphers over CBC in order to mitigate the risk of the BEAST attack
 Meta: @id ssl_beast
 Given SSL tests have been run on the secure base Url
 Then the service must not be vulnerable to the BEAST attack
-
 
 Scenario: The minimum cipher strength should be at least 128 bit
 Meta: @id ssl_strong_cipher
 Given SSL tests have been run on the secure base Url
 Then the minimum ciphers strength must be 128 bit
 
+Scenario: Disable SSL version 1 due to numerous cryptographic weaknesses
+Meta: @id ssl_v1_disabled
+Given SSL tests have been run on the secure base Url
+Then SSL version 1 must not be supported
 
-Scenario: Disable SSL version 2
+Scenario: Disable SSL version 2 due to numerous cryptographic weaknesses
 Meta: @id ssl_v2_disabled
 Given SSL tests have been run on the secure base Url
 Then SSL version 2 must not be supported
 
+Scenario: Disable SSL version 3 to mitigate the risk of the POODLE attack
+Meta: @id ssl_v3_disabled
+Given SSL tests have been run on the secure base Url
+Then SSL version 3 must not be supported
 
 Scenario: Enable Perfect forward secrecy
 Meta: @id ssl_perfect_forward_secrecy
 Given SSL tests have been run on the secure base Url
 Then a ECDHE cipher must be enabled
 And a DHE cipher must be enabled
-
 
 Scenario: Support TLSv1.2
 Meta: @id ssl_support_tlsv1.2

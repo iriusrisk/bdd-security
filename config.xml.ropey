@@ -15,10 +15,10 @@
     <baseUrl>http://localhost:9110/ropeytasks/</baseUrl>
 
     <!-- Used for the SSL and the HTTP header tests -->
-    <baseSecureUrl>https://www.cloudflarechallenge.com/</baseSecureUrl>
+    <baseSecureUrl>https://localhost:8443/ropeytasks/</baseSecureUrl>
 
     <!-- The fully qualified class name representing the application under test -->
-    <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
+    <class>net.continuumsecurity.examples.ropeytasks.Demo</class>
 
     <!-- Names of the session ID cookies -->
     <sessionIds>
