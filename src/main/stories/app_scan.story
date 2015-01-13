@@ -1,8 +1,8 @@
 Automated Application Security Scanning
 
 Narrative: 
-In order to protect my data
-As a user
+In order to protect user data
+As an application owner
 I want to ensure that the application does not suffer from common security vulnerabilities
 
 Meta: @story app_scan
@@ -17,7 +17,7 @@ And the attack strength is set to High
 And the alert threshold is set to Medium
 When the scanner is run
 And false positives described in: tables/false_positives.table are removed
-Then no Medium or higher risk vulnerabilities should be present
+Then no High or higher risk vulnerabilities should be present
 
 
 Scenario: The application should not contain Cross Site Scripting vulnerabilities

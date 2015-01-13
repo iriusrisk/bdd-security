@@ -12,11 +12,6 @@ Meta: @id ssl_crime
 Given SSL tests have been run on the secure base Url
 Then the service must not support SSL compression
 
-Scenario: The SSL service should either support TLSv1.1+ or prefer RC4 ciphers over CBC in order to mitigate the risk of the BEAST attack
-Meta: @id ssl_beast
-Given SSL tests have been run on the secure base Url
-Then the service must not be vulnerable to the BEAST attack
-
 Scenario: The minimum cipher strength should be at least 128 bit
 Meta: @id ssl_strong_cipher
 Given SSL tests have been run on the secure base Url

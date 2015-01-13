@@ -2,7 +2,7 @@ Authentication
 
 Narrative: 
 In order to protect sensitive user data
-As a user
+As an application owner
 I want to have a robust authentication system
 
 Meta: @story authentication

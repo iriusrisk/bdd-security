@@ -1,8 +1,8 @@
 
 Narrative: 
 
-In order to protect the integrity of my session and the confidentiality of my data
-As a user
+In order to protect the integrity of the user session
+As an application owner
 I want to verify that there are no weaknesses in the session management implementation
 
 Meta: @story session_management
