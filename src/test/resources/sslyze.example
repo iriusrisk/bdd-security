@@ -1,0 +1,135 @@
+
+
+
+ REGISTERING AVAILABLE PLUGINS
+ -----------------------------
+
+  PluginCertInfo
+  PluginSessionResumption
+  PluginHeartbleed
+  PluginOpenSSLCipherSuites
+  PluginHSTS
+  PluginChromeSha1Deprecation
+  PluginCompression
+  PluginSessionRenegotiation
+
+
+
+ CHECKING HOST(S) AVAILABILITY
+ -----------------------------
+
+   www.google.com:443                  => 74.125.133.104:443
+
+
+
+ SCAN RESULTS FOR WWW.GOOGLE.COM:443 - 74.125.133.104:443
+ --------------------------------------------------------
+
+  * Deflate Compression:
+      OK - Compression disabled
+
+  * Session Renegotiation:
+      Client-initiated Renegotiations:   OK - Rejected
+      Secure Renegotiation:              OK - Supported
+
+  * OpenSSL Heartbleed:
+      OK - Not vulnerable to Heartbleed
+
+  * Certificate - Content:
+      SHA1 Fingerprint:                  adb87314d52684adcc6dde340908dda496f9b290
+      Common Name:                       www.google.com
+      Issuer:                            Google Internet Authority G2
+      Serial Number:                     3169487CDFC9F19C
+      Not Before:                        Dec 10 12:05:39 2014 GMT
+      Not After:                         Mar 10 00:00:00 2015 GMT
+      Signature Algorithm:               sha1WithRSAEncryption
+      Key Size:                          2048 bit
+      Exponent:                          65537 (0x10001)
+      X509v3 Subject Alternative Name:   {'DNS': ['www.google.com']}
+
+  * Certificate - Trust:
+      Hostname Validation:               OK - Subject Alternative Name matches
+      "Mozilla NSS - 08/2014" CA Store:  OK - Certificate is trusted
+      "Microsoft - 08/2014" CA Store:    OK - Certificate is trusted
+      "Apple - OS X 10.9.4" CA Store:    OK - Certificate is trusted
+      "Java 6 - Update 65" CA Store:     OK - Certificate is trusted
+      Certificate Chain Received:        ['www.google.com', 'Google Internet Authority G2', 'GeoTrust Global CA']
+
+  * Certificate - OCSP Stapling:
+      NOT SUPPORTED - Server did not send back an OCSP response.
+
+  * Session Resumption:
+      With Session IDs:                  OK - Supported (5 successful, 0 failed, 0 errors, 5 total attempts).
+      With TLS Session Tickets:          OK - Supported
+
+  * SSLV2 Cipher Suites:
+      Server rejected all cipher suites.
+
+  * TLSV1_2 Cipher Suites:
+      Preferred:
+                 ECDHE-RSA-AES128-GCM-SHA256   ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VPjjLZHAVOqDgRg
+      Accepted:
+                 ECDHE-RSA-AES256-GCM-SHA384   ECDH-256 bits  256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VPznJcLBVLbugegP
+                 ECDHE-RSA-AES128-GCM-SHA256   ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VOnwOMqDVO3rgPgJ
+                 ECDHE-RSA-AES128-SHA256       ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VOXsOM2BVNuJgOgH
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VNzJOpaBVOjAgOAE
+                 AES256-GCM-SHA384             -              256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VMTrNdDCVIqigOAG
+                 AES256-SHA                    -              256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VLytN9aAVPmVgYAJ
+                 ECDHE-RSA-AES256-SHA384       ECDH-256 bits  256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VLDRJtKAVOnYgSA
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VKfaJdjBVMyLgegM
+                 AES256-SHA256                 -              256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_pG7VJTtNYvFVIsU
+                 RC4-MD5                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VPaLG4LAVPr2gagG
+                 RC4-SHA                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VPOXGYWFVLDKgNAB
+                 ECDHE-RSA-DES-CBC3-SHA        ECDH-256 bits  112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VOjXHoqCVKqUgfgP
+                 AES128-SHA                    -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VObdFJLAVO3mgSA
+                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VLj3F4WFVLDKgNAB
+                 DES-CBC3-SHA                  -              112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VL7xI5aBVOjAgOAE
+                 AES128-SHA256                 -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VJ3iE8SEVJa_gdAI
+                 AES128-GCM-SHA256             -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=_5G7VIKGE4XAVNSSgvAL
+
+  * TLSV1_1 Cipher Suites:
+      Preferred:
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VIiCNcKDVIqZgbgB
+      Accepted:
+                 AES128-SHA                    -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VN_DGovDVIPsgrgG
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VMn1DIiAVOiuguAE
+                 ECDHE-RSA-DES-CBC3-SHA        ECDH-256 bits  112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VM_8ItGBVOCsgLgL
+                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VKK9HYGCVMH1gNgN
+                 DES-CBC3-SHA                  -              112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VJvbJ9jDVKn_gegP
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VIz8A9WAVM27grgO
+                 RC4-MD5                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VIr0HoKEVMOQgYAJ
+                 RC4-SHA                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VIn1HsTHVOCQgNgD
+                 AES256-SHA                    -              256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AJK7VI2fDMHCVNOKgcAG
+
+  * TLSV1 Cipher Suites:
+      Preferred:
+                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VP3TOsvCVPL2gdAB
+      Accepted:
+                 AES128-SHA                    -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VNHhIcXEVNf-gqAB
+                 RC4-MD5                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VLfSIoXFVLD6gcgG
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VJTcCJfBVILqgZAH
+                 RC4-SHA                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VJO6Is6AVIKggKgE
+                 AES256-SHA                    -              256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VJ-jD4PEVPTHgcgJ
+                 DES-CBC3-SHA                  -              112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VISqLY2AVKTRgIgF
+                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VIL1IdOBVLXrgrgI
+                 ECDHE-RSA-DES-CBC3-SHA        ECDH-256 bits  112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VIGPJoWFVLDKgNAB
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VID6EoWFVLDKgNAB
+
+  * SSLV3 Cipher Suites:
+      Preferred:
+                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=A5K7VJuhCM6BVNLngIgE
+      Accepted:
+                 AES256-SHA                    -              256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VPGaF9jBVMyLgegM
+                 RC4-MD5                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VPCQMIWAVIHDgrgF
+                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VNDXKpfBVILqgZAH
+                 AES128-SHA                    -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VMDaKojAVJaQgfAO
+                 ECDHE-RSA-DES-CBC3-SHA        ECDH-256 bits  112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VLKKM82BVNuJgOgH
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VKHTGdfHVNm-gNgG
+                 RC4-SHA                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VKGQMMqDVO3rgPgJ
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VJzDDISFVP6egbgN
+                 DES-CBC3-SHA                  -              112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VImoOcjCVNmpgbgL
+
+
+
+ SCAN COMPLETED IN 5.10 S
+ ------------------------

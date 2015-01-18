@@ -20,10 +20,7 @@ package net.continuumsecurity.runner;
 
 import net.continuumsecurity.Config;
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.steps.AppScanningSteps;
-import net.continuumsecurity.web.steps.NessusScanningSteps;
-import net.continuumsecurity.web.steps.InfrastructureSteps;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
+import net.continuumsecurity.web.steps.*;
 import org.apache.commons.io.FileUtils;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
@@ -73,6 +70,7 @@ public class StoryRunner extends BaseStoryRunner {
                 ws,
                 new InfrastructureSteps(),
                 new NessusScanningSteps(),
+                new SSLyzeSteps(),
                 new AppScanningSteps());
     }
 

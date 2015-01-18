@@ -44,38 +44,6 @@ public class TestAutomatedScannerSteps {
         assertThat(steps.containsAlertByValue(list1,second),is(false));
     }
 
-    @Test
-    public void testRemoveAlertsFromPreviousScenarios() {
-        List<Alert> previousAlerts = new ArrayList<>();
-        previousAlerts.add(first);
-        previousAlerts.add(second);
 
-        List<Alert> currentAlerts = new ArrayList<>();
-        currentAlerts.add(first);
-        currentAlerts.add(second);
-        currentAlerts.add(third);
-
-        steps.setAlertsFromPreviousScenarios(previousAlerts);
-        List<Alert> filtered = steps.removeAlertsFromPreviousScenarios(currentAlerts);
-        assertThat(filtered.size(),equalTo(1));
-        assertThat(filtered,contains(third));
-
-    }
-
-    @Test
-    public void testAddToAlertsFromPreviousScenarios() {
-        List<Alert> previousAlerts = new ArrayList<>();
-        previousAlerts.add(first);
-        previousAlerts.add(second);
-        steps.setAlertsFromPreviousScenarios(previousAlerts);
-
-        List<Alert> currentAlerts = new ArrayList<>();
-        currentAlerts.add(third);
-        steps.addToAlertsFromPreviousScenarios(currentAlerts);
-
-        assertThat(steps.getAlertsFromPreviousScenarios().size(),equalTo(3));
-        assertThat(steps.getAlertsFromPreviousScenarios(),contains(first,second,third));
-
-    }
 
 }

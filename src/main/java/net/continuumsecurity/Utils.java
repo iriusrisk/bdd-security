@@ -17,6 +17,8 @@ import org.zaproxy.clientapi.core.Alert;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -234,5 +236,14 @@ public class Utils {
         return jbehaveTable;
       }
 
+    public static String getHostFromUrl(String url) throws MalformedURLException {
+        URL theUrl = new URL(url);
+        return theUrl.getHost();
+    }
+
+    public static int getPortFromUrl(String url) throws MalformedURLException {
+        URL theUrl = new URL(url);
+        return theUrl.getPort();
+    }
 
 }

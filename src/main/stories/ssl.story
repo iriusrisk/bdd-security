@@ -5,45 +5,60 @@ In order to protect my data transmitted over the network
 As a user
 I want to verify that good SSL practices have been implemented and known weaknesses have been avoided
 
-Meta: @story ssl
+Meta: @story ssl @skip
 
 Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack
 Meta: @id ssl_crime
-Given SSL tests have been run on the secure base Url
-Then the service must not support SSL compression
+Given the SSLyze command is run against the secure base Url
+Then the output must contain the text "Compression disabled"
+
+Scenario: Disable client renegotiations
+Meta: @id ssl_client_renegotiations
+Given the SSLyze command is run against the secure base Url
+Then the output must contain a line that matches the regular expression ".*Client-initiated Renegotiations:\s+OK - Rejected.*"
 
 Scenario: The minimum cipher strength should be at least 128 bit
 Meta: @id ssl_strong_cipher
-Given SSL tests have been run on the secure base Url
-Then the minimum ciphers strength must be 128 bit
+Given the SSLyze command is run against the secure base Url
+Then the minimum key size must be 128 bits
 
-Scenario: Disable SSL version 1 due to numerous cryptographic weaknesses
-Meta: @id ssl_v1_disabled
-Given SSL tests have been run on the secure base Url
-Then SSL version 1 must not be supported
-
-Scenario: Disable SSL version 2 due to numerous cryptographic weaknesses
-Meta: @id ssl_v2_disabled
-Given SSL tests have been run on the secure base Url
-Then SSL version 2 must not be supported
-
-Scenario: Disable SSL version 3 to mitigate the risk of the POODLE attack
-Meta: @id ssl_v3_disabled
-Given SSL tests have been run on the secure base Url
-Then SSL version 3 must not be supported
+Scenario: Disable weak SSL protocols due to numerous cryptographic weaknesses
+Meta: @id ssl_disabled_protocols
+Given the SSLyze command is run against the secure base Url
+Then the following protocols must not be supported
+|protocol   |
+|SSLV1      |
+|SSLV2      |
+|SSLV3      |
 
 Scenario: Enable Perfect forward secrecy
 Meta: @id ssl_perfect_forward_secrecy
-Given SSL tests have been run on the secure base Url
-Then a ECDHE cipher must be enabled
-And a DHE cipher must be enabled
+Given the SSLyze command is run against the secure base Url
+Then any of the following ciphers must be supported
+|cipher                         |
+|ECDHE-RSA-AES128-SHA           |
+|ECDHE-RSA-AES256-SHA           |
+|DHE-DSS-CAMELLIA128-SHA        |
+|DHE-DSS-CAMELLIA256-SHA        |
+|DHE-RSA-CAMELLIA128-SHA        |
+|DHE-RSA-CAMELLIA256-SHA        |
+|ECDHE-ECDSA-CAMELLIA128-SHA256 |
+|ECDHE-ECDSA-CAMELLIA256-SHA384 |
+|ECDH-ECDSA-CAMELLIA128-SHA256  |
+|ECDH-ECDSA-CAMELLIA256-SHA384  |
+|ECDHE-RSA-CAMELLIA128-SHA256   |
+|ECDHE-RSA-CAMELLIA256-SHA384   |
+|ECDH-RSA-CAMELLIA128-SHA256    |
+|ECDH-RSA-CAMELLIA256-SHA384    |
 
 Scenario: Support TLSv1.2
-Meta: @id ssl_support_tlsv1.2
-Given SSL tests have been run on the secure base Url
-Then TLSv1.2 should be supported
+Meta: @id ssl_support_strong_protocols
+Given the SSLyze command is run against the secure base Url
+Then the following protocols must be supported
+|protocol   |
+|TLSV1_2    |
 
 Scenario: Patch OpenSSL against the Heartbleed vulnerability
 Meta: @id ssl_heartbleed
-Given SSL tests have been run on the secure base Url
-Then the service should be patched against the Heartbleed (CVE-2014-0160) vulnerability
+Given the SSLyze command is run against the secure base Url
+Then the output must contain the text "Not vulnerable to Heartbleed"

@@ -40,7 +40,7 @@ public class SslTest {
 
     @Test
     public void ssl_version2_disabled() {
-        webAppSteps.sslNoV2();
+        webAppSteps.sslNoV2("2");
     }
 
     @Test

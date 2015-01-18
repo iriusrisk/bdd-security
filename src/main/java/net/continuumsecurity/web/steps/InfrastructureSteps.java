@@ -21,78 +21,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class InfrastructureSteps {
-    Logger log = Logger.getLogger(WebApplicationSteps.class);
-    SSLTester sslTester;
+    Logger log = Logger.getLogger(InfrastructureSteps.class);
     String targetHost;
     PortScanner portScanner;
     List<PortResult> portScanResults;
     List<Integer> selectedPorts;
     List<Integer> expectedPorts;
-
-    @Given("SSL tests have been run on the secure base Url")
-    public void runSSLTestsOnSecureBaseUrl() throws IOException {
-        if (sslTester == null) {
-            sslTester = new SSLTester();
-            URL url = new URL(Config.getBaseSecureUrl());
-            int port = url.getPort();
-            if (port == -1) port = 443;
-            sslTester.test(url.getHost(), port);
-        }
-    }
-
-    @Then("the service must not support SSL compression")
-    public void sslServiceNotVulnerableToCRIME() {
-        assertThat(sslTester.isVulnCRIME(), is(false));
-    }
-
-    @Then("the service must not be vulnerable to the BEAST attack")
-    public void sslServiceNotVulnerableToBEAST() {
-        assertThat(sslTester.isVulnBEAST(), is(false));
-    }
-
-    @Then("the minimum ciphers strength must be 128 bit")
-    public void sslMinimum128bitCiphers() {
-        assertThat(sslTester.getMinEncryptionStrength(), greaterThanOrEqualTo(3));
-    }
-
-    @Then("SSL version $version must not be supported")
-    public void sslNoV2(String disallowVersion) {
-        boolean isSupported = false;
-        for (String version : sslTester.getSupportedProtocols()) {
-            if (version.contains("SSLv"+disallowVersion)) {
-                isSupported = true;
-                break;
-            }
-        }
-        assertThat(isSupported, equalTo(false));
-    }
-
-    @Then("$protocol should be supported")
-    public void sslSupportProtocol(@Named("protocol") String protocol) {
-        boolean found = false;
-        for (String version : sslTester.getSupportedProtocols()) {
-            if (version.contains(protocol)) {
-                found = true;
-            }
-        }
-        assertThat(sslTester.getSupportedProtocols().toString(), found, equalTo(true));
-    }
-
-    @Then("$cipher ciphers must not be supported")
-    public void sslNoCipher(@Named("cipher") String cipher) {
-        assertThat(sslTester.getSupportedCiphers().toString(), Utils.mapOfStringListContainsString(sslTester.getSupportedCiphers(), cipher), is(false));
-    }
-
-    @Then("the service should be patched against the Heartbleed (CVE-2014-0160) vulnerability")
-    public void checkHeartbleed() {
-        assertThat("Vulnerable protocols: "+sslTester.getHeartbleedDetails(), sslTester.isVulnHeartbleed(), is(false));
-    }
-
-    //@Then("a $cipherType cipher should be supported")
-    @Then("a $cipher cipher must be enabled")
-    public void sslSupportAtLeastOneCipher(@Named("cipher") String cipher) {
-        assertThat(sslTester.getSupportedCiphers().toString(), Utils.mapOfStringListContainsString(sslTester.getSupportedCiphers(), cipher), is(true));
-    }
 
     @Given("the target host from the base URL")
     public void setTargetHostFromBaseURL() throws MalformedURLException {

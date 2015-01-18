@@ -29,6 +29,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,10 +118,6 @@ public class Config {
         return validateAndGetString("proxy.api");
     }
 
-    public static String getSecureBaseUrl() {
-        return validateAndGetString("secureBaseUrl");
-    }
-
     public static String getDefaultDriver() {
         return validateAndGetString("defaultDriver");
     }
@@ -141,6 +139,8 @@ public class Config {
         if (ret == null) throw new RuntimeException(value+" not defined in config.xml");
         return ret;
     }
+
+    public static String getSSLyze() { return validateAndGetString("sslyze"); }
 
     public static String getProxyHost() {
         return validateAndGetString("proxy.host");
