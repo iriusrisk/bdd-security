@@ -12,7 +12,7 @@
     <proxyDriver path="drivers/chromedriver-mac">Chrome</proxyDriver>
 
     <!-- Base URL for the application to test -->
-    <baseUrl>http://localhost:9090</baseUrl>
+    <baseUrl>http://localhost:9090/</baseUrl>
 
     <!-- Used for the SSL and the HTTP header tests -->
     <baseSecureUrl>https://www.wormly.com/</baseSecureUrl>
