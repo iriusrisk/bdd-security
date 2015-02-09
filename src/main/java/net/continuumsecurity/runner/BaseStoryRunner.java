@@ -38,7 +38,6 @@ public abstract class BaseStoryRunner extends JUnitStories {
 		.doIgnoreFailureInStories(true)
 		.doIgnoreFailureInView(true)
 		.useStoryTimeoutInSecs(60*60);
-
 	}
 	
 	@Override

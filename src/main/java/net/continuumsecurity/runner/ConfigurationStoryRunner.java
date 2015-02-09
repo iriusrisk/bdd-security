@@ -31,7 +31,8 @@ import java.util.List;
 
 public class ConfigurationStoryRunner extends BaseStoryRunner {
 	List<String> filters;
-	
+
+
 	public ConfigurationStoryRunner(List<String> filters) {
 		this.filters = filters;
 		configuredEmbedder().useMetaFilters(filters);
