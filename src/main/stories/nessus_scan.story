@@ -9,7 +9,7 @@ I want to scan the hosts for known security vulnerabilities
 					 
 Scenario: The host systems should not expose known security vulnerabilities
 
-Given a nessus server at https://localhost:8834
+Given a nessus version 6 server at https://localhost:8834
 And the nessus username continuum and the password continuum
 And the scanning policy named test
 And the target hosts

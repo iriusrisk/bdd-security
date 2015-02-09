@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.continuumsecurity.ClientFactory;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.ReportClient;
 import net.continuumsecurity.ScanClient;
-import net.continuumsecurity.model.Issue;
 
+import net.continuumsecurity.v5.model.Issue;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -30,16 +31,18 @@ public class NessusScanningSteps {
     String policyName;
     List<String> hostNames = new ArrayList<String>();
     String scanUuid;
-    String scanName;
+    String scanIdentifierForStatus;
     String username,password;
     Map<Integer,Issue> issues;
     String nessusUrl;
+    int nessusVersion;
 
     
-    @Given("a nessus server at $nessusUrl")
-    public void createNessusClient(String url) {
+    @Given("a nessus version $version server at $nessusUrl")
+    public void createNessusClient(int version,String url) {
         nessusUrl = url;
-    	scanClient = new ScanClient(url);
+        nessusVersion = version;
+    	scanClient = ClientFactory.createScanClient(url,nessusVersion,true);
     }
 
     @Given("the nessus username $username and the password $password")
@@ -67,15 +70,19 @@ public class NessusScanningSteps {
 
     @When("the scanner is run with scan name $scanName")
     public void runScan(String scanName) throws LoginException {
-        this.scanName = scanName;
         scanClient.login(username,password);
         scanUuid = scanClient.newScan(scanName,policyName, Utils.join(hostNames,","));
+        if (nessusVersion == 5) {
+            scanIdentifierForStatus = scanName;
+        } else {
+            scanIdentifierForStatus =scanUuid;
+        }
     }
 
     @When("the list of issues is stored")
     public void storeIssues() throws LoginException {
-        waitForScanToComplete(scanName);
-        reportClient = new ReportClient(nessusUrl);
+        waitForScanToComplete(scanIdentifierForStatus);
+        reportClient = ClientFactory.createReportClient(nessusUrl,nessusVersion, true);
         reportClient.login(username,password);
         issues = reportClient.getAllIssuesSortedByPluginId(scanUuid);
     }
@@ -116,9 +123,6 @@ public class NessusScanningSteps {
             }
         }
     }
-    
-    
-    
-    
+
 
 }

@@ -32,16 +32,15 @@ public class WConsole {
 
     public WConsole() {
         PropertyConfigurator.configure("log4j.properties");
-        app = Config.createApp();
-        app.enableDefaultClient();
+
     }
 
     public void run() {
+        app = Config.createApp();
+        app.enableDefaultClient();
         Console console = new Console();
         console.setVariable("app",app);
-        //TODO fixme
-        //console.setVariable("driver",app.getDriver());
-        console.setVariable("burpDriver",DriverFactory.getDriver(Config.getProxyDriver()));
+        console.setVariable("proxyDriver",DriverFactory.getDriver(Config.getProxyDriver()));
         console.setVariable("proxy", ProxyFactory.getLoggingProxy());
         console.setVariable("scanner", ProxyFactory.getScanningProxy());
         console.run();
