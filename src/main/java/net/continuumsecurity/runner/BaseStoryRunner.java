@@ -34,7 +34,7 @@ public abstract class BaseStoryRunner extends JUnitStories {
 	public BaseStoryRunner() {
 		PropertyConfigurator.configure("log4j.properties");
 		configuredEmbedder().embedderControls()
-		.doGenerateViewAfterStories(false) //We'll generate it manually after the stories are done
+		.doGenerateViewAfterStories(true) //We'll generate it manually after the stories are done
 		.doIgnoreFailureInStories(true)
 		.doIgnoreFailureInView(true)
 		.useStoryTimeoutInSecs(60*60);

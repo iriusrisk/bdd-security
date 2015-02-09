@@ -20,6 +20,8 @@
     <!-- The fully qualified class name representing the application under test -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
 
+    <sslyze>/opt/sslyze/sslyze.py</sslyze>
+
     <!-- Names of the session ID cookies -->
     <sessionIds>
         <name>JSESSIONID</name>

@@ -5,7 +5,7 @@ In order to protect my data transmitted over the network
 As a user
 I want to verify that good SSL practices have been implemented and known weaknesses have been avoided
 
-Meta: @story ssl @skip
+Meta: @story ssl
 
 Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack
 Meta: @id ssl_crime

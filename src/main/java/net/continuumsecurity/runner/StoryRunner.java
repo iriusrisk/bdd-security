@@ -37,11 +37,12 @@ import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class StoryRunner extends BaseStoryRunner {
-    final CmdLineParser parser;
+public class StoryRunner extends JUnitStoryRunner {
     private static final String LATEST_REPORTS = Config.getLatestReportsDir();
-    private static final String RESOURCES_DIR = "src"+File.separator+"main"+File.separator+"resources";
+    private static final String RESOURCES_DIR = "src"+ File.separator+"main"+File.separator+"resources";
     private static final String REPORTS_DIR = Config.getReportsDir();
+
+    final CmdLineParser parser;
 
     @Option(name = "-story", usage = "Name of story meta-tag to run")
     private String storyName;
@@ -57,34 +58,7 @@ public class StoryRunner extends BaseStoryRunner {
 
     public StoryRunner() {
         super();
-        // configuredEmbedder().useEmbedderControls(new
-        // PropertyBasedEmbedderControls());
-
         parser = new CmdLineParser(this);
-    }
-
-    @Override
-    public InjectableStepsFactory stepsFactory() {
-        WebApplicationSteps ws = new WebApplicationSteps();
-        return new InstanceStepsFactory(configuration(),
-                ws,
-                new InfrastructureSteps(),
-                new NessusScanningSteps(),
-                new SSLyzeSteps(),
-                new AppScanningSteps());
-    }
-
-    @Override
-    public List<String> storyPaths() {
-        List<String> includes = new ArrayList<String>();
-        includes.add("**/*.story");
-
-        List<String> excludes = new ArrayList<String>();
-        excludes.add("**/configuration.story");
-        excludes.add("**/navigate_app.story");
-        return new StoryFinder().findPaths(
-                CodeLocations.codeLocationFromURL(storyUrl), includes,
-                excludes);
     }
 
     private void prepareReportsDir() throws IOException {
@@ -103,7 +77,7 @@ public class StoryRunner extends BaseStoryRunner {
     /*
       * Add required meta filters to control which stories are run
       */
-    protected List<String> createFilters() {
+    public List<String> createFilters() {
         List<String> filters = new ArrayList<String>();
         //JBehave doesn't propagate meta tags to givenstories, so we have to fix them manually
         if (storyName != null) {
@@ -139,7 +113,8 @@ public class StoryRunner extends BaseStoryRunner {
         if (justRunConfig) {
             try {
                 log.debug("Running configuration stories");
-                ConfigurationStoryRunner configRunner = new ConfigurationStoryRunner(filters);
+                ConfigurationStoryRunner configRunner = new ConfigurationStoryRunner();
+                configRunner.setFilters(filters);
                 configRunner.run();
                 log.debug("Configuration stories completed.");
             } catch (Throwable t) {

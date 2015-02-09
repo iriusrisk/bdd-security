@@ -32,8 +32,10 @@ import java.util.List;
 public class ConfigurationStoryRunner extends BaseStoryRunner {
 	List<String> filters;
 
+	public ConfigurationStoryRunner() {
+	}
 
-	public ConfigurationStoryRunner(List<String> filters) {
+	public void setFilters(List<String> filters) {
 		this.filters = filters;
 		configuredEmbedder().useMetaFilters(filters);
 		configuredEmbedder().embedderControls().doIgnoreFailureInStories(false);

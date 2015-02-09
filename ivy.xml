@@ -41,13 +41,14 @@
     <dependencies>
         <dependency org="junit" name="junit-dep" rev="4.11" />
         <dependency org="org.hamcrest" name="hamcrest-all" rev="1.3"/>
-        <dependency org="org.jbehave" name="jbehave-core" rev="3.8">
+        <dependency org="org.jbehave" name="jbehave-core" rev="3.9.1">
             <exclude org="org.hamcrest"/>
             <exclude org="junit"/>
         </dependency>
         <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.39.0">
             <exclude org="junit"/>
         </dependency>
+        <dependency org="de.codecentric" name="jbehave-junit-runner" rev="1.1.2"/>
         <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.39.0"/>
         <dependency org="log4j" name="log4j" rev="1.2.17"/>
         <dependency org="args4j" name="args4j" rev="2.0.16"/>
