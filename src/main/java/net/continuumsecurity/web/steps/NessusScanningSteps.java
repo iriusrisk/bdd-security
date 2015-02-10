@@ -36,13 +36,18 @@ public class NessusScanningSteps {
     Map<Integer,Issue> issues;
     String nessusUrl;
     int nessusVersion;
+    boolean ignoreHostNamesInSSLCert = false;
 
-    
+    @Given("a nessus API client that accepts all hostnames in SSL certificates")
+    public void ignoreHostNamesInSSLCert() {
+        ignoreHostNamesInSSLCert = true;
+    }
+
     @Given("a nessus version $version server at $nessusUrl")
     public void createNessusClient(int version,String url) {
         nessusUrl = url;
         nessusVersion = version;
-    	scanClient = ClientFactory.createScanClient(url,nessusVersion,true);
+    	scanClient = ClientFactory.createScanClient(url,nessusVersion,ignoreHostNamesInSSLCert);
     }
 
     @Given("the nessus username $username and the password $password")
@@ -70,6 +75,10 @@ public class NessusScanningSteps {
 
     @When("the scanner is run with scan name $scanName")
     public void runScan(String scanName) throws LoginException {
+        if (username == null) {
+            username = Config.getNessusUsername();
+            password = Config.getNessusPassword();
+        }
         scanClient.login(username,password);
         scanUuid = scanClient.newScan(scanName,policyName, Utils.join(hostNames,","));
         if (nessusVersion == 5) {
@@ -82,7 +91,7 @@ public class NessusScanningSteps {
     @When("the list of issues is stored")
     public void storeIssues() throws LoginException {
         waitForScanToComplete(scanIdentifierForStatus);
-        reportClient = ClientFactory.createReportClient(nessusUrl,nessusVersion, true);
+        reportClient = ClientFactory.createReportClient(nessusUrl,nessusVersion, ignoreHostNamesInSSLCert);
         reportClient.login(username,password);
         issues = reportClient.getAllIssuesSortedByPluginId(scanUuid);
     }

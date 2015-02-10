@@ -174,6 +174,10 @@ public class Config {
         return validateAndGetString("reportsDir");
     }
 
+    public static String getNessusUsername() { return validateAndGetString("nessus.username");}
+
+    public static String getNessusPassword() { return validateAndGetString("nessus.password");}
+
     public static List<String> getSessionIDs() {
         List<String> ids = new ArrayList<String>();
         for (Object o : getXml().getList("sessionIds.name")) {

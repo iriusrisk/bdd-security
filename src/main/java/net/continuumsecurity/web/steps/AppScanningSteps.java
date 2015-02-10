@@ -117,7 +117,7 @@ public class AppScanningSteps {
         while (complete < 100) {
             complete = spider.getSpiderStatus();
             log.debug("Spidering of: " + url + " is " + complete + "% complete.");
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
         for (String result : spider.getSpiderResults()) {
             log.debug("Found Url: " + result);
@@ -194,7 +194,7 @@ public class AppScanningSteps {
         while (complete < 100) {
             complete = scanner.getScanStatus();
             log.debug("Scan is " + complete + "% complete.");
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
     }
 

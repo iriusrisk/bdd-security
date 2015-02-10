@@ -36,6 +36,11 @@
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>
     <incorrectUsername>bobbles</incorrectUsername>
 
+    <nessus>
+        <username>continuum</username>
+        <password>continuum</password>
+    </nessus>
+
     <proxy>
         <host>127.0.0.1</host>
         <port>8888</port>
