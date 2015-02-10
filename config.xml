@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <web-app>
-    <!-- The settings in this file are for the ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks,
-         you'll need to modify them for your app -->
+    <!-- The settings in this file are for the demo ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks,
+            which is included in the bdd-security framework for demo purposes.
+
+         You'll need to modify this file for your app -->
 
     <!-- The default driver for tests that don't require a proxy.
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
