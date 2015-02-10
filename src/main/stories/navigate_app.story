@@ -13,4 +13,3 @@ And the following URLs are spidered:
 |url|
 |baseUrl|
 And the spider status reaches 100% complete
-

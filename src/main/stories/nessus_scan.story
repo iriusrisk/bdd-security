@@ -1,6 +1,6 @@
 Automated Nessus scanning
 
-Meta: @story nessus_scan @skip
+Meta: @story nessus_scan
 
 Narrative:
 In order to identify security vulnerabilities on the hosts
