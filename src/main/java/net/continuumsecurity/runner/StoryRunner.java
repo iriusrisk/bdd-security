@@ -61,12 +61,6 @@ public class StoryRunner extends JUnitStoryRunner {
         parser = new CmdLineParser(this);
     }
 
-    private void prepareReportsDir() throws IOException {
-        FileUtils.deleteQuietly(new File(LATEST_REPORTS));
-        File viewDir = new File(LATEST_REPORTS + File.separator+"view");
-        FileUtils.copyDirectory(new File(RESOURCES_DIR), viewDir);
-    }
-
     private void copyResultsToStampedReportsDir() throws IOException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss", Locale.getDefault());
         File dirName = new File(REPORTS_DIR+File.separator+formatter.format(new Date()));
@@ -124,10 +118,8 @@ public class StoryRunner extends JUnitStoryRunner {
                 log.error("Halting execution");
                 log.error(sw.toString());
                 t.printStackTrace();
-                wrapUp();
                 System.exit(1);
             }
-            wrapUp();
             System.exit(0);
         }
 
@@ -138,20 +130,9 @@ public class StoryRunner extends JUnitStoryRunner {
             log.debug("Caught exception from StoryRunner.execute()");
             e.printStackTrace();
         } finally {
-            wrapUp();
+            //wrapUp();
         }
         System.exit(0);
-    }
-
-    public void wrapUp() {
-        configuredEmbedder().generateReportsView();
-        try {
-            copyResultsToStampedReportsDir();
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-        }
-        DriverFactory.quitAll();
     }
 
     public static void main(String... argv) throws CmdLineException,IOException {

@@ -9,6 +9,7 @@
 
     <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
     <property name="reports.resources" location="src/main/resources"/>
+    <property name="reports.dir" location="reports"/>
 
     <path id="build.classpath">
         <fileset dir="${lib.dir}">
@@ -102,6 +103,7 @@
     </target>
 
     <target name="junit.runner" depends="compile">
+        <delete quiet="true" file="${reports.dir}/junit/junit.xml" />
 
         <junit printsummary="yes" haltonfailure="no">
             <classpath>
@@ -110,7 +112,7 @@
             </classpath>
 
             <test name="net.continuumsecurity.runner.JUnitStoryRunner"
-                  haltonfailure="no" outfile="junit">
+                  haltonfailure="no" todir="${reports.dir}/junit" outfile="junit">
                 <formatter type="xml"/>
             </test>
         </junit>

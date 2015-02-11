@@ -2,12 +2,15 @@ package net.continuumsecurity.runner;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 import net.continuumsecurity.web.steps.*;
+import org.apache.commons.io.FileUtils;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +24,23 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         super();
         List<String> filters = createFilters();
         filters.add("-skip");
+        try {
+            prepareReportsDir();
+        } catch (IOException e) {
+            System.err.println("Error preparing reports directory");
+            e.printStackTrace();
+            System.exit(1);
+        }
         configuredEmbedder().useMetaFilters(filters);
+        configuredEmbedder().generateReportsView();
         JUnitReportingRunner.recommandedControls(configuredEmbedder());
+    }
+
+    protected void prepareReportsDir() throws IOException {
+        FileUtils.deleteQuietly(new File(WrapUpScanSteps.LATEST_REPORTS));
+        //FileUtils.cleanDirectory(new File(WrapUpScanSteps.JUNIT_REPORTS_DIR));
+        File viewDir = new File(WrapUpScanSteps.LATEST_REPORTS + File.separator+"view");
+        FileUtils.copyDirectory(new File(WrapUpScanSteps.RESOURCES_DIR), viewDir);
     }
 
     @Override
@@ -35,7 +53,8 @@ public class JUnitStoryRunner extends BaseStoryRunner {
                 new NessusScanningSteps(),
                 new SSLyzeSteps(),
                 new AppScanningSteps(),
-                new CloseAllBrowsersSteps());
+                new WrapUpScanSteps()
+                );
     }
 
     public List<String> createFilters() {

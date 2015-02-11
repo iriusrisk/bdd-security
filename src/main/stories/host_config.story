@@ -4,7 +4,7 @@ In order to reduce the risk of vulnerabilities introduced through software runni
 As a system owner
 I want to ensure that the configuration of the host and network are as expected 
 
-Meta: @story host_config @skip
+Meta: @story host_config
 
 Scenario: Only the required ports should be open
 Meta: @id open_ports
