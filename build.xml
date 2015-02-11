@@ -103,6 +103,7 @@
     </target>
 
     <target name="junit.runner" depends="compile">
+        <mkdir dir="${reports.dir}/junit"/>
         <delete quiet="true" file="${reports.dir}/junit/junit.xml" />
 
         <junit printsummary="yes" haltonfailure="no">
