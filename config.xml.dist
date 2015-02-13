@@ -53,4 +53,5 @@
     <storyDir>src/main/stories/</storyDir>
     <reportsDir>reports</reportsDir>
     <latestReportsDir>reports/latest</latestReportsDir>
+    <storyTimeout>3600</storyTimeout> <!-- for a single story in seconds -->
 </web-app>

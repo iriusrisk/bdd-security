@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
-package net.continuumsecurity.runner;
+package net.continuumsecurity.jbehave;
 
 import net.continuumsecurity.Config;
 import org.apache.log4j.Logger;
@@ -37,7 +37,7 @@ public abstract class BaseStoryRunner extends JUnitStories {
 		.doGenerateViewAfterStories(true) //We'll generate it manually after the stories are done
 		.doIgnoreFailureInStories(true)
 		.doIgnoreFailureInView(true)
-		.useStoryTimeoutInSecs(60*60);
+		.useStoryTimeoutInSecs(Config.getStoryTimeout());
 	}
 	
 	@Override

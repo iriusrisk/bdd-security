@@ -1,4 +1,4 @@
-package net.continuumsecurity.testng.web;
+package net.continuumsecurity.testng;
 
 import net.continuumsecurity.Constants;
 import net.continuumsecurity.Utils;

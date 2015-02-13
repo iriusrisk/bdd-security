@@ -16,16 +16,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
-package net.continuumsecurity.runner;
+package net.continuumsecurity.jbehave;
 
 import net.continuumsecurity.Config;
-import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.steps.*;
 import org.apache.commons.io.FileUtils;
-import org.jbehave.core.io.CodeLocations;
-import org.jbehave.core.io.StoryFinder;
-import org.jbehave.core.steps.InjectableStepsFactory;
-import org.jbehave.core.steps.InstanceStepsFactory;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;

@@ -1,4 +1,4 @@
-package net.continuumsecurity.runner;
+package net.continuumsecurity.jbehave;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 import net.continuumsecurity.web.steps.*;

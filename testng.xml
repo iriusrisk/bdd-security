@@ -1,0 +1,16 @@
+<suite name="Security Suite" verbose="1">
+
+    <test name="Security">
+        <classes>
+            <class name="net.continuumsecurity.testng.AppScanTest"/>
+            <class name="net.continuumsecurity.testng.AuthenticationTest"/>
+            <class name="net.continuumsecurity.testng.AuthorisationTest"/>
+            <class name="net.continuumsecurity.testng.HostConfigTest"/>
+            <class name="net.continuumsecurity.testng.PasswordRecoveryTest"/>
+            <class name="net.continuumsecurity.testng.SessionManagementTest"/>
+            <class name="net.continuumsecurity.testng.SslTest"/>
+            <class name="net.continuumsecurity.testng.TransportTest"/>
+
+        </classes>
+    </test>
+</suite>

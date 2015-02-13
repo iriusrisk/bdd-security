@@ -38,6 +38,7 @@ import java.util.Map;
 
 public class Config {
     protected XMLConfiguration xml;
+    private static long storyTimeout;
 
     public static Application createApp() {
         Object app = null;
@@ -66,6 +67,7 @@ public class Config {
         PropertyConfigurator.configure("log4j.properties");
         loadConfig("config.xml");
     }
+
 
     public synchronized void initialiseTables() {
         Application app = createApp();
@@ -196,6 +198,11 @@ public class Config {
         return System.getProperty("user.dir")
                 + File.separator
                 + getXml().getString("storyDir");
+    }
+
+
+    public static long getStoryTimeout() {
+        return getXml().getLong("storyTimeout");
     }
 
     public static String getStoryUrl() {

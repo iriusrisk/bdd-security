@@ -2,6 +2,7 @@
 
     <property name="src.dir" location="src/main/java" />
     <property name="build.dir" location="target/classes" />
+    <property name="testng.dir" location="target/classes" />
     <property name="dist.dir" location="target" />
     <property name="story.dir" location="src/main/stories" />
     <property name="lib.dir" location="lib" />
@@ -17,6 +18,13 @@
         </fileset>
         <fileset dir="${ivy.provided.lib.dir}">
             <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <path id="run.classpath">
+        <path refid="build.classpath"/>
+        <fileset dir="${build.dir}">
+            <include name="**/*.class" />
         </fileset>
     </path>
 
@@ -44,8 +52,8 @@
         </javac>
     </target>
 
-    <target name="test.all" depends="compile">
-        <java classname="net.continuumsecurity.runner.StoryRunner"
+    <target name="jbehave.run" depends="compile">
+        <java classname="net.continuumsecurity.jbehave.StoryRunner"
               fork="true"
               failonerror="true"
               maxmemory="512m"
@@ -61,7 +69,7 @@
     </target>
 
     <target name="test" depends="compile">
-        <java classname="net.continuumsecurity.runner.StoryRunner"
+        <java classname="net.continuumsecurity.jbehave.StoryRunner"
               fork="true"
               failonerror="true"
               maxmemory="512m"
@@ -104,7 +112,7 @@
 
     <target name="junit.runner" depends="compile">
         <mkdir dir="${reports.dir}/junit"/>
-        <delete quiet="true" file="${reports.dir}/junit/junit.xml" />
+        <delete quiet="true" file="${reports.dir}/junit/*.*" />
 
         <junit printsummary="yes" haltonfailure="no">
             <classpath>
@@ -112,11 +120,26 @@
                 <pathelement location="${build.dir}"/>
             </classpath>
 
-            <test name="net.continuumsecurity.runner.JUnitStoryRunner"
-                  haltonfailure="no" todir="${reports.dir}/junit" outfile="junit">
+            <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
+                  haltonfailure="no" todir="${reports.dir}/junit">
                 <formatter type="xml"/>
             </test>
         </junit>
+    </target>
+
+    <taskdef resource="testngtasks" classpathref="build.classpath" classpath="lib/testng-jar-6.1.1.jar"/>
+
+    <target name="testng.run" depends="compile">
+        <mkdir dir="${reports.dir}/testng"/>
+
+        <testng classpathref="run.classpath" outputDir="${reports.dir}/testng"
+                haltonfailure="false">
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+            <xmlfileset dir="." includes="testng.xml"/>
+        </testng>
     </target>
 
     <target name="demo.run">
@@ -124,7 +147,7 @@
             <antcall target="ropey.run"/>
             <sequential>
                 <sleep seconds="20"/>
-                <antcall target="test.all"/>
+                <antcall target="jbehave.run"/>
             </sequential>
         </parallel>
     </target>

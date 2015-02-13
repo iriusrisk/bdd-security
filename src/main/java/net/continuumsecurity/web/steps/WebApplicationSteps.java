@@ -255,7 +255,7 @@ public class WebApplicationSteps {
     }
 
     @Then("the protocol should be HTTPS")
-    public void protocolHttps() {
+    public void verifyProtocolHttps() {
         assertThat(currentHar.getRequest().getUrl(), currentHar.getRequest().getUrl().substring(0, 5), equalTo("https"));
     }
 
@@ -272,7 +272,7 @@ public class WebApplicationSteps {
     }
 
     @Then("the protocol of the current URL should be HTTPS")
-    public void protocolBrowserUrlHttps() {
+    public void verifyProtocolBrowserUrlHttps() {
         String currentUrl = ((WebApplication) app).getWebDriver().getCurrentUrl();
         assertThat(currentUrl, currentUrl.substring(0, 4), equalToIgnoringCase("https"));
     }

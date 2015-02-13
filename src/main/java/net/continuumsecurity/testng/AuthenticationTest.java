@@ -1,4 +1,4 @@
-package net.continuumsecurity.testng.web;
+package net.continuumsecurity.testng;
 
 import java.io.UnsupportedEncodingException;
 
@@ -12,21 +12,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class AuthenticationTest {
-    protected WebApplicationSteps webAppSteps = new WebApplicationSteps();
-    ExamplesTable credentialsTable;
+public class AuthenticationTest extends BrowserBasedTest {
 
-    @BeforeClass
-    public void setUp() {
-        webAppSteps.createApp();
-        String workingDirectory = System.getProperty("user.dir");
-        this.credentialsTable = new ExamplesTable(Utils.createStringFromJBehaveTable(workingDirectory + "/src/main/stories/users.table"));
-    }
-
-    @AfterClass
-    public void tearDown() {
-        DriverFactory.quitAll();
-    }
 
     @BeforeTest
     public void beforeScenario() {
@@ -48,7 +35,7 @@ public class AuthenticationTest {
         webAppSteps.clearProxy();
         webAppSteps.openLoginPage();
         webAppSteps.findResponseWithLoginform();
-        webAppSteps.protocolHttps();
+        webAppSteps.verifyProtocolHttps();
     }
 
     @Test
@@ -58,7 +45,7 @@ public class AuthenticationTest {
         webAppSteps.openLoginPage();
         webAppSteps.findResponseWithLoginform();
         webAppSteps.submitLoginOverHttp();
-        webAppSteps.protocolBrowserUrlHttps();
+        webAppSteps.verifyProtocolBrowserUrlHttps();
     }
 
     @Test
@@ -67,7 +54,7 @@ public class AuthenticationTest {
         webAppSteps.clearProxy();
         webAppSteps.loginFromTable(this.credentialsTable);
         webAppSteps.findRequestWithPassword();
-        webAppSteps.protocolHttps();
+        webAppSteps.verifyProtocolHttps();
     }
 
     @Test
