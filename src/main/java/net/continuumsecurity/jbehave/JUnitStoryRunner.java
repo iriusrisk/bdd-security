@@ -1,7 +1,7 @@
 package net.continuumsecurity.jbehave;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
-import net.continuumsecurity.web.steps.*;
+import net.continuumsecurity.steps.*;
 import org.apache.commons.io.FileUtils;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
@@ -64,7 +64,7 @@ public class JUnitStoryRunner extends BaseStoryRunner {
     @Override
     public List<String> storyPaths() {
         List<String> includes = new ArrayList<String>();
-        includes.add("**/*.story");
+        includes.add("**/host_config.story");
 
         List<String> excludes = new ArrayList<String>();
         excludes.add("**/configuration.story");

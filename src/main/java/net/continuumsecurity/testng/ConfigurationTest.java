@@ -2,8 +2,8 @@ package net.continuumsecurity.testng;
 
 import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.steps.AppScanningSteps;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
+import net.continuumsecurity.steps.AppScanningSteps;
+import net.continuumsecurity.steps.WebApplicationSteps;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;

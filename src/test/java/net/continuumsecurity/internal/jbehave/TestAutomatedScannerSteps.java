@@ -1,6 +1,6 @@
 package net.continuumsecurity.internal.jbehave;
 
-import net.continuumsecurity.web.steps.AppScanningSteps;
+import net.continuumsecurity.steps.AppScanningSteps;
 import org.junit.Before;
 import org.junit.Test;
 import org.zaproxy.clientapi.core.Alert;
@@ -8,7 +8,6 @@ import org.zaproxy.clientapi.core.Alert;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.Is.is;

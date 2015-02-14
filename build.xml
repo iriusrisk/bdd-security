@@ -110,9 +110,9 @@
         </java>
     </target>
 
-    <target name="junit.runner" depends="compile">
+    <target name="junit.run" depends="compile">
+        <delete quiet="true" dir="${reports.dir}/junit" />
         <mkdir dir="${reports.dir}/junit"/>
-        <delete quiet="true" file="${reports.dir}/junit/*.*" />
 
         <junit printsummary="yes" haltonfailure="no">
             <classpath>

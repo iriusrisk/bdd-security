@@ -13,9 +13,8 @@ Given a nessus API client that accepts all hostnames in SSL certificates
 And a nessus version 6 server at https://localhost:8834
 And the scanning policy named test
 And the target hosts
-|hostname			             |
-|localhost.localdomain           |
-|other.target                    |
+|hostname             |
+|localhost            |
 When the scanner is run with scan name bddscan
 And the list of issues is stored
 And the following false positives are removed

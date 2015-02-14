@@ -2,7 +2,7 @@ package net.continuumsecurity.testng;
 
 import net.continuumsecurity.Utils;
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
+import net.continuumsecurity.steps.WebApplicationSteps;
 import org.jbehave.core.model.ExamplesTable;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

@@ -18,10 +18,10 @@
  ******************************************************************************/
 package net.continuumsecurity.jbehave;
 
-import net.continuumsecurity.web.steps.AppScanningSteps;
-import net.continuumsecurity.web.steps.InfrastructureSteps;
-import net.continuumsecurity.web.steps.SSLyzeSteps;
-import net.continuumsecurity.web.steps.WebApplicationSteps;
+import net.continuumsecurity.steps.AppScanningSteps;
+import net.continuumsecurity.steps.InfrastructureSteps;
+import net.continuumsecurity.steps.SSLyzeSteps;
+import net.continuumsecurity.steps.WebApplicationSteps;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
