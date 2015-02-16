@@ -7,7 +7,6 @@ import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.web.WebApplication;
-import org.openqa.selenium.By;
 
 /**
  * Created by stephen on 11/12/14.
