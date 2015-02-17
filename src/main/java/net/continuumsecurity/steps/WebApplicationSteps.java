@@ -241,11 +241,21 @@ public class WebApplicationSteps {
     	return proxy;
     }
 
-    @Given("the HTTP request-response containing the default credentials is inspected")
-    public void findRequestWithPassword() throws UnsupportedEncodingException {
-        String passwd = URLEncoder.encode(credentials.getPassword(), "UTF-8");
-        String username = URLEncoder.encode(credentials.getUsername(), "UTF-8");
+    @Given("the HTTP request-response containing the default credentials is selected")
+    public void findRequestWithPassword() {
         List<HarEntry> requests = getProxy().findInRequestHistory(credentials.getPassword());
+        if (requests == null || requests.size() == 0)
+            throw new StepException(
+                    "Could not find HTTP request with credentials: "
+                            + credentials.getUsername() + " "
+                            + credentials.getPassword());
+        currentHar = requests.get(0);
+    }
+
+
+    @Given("the HTTP request containing the string $value is selected")
+    public void findRequestWithPassword(String value) {
+        List<HarEntry> requests = getProxy().findInRequestHistory(value);
         if (requests == null || requests.size() == 0)
             throw new StepException(
                     "Could not find HTTP request with credentials: "

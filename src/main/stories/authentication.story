@@ -15,7 +15,6 @@ When the case of the password is changed
 And the user logs in from a fresh login page
 Then the user is not logged in
 
-
 Scenario: Present the login form itself over an HTTPS connection
 Meta: @id auth_login_form_over_ssl
 Given the browser is configured to use an intercepting proxy
@@ -30,7 +29,7 @@ Meta: @id auth_https
 Given the browser is configured to use an intercepting proxy
 And the proxy logs are cleared
 And the default user logs in with credentials from: users.table
-And the HTTP request-response containing the default credentials is inspected
+And the HTTP request-response containing the default credentials is selected
 Then the protocol should be HTTPS
 
 
@@ -39,7 +38,7 @@ Meta: @id auth_return_redirect
 Given the browser is configured to use an intercepting proxy
 And the proxy logs are cleared
 And the default user logs in with credentials from: users.table
-And the HTTP request-response containing the default credentials is inspected
+And the HTTP request-response containing the default credentials is selected
 Then the response status code should start with 3
 
 
@@ -58,7 +57,7 @@ Then it should have the autocomplete attribute set to 'off'
 
 
 Scenario: Lock the user account out after 4 incorrect authentication attempts
-Meta: @id auth_lockout
+Meta: @id auth_lockout @skip
 Given the default username from: users.table
 And an incorrect password
 And the user logs in from a fresh login page 4 times
@@ -67,8 +66,7 @@ And the user logs in from a fresh login page
 Then the user is not logged in
 
 Scenario: Display a Captcha after 4 failed authentication attempts
-Meta: @id auth_login_captcha
-@skip
+Meta: @id auth_login_captcha @skip
 Given the default username from: users.table
 And an incorrect password
 And the user logs in from a fresh login page 4 times
