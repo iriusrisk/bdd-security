@@ -64,7 +64,7 @@ public class JUnitStoryRunner extends BaseStoryRunner {
     @Override
     public List<String> storyPaths() {
         List<String> includes = new ArrayList<String>();
-        includes.add("**/host_config.story");
+        includes.add("**/*.story");
 
         List<String> excludes = new ArrayList<String>();
         excludes.add("**/configuration.story");
