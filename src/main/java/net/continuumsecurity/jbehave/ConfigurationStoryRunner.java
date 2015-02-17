@@ -18,10 +18,7 @@
  ******************************************************************************/
 package net.continuumsecurity.jbehave;
 
-import net.continuumsecurity.steps.AppScanningSteps;
-import net.continuumsecurity.steps.InfrastructureSteps;
-import net.continuumsecurity.steps.SSLyzeSteps;
-import net.continuumsecurity.steps.WebApplicationSteps;
+import net.continuumsecurity.steps.*;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
@@ -54,7 +51,8 @@ public class ConfigurationStoryRunner extends BaseStoryRunner {
 				ws,
                 new InfrastructureSteps(),
 				new AppScanningSteps(),
-				new SSLyzeSteps());
+				new SSLyzeSteps(),
+				new WrapUpScanSteps());
 	}
 	
 }
