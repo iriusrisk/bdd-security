@@ -254,7 +254,7 @@ public class WebApplicationSteps {
 
 
     @Given("the HTTP request containing the string $value is selected")
-    public void findRequestWithPassword(String value) {
+    public void findRequestWithString(String value) {
         List<HarEntry> requests = getProxy().findInRequestHistory(value);
         if (requests == null || requests.size() == 0)
             throw new StepException(
@@ -278,6 +278,15 @@ public class WebApplicationSteps {
             throw new StepException(
                     "Could not find HTTP response with password form using regex: "
                             + regex);
+        currentHar = responses.get(0);
+    }
+
+    @Given("the first HTTP request-response stored by the proxy is selected")
+    public void findFirstHar() {
+        List<HarEntry> responses = getProxy().getHistory();
+        if (responses == null || responses.size() == 0)
+            throw new StepException(
+                    "No request-responses found");
         currentHar = responses.get(0);
     }
 
