@@ -28,6 +28,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
+import java.sql.Driver;
+import java.util.concurrent.TimeUnit;
 
 
 public class WebApplication extends Application {
@@ -59,6 +61,11 @@ public class WebApplication extends Application {
 
     public void verifyTextPresent(String text) {
         if (!this.driver.getPageSource().contains(text)) throw new UnexpectedContentException("Expected text: ["+text+"] was not found.");
+    }
+
+    public void setImplicitWait(long time, TimeUnit unit) {
+        DriverFactory.getDriver(Config.getProxyDriver()).manage().timeouts().implicitlyWait(time,unit);
+        DriverFactory.getDriver(Config.getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
     }
 
     @Override
