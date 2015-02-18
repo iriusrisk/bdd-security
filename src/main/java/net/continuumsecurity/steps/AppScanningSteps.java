@@ -28,11 +28,9 @@ import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.drivers.ProxyFactory;
 
 import org.apache.log4j.Logger;
-import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Named;
-import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
+import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
+import org.jbehave.core.steps.Parameters;
 import org.zaproxy.clientapi.core.Alert;
 
 import java.lang.reflect.Method;
@@ -94,10 +92,10 @@ public class AppScanningSteps {
         spider.setMaxDepth(depth);
     }
 
-    @Given("the following URL regular expressions are excluded from the spider: $excludedUrlsTable")
+    @Given("the URL regular expressions listed in the file: $excludedUrlsTable are excluded from the spider")
     public void setExcludedRegex(ExamplesTable exRegex) {
         for (Map<String, String> row : exRegex.getRows()) {
-            spider.excludeFromScan(row.get("regex"));
+            spider.excludeFromSpider(row.get("regex"));
         }
     }
 
@@ -180,6 +178,13 @@ public class AppScanningSteps {
             throw new RuntimeException("First set the scanning policy before setting attack strength or alert threshold");
         for (String id : scannerIds.split(",")) {
             scanner.setScannerAlertThreshold(id, threshold.toUpperCase());
+        }
+    }
+
+    @Given("the URL regular expressions listed in the file: $exclude are excluded from the scanner")
+    public void excludeUrlsFromScan(ExamplesTable exclude) {
+        for (Parameters param : exclude.getRowsAsParameters()) {
+            scanner.excludeFromScanner(param.values().get("regex"));
         }
     }
 
