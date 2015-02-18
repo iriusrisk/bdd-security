@@ -27,6 +27,9 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Driver;
 import java.util.concurrent.TimeUnit;
@@ -66,6 +69,12 @@ public class WebApplication extends Application {
     public void setImplicitWait(long time, TimeUnit unit) {
         DriverFactory.getDriver(Config.getProxyDriver()).manage().timeouts().implicitlyWait(time,unit);
         DriverFactory.getDriver(Config.getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
+    }
+
+    public WebElement findAndWaitForElement(By by) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return driver.findElement(by);
     }
 
     @Override
