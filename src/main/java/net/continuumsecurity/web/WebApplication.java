@@ -24,10 +24,7 @@ import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -72,8 +69,12 @@ public class WebApplication extends Application {
     }
 
     public WebElement findAndWaitForElement(By by) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        } catch (TimeoutException e) {
+            throw new NoSuchElementException(e.getMessage());
+        }
         return driver.findElement(by);
     }
 
