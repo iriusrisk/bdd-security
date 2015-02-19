@@ -26,23 +26,9 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         String filter = System.getProperty("filters");
         if (filter == null) filter = "-skip";
         filters.add(filter);
-        try {
-            prepareReportsDir();
-        } catch (IOException e) {
-            System.err.println("Error preparing reports directory");
-            e.printStackTrace();
-            System.exit(1);
-        }
         configuredEmbedder().useMetaFilters(filters);
         configuredEmbedder().generateReportsView();
         JUnitReportingRunner.recommandedControls(configuredEmbedder());
-    }
-
-    protected void prepareReportsDir() throws IOException {
-        FileUtils.deleteQuietly(new File(WrapUpScanSteps.LATEST_REPORTS));
-        //FileUtils.cleanDirectory(new File(WrapUpScanSteps.JUNIT_REPORTS_DIR));
-        File viewDir = new File(WrapUpScanSteps.LATEST_REPORTS + File.separator+"view");
-        FileUtils.copyDirectory(new File(WrapUpScanSteps.RESOURCES_DIR), viewDir);
     }
 
     @Override

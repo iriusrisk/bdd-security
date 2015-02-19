@@ -19,6 +19,7 @@
 package net.continuumsecurity.jbehave;
 
 import net.continuumsecurity.Config;
+import net.continuumsecurity.steps.WrapUpScanSteps;
 import org.apache.commons.io.FileUtils;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -84,6 +85,13 @@ public class StoryRunner extends JUnitStoryRunner {
             log.debug("\t"+filter);
         }
         return filters;
+    }
+
+    protected void prepareReportsDir() throws IOException {
+        FileUtils.deleteQuietly(new File(WrapUpScanSteps.LATEST_REPORTS));
+        //FileUtils.cleanDirectory(new File(WrapUpScanSteps.JUNIT_REPORTS_DIR));
+        File viewDir = new File(WrapUpScanSteps.LATEST_REPORTS + File.separator+"view");
+        FileUtils.copyDirectory(new File(WrapUpScanSteps.RESOURCES_DIR), viewDir);
     }
 
     public void execute(String... argv) throws CmdLineException,IOException {

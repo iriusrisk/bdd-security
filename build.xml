@@ -1,12 +1,12 @@
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="test.all">
 
-    <property name="src.dir" location="src/main/java" />
-    <property name="build.dir" location="target/classes" />
-    <property name="testng.dir" location="target/classes" />
-    <property name="dist.dir" location="target" />
-    <property name="story.dir" location="src/main/stories" />
-    <property name="lib.dir" location="lib" />
-    <property name="ivy.provided.lib.dir" location="lib/ivy" />
+    <property name="src.dir" location="src/main/java"/>
+    <property name="build.dir" location="target/classes"/>
+    <property name="testng.dir" location="target/classes"/>
+    <property name="dist.dir" location="target"/>
+    <property name="story.dir" location="src/main/stories"/>
+    <property name="lib.dir" location="lib"/>
+    <property name="ivy.provided.lib.dir" location="lib/ivy"/>
 
     <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
     <property name="reports.resources" location="src/main/resources"/>
@@ -14,17 +14,17 @@
 
     <path id="build.classpath">
         <fileset dir="${lib.dir}">
-            <include name="**/*.jar" />
+            <include name="**/*.jar"/>
         </fileset>
         <fileset dir="${ivy.provided.lib.dir}">
-            <include name="**/*.jar" />
+            <include name="**/*.jar"/>
         </fileset>
     </path>
 
     <path id="run.classpath">
         <path refid="build.classpath"/>
         <fileset dir="${build.dir}">
-            <include name="**/*.class" />
+            <include name="**/*.class"/>
         </fileset>
     </path>
 
@@ -37,18 +37,19 @@
 
     <!-- Deletes the existing build, docs and dist directory-->
     <target name="clean">
-        <delete dir="${build.dir}" />
-        <delete dir="${dist.dir}" />
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
     </target>
 
     <target name="makedir">
-        <mkdir dir="${build.dir}" />
-        <mkdir dir="${dist.dir}" />
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
     </target>
 
     <!-- Compiles the java code (including the usage of library for JUnit -->
     <target name="compile" depends="clean, makedir">
-        <javac target="1.7" source="1.7" srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" debug="true" includeAntRuntime="false">
+        <javac target="1.7" source="1.7" srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath"
+               debug="true" includeAntRuntime="false">
         </javac>
     </target>
 
@@ -57,11 +58,11 @@
               fork="true"
               failonerror="true"
               maxmemory="512m"
-              >
+                >
             <classpath>
                 <path refid="build.classpath"/>
                 <fileset dir="${story.dir}">
-                    <include name="**/*.story" />
+                    <include name="**/*.story"/>
                 </fileset>
                 <pathelement location="${build.dir}"/>
             </classpath>
@@ -80,7 +81,7 @@
             <classpath>
                 <path refid="build.classpath"/>
                 <fileset dir="${story.dir}">
-                    <include name="**/*.story" />
+                    <include name="**/*.story"/>
                 </fileset>
                 <pathelement location="${build.dir}"/>
             </classpath>
@@ -90,19 +91,19 @@
     <target name="resolve" description="--> retrieve dependencies with ivy">
         <mkdir dir="${ivy.provided.lib.dir}"/>
         <ivy:retrieve sync="true" pattern="${ivy.provided.lib.dir}/[artifact]-[type]-[revision].[ext]"/>
-        <ivy:report todir="${ivy.provided.lib.dir}" />
+        <ivy:report todir="${ivy.provided.lib.dir}"/>
     </target>
 
     <target name="dependency-report">
         <ivy:retrieve sync="true" pattern="${ivy.provided.lib.dir}/[artifact]-[type]-[revision].[ext]"/>
-        <ivy:report conf="compile" graph="false" />
+        <ivy:report conf="compile" graph="false"/>
     </target>
 
     <target name="all" depends="compile">
     </target>
 
     <target name="clean-cache" description="--> clean the ivy cache">
-        <ivy:cleancache />
+        <ivy:cleancache/>
     </target>
 
     <target name="ropey.run">
@@ -112,7 +113,7 @@
     </target>
 
     <target name="junit.run" depends="compile">
-        <delete quiet="true" dir="${reports.dir}/junit" />
+        <delete quiet="true" dir="${reports.dir}/junit"/>
         <mkdir dir="${reports.dir}/junit"/>
 
         <junit printsummary="yes" haltonfailure="no">
@@ -132,12 +133,12 @@
     </target>
 
     <target name="junit.nessus.run" depends="compile">
-        <delete quiet="true" dir="${reports.dir}/junit" />
+        <delete quiet="true" dir="${reports.dir}/junit"/>
         <mkdir dir="${reports.dir}/junit"/>
 
         <junit printsummary="yes" haltonfailure="no">
             <!-- run specific stories through meta filtering -->
-            <sysproperty key="filters" value="-m +story nessus_scan"/>
+            <sysproperty key="filters" value="-m -story nessus_scan, +story authentication"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${build.dir}"/>
@@ -149,6 +150,56 @@
             </test>
         </junit>
     </target>
+
+    <target name="junit.parallel" depends="compile">
+        <!-- Example of how to run tests in parallel in separate JVMs -->
+        <delete quiet="true" dir="${reports.dir}/junit"/>
+        <mkdir dir="${reports.dir}/junit"/>
+        <parallel>
+            <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="600000" includeantruntime="true" showoutput="true">
+                <!-- run specific stories through meta filtering -->
+                <sysproperty key="filters" value="-m -skip -story nessus_scan, -story ssl, -story host_config"/>
+                <classpath>
+                    <path refid="build.classpath"/>
+                    <pathelement location="${build.dir}"/>
+                </classpath>
+
+                <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
+                      haltonfailure="no" todir="${reports.dir}/junit">
+                    <formatter type="xml"/>
+                </test>
+            </junit>
+
+            <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="1200000" includeantruntime="true" showoutput="true">
+                <!-- run specific stories through meta filtering -->
+                <sysproperty key="filters" value="-m -skip -story nessus_scan, +story ssl, +story host_config"/>
+                <classpath>
+                    <path refid="build.classpath"/>
+                    <pathelement location="${build.dir}"/>
+                </classpath>
+
+                <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
+                      haltonfailure="no" todir="${reports.dir}/junit">
+                    <formatter type="xml"/>
+                </test>
+            </junit>
+
+            <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="600000" includeantruntime="true" showoutput="true">
+                <!-- run specific stories through meta filtering -->
+                <sysproperty key="filters" value="-m +story nessus_scan"/>
+                <classpath>
+                    <path refid="build.classpath"/>
+                    <pathelement location="${build.dir}"/>
+                </classpath>
+
+                <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
+                      haltonfailure="no" todir="${reports.dir}/junit">
+                    <formatter type="xml"/>
+                </test>
+            </junit>
+        </parallel>
+    </target>
+
 
     <taskdef resource="testngtasks" classpathref="build.classpath" classpath="lib/testng-jar-6.1.1.jar"/>
 
@@ -174,7 +225,6 @@
             </sequential>
         </parallel>
     </target>
-
 
 
 </project>
