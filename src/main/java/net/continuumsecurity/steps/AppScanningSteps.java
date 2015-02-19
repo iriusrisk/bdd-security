@@ -47,6 +47,7 @@ public class AppScanningSteps {
     Spider spider;
     Application app;
     List<Alert> alerts = new ArrayList<Alert>();
+    List<Alert> alertsAlreadyFound = new ArrayList<Alert>();
     String scannerIds = null;
 
     public AppScanningSteps() {
@@ -67,6 +68,11 @@ public class AppScanningSteps {
     @Given("a scanner with all policies disabled")
     public void disableAllScanners() {
         scanner.disableAllScanners();
+    }
+
+    @Given("a scanner with all policies enabled")
+    public void enableAllScanners() {
+        scanner.enableAllScanners();
     }
 
     @Given("the page flow described in the method: $methodName is run through the proxy")
@@ -217,6 +223,20 @@ public class AppScanningSteps {
             }
         }
         alerts = clean;
+        alerts = removeExistingAlerts();
+        alertsAlreadyFound.addAll(alerts);
+    }
+
+    private List<Alert> removeExistingAlerts() {
+        List<Alert> cleaned = new ArrayList<Alert>();
+        for (Alert alert : alerts) {
+            boolean found = false;
+            for (Alert existing : alertsAlreadyFound) {
+                if (alert.equals(existing)) found = true;
+            }
+            if (!found) cleaned.add(alert);
+        }
+        return cleaned;
     }
 
     @Then("no $riskRating or higher risk vulnerabilities should be present")
