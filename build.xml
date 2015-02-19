@@ -153,11 +153,9 @@
 
     <target name="junit.parallel" depends="compile">
         <!-- Example of how to run tests in parallel in separate JVMs -->
-        <delete quiet="true" dir="${reports.dir}/junit"/>
         <mkdir dir="${reports.dir}/junit"/>
         <parallel>
             <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="600000" includeantruntime="true" showoutput="true">
-                <!-- run specific stories through meta filtering -->
                 <sysproperty key="filters" value="-m -skip -story nessus_scan, -story ssl, -story host_config"/>
                 <classpath>
                     <path refid="build.classpath"/>
@@ -165,13 +163,12 @@
                 </classpath>
 
                 <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
-                      haltonfailure="no" todir="${reports.dir}/junit">
+                      haltonfailure="no" todir="${reports.dir}/junit" outfile="TEST-browser">
                     <formatter type="xml"/>
                 </test>
             </junit>
 
             <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="1200000" includeantruntime="true" showoutput="true">
-                <!-- run specific stories through meta filtering -->
                 <sysproperty key="filters" value="-m -skip -story nessus_scan, +story ssl, +story host_config"/>
                 <classpath>
                     <path refid="build.classpath"/>
@@ -179,13 +176,12 @@
                 </classpath>
 
                 <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
-                      haltonfailure="no" todir="${reports.dir}/junit">
+                      haltonfailure="no" todir="${reports.dir}/junit" outfile="TEST-infrastructure">
                     <formatter type="xml"/>
                 </test>
             </junit>
 
             <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="600000" includeantruntime="true" showoutput="true">
-                <!-- run specific stories through meta filtering -->
                 <sysproperty key="filters" value="-m +story nessus_scan"/>
                 <classpath>
                     <path refid="build.classpath"/>
@@ -193,11 +189,19 @@
                 </classpath>
 
                 <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
-                      haltonfailure="no" todir="${reports.dir}/junit">
+                      haltonfailure="no" todir="${reports.dir}/junit" outfile="TEST-nessus">
                     <formatter type="xml"/>
                 </test>
             </junit>
         </parallel>
+    </target>
+
+    <target name="junit.report">
+        <mkdir dir="${reports.dir}/junit/html"/>
+        <junitreport todir="${reports.dir}/junit">
+            <fileset dir="${reports.dir}/junit" includes="TEST-*.xml"/>
+            <report todir="${reports.dir}/junit/html"/>
+        </junitreport>
     </target>
 
 
