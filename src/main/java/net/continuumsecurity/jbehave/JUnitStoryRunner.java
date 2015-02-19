@@ -23,7 +23,9 @@ public class JUnitStoryRunner extends BaseStoryRunner {
     public JUnitStoryRunner() {
         super();
         List<String> filters = createFilters();
-        filters.add("-skip");
+        String filter = System.getProperty("filters");
+        if (filter == null) filter = "-skip";
+        filters.add(filter);
         try {
             prepareReportsDir();
         } catch (IOException e) {

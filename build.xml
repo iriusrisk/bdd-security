@@ -116,6 +116,28 @@
         <mkdir dir="${reports.dir}/junit"/>
 
         <junit printsummary="yes" haltonfailure="no">
+            <!-- run specific stories through meta filtering
+            <sysproperty key="filters" value="-m +story data_security"/>
+            -->
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+
+            <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
+                  haltonfailure="no" todir="${reports.dir}/junit">
+                <formatter type="xml"/>
+            </test>
+        </junit>
+    </target>
+
+    <target name="junit.nessus.run" depends="compile">
+        <delete quiet="true" dir="${reports.dir}/junit" />
+        <mkdir dir="${reports.dir}/junit"/>
+
+        <junit printsummary="yes" haltonfailure="no">
+            <!-- run specific stories through meta filtering -->
+            <sysproperty key="filters" value="-m +story nessus_scan"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${build.dir}"/>
