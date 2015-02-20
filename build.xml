@@ -88,10 +88,11 @@
         </java>
     </target>
 
-    <target name="resolve" description="--> retrieve dependencies with ivy">
+    <target name="resolve" description="  retrieve dependencies with ivy">
         <mkdir dir="${ivy.provided.lib.dir}" />
         <ivy:retrieve sync="true" pattern="${ivy.provided.lib.dir}/[artifact]-[type]-[revision].[ext]"/>
         <ivy:report todir="${ivy.provided.lib.dir}"/>
+        <touch file="${ivy.provided.lib.dir}/ant.foo"/>
     </target>
 
     <target name="dependency-report">
