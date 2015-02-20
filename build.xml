@@ -89,7 +89,7 @@
     </target>
 
     <target name="resolve" description="--> retrieve dependencies with ivy">
-        <mkdir dir="${ivy.provided.lib.dir}"/>
+        <mkdir dir="${ivy.provided.lib.dir}" />
         <ivy:retrieve sync="true" pattern="${ivy.provided.lib.dir}/[artifact]-[type]-[revision].[ext]"/>
         <ivy:report todir="${ivy.provided.lib.dir}"/>
     </target>
@@ -130,15 +130,17 @@
                 <formatter type="xml"/>
             </test>
         </junit>
+        <antcall target="junit.report"/>
+
     </target>
 
     <target name="junit.nessus.run" depends="compile">
         <delete quiet="true" dir="${reports.dir}/junit"/>
         <mkdir dir="${reports.dir}/junit"/>
 
-        <junit printsummary="yes" haltonfailure="no">
+        <junit printsummary="yes" haltonfailure="no" showoutput="true">
             <!-- run specific stories through meta filtering -->
-            <sysproperty key="filters" value="-m -story nessus_scan, +story authentication"/>
+            <sysproperty key="filters" value="-m +story nessus_scan"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${build.dir}"/>
