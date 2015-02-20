@@ -11,6 +11,7 @@
     <property name="jbehave.view" location="${build.dir}/jbehave/view"/>
     <property name="reports.resources" location="src/main/resources"/>
     <property name="reports.dir" location="reports"/>
+    <property name="reports.dir.latest" location="reports/latest"/>
 
     <path id="build.classpath">
         <fileset dir="${lib.dir}">
@@ -36,9 +37,15 @@
              uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
 
     <!-- Deletes the existing build, docs and dist directory-->
-    <target name="clean">
+    <target name="clean" depends="clean-reports">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="clean-reports">
+        <delete dir="${reports.dir.latest}"/>
+        <delete dir="${reports.dir}/junit"/>
+        <mkdir dir="${reports.dir}/junit"/>
     </target>
 
     <target name="makedir">
@@ -114,9 +121,6 @@
     </target>
 
     <target name="junit.run" depends="compile">
-        <delete quiet="true" dir="${reports.dir}/junit"/>
-        <mkdir dir="${reports.dir}/junit"/>
-
         <junit printsummary="yes" haltonfailure="no">
             <!-- run specific stories through meta filtering
             <sysproperty key="filters" value="-m +story data_security"/>
@@ -136,9 +140,6 @@
     </target>
 
     <target name="junit.nessus.run" depends="compile">
-        <delete quiet="true" dir="${reports.dir}/junit"/>
-        <mkdir dir="${reports.dir}/junit"/>
-
         <junit printsummary="yes" haltonfailure="no" showoutput="true">
             <!-- run specific stories through meta filtering -->
             <sysproperty key="filters" value="-m +story nessus_scan"/>
@@ -156,7 +157,7 @@
 
     <target name="junit.parallel" depends="compile">
         <!-- Example of how to run tests in parallel in separate JVMs -->
-        <mkdir dir="${reports.dir}/junit"/>
+
         <parallel>
             <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="600000" includeantruntime="true" showoutput="true">
                 <sysproperty key="filters" value="-m -skip -story nessus_scan, -story ssl, -story host_config"/>
@@ -200,7 +201,6 @@
     </target>
 
     <target name="junit.report">
-        <mkdir dir="${reports.dir}/junit/html"/>
         <junitreport todir="${reports.dir}/junit">
             <fileset dir="${reports.dir}/junit" includes="TEST-*.xml"/>
             <report todir="${reports.dir}/junit/html"/>
