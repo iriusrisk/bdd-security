@@ -1,4 +1,4 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="test.all">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="bdd-security" basedir="." default="junit.run">
 
     <property name="src.dir" location="src/main/java"/>
     <property name="build.dir" location="target/classes"/>
