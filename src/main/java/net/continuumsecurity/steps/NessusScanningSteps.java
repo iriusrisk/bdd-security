@@ -84,7 +84,7 @@ public class NessusScanningSteps {
         if (nessusVersion == 5) {
             scanIdentifierForStatus = scanName;
         } else {
-            scanIdentifierForStatus =scanUuid;
+            scanIdentifierForStatus = scanUuid;
         }
     }
 
