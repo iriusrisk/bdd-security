@@ -29,6 +29,18 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         configuredEmbedder().useMetaFilters(filters);
         configuredEmbedder().generateReportsView();
         JUnitReportingRunner.recommandedControls(configuredEmbedder());
+        try {
+            prepareReportsDir();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void prepareReportsDir() throws IOException {
+        FileUtils.deleteQuietly(new File(WrapUpScanSteps.LATEST_REPORTS));
+        //FileUtils.cleanDirectory(new File(WrapUpScanSteps.JUNIT_REPORTS_DIR));
+        File viewDir = new File(WrapUpScanSteps.LATEST_REPORTS + File.separator+"view");
+        FileUtils.copyDirectory(new File(WrapUpScanSteps.RESOURCES_DIR), viewDir);
     }
 
     @Override

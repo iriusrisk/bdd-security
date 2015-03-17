@@ -87,12 +87,6 @@ public class StoryRunner extends JUnitStoryRunner {
         return filters;
     }
 
-    protected void prepareReportsDir() throws IOException {
-        FileUtils.deleteQuietly(new File(WrapUpScanSteps.LATEST_REPORTS));
-        //FileUtils.cleanDirectory(new File(WrapUpScanSteps.JUNIT_REPORTS_DIR));
-        File viewDir = new File(WrapUpScanSteps.LATEST_REPORTS + File.separator+"view");
-        FileUtils.copyDirectory(new File(WrapUpScanSteps.RESOURCES_DIR), viewDir);
-    }
 
     public void execute(String... argv) throws CmdLineException,IOException {
         parser.parseArgument(argv);
