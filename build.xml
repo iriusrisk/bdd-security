@@ -170,22 +170,7 @@
             </test>
         </junit>
     </target>
-
-    <target name="junit.test" depends="compile">
-        <junit printsummary="yes" haltonfailure="no" showoutput="true">
-            <!-- run specific stories through meta filtering-->
-            <sysproperty key="stories" value="authentication"/>
-            <classpath>
-                <path refid="build.classpath"/>
-                <pathelement location="${build.dir}"/>
-            </classpath>
-
-            <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
-                  haltonfailure="no" todir="${reports.dir}/junit">
-                <formatter type="xml"/>
-            </test>
-        </junit>
-    </target>
+    
 
     <target name="junit.ssl.run" depends="compile">
         <junit printsummary="yes" haltonfailure="no" showoutput="true">
