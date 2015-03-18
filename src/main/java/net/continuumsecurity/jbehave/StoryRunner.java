@@ -68,16 +68,12 @@ public class StoryRunner extends JUnitStoryRunner {
       */
     public List<String> createFilters() {
         List<String> filters = new ArrayList<String>();
-        //JBehave doesn't propagate meta tags to givenstories, so we have to fix them manually
+        //Enabling the Meta filters to allow single story/scenario execution
         if (storyName != null) {
-            if (storyName.equalsIgnoreCase("app_scan")) {
-                filters.add("-m \"+pre navigate +story "+storyName+"\"");
-            }  else filters.add("-m \"+story "+storyName+"\"");
+            filters.add("-m \"+story "+storyName+"\"");
         }
         if (idName != null) {
-            if (idName.startsWith("scan_")) {
-                filters.add("-m \"+pre navigate +id "+idName+"\"");
-            } else filters.add("-m \"+id "+idName+"\"");
+            filters.add("-m \"+id "+idName+"\"");
         }
         filters.add("-skip");
         log.debug(" running with filters:");
