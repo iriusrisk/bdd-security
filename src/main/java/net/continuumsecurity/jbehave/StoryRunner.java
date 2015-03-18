@@ -70,10 +70,10 @@ public class StoryRunner extends JUnitStoryRunner {
         List<String> filters = new ArrayList<String>();
         //Enabling the Meta filters to allow single story/scenario execution
         if (storyName != null) {
-            filters.add("-m \"+story "+storyName+"\"");
+            filters.add("+story "+storyName);
         }
         if (idName != null) {
-            filters.add("-m \"+id "+idName+"\"");
+            filters.add("+id "+idName);
         }
         filters.add("-skip");
         log.debug(" running with filters:");

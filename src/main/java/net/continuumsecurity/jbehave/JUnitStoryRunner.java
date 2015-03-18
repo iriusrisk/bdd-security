@@ -3,6 +3,7 @@ package net.continuumsecurity.jbehave;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 import net.continuumsecurity.steps.*;
 import org.apache.commons.io.FileUtils;
+import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
@@ -11,8 +12,8 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by stephen on 09/02/15.
@@ -24,7 +25,9 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         super();
         List<String> filters = createFilters();
         String filter = System.getProperty("filters");
-        if (filter == null) filter = "-skip";
+        String stories = System.getProperty("stories");
+        if (stories != null) filters.addAll(createStoryMetaFilters(stories));
+        filters.add("-skip");
         filters.add(filter);
         configuredEmbedder().useMetaFilters(filters);
         configuredEmbedder().generateReportsView();
@@ -34,6 +37,17 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Collection<? extends String> createStoryMetaFilters(String stories) {
+        String[] storyArray = stories.split(",");
+        StringBuilder groovyMatcher = new StringBuilder("groovy: ");
+        Iterator i = Arrays.asList(storyArray).iterator();
+        while (i.hasNext()) {
+            groovyMatcher.append("story == '").append(i.next()).append("'");
+            if (i.hasNext()) groovyMatcher.append(" || ");
+        }
+        return Arrays.asList(groovyMatcher.toString());
     }
 
     protected void prepareReportsDir() throws IOException {

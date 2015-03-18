@@ -142,7 +142,7 @@
     <target name="junit.nessus.run" depends="compile">
         <junit printsummary="yes" haltonfailure="no" showoutput="true">
             <!-- run specific stories through meta filtering -->
-            <sysproperty key="filters" value="-m +story nessus_scan"/>
+            <sysproperty key="stories" value="nessus_scan,host_config"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${build.dir}"/>
@@ -157,8 +157,8 @@
 
     <target name="junit.zap.run" depends="compile">
         <junit printsummary="yes" haltonfailure="no" showoutput="true">
-            <!-- run specific stories through meta filtering -->
-            <sysproperty key="filters" value="-m -skip -story nessus_scan, -story ssl, -story host_config"/>
+            <!-- run specific stories through meta filtering-->
+            <sysproperty key="stories" value="authentication,session_management,app_scan,authorisation,data_security,http_headers"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${build.dir}"/>
@@ -174,7 +174,7 @@
     <target name="junit.ssl.run" depends="compile">
         <junit printsummary="yes" haltonfailure="no" showoutput="true">
             <!-- run specific stories through meta filtering -->
-            <sysproperty key="filters" value="-m -skip +story ssl"/>
+            <sysproperty key="stories" value="ssl"/>
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${build.dir}"/>
@@ -185,51 +185,6 @@
                 <formatter type="xml"/>
             </test>
         </junit>
-    </target>
-
-    <target name="junit.parallel" depends="compile">
-        <!-- Example of how to run tests in parallel in separate JVMs -->
-
-        <parallel>
-            <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="600000" includeantruntime="true" showoutput="true">
-                <sysproperty key="filters" value="-m -skip -story nessus_scan, -story ssl, -story host_config"/>
-                <classpath>
-                    <path refid="build.classpath"/>
-                    <pathelement location="${build.dir}"/>
-                </classpath>
-
-                <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
-                      haltonfailure="no" todir="${reports.dir}/junit" outfile="TEST-browser">
-                    <formatter type="xml"/>
-                </test>
-            </junit>
-
-            <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="1200000" includeantruntime="true" showoutput="true">
-                <sysproperty key="filters" value="-m -skip -story nessus_scan, +story ssl, +story host_config"/>
-                <classpath>
-                    <path refid="build.classpath"/>
-                    <pathelement location="${build.dir}"/>
-                </classpath>
-
-                <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
-                      haltonfailure="no" todir="${reports.dir}/junit" outfile="TEST-infrastructure">
-                    <formatter type="xml"/>
-                </test>
-            </junit>
-
-            <junit printsummary="yes" haltonfailure="no" fork="true" forkmode="once" timeout="600000" includeantruntime="true" showoutput="true">
-                <sysproperty key="filters" value="-m +story nessus_scan"/>
-                <classpath>
-                    <path refid="build.classpath"/>
-                    <pathelement location="${build.dir}"/>
-                </classpath>
-
-                <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
-                      haltonfailure="no" todir="${reports.dir}/junit" outfile="TEST-nessus">
-                    <formatter type="xml"/>
-                </test>
-            </junit>
-        </parallel>
     </target>
 
     <target name="junit.report">
