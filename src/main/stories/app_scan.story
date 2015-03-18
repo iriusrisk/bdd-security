@@ -5,7 +5,7 @@ In order to protect user data
 As an application owner
 I want to ensure that the application does not suffer from common security vulnerabilities
 
-Meta : @story app_scan
+Meta: @story app_scan
 
 GivenStories: navigate_app.story
 
