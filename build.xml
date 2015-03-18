@@ -155,6 +155,38 @@
         </junit>
     </target>
 
+    <target name="junit.zap.run" depends="compile">
+        <junit printsummary="yes" haltonfailure="no" showoutput="true">
+            <!-- run specific stories through meta filtering -->
+            <sysproperty key="filters" value="-m -skip -story nessus_scan, -story ssl, -story host_config"/>
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+
+            <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
+                  haltonfailure="no" todir="${reports.dir}/junit">
+                <formatter type="xml"/>
+            </test>
+        </junit>
+    </target>
+
+    <target name="junit.ssl.run" depends="compile">
+        <junit printsummary="yes" haltonfailure="no" showoutput="true">
+            <!-- run specific stories through meta filtering -->
+            <sysproperty key="filters" value="-m -skip +story ssl"/>
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+
+            <test name="net.continuumsecurity.jbehave.JUnitStoryRunner"
+                  haltonfailure="no" todir="${reports.dir}/junit">
+                <formatter type="xml"/>
+            </test>
+        </junit>
+    </target>
+
     <target name="junit.parallel" depends="compile">
         <!-- Example of how to run tests in parallel in separate JVMs -->
 
