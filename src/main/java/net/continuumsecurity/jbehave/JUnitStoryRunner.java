@@ -26,8 +26,11 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         List<String> filters = createFilters();
         String filter = System.getProperty("filters");
         String stories = System.getProperty("stories");
-        if (stories != null) filters.addAll(createStoryMetaFilters(stories));
-        filters.add("-skip");
+        if (stories != null) {
+            filters.addAll(createStoryMetaFilters(stories));
+        } else if (filter != null && !filter.contains("groovy:")) {
+            filters.add("-skip");
+        }
         filters.add(filter);
         configuredEmbedder().useMetaFilters(filters);
         configuredEmbedder().generateReportsView();
@@ -41,12 +44,13 @@ public class JUnitStoryRunner extends BaseStoryRunner {
 
     private Collection<? extends String> createStoryMetaFilters(String stories) {
         String[] storyArray = stories.split(",");
-        StringBuilder groovyMatcher = new StringBuilder("groovy: ");
+        StringBuilder groovyMatcher = new StringBuilder("groovy: (");
         Iterator i = Arrays.asList(storyArray).iterator();
         while (i.hasNext()) {
             groovyMatcher.append("story == '").append(i.next()).append("'");
             if (i.hasNext()) groovyMatcher.append(" || ");
         }
+        groovyMatcher.append(") && skip == false");
         return Arrays.asList(groovyMatcher.toString());
     }
 
