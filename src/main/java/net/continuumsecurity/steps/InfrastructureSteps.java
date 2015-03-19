@@ -37,7 +37,7 @@ public class InfrastructureSteps {
     }
 
     @When("the $state ports are selected")
-    public void selectOpenPorts(String state) {
+    public void selectPorts(String state) {
         selectedPorts = new ArrayList<Integer>();
         for (PortResult result : portScanResults) {
             if (result.getState().equals(PortResult.PortState.fromString(state))) {
@@ -55,6 +55,7 @@ public class InfrastructureSteps {
         assertThat("Only the expected ports are open",selectedPorts, hasItems(expectedPorts.toArray(new Integer[expectedPorts.size()])));
     }
 
-
-
+    public List<Integer> getSelectedPorts() {
+        return selectedPorts;
+    }
 }
