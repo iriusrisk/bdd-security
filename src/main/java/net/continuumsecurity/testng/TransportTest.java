@@ -38,7 +38,7 @@ public class TransportTest {
 
     @BeforeTest
     public void beforeScenario() {
-        webAppSteps.createAppAndCredentials();
+        webAppSteps.createApp();
     }
 
     @Test

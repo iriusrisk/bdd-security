@@ -2,7 +2,8 @@
 Scenario: Navigate and spider the application
 Meta: @pre navigate
 
-Given a new scanning session
+Given a new browser instance
+And a new scanning session
 And the page flow described in the method: navigate is run through the proxy
 And the URL regular expressions listed in the file: tables/exclude_urls.table are excluded from the spider
 And the spider is configured for a maximum depth of 10

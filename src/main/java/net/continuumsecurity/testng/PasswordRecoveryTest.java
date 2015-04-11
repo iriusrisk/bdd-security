@@ -22,7 +22,7 @@ public class PasswordRecoveryTest {
 
     @BeforeTest
     public void beforeScenario() {
-        webAppSteps.createAppAndCredentials();
+        webAppSteps.createApp();
     }
 
     @Test

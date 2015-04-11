@@ -26,7 +26,7 @@ public class AuthorisationTest {
         String workingDirectory = System.getProperty("user.dir");
         this.authorisedTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
         this.unauthorisedTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/tables/unauthorised.resources.table");
-        webAppSteps.createAppAndCredentials();
+        webAppSteps.createApp();
     }
 
     @AfterClass

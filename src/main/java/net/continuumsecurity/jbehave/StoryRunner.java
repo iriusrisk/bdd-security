@@ -34,7 +34,6 @@ import java.util.*;
 
 public class StoryRunner extends JUnitStoryRunner {
     private static final String LATEST_REPORTS = Config.getLatestReportsDir();
-    private static final String RESOURCES_DIR = "src"+ File.separator+"main"+File.separator+"resources";
     private static final String REPORTS_DIR = Config.getReportsDir();
 
     final CmdLineParser parser;

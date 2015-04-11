@@ -63,10 +63,8 @@ public class JUnitStoryRunner extends BaseStoryRunner {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        WebApplicationSteps ws = new WebApplicationSteps();
-
         return new InstanceStepsFactory(configuration(),
-                ws,
+                new WebApplicationSteps(),
                 new InfrastructureSteps(),
                 new NessusScanningSteps(),
                 new SSLyzeSteps(),

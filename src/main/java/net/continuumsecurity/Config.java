@@ -58,7 +58,6 @@ public class Config {
     private synchronized static Config getInstance() {
         if (config == null) {
             config = new Config();
-            config.initialiseTables();
         }
         return config;
     }
@@ -69,7 +68,7 @@ public class Config {
     }
 
 
-    public synchronized void initialiseTables() {
+    public static synchronized void initialiseTables() {
         Application app = createApp();
         writeTable(getStoryDir() + "users.table", usersToTable(getUsers()));
         writeTable(getStoryDir() + "tables" + File.separator + "authorised.resources.table",

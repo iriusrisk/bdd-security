@@ -28,7 +28,7 @@ public class SessionManagementTest {
 
     @BeforeTest
     public void beforeScenario() {
-        webAppSteps.createAppAndCredentials();
+        webAppSteps.createApp();
     }
 
     @Test

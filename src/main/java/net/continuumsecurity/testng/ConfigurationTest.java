@@ -24,7 +24,7 @@ public class ConfigurationTest {
 
     @BeforeTest
     public void beforeScenario() {
-        webAppSteps.createAppAndCredentials();
+        webAppSteps.createApp();
         String workingDirectory = System.getProperty("user.dir");
         this.usersTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/users.table");
         this.automatedScanningSteps.createNewScanSession();

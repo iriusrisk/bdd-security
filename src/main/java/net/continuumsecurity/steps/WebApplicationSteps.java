@@ -69,11 +69,6 @@ public class WebApplicationSteps {
 
     }
 
-    @BeforeStory
-    public void setup() {
-        createApp();
-    }
-
     /*
      * This has to be called explicitly when using an examples table in order to
      * start with a fresh browser instance, because @BeforeScenario is only
@@ -82,17 +77,14 @@ public class WebApplicationSteps {
     @Given("a new browser instance")
     public void createApp() {
         app = Config.createApp();
+        Config.initialiseTables();
         app.enableDefaultClient();
         assert app.getWebDriver() != null;
         app.getWebDriver().manage().deleteAllCookies();
-    }
-
-    @BeforeScenario
-    public void createAppAndCredentials() {
-        createApp();
         credentials = new UserPassCredentials("", "");
         sessionIds = new ArrayList<Cookie>();
     }
+
 
     @Given("the login page")
     @When("the login page is displayed")

@@ -12,7 +12,7 @@ public class AuthenticationTest extends BrowserBasedTest {
 
     @BeforeTest
     public void beforeScenario() {
-        webAppSteps.createAppAndCredentials();
+        webAppSteps.createApp();
     }
 
     @Test
