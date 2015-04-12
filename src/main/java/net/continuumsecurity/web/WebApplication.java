@@ -64,8 +64,8 @@ public class WebApplication extends Application {
     }
 
     public void setImplicitWait(long time, TimeUnit unit) {
-        DriverFactory.getDriver(Config.getProxyDriver()).manage().timeouts().implicitlyWait(time,unit);
         DriverFactory.getDriver(Config.getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
+        DriverFactory.getProxyDriver(Config.getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
     }
 
     public WebElement findAndWaitForElement(By by) {
@@ -85,7 +85,7 @@ public class WebApplication extends Application {
 
     @Override
     public void enableHttpLoggingClient() {
-        setWebDriver(DriverFactory.getProxyDriver(Config.getProxyDriver()));
+        setWebDriver(DriverFactory.getProxyDriver(Config.getDefaultDriver()));
     }
 
     @Override

@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <web-app>
+
     <!-- The settings in this file are for the demo ropey-tasks vulnerable web app available at: https://github.com/stephendv/RopeyTasks,
-            which is included in the bdd-security framework for demo purposes.
+            which is included in the bdd-security framework for demo purposes. -->
 
-         You'll need to modify this file for your app -->
-
-    <!-- The default driver for tests that don't require a proxy.
+    <!-- The web driver to use, can be either Firefox or Chrome.  Optionally specify path to the driver (required for linux)
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
-    <defaultDriver>firefox</defaultDriver> -->
-    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>
+    <defaultDriver>firefox</defaultDriver>
+    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>  -->
 
-    <!-- The driver configured to use ZAP as the proxy -->
-    <proxyDriver path="drivers/chromedriver-mac">Chrome</proxyDriver>
-
-    <!-- Base URL for the application to test -->
+    <!-- Base URL of the application to test -->
     <baseUrl>http://localhost:9090/</baseUrl>
 
-    <!-- Used for the SSL and the HTTP header tests -->
+    <!-- Base Secure URL of the application to test.  Used for the SSL and the HTTP header tests -->
     <baseSecureUrl>https://www.wormly.com/</baseSecureUrl>
 
-    <!-- The fully qualified class name representing the application under test -->
+    <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth selenium testing. -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
 
     <sslyze>/opt/sslyze/sslyze.py</sslyze>
 
-    <!-- Names of the session ID cookies -->
+    <!-- Optional names of the session ID cookies for session management testing. -->
     <sessionIds>
         <name>JSESSIONID</name>
     </sessionIds>
@@ -38,11 +34,13 @@
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>
     <incorrectUsername>bobbles</incorrectUsername>
 
+    <!-- Optional login credentials for the Nessus server, the server location is specified in the nessus_scan.story file -->
     <nessus>
         <username>continuum</username>
         <password>continuum</password>
     </nessus>
 
+    <!-- Required location of a running OWASP ZAP instance -->
     <proxy>
         <host>127.0.0.1</host>
         <port>8888</port>

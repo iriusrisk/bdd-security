@@ -22,6 +22,7 @@ import net.continuumsecurity.web.Application;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
@@ -120,19 +121,29 @@ public class Config {
     }
 
     public static String getDefaultDriver() {
-        return validateAndGetString("defaultDriver");
+        String driver="Chrome";
+        try {
+            driver = validateAndGetString("defaultDriver");
+        } catch (RuntimeException e) {
+            System.err.println("No defaultDriver specific in config.xml, using Chrome");
+        }
+        return driver;
     }
 
     public static String getDefaultDriverPath() {
-        return validateAndGetString("defaultDriver[@path]");
-    }
-
-    public static String getProxyDriver() {
-        return validateAndGetString("proxyDriver");
-    }
-
-    public static String getProxyDriverPath() {
-        return validateAndGetString("proxyDriver[@path]");
+        String path = null;
+        try {
+            path = validateAndGetString("defaultDriver[@path]");
+            return path;
+        } catch (RuntimeException e) {
+            System.err.println("No path to the defaultDriver specified in config.xml, using auto-detection.");
+            //Option path not specified
+            if (SystemUtils.IS_OS_MAC_OSX) path = "drivers"+File.separator+"chromedriver-mac";
+            else if (SystemUtils.IS_OS_WINDOWS) path = "drivers"+File.separator+"chromedriver.exe";
+            else if (SystemUtils.IS_OS_LINUX) throw new RuntimeException("Linux detected, please specify the correct chrome driver to use (32 or 64 bit) in the config.xml file");
+            else throw new RuntimeException("Could not determine host OS. Specify the correct chrome driver to use for this OS in the config.xml file");
+            return path;
+        }
     }
 
     private static String validateAndGetString(String value) {
