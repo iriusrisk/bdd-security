@@ -46,6 +46,7 @@
         <delete dir="${reports.dir.latest}"/>
         <delete dir="${reports.dir}/junit"/>
         <mkdir dir="${reports.dir}/junit"/>
+        <mkdir dir="${reports.dir.latest}"/>
     </target>
 
     <target name="makedir">
