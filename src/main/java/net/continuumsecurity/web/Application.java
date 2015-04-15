@@ -34,15 +34,6 @@ import java.util.List;
 public abstract class Application {
     public static Logger log = Logger.getLogger(Application.class);
 
-    public List<Method> getScannableMethods() {
-        List<Method> methods = new ArrayList<Method>();
-        for (Method method : this.getClass().getMethods()) {
-            if (method.isAnnotationPresent(SecurityScan.class)) {
-                methods.add(method);
-            }
-        }
-        return methods;
-    }
 
     public List<Method> getRestrictedMethods() {
         List<Method> methods = new ArrayList<Method>();
