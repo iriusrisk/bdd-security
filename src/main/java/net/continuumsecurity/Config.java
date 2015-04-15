@@ -18,6 +18,7 @@
  ******************************************************************************/
 package net.continuumsecurity;
 
+import net.continuumsecurity.scanner.ZapManager;
 import net.continuumsecurity.web.Application;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -40,6 +41,9 @@ import java.util.Map;
 public class Config {
     protected XMLConfiguration xml;
     private static long storyTimeout;
+    private String proxyHost;
+    private int proxyPort = 0;
+    private String proxyApi;
 
     public static Application createApp() {
         Object app = null;
@@ -116,16 +120,14 @@ public class Config {
         return validateAndGetString("baseUrl");
     }
 
-    public static String getProxyApi() {
-        return validateAndGetString("proxy.api");
-    }
+
 
     public static String getDefaultDriver() {
         String driver="Chrome";
         try {
             driver = validateAndGetString("defaultDriver");
         } catch (RuntimeException e) {
-            System.err.println("No defaultDriver specific in config.xml, using Chrome");
+            System.err.println("No defaultDriver specified in config.xml, using Chrome");
         }
         return driver;
     }
@@ -142,6 +144,7 @@ public class Config {
             else if (SystemUtils.IS_OS_WINDOWS) path = "drivers"+File.separator+"chromedriver.exe";
             else if (SystemUtils.IS_OS_LINUX) throw new RuntimeException("Linux detected, please specify the correct chrome driver to use (32 or 64 bit) in the config.xml file");
             else throw new RuntimeException("Could not determine host OS. Specify the correct chrome driver to use for this OS in the config.xml file");
+            System.err.println("Using driver at: "+path);
             return path;
         }
     }
@@ -155,7 +158,39 @@ public class Config {
     public static String getSSLyze() { return validateAndGetString("sslyze"); }
 
     public static String getProxyHost() {
-        return validateAndGetString("proxy.host");
+        if (config.getInstance().proxyHost != null ) return config.getInstance().proxyHost;
+        config.getInstance().startEmbeddedZap();
+        return config.getInstance().proxyHost;
+    }
+
+    public static int getProxyPort() {
+        if (config.getInstance().proxyPort != 0 ) return config.getInstance().proxyPort;
+        config.getInstance().startEmbeddedZap();
+        return config.getInstance().proxyPort;
+    }
+
+    public static String getProxyApi() {
+        if (config.getInstance().proxyApi != null ) return config.getInstance().proxyApi;
+        config.getInstance().startEmbeddedZap();
+        return config.getInstance().proxyApi;
+    }
+
+    private void startEmbeddedZap() {
+        try {
+            config.getInstance().proxyHost = validateAndGetString("proxy.host");
+            config.getInstance().proxyPort = getXml().getInt("proxy.port");
+            config.getInstance().proxyApi = validateAndGetString("proxy.api");
+        } catch (RuntimeException e) {
+            System.err.println("No proxy.host, proxy.port or proxy.api settings for ZAP, using embedded instance...");
+            config.getInstance().proxyHost = "127.0.0.1";
+            config.getInstance().proxyApi = "";
+            try {
+                config.getInstance().proxyPort = ZapManager.getInstance().start();
+            } catch (Exception e1) {
+                System.err.println("Fatal error starting embedded OWASP ZAP");
+                e1.printStackTrace();
+            }
+        }
     }
 
     public static boolean displayStackTrace() {
@@ -174,9 +209,6 @@ public class Config {
         return validateAndGetString("incorrectPassword");
     }
 
-    public static int getProxyPort() {
-        return getXml().getInt("proxy.port");
-    }
 
     public static String getLatestReportsDir() {
         return validateAndGetString("latestReportsDir");

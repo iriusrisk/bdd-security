@@ -7,7 +7,7 @@
     <!-- The web driver to use, can be either Firefox or Chrome.  Optionally specify path to the driver (required for linux)
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver
     <defaultDriver>firefox</defaultDriver>
-    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>  -->
+    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>-->
 
     <!-- Base URL of the application to test -->
     <baseUrl>http://localhost:9090/</baseUrl>
@@ -40,12 +40,12 @@
         <password>continuum</password>
     </nessus>
 
-    <!-- Required location of a running OWASP ZAP instance -->
+    <!-- Optional location of a running OWASP ZAP instance
     <proxy>
         <host>127.0.0.1</host>
         <port>8888</port>
         <api></api>
-    </proxy>
+    </proxy> -->
 
     <displayStackTrace>true</displayStackTrace>
     <storyDir>src/main/stories/</storyDir>
