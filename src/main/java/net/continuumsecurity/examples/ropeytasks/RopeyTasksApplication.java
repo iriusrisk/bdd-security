@@ -57,13 +57,13 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     }
 
     public void viewProfile() {
-        driver.findElement(By.linkText("Profile")).click();
+
     }
 
     @Restricted(users = {"bob", "admin"},
             sensitiveData = "Robert")
     public void viewProfileForBob() {
-        viewProfile();
+        driver.findElement(By.linkText("Profile")).click();
     }
 
     @Restricted(users = {"alice", "admin"},
