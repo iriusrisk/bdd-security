@@ -56,11 +56,10 @@ public class AppScanningSteps {
 
     @BeforeScenario
     public void beforeEachScenario() {
-        scanner = ProxyFactory.getScanningProxy();
-        spider = ProxyFactory.getSpider();
+        scanner = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
+        spider = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
         scanner.deleteAlerts();
         alerts.clear();
-
     }
 
 

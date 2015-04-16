@@ -27,6 +27,7 @@ import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.proxy.LoggingProxy;
+import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.FakeCaptchaSolver;
 import net.continuumsecurity.web.StepException;
@@ -232,7 +233,7 @@ public class WebApplicationSteps {
     }
     
     public LoggingProxy getProxy() {
-    	if (proxy == null) proxy = ProxyFactory.getLoggingProxy();
+    	if (proxy == null) proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
     	return proxy;
     }
 

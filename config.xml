@@ -40,12 +40,12 @@
         <password>continuum</password>
     </nessus>
 
-    <!-- Optional location of a running OWASP ZAP instance.  Either an external proxy must be specified here, or the zapPath must be specified to launch ZAP-->
+    <!-- Optional location of a running OWASP ZAP instance.  Either an external proxy must be specified here, or the zapPath must be specified to launch ZAP
     <proxy>
         <host>127.0.0.1</host>
         <port>8888</port>
         <api></api>
-    </proxy>
+    </proxy>-->
 
     <zapPath>zap/zap.sh</zapPath>
 

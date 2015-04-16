@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 /**
@@ -37,12 +38,13 @@ public class ZapManager {
             port = findOpenPortOnAllLocalInterfaces();
             String[] cmd = {zapProgramFile.getAbsolutePath(), "-daemon",
                     "-host", HOST,
-                    "-port", String.valueOf(port)};
+                    "-port", String.valueOf(port),
+                    "-newsession", Paths.get(".").toAbsolutePath().normalize().toString()+"/zapsession/"};
             log.info("Start ZAProxy [" + zapProgramFile.getAbsolutePath() + "] on port: " + port);
-            ProcessBuilder pb = new ProcessBuilder(cmd);
+            ProcessBuilder pb = new ProcessBuilder().inheritIO();
             pb.directory(zapProgramFile.getParentFile());
 
-            process = pb.start();
+            process = pb.command(cmd).start();
             waitForSuccessfulConnectionToZap();
         } else {
             log.info("ZAP already started.");
