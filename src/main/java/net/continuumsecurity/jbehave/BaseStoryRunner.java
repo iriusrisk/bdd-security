@@ -29,7 +29,7 @@ import java.util.List;
 
 public abstract class BaseStoryRunner extends JUnitStories {
 	Logger log = Logger.getLogger(StoryRunner.class);
-	protected static String storyUrl = Config.getStoryUrl();
+	protected static String storyUrl = Config.getInstance().getStoryUrl();
 	
 	public BaseStoryRunner() {
 		PropertyConfigurator.configure("log4j.properties");
@@ -37,7 +37,7 @@ public abstract class BaseStoryRunner extends JUnitStories {
 		.doGenerateViewAfterStories(true) //We'll generate it manually after the stories are done
 		.doIgnoreFailureInStories(true)
 		.doIgnoreFailureInView(true)
-		.useStoryTimeoutInSecs(Config.getStoryTimeout());
+		.useStoryTimeoutInSecs(Config.getInstance().getStoryTimeout());
 	}
 	
 	@Override

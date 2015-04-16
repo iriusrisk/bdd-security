@@ -28,7 +28,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 
     @Override
     public void openLoginPage() {
-        driver.get(Config.getBaseUrl() + "user/login");
+        driver.get(Config.getInstance().getBaseUrl() + "user/login");
         verifyTextPresent("Login");
     }
 
@@ -75,7 +75,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     @Restricted(users = {"admin"},
             sensitiveData = "User List")
     public void viewUserList() {
-        driver.get(Config.getBaseUrl() + "admin/list");
+        driver.get(Config.getInstance().getBaseUrl() + "admin/list");
     }
 
     @Override
@@ -92,7 +92,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 
     public void navigate() {
         openLoginPage();
-        login(Config.getUsers().getDefaultCredentials());
+        login(Config.getInstance().getUsers().getDefaultCredentials());
         verifyTextPresent("Welcome");
         viewProfile();
         search("test");
@@ -109,7 +109,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
      */
     @Override
     public void submitRecover(Map<String, String> details) {
-        driver.get(Config.getBaseUrl() + "user/recover");
+        driver.get(Config.getInstance().getBaseUrl() + "user/recover");
         driver.findElement(By.id("email")).sendKeys(details.get("email"));
         driver.findElement(By.xpath("//input[@value='Recover']")).click();
     }

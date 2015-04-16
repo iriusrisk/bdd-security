@@ -1,6 +1,6 @@
 package net.continuumsecurity.scanner;
 
-import org.zaproxy.zap.ZAP;
+import org.zaproxy.clientapi.core.ClientApi;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,41 +18,53 @@ public class ZapManager {
     private static ZapManager instance = null;
     private int port;
     String HOST = "127.0.0.1";
-    int CONNECTION_TIMEOUT = 5000; //milliseconds
+    int CONNECTION_TIMEOUT = 15000; //milliseconds
+    String API_KEY = "";
+    Process process;
 
     private ZapManager() {
     }
 
-    public static ZapManager getInstance() {
+    public static synchronized ZapManager getInstance() {
         if (instance == null) instance = new ZapManager();
         return instance;
     }
 
-    public void startZAP(String zapPath) throws Exception {
-        File zapProgramFile = new File(zapPath);
+    public int startZAP(String zapPath) throws Exception {
+        if (process == null) {
+            File zapProgramFile = new File(zapPath);
 
-        port = findOpenPortOnAllLocalInterfaces();
-		String[] cmd = { zapProgramFile.getAbsolutePath(), "-daemon",
-                "-host", HOST,
-                "-port", String.valueOf(port)};
-        log.info("Start ZAProxy [" + zapProgramFile.getAbsolutePath() + "] on port: "+port);
-        ProcessBuilder pb = new ProcessBuilder(cmd);
-        pb.directory(zapProgramFile.getParentFile());
+            port = findOpenPortOnAllLocalInterfaces();
+            String[] cmd = {zapProgramFile.getAbsolutePath(), "-daemon",
+                    "-host", HOST,
+                    "-port", String.valueOf(port)};
+            log.info("Start ZAProxy [" + zapProgramFile.getAbsolutePath() + "] on port: " + port);
+            ProcessBuilder pb = new ProcessBuilder(cmd);
+            pb.directory(zapProgramFile.getParentFile());
 
-        Process p = pb.start();
-
-        waitForSuccessfulConnectionToZap();
+            process = pb.start();
+            waitForSuccessfulConnectionToZap();
+        } else {
+            log.info("ZAP already started.");
+        }
+        return port;
     }
 
-    /**
-     * Wait for ZAProxy initialization, so it's ready to use at the end of this method
-     * (otherwise, catch exception).
-     *
-     * @param timeout the time in sec to try to connect at zap proxy.
-     * @param listener the listener to display log during the job execution in jenkins
-     * @see <a href="https://groups.google.com/forum/#!topic/zaproxy-develop/gZxYp8Og960">
-     * 		https://groups.google.com/forum/#!topic/zaproxy-develop/gZxYp8Og960</a>
-     */
+    public void stopZap() {
+        if (process == null) return; //ZAP not running
+        try {
+            log.info("Stopping ZAP");
+            ClientApi client = new ClientApi(HOST,port);
+            client.core.shutdown(API_KEY);
+            Thread.sleep(2000);
+            process.destroy();
+        } catch (final Exception e) {
+            log.warning("Error shutting down ZAP.");
+            log.warning(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void waitForSuccessfulConnectionToZap() {
         int timeoutInMs = CONNECTION_TIMEOUT;
         int connectionTimeoutInMs = timeoutInMs;

@@ -28,18 +28,18 @@ public class ProxyFactory {
     private static ZAProxyScanner proxy;
 	static Logger log = Logger.getLogger(ProxyFactory.class);
 	
-	public static ScanningProxy getScanningProxy() throws ProxyException {
-		if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort(),Config.getProxyApi());
+	public static synchronized ScanningProxy getScanningProxy() throws ProxyException {
+		if (proxy == null) proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
 		return proxy;
 	}
 
-    public static Spider getSpider() throws ProxyException {
-        if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort(),Config.getProxyApi());
+    public static synchronized Spider getSpider() throws ProxyException {
+        if (proxy == null) proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
         return proxy;
     }
     
-    public static LoggingProxy getLoggingProxy() throws ProxyException {
-        if (proxy == null) proxy = new ZAProxyScanner(Config.getProxyHost(),Config.getProxyPort(),Config.getProxyApi());
+    public static synchronized LoggingProxy getLoggingProxy() throws ProxyException {
+        if (proxy == null) proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
         return proxy;
     }
 	

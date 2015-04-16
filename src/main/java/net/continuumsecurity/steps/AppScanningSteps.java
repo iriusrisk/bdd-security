@@ -24,6 +24,7 @@ import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.Utils;
 import net.continuumsecurity.proxy.ScanningProxy;
 import net.continuumsecurity.proxy.Spider;
+import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.drivers.ProxyFactory;
 
@@ -47,22 +48,37 @@ public class AppScanningSteps {
     Spider spider;
     Application app;
     List<Alert> alerts = new ArrayList<Alert>();
-    List<Alert> alertsAlreadyFound = new ArrayList<Alert>();
     String scannerIds = null;
 
     public AppScanningSteps() {
 
     }
 
+    @BeforeScenario
+    public void beforeEachScenario() {
+        scanner = ProxyFactory.getScanningProxy();
+        spider = ProxyFactory.getSpider();
+        scanner.deleteAlerts();
+        alerts.clear();
+
+    }
+
+
+    @Given("the passive scanner has already run during the app navigation")
+    public void runPassiveScanner() {
+        //Do nothing, it has already run during navigation
+    }
 
     @Given("a new scanning session")
     public void createNewScanSession() {
-        app = Config.createApp();
+        app = Config.getInstance().createApp();
         app.enableHttpLoggingClient();
-        scanner = ProxyFactory.getScanningProxy();
-        spider = ProxyFactory.getSpider();
         scanner.clear();
-        alerts.clear();
+    }
+
+    @Given("all existing alerts are deleted")
+    public void deleteAlerts() {
+        scanner.deleteAlerts();
     }
 
     @Given("a scanner with all policies disabled")
@@ -87,8 +103,8 @@ public class AppScanningSteps {
     public void spiderUrls(ExamplesTable urlsTable) throws InterruptedException {
         for (Map<String, String> row : urlsTable.getRows()) {
             String url = row.get("url");
-            if (url.equalsIgnoreCase("baseurl")) url = Config.getBaseUrl();
-            else if (url.equalsIgnoreCase("basesecureurl")) url = Config.getBaseSecureUrl();
+            if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
+            else if (url.equalsIgnoreCase("basesecureurl")) url = Config.getInstance().getBaseSecureUrl();
             spider(url);
         }
     }
@@ -105,7 +121,6 @@ public class AppScanningSteps {
         }
     }
 
-
     @Given("the spider is configured for $threads concurrent threads")
     public void setSpiderThreads(@Named("threads") int threads) {
         spider.setThreadCount(threads);
@@ -114,13 +129,14 @@ public class AppScanningSteps {
 
     private void spider(String url) throws InterruptedException {
         spider.spider(url);
-        int complete = spider.getSpiderStatus();
+        int scanId = spider.getLastSpiderScanId();
+        int complete = spider.getSpiderProgress(scanId);
         while (complete < 100) {
-            complete = spider.getSpiderStatus();
+            complete = spider.getSpiderProgress(scanId);
             log.debug("Spidering of: " + url + " is " + complete + "% complete.");
             Thread.sleep(2000);
         }
-        for (String result : spider.getSpiderResults()) {
+        for (String result : spider.getSpiderResults(scanId)) {
             log.debug("Found Url: " + result);
         }
     }
@@ -158,8 +174,11 @@ public class AppScanningSteps {
             case "server-side-code-injection":
                 scannerIds = "90019";
                 break;
+            case "remote-os-command-injection":
+                scannerIds = "90020";
+                break;
             case "external-redirect":
-                scannerIds = "30000";
+                scannerIds = "20019";
                 break;
             case "crlf-injection":
                 scannerIds = "40003";
@@ -196,17 +215,18 @@ public class AppScanningSteps {
 
     @When("the scanner is run")
     public void runScanner() throws Exception {
-        log.info("Scanning: "+Config.getBaseUrl());
-        scanner.scan(Config.getBaseUrl());
+        log.info("Scanning: "+Config.getInstance().getBaseUrl());
+        scanner.scan(Config.getInstance().getBaseUrl());
         int complete = 0;
+        int scanId = scanner.getLastScannerScanId();
         while (complete < 100) {
-            complete = scanner.getScanStatus();
+            complete = scanner.getScanProgress(scanId);
             log.debug("Scan is " + complete + "% complete.");
             Thread.sleep(2000);
         }
     }
 
-    @When("false positives described in: $falsePositives are removed")
+    @When("the following false positives are removed $falsePositives")
     public void removeFalsePositives(ExamplesTable falsePositives) {
         alerts = scanner.getAlerts();
         List<Alert> clean = new ArrayList<Alert>();
@@ -223,20 +243,6 @@ public class AppScanningSteps {
             }
         }
         alerts = clean;
-        alerts = removeExistingAlerts();
-        alertsAlreadyFound.addAll(alerts);
-    }
-
-    private List<Alert> removeExistingAlerts() {
-        List<Alert> cleaned = new ArrayList<Alert>();
-        for (Alert alert : alerts) {
-            boolean found = false;
-            for (Alert existing : alertsAlreadyFound) {
-                if (alert.equals(existing)) found = true;
-            }
-            if (!found) cleaned.add(alert);
-        }
-        return cleaned;
     }
 
     @Then("no $riskRating or higher risk vulnerabilities should be present")
@@ -261,8 +267,9 @@ public class AppScanningSteps {
     @Given("the spider status reaches 100% complete")
     public void waitForSpiderToComplete() {
         int status = 0;
+        int scanId = spider.getLastSpiderScanId();
         while (status < 100) {
-            status = spider.getSpiderStatus();
+            status = spider.getSpiderProgress(scanId);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

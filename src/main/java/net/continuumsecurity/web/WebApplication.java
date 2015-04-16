@@ -64,8 +64,8 @@ public class WebApplication extends Application {
     }
 
     public void setImplicitWait(long time, TimeUnit unit) {
-        DriverFactory.getDriver(Config.getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
-        DriverFactory.getProxyDriver(Config.getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
+        DriverFactory.getDriver(Config.getInstance().getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
+        DriverFactory.getProxyDriver(Config.getInstance().getDefaultDriver()).manage().timeouts().implicitlyWait(time,unit);
     }
 
     public WebElement findAndWaitForElement(By by) {
@@ -78,6 +78,11 @@ public class WebApplication extends Application {
         return driver.findElement(by);
     }
 
+    public void navigate() {
+        driver.get(Config.getInstance().getBaseUrl());
+        driver.get(Config.getInstance().getBaseSecureUrl());
+    }
+
     @Override
     public Cookie getCookieByName(String name) {
         return driver.manage().getCookieNamed(name);
@@ -85,11 +90,11 @@ public class WebApplication extends Application {
 
     @Override
     public void enableHttpLoggingClient() {
-        setWebDriver(DriverFactory.getProxyDriver(Config.getDefaultDriver()));
+        setWebDriver(DriverFactory.getProxyDriver(Config.getInstance().getDefaultDriver()));
     }
 
     @Override
     public void enableDefaultClient() {
-        setWebDriver(DriverFactory.getDriver(Config.getDefaultDriver()));
+        setWebDriver(DriverFactory.getDriver(Config.getInstance().getDefaultDriver()));
     }
 }

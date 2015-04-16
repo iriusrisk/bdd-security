@@ -37,30 +37,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Config {
+    private final static Logger log = Logger.getLogger(Config.class.getName());
+
     protected XMLConfiguration xml;
     private static long storyTimeout;
     private String proxyHost;
     private int proxyPort = 0;
     private String proxyApi;
+    private static Config config;
 
-    public static Application createApp() {
+    public Application createApp() {
         Object app = null;
         try {
-            Class appClass = Class.forName(Config.getClassName());
+            Class appClass = Class.forName(Config.getInstance().getClassName());
             app = appClass.newInstance();
             return (Application) app;
         } catch (Exception e) {
-            System.err.println("FATAL error instantiating the class: "
-                    + Config.getClassName());
+            log.warning("FATAL error instantiating the class: "
+                    + Config.getInstance().getClassName());
             e.printStackTrace();
             System.exit(1);
         }
         return (Application) app;
     }
 
-    private synchronized static Config getInstance() {
+    public synchronized static Config getInstance() {
         if (config == null) {
             config = new Config();
         }
@@ -73,7 +77,7 @@ public class Config {
     }
 
 
-    public static synchronized void initialiseTables() {
+    public void initialiseTables() {
         Application app = createApp();
         writeTable(getStoryDir() + "users.table", usersToTable(getUsers()));
         writeTable(getStoryDir() + "tables" + File.separator + "authorised.resources.table",
@@ -82,9 +86,8 @@ public class Config {
                 unAuthorisedResourcesToTable(app, getUsers()));
     }
 
-    protected static Config config;
 
-    public static synchronized Users getUsers() {
+    public  Users getUsers() {
         Users users = new Users();
 
         List<HierarchicalConfiguration> usersInXml = getXml()
@@ -112,117 +115,110 @@ public class Config {
     }
 
 
-    public static String getClassName() {
+    public String getClassName() {
         return validateAndGetString("class");
     }
 
-    public static String getBaseUrl() {
+    public String getBaseUrl() {
         return validateAndGetString("baseUrl");
     }
 
 
 
-    public static String getDefaultDriver() {
+    public String getDefaultDriver() {
         String driver="Chrome";
         try {
             driver = validateAndGetString("defaultDriver");
         } catch (RuntimeException e) {
-            System.err.println("No defaultDriver specified in config.xml, using Chrome");
         }
         return driver;
     }
 
-    public static String getDefaultDriverPath() {
+    public String getDefaultDriverPath() {
         String path = null;
         try {
             path = validateAndGetString("defaultDriver[@path]");
             return path;
         } catch (RuntimeException e) {
-            System.err.println("No path to the defaultDriver specified in config.xml, using auto-detection.");
+            log.info("No path to the defaultDriver specified in config.xml, using auto-detection.");
             //Option path not specified
             if (SystemUtils.IS_OS_MAC_OSX) path = "drivers"+File.separator+"chromedriver-mac";
             else if (SystemUtils.IS_OS_WINDOWS) path = "drivers"+File.separator+"chromedriver.exe";
             else if (SystemUtils.IS_OS_LINUX) throw new RuntimeException("Linux detected, please specify the correct chrome driver to use (32 or 64 bit) in the config.xml file");
             else throw new RuntimeException("Could not determine host OS. Specify the correct chrome driver to use for this OS in the config.xml file");
-            System.err.println("Using driver at: "+path);
+            log.info("Using driver at: "+path);
             return path;
         }
     }
 
-    private static String validateAndGetString(String value) {
+    private String validateAndGetString(String value) {
         String ret = getXml().getString(value);
         if (ret == null) throw new RuntimeException(value+" not defined in config.xml");
         return ret;
     }
 
-    public static String getSSLyze() { return validateAndGetString("sslyze"); }
+    public String getSSLyze() { return validateAndGetString("sslyze"); }
 
-    public static String getProxyHost() {
-        if (config.getInstance().proxyHost != null ) return config.getInstance().proxyHost;
-        config.getInstance().startEmbeddedZap();
-        return config.getInstance().proxyHost;
-    }
-
-    public static int getProxyPort() {
-        if (config.getInstance().proxyPort != 0 ) return config.getInstance().proxyPort;
-        config.getInstance().startEmbeddedZap();
-        return config.getInstance().proxyPort;
-    }
-
-    public static String getProxyApi() {
-        if (config.getInstance().proxyApi != null ) return config.getInstance().proxyApi;
-        config.getInstance().startEmbeddedZap();
-        return config.getInstance().proxyApi;
-    }
-
-    private void startEmbeddedZap() {
+    public String getProxyHost() {
         try {
-            config.getInstance().proxyHost = validateAndGetString("proxy.host");
-            config.getInstance().proxyPort = getXml().getInt("proxy.port");
-            config.getInstance().proxyApi = validateAndGetString("proxy.api");
+            proxyHost = validateAndGetString("proxy.host");
+            proxyPort = Integer.parseInt(validateAndGetString("proxy.port"));
+            proxyApi = validateAndGetString("proxy.api");
         } catch (RuntimeException e) {
-            System.err.println("No proxy.host, proxy.port or proxy.api settings for ZAP, using embedded instance...");
-            config.getInstance().proxyHost = "127.0.0.1";
-            config.getInstance().proxyApi = "";
             try {
-                config.getInstance().proxyPort = ZapManager.getInstance().start();
-            } catch (Exception e1) {
-                System.err.println("Fatal error starting embedded OWASP ZAP");
-                e1.printStackTrace();
+                proxyPort = ZapManager.getInstance().startZAP(Config.getInstance().getZapPath());
+                proxyHost = "127.0.0.1";
+                proxyApi = "";
+            } catch (Exception re) {
+                log.warning("Error starting embedded ZAP");
+                re.printStackTrace();
             }
         }
+        return Config.getInstance().proxyHost;
     }
 
-    public static boolean displayStackTrace() {
+    public int getProxyPort() {
+        return proxyPort;
+    }
+
+    public String getProxyApi() {
+        return proxyApi;
+    }
+
+    public String getZapPath() {
+        return validateAndGetString("zapPath");
+    }
+
+    public boolean displayStackTrace() {
         return getXml().getBoolean("displayStackTrace");
     }
 
-    public static String getBaseSecureUrl() {
+    public String getBaseSecureUrl() {
         return getXml().getString("baseSecureUrl");
     }
 
-    public static String getIncorrectUsername() {
+    public String getIncorrectUsername() {
         return validateAndGetString("incorrectUsername");
     }
 
-    public static String getIncorrectPassword() {
+    public String getIncorrectPassword() {
         return validateAndGetString("incorrectPassword");
     }
 
 
-    public static String getLatestReportsDir() {
+    public String getLatestReportsDir() {
         return validateAndGetString("latestReportsDir");
     }
 
-    public static String getReportsDir() {
+    public String getReportsDir() {
         return validateAndGetString("reportsDir");
     }
 
-    public static String getNessusUsername() { return validateAndGetString("nessus.username");}
+    public String getNessusUsername() { return validateAndGetString("nessus.username");}
 
-    public static String getNessusPassword() { return validateAndGetString("nessus.password");}
+    public String getNessusPassword() { return validateAndGetString("nessus.password");}
 
-    public static List<String> getSessionIDs() {
+    public List<String> getSessionIDs() {
         List<String> ids = new ArrayList<String>();
         for (Object o : getXml().getList("sessionIds.name")) {
             ids.add((String) o);
@@ -231,27 +227,27 @@ public class Config {
     }
 
 
-    public static void setXml(XMLConfiguration xml) {
+    public void setXml(XMLConfiguration xml) {
         getInstance().xml = xml;
     }
 
 
-    public static String getStoryDir() {
+    public String getStoryDir() {
         return System.getProperty("user.dir")
                 + File.separator
                 + getXml().getString("storyDir");
     }
 
 
-    public static long getStoryTimeout() {
+    public long getStoryTimeout() {
         return getXml().getLong("storyTimeout");
     }
 
-    public static String getStoryUrl() {
+    public String getStoryUrl() {
         return "file:///" + getStoryDir();
     }
 
-    public synchronized static XMLConfiguration getXml() {
+    public  static XMLConfiguration getXml() {
         return getInstance().xml;
     }
 
@@ -259,14 +255,13 @@ public class Config {
         try {
             xml = new XMLConfiguration();
             xml.load(file);
-
         } catch (ConfigurationException cex) {
             cex.printStackTrace();
             System.exit(1);
         }
     }
 
-    public static synchronized List<List<String>> usersToTable(Users users) {
+    public  List<List<String>> usersToTable(Users users) {
         List<List<String>> table = new ArrayList<List<String>>();
         List<String> row = new ArrayList<String>();
         row.add("username");
@@ -281,7 +276,7 @@ public class Config {
         return table;
     }
 
-    public static synchronized List<List<String>> authorisedResourcesToTable(
+    public  List<List<String>> authorisedResourcesToTable(
             Application app, Users users) {
         List<List<String>> table = new ArrayList<List<String>>();
         List<String> row = new ArrayList<String>();
@@ -309,7 +304,7 @@ public class Config {
       * Create a matrix of restricted methods and the users who are not
       * authorised to access them
       */
-    public static synchronized List<List<String>> unAuthorisedResourcesToTable(
+    public  List<List<String>> unAuthorisedResourcesToTable(
             Application app, Users users) {
         List<List<String>> table = new ArrayList<List<String>>();
         List<String> row = new ArrayList<String>();
@@ -331,10 +326,10 @@ public class Config {
         return table;
     }
 
-    public static synchronized void writeTable(String file,
+    public  void writeTable(String file,
                                                List<List<String>> table) {
         PrintStream writer = null;
-        System.out.println("Writing to table file: " + file);
+        log.info("Writing to table file: " + file);
         try {
             writer = new PrintStream(new FileOutputStream(file, false));
             for (List<String> row : table) {

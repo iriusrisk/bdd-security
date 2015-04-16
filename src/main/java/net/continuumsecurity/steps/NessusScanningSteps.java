@@ -66,7 +66,7 @@ public class NessusScanningSteps {
     	for (Map<String,String> host : hostsTable.getRows()) {
     		String hostname = host.get("hostname");
     		if ("baseUrl".equalsIgnoreCase(hostname)) {
-    			URL url = new URL(Config.getBaseUrl());
+    			URL url = new URL(Config.getInstance().getBaseUrl());
     			hostname = url.getHost();
     		} 
     		hostNames.add(hostname);    		
@@ -76,8 +76,8 @@ public class NessusScanningSteps {
     @When("the scanner is run with scan name $scanName")
     public void runScan(String scanName) throws LoginException {
         if (username == null) {
-            username = Config.getNessusUsername();
-            password = Config.getNessusPassword();
+            username = Config.getInstance().getNessusUsername();
+            password = Config.getInstance().getNessusPassword();
         }
         scanClient.login(username,password);
         scanUuid = scanClient.newScan(scanName,policyName, Utils.join(hostNames,","));
@@ -96,7 +96,7 @@ public class NessusScanningSteps {
         issues = reportClient.getAllIssuesSortedByPluginId(scanUuid);
     }
 
-    @When("the following false positives are removed $falsep")
+    @When("the following nessus false positives are removed $falsep")
     public void removeFalsePositives(ExamplesTable falsePositivesTable) {
         for (Map<String,String> row : falsePositivesTable.getRows()) {
             Integer pluginId = Integer.parseInt(row.get("PluginID"));

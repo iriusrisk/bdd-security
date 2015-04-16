@@ -69,6 +69,10 @@ public class WebApplicationSteps {
 
     }
 
+    @BeforeStories
+    public void beforeStories() {
+        Config.getInstance().initialiseTables();
+    }
     /*
      * This has to be called explicitly when using an examples table in order to
      * start with a fresh browser instance, because @BeforeScenario is only
@@ -76,8 +80,7 @@ public class WebApplicationSteps {
      */
     @Given("a new browser instance")
     public void createApp() {
-        app = Config.createApp();
-        Config.initialiseTables();
+        app = Config.getInstance().createApp();
         app.enableDefaultClient();
         assert app.getWebDriver() != null;
         app.getWebDriver().manage().deleteAllCookies();
@@ -130,7 +133,7 @@ public class WebApplicationSteps {
 
     @Given("an invalid username")
     public void setInvalidUsername() {
-        credentials.setUsername(Config.getIncorrectUsername());
+        credentials.setUsername(Config.getInstance().getIncorrectUsername());
     }
 
     @Given("the password $password")
@@ -140,7 +143,7 @@ public class WebApplicationSteps {
 
     @Given("an incorrect password")
     public void incorrectPassword() {
-        credentials.setPassword(Config.getIncorrectPassword());
+        credentials.setPassword(Config.getInstance().getIncorrectPassword());
     }
 
     @When("the user logs in from a fresh login page")
@@ -295,7 +298,7 @@ public class WebApplicationSteps {
 
     @Given("the value of the session cookie is noted")
     public void findAndSetSessionIds() {
-        for (String name : Config.getSessionIDs()) {
+        for (String name : Config.getInstance().getSessionIDs()) {
             Cookie cookie = app.getCookieByName(name);
             if (cookie != null)
                 sessionIds.add(cookie);
@@ -304,7 +307,7 @@ public class WebApplicationSteps {
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
-        for (String name : Config.getSessionIDs()) {
+        for (String name : Config.getInstance().getSessionIDs()) {
             Cookie initialSessionCookie = findCookieByName(sessionIds, name);
             if (initialSessionCookie != null) {
                 String existingCookieValue = findCookieByName(sessionIds, name)
@@ -320,17 +323,17 @@ public class WebApplicationSteps {
 
     @Then("the session cookie should have the secure flag set")
     public void sessionCookiesSecureFlag() {
-        for (String name : Config.getSessionIDs()) {
+        for (String name : Config.getInstance().getSessionIDs()) {
             assertThat(app.getCookieByName(name).isSecure(), equalTo(true));
         }
     }
 
     @Then("the session cookie should have the httpOnly flag set")
     public void sessionCookiesHttpOnlyFlag() {
-        int numCookies = Config.getSessionIDs().size();
+        int numCookies = Config.getInstance().getSessionIDs().size();
         int cookieCount = 0;
         for (HarEntry entry : getProxy().getHistory()) {
-            for (String name : Config.getSessionIDs()) {
+            for (String name : Config.getInstance().getSessionIDs()) {
                 for (HarCookie cookie : entry.getResponse().getCookies().getCookies()) {
                     if (cookie.getName().equalsIgnoreCase(name) && cookie.isHttpOnly()) {
                         cookieCount++;
@@ -404,7 +407,7 @@ public class WebApplicationSteps {
 
     @When("the password recovery feature is requested")
     public void submitPasswordRecovery() {
-        ((IRecoverPassword) app).submitRecover(Config.getUsers()
+        ((IRecoverPassword) app).submitRecover(Config.getInstance().getUsers()
                 .getAll().get(0).getRecoverPasswordMap());
     }
 
@@ -569,7 +572,7 @@ public class WebApplicationSteps {
 
     @When("the secure base Url for the application is accessed")
     public void openBaseSecureUrl() {
-        app.getWebDriver().get(Config.getBaseSecureUrl());
+        app.getWebDriver().get(Config.getInstance().getBaseSecureUrl());
     }
 
     @Then("the Access-Control-Allow-Origin header must not be: $value")

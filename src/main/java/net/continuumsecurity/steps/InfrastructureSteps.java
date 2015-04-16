@@ -27,7 +27,7 @@ public class InfrastructureSteps {
 
     @Given("the target host from the base URL")
     public void setTargetHostFromBaseURL() throws MalformedURLException {
-        targetHost = new URL(Config.getBaseUrl()).getHost();
+        targetHost = new URL(Config.getInstance().getBaseUrl()).getHost();
     }
 
     @When("TCP ports from $from to $to are scanned using $threads threads and a timeout of $timeout milliseconds")
@@ -46,7 +46,7 @@ public class InfrastructureSteps {
         }
     }
 
-    @Then("only the following ports should be open: $portsTable")
+    @Then("only the following ports should be selected $portsTable")
     public void checkOpenPorts(ExamplesTable portsTable) {
         expectedPorts = new ArrayList<Integer>();
         for (Map<String,String> row : portsTable.getRows()) {

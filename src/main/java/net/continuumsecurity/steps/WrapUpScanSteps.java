@@ -1,6 +1,7 @@
 package net.continuumsecurity.steps;
 
 import net.continuumsecurity.Config;
+import net.continuumsecurity.scanner.ZapManager;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -19,9 +20,9 @@ import java.util.Locale;
 public class WrapUpScanSteps {
     Logger log = Logger.getLogger(WrapUpScanSteps.class);
 
-    public static final String LATEST_REPORTS = Config.getLatestReportsDir();
+    public static final String LATEST_REPORTS = Config.getInstance().getLatestReportsDir();
     public static final String RESOURCES_DIR = "src"+ File.separator+"main"+File.separator+"resources";
-    public static final String REPORTS_DIR = Config.getReportsDir();
+    public static final String REPORTS_DIR = Config.getInstance().getReportsDir();
 
     Embedder embedder;
 
@@ -35,6 +36,7 @@ public class WrapUpScanSteps {
 
     public void wrapUp() {
         try {
+            ZapManager.getInstance().stopZap();
             copyResultsToStampedReportsDir();
         } catch (IOException e) {
             log.error(e.getMessage());

@@ -33,10 +33,10 @@ public class SSLyzeSteps {
 
     private ProcessExecutor createSSLyzeProcess() throws MalformedURLException {
         List<String> cmds = new ArrayList<>();
-        cmds.addAll(Arrays.asList(Config.getSSLyze().split("\\s+")));
-        int port = Utils.getPortFromUrl(Config.getBaseSecureUrl());
+        cmds.addAll(Arrays.asList(Config.getInstance().getSSLyze().split("\\s+")));
+        int port = Utils.getPortFromUrl(Config.getInstance().getBaseSecureUrl());
 
-        String target = Utils.getHostFromUrl(Config.getBaseSecureUrl());
+        String target = Utils.getHostFromUrl(Config.getInstance().getBaseSecureUrl());
         if (port > -1) {
             target = target+":"+port;
         }

@@ -33,8 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StoryRunner extends JUnitStoryRunner {
-    private static final String LATEST_REPORTS = Config.getLatestReportsDir();
-    private static final String REPORTS_DIR = Config.getReportsDir();
+    private static final String LATEST_REPORTS = Config.getInstance().getLatestReportsDir();
+    private static final String REPORTS_DIR = Config.getInstance().getReportsDir();
 
     final CmdLineParser parser;
 

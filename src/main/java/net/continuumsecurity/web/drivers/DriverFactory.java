@@ -111,7 +111,7 @@ public class DriverFactory {
     }
 
     public WebDriver createChromeDriver(DesiredCapabilities capabilities) {
-        System.setProperty("webdriver.chrome.driver", Config.getDefaultDriverPath());
+        System.setProperty("webdriver.chrome.driver", Config.getInstance().getDefaultDriverPath());
         if (capabilities != null) {
             capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             ChromeOptions options = new ChromeOptions();
@@ -149,8 +149,8 @@ public class DriverFactory {
     public DesiredCapabilities createProxyCapabilities() {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         Proxy proxy = new Proxy();
-        proxy.setHttpProxy(Config.getProxyHost() + ":" + Config.getProxyPort());
-        proxy.setSslProxy(Config.getProxyHost() + ":" + Config.getProxyPort());
+        proxy.setHttpProxy(Config.getInstance().getProxyHost() + ":" + Config.getInstance().getProxyPort());
+        proxy.setSslProxy(Config.getInstance().getProxyHost() + ":" + Config.getInstance().getProxyPort());
         capabilities.setCapability("proxy", proxy);
         return capabilities;
     }

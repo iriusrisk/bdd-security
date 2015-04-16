@@ -48,9 +48,9 @@ public class PreferredConfiguration extends MostUsefulConfiguration {
 		StoryReporterBuilder srb = new StoryReporterBuilder()
 				.withDefaultFormats()
 				.withViewResources(viewResources)
-                .withRelativeDirectory(".." + File.separator + Config.getLatestReportsDir())
+                .withRelativeDirectory(".." + File.separator + Config.getInstance().getLatestReportsDir())
 				.withFormats(Format.XML, Format.CONSOLE, Format.HTML, Format.IDE_CONSOLE, Format.TXT)
-				.withFailureTrace(Config.displayStackTrace());
+				.withFailureTrace(Config.getInstance().displayStackTrace());
 
 		// Setup parameters
 		ParameterConverters parameterConverters = new ParameterConverters()

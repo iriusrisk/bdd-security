@@ -31,10 +31,10 @@ public class Utils {
     static Logger log = Logger.getLogger(Utils.class);
 
     public static String extractSessionIDName(String target) {
-        if (Config.getSessionIDs().size() == 0) {
+        if (Config.getInstance().getSessionIDs().size() == 0) {
             log.warn("Attempting to extract session ID from string, but no session IDs defined in the configuration.");
         }
-        for (String sessId : Config.getSessionIDs()) {
+        for (String sessId : Config.getInstance().getSessionIDs()) {
             Pattern p = Pattern.compile(".*" + sessId + ".*", Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
             Matcher m = p.matcher(target);
             log.trace("Search for sessionID: " + sessId + " in string: " + target);
