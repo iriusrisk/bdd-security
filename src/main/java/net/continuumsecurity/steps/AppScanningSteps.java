@@ -22,12 +22,9 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.FalsePositive;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.Utils;
-import net.continuumsecurity.proxy.ScanningProxy;
 import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
-import net.continuumsecurity.web.drivers.ProxyFactory;
-
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
@@ -44,8 +41,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class AppScanningSteps {
     Logger log = Logger.getLogger(AppScanningSteps.class);
-    ScanningProxy scanner;
-    Spider spider;
+    private ZAProxyScanner scanner;
+    Spider spider = (Spider) getScanner();
     Application app;
     List<Alert> alerts = new ArrayList<Alert>();
     String scannerIds = null;
@@ -56,10 +53,7 @@ public class AppScanningSteps {
 
     @BeforeScenario
     public void beforeEachScenario() {
-        scanner = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
-        spider = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
-        scanner.deleteAlerts();
-        alerts.clear();
+
     }
 
 
@@ -72,22 +66,30 @@ public class AppScanningSteps {
     public void createNewScanSession() {
         app = Config.getInstance().createApp();
         app.enableHttpLoggingClient();
-        scanner.clear();
     }
 
     @Given("all existing alerts are deleted")
     public void deleteAlerts() {
-        scanner.deleteAlerts();
+        getScanner().deleteAlerts();
+        alerts.clear();
     }
 
     @Given("a scanner with all policies disabled")
     public void disableAllScanners() {
-        scanner.disableAllScanners();
+        getScanner().disableAllScanners();
     }
+
+    public ZAProxyScanner getScanner() {
+        if (scanner == null) {
+            scanner = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
+        }
+        return scanner;
+    }
+
 
     @Given("a scanner with all policies enabled")
     public void enableAllScanners() {
-        scanner.enableAllScanners();
+        getScanner().enableAllScanners();
     }
 
     @Given("the page flow described in the method: $methodName is run through the proxy")
@@ -142,7 +144,7 @@ public class AppScanningSteps {
 
     @Given("the passive scanner is enabled")
     public void enablePassiveScanner() {
-        scanner.setEnablePassiveScan(true);
+        getScanner().setEnablePassiveScan(true);
     }
 
 
@@ -184,7 +186,7 @@ public class AppScanningSteps {
                 break;
         }
         if (scannerIds == null) throw new UnexpectedContentException("No matching policy found for: " + policyName);
-        scanner.setEnableScanners(scannerIds, true);
+        getScanner().setEnableScanners(scannerIds, true);
     }
 
     @Given("the attack strength is set to $strength")
@@ -192,7 +194,7 @@ public class AppScanningSteps {
         if (scannerIds == null)
             throw new RuntimeException("First set the scanning policy before setting attack strength or alert threshold");
         for (String id : scannerIds.split(",")) {
-            scanner.setScannerAttackStrength(id, strength.toUpperCase());
+            getScanner().setScannerAttackStrength(id, strength.toUpperCase());
         }
     }
 
@@ -201,25 +203,25 @@ public class AppScanningSteps {
         if (scannerIds == null)
             throw new RuntimeException("First set the scanning policy before setting attack strength or alert threshold");
         for (String id : scannerIds.split(",")) {
-            scanner.setScannerAlertThreshold(id, threshold.toUpperCase());
+            getScanner().setScannerAlertThreshold(id, threshold.toUpperCase());
         }
     }
 
     @Given("the URL regular expressions listed in the file: $exclude are excluded from the scanner")
     public void excludeUrlsFromScan(ExamplesTable exclude) {
         for (Parameters param : exclude.getRowsAsParameters()) {
-            scanner.excludeFromScanner(param.values().get("regex"));
+            getScanner().excludeFromScanner(param.values().get("regex"));
         }
     }
 
     @When("the scanner is run")
     public void runScanner() throws Exception {
         log.info("Scanning: "+Config.getInstance().getBaseUrl());
-        scanner.scan(Config.getInstance().getBaseUrl());
+        getScanner().scan(Config.getInstance().getBaseUrl());
         int complete = 0;
-        int scanId = scanner.getLastScannerScanId();
+        int scanId = getScanner().getLastScannerScanId();
         while (complete < 100) {
-            complete = scanner.getScanProgress(scanId);
+            complete = getScanner().getScanProgress(scanId);
             log.debug("Scan is " + complete + "% complete.");
             Thread.sleep(2000);
         }
@@ -227,7 +229,7 @@ public class AppScanningSteps {
 
     @When("the following false positives are removed $falsePositives")
     public void removeFalsePositives(ExamplesTable falsePositives) {
-        alerts = scanner.getAlerts();
+        alerts = getScanner().getAlerts();
         List<Alert> clean = new ArrayList<Alert>();
 
         for (Alert alert : alerts) {

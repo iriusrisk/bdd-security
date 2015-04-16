@@ -32,7 +32,6 @@ import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.FakeCaptchaSolver;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.WebApplication;
-import net.continuumsecurity.web.drivers.ProxyFactory;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
