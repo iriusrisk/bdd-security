@@ -20,6 +20,7 @@ package net.continuumsecurity;
 
 import net.continuumsecurity.scanner.ZapManager;
 import net.continuumsecurity.web.Application;
+import net.continuumsecurity.web.WebApplication;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -43,7 +44,6 @@ public class Config {
     private final static Logger log = Logger.getLogger(Config.class.getName());
 
     protected XMLConfiguration xml;
-    private static long storyTimeout;
     private String proxyHost;
     private int proxyPort = 0;
     private String proxyApi;
@@ -56,12 +56,10 @@ public class Config {
             app = appClass.newInstance();
             return (Application) app;
         } catch (Exception e) {
-            log.warning("FATAL error instantiating the class: "
-                    + Config.getInstance().getClassName());
-            e.printStackTrace();
-            System.exit(1);
+            log.warning("Error instantiating the class defined in config.xml");
+            log.warning("Using the basic WebApplication");
+            return new WebApplication();
         }
-        return (Application) app;
     }
 
     public synchronized static Config getInstance() {

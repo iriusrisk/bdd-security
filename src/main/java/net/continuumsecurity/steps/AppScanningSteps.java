@@ -51,12 +51,6 @@ public class AppScanningSteps {
 
     }
 
-    @BeforeScenario
-    public void beforeEachScenario() {
-
-    }
-
-
     @Given("the passive scanner has already run during the app navigation")
     public void runPassiveScanner() {
         //Do nothing, it has already run during navigation
