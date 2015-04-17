@@ -42,7 +42,6 @@ import static org.hamcrest.Matchers.equalTo;
 public class AppScanningSteps {
     Logger log = Logger.getLogger(AppScanningSteps.class);
     private ZAProxyScanner scanner;
-    Spider spider = (Spider) getScanner();
     Application app;
     List<Alert> alerts = new ArrayList<Alert>();
     String scannerIds = null;
@@ -80,6 +79,9 @@ public class AppScanningSteps {
         return scanner;
     }
 
+    public Spider getSpider() {
+        return (Spider)getScanner();
+    }
 
     @Given("a scanner with all policies enabled")
     public void enableAllScanners() {
@@ -106,32 +108,32 @@ public class AppScanningSteps {
 
     @Given("the spider is configured for a maximum depth of $depth")
     public void setSpiderDepth(@Named("depth") int depth) {
-        spider.setMaxDepth(depth);
+        getSpider().setMaxDepth(depth);
     }
 
     @Given("the URL regular expressions listed in the file: $excludedUrlsTable are excluded from the spider")
     public void setExcludedRegex(ExamplesTable exRegex) {
         for (Map<String, String> row : exRegex.getRows()) {
-            spider.excludeFromSpider(row.get("regex"));
+            getSpider().excludeFromSpider(row.get("regex"));
         }
     }
 
     @Given("the spider is configured for $threads concurrent threads")
     public void setSpiderThreads(@Named("threads") int threads) {
-        spider.setThreadCount(threads);
+        getSpider().setThreadCount(threads);
     }
 
 
     private void spider(String url) throws InterruptedException {
-        spider.spider(url);
-        int scanId = spider.getLastSpiderScanId();
-        int complete = spider.getSpiderProgress(scanId);
+        getSpider().spider(url);
+        int scanId = getSpider().getLastSpiderScanId();
+        int complete = getSpider().getSpiderProgress(scanId);
         while (complete < 100) {
-            complete = spider.getSpiderProgress(scanId);
+            complete = getSpider().getSpiderProgress(scanId);
             log.debug("Spidering of: " + url + " is " + complete + "% complete.");
             Thread.sleep(2000);
         }
-        for (String result : spider.getSpiderResults(scanId)) {
+        for (String result : getSpider().getSpiderResults(scanId)) {
             log.debug("Found Url: " + result);
         }
     }
@@ -262,9 +264,9 @@ public class AppScanningSteps {
     @Given("the spider status reaches 100% complete")
     public void waitForSpiderToComplete() {
         int status = 0;
-        int scanId = spider.getLastSpiderScanId();
+        int scanId = getSpider().getLastSpiderScanId();
         while (status < 100) {
-            status = spider.getSpiderProgress(scanId);
+            status = getSpider().getSpiderProgress(scanId);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
