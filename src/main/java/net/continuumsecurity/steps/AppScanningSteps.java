@@ -31,7 +31,11 @@ import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.steps.Parameters;
 import org.zaproxy.clientapi.core.Alert;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +85,12 @@ public class AppScanningSteps {
 
     public Spider getSpider() {
         return (Spider)getScanner();
+    }
+
+    @When("the XML report is written to the file $file")
+    public void writeXmlReport(String filename) throws IOException {
+        byte[] xmlReport = scanner.getXmlReport();
+        Files.write(Paths.get(Config.getInstance().getLatestReportsDir()+ File.separator+"zap"+File.separator+filename), xmlReport);
     }
 
     @Given("a scanner with all policies enabled")

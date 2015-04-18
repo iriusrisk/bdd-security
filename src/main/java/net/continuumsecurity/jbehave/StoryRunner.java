@@ -33,8 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StoryRunner extends JUnitStoryRunner {
-    private static final String LATEST_REPORTS = Config.getInstance().getLatestReportsDir();
-    private static final String REPORTS_DIR = Config.getInstance().getReportsDir();
 
     final CmdLineParser parser;
 
@@ -53,13 +51,6 @@ public class StoryRunner extends JUnitStoryRunner {
     public StoryRunner() {
         super();
         parser = new CmdLineParser(this);
-    }
-
-    private void copyResultsToStampedReportsDir() throws IOException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss", Locale.getDefault());
-        File dirName = new File(REPORTS_DIR+File.separator+formatter.format(new Date()));
-        FileUtils.forceMkdir(dirName);
-        FileUtils.copyDirectory(new File(LATEST_REPORTS), dirName);
     }
 
     /*

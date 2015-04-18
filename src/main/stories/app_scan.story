@@ -20,6 +20,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file sql_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -34,6 +35,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file xss.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -48,6 +50,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file ssi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -62,6 +65,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file sfi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -76,6 +80,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file ssi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -90,6 +95,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file ss_code_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -104,6 +110,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file os_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -118,6 +125,7 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file crlf_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
@@ -132,4 +140,5 @@ And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |
+And the XML report is written to the file redirect.xml
 Then no Medium or higher risk vulnerabilities should be present
