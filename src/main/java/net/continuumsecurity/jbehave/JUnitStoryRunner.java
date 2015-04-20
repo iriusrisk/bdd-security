@@ -58,6 +58,7 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         FileUtils.deleteQuietly(new File(WrapUpScanSteps.LATEST_REPORTS));
         //FileUtils.cleanDirectory(new File(WrapUpScanSteps.JUNIT_REPORTS_DIR));
         FileUtils.forceMkdir(new File(WrapUpScanSteps.LATEST_REPORTS+File.separator+"zap"));
+
         File viewDir = new File(WrapUpScanSteps.LATEST_REPORTS + File.separator+"view");
         FileUtils.copyDirectory(new File(WrapUpScanSteps.RESOURCES_DIR), viewDir);
     }

@@ -190,6 +190,38 @@ public class AppScanningSteps {
             case "crlf-injection":
                 scannerIds = "40003";
                 break;
+            case "source-code-disclosure":
+                scannerIds = "42,10045,20017";
+                break;
+            case "shell-shock":
+                scannerIds = "10048";
+                break;
+            case "remote-code-execution":
+                scannerIds = "20018";
+                break;
+            case "ldap-injection":
+                scannerIds = "40015";
+                break;
+            case "xpath-injection":
+                scannerIds = "90021";
+                break;
+            case "xml-external-entity":
+                scannerIds = "90023";
+                break;
+            case "padding-oracle":
+                scannerIds = "90024";
+                break;
+            case "el-injection":
+                scannerIds = "90025";
+                break;
+            case "insecure-http-methods":
+                scannerIds = "90028";
+                break;
+            case "parameter-pollution":
+                scannerIds = "20014";
+                break;
+            default : throw new RuntimeException("No policy found for: "+policyName);
+
         }
         if (scannerIds == null) throw new UnexpectedContentException("No matching policy found for: " + policyName);
         getScanner().setEnableScanners(scannerIds, true);
