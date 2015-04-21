@@ -242,20 +242,6 @@ And the following false positives are removed
 And the XML report is written to the file padding_oracle.xml
 Then no Medium or higher risk vulnerabilities should be present
 
-Scenario: The application should not be vulnerable to Expression Language injection attacks
-Meta: @id scan_el_injection @cwe-917
-Given a scanner with all policies disabled
-And all existing alerts are deleted
-And the URL regular expressions listed in the file: tables/exclude_urls.table are excluded from the scanner
-And the el-injection policy is enabled
-And the attack strength is set to High
-And the alert threshold is set to Low
-When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
-And the XML report is written to the file el_injection.xml
-Then no Medium or higher risk vulnerabilities should be present
-
 Scenario: The application should not expose insecure HTTP methods
 Meta: @id scan_insecure_methods @cwe-200
 Given a scanner with all policies disabled
@@ -268,18 +254,4 @@ When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file insecure_methods.xml
-Then no Medium or higher risk vulnerabilities should be present
-
-Scenario: The application should not be vulnerable to HTTP Parameter polution
-Meta: @id scan_param_pollution @cwe-352
-Given a scanner with all policies disabled
-And all existing alerts are deleted
-And the URL regular expressions listed in the file: tables/exclude_urls.table are excluded from the scanner
-And the parameter-pollution policy is enabled
-And the attack strength is set to High
-And the alert threshold is set to Low
-When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
-And the XML report is written to the file param_pollution.xml
 Then no Medium or higher risk vulnerabilities should be present
