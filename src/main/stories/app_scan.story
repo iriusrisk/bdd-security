@@ -19,7 +19,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file sql_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -34,7 +34,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file xss.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -49,7 +49,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file ssi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -64,7 +64,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file sfi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -79,7 +79,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file ssi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -94,7 +94,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file ss_code_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -109,7 +109,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file os_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -124,7 +124,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file crlf_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -139,7 +139,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file redirect.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -153,7 +153,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file source_disclosure.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -167,8 +167,8 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
-And the XML report is written to the file source_disclosure.xml
+|url                           |parameter           |cweid  |wascid |
+And the XML report is written to the file shell_shock.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 Scenario: The application should not be vulnerable to remote code execution
@@ -181,7 +181,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file rce.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -209,7 +209,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file xpath_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -224,7 +224,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file xxe.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -238,8 +238,8 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
-And the XML report is written to the file xxe.xml
+|url                           |parameter           |cweid  |wascid |
+And the XML report is written to the file padding_oracle.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 Scenario: The application should not be vulnerable to Expression Language injection attacks
@@ -252,7 +252,7 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
+|url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file el_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -266,8 +266,8 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
-And the XML report is written to the file el_injection.xml
+|url                           |parameter           |cweid  |wascid |
+And the XML report is written to the file insecure_methods.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 Scenario: The application should not be vulnerable to HTTP Parameter polution
@@ -280,6 +280,6 @@ And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
 And the following false positives are removed
-|url                           |parameter           |cweid  |
-And the XML report is written to the file el_injection.xml
+|url                           |parameter           |cweid  |wascid |
+And the XML report is written to the file param_pollution.xml
 Then no Medium or higher risk vulnerabilities should be present

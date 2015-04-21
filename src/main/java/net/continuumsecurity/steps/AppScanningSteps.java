@@ -273,7 +273,7 @@ public class AppScanningSteps {
         for (Alert alert : alerts) {
             boolean falsePositive = false;
             for (FalsePositive falsep : Utils.getFalsePositivesFromTable(falsePositives)) {
-                if (falsep.matches(alert.getUrl(), alert.getParam(), Integer.toString(alert.getCweId()))) {
+                if (falsep.matches(alert.getUrl(), alert.getParam(),alert.getCweId(), alert.getWascId())) {
                     falsePositive = true;
                 }
             }
@@ -332,7 +332,8 @@ public class AppScanningSteps {
                 detail = detail + alert.getAlert() + "\n"
                         + "URL: " + alert.getUrl() + "\n"
                         + "Parameter: " + alert.getParam() + "\n"
-                        + "CWE: " + alert.getCweId() + "\n";
+                        + "CWE-ID: " + alert.getCweId() + "\n"
+                        + "WASC-ID: " + alert.getWascId() +"\n";
             }
         }
         return detail;

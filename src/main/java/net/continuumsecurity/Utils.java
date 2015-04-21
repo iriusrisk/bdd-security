@@ -62,7 +62,7 @@ public class Utils {
         List<FalsePositive> falsePositives = new ArrayList<FalsePositive>();
 
         for (Map<String,String> row : falseps.getRows()) {
-            falsePositives.add(new FalsePositive(row.get("url"),row.get("parameter"),row.get("cweid")));
+            falsePositives.add(new FalsePositive(row.get("url"),row.get("parameter"),row.get("cweid"), row.get("wascid")));
         }
         return falsePositives;
     }
