@@ -144,7 +144,7 @@ And the XML report is written to the file redirect.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 Scenario: The application should not disclose source code
-Meta: @id scan_source_disclosure @cwe-541 @cwe-20
+Meta: @id scan_source_disclosure @cwe-541
 Given a scanner with all policies disabled
 And all existing alerts are deleted
 And the URL regular expressions listed in the file: tables/exclude_urls.table are excluded from the scanner
@@ -169,20 +169,6 @@ When the scanner is run
 And the following false positives are removed
 |url                           |parameter           |cweid  |wascid |
 And the XML report is written to the file shell_shock.xml
-Then no Medium or higher risk vulnerabilities should be present
-
-Scenario: The application should not be vulnerable to remote code execution
-Meta: @id scan_rce @cwe-20
-Given a scanner with all policies disabled
-And all existing alerts are deleted
-And the URL regular expressions listed in the file: tables/exclude_urls.table are excluded from the scanner
-And the remote-code-execution policy is enabled
-And the attack strength is set to High
-And the alert threshold is set to Low
-When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
-And the XML report is written to the file rce.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 Scenario: The application should not be vulnerable to LDAP injection
@@ -214,7 +200,7 @@ And the XML report is written to the file xpath_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 
-Scenario: The application should not be vulnerable to XMl External Entity Attacks
+Scenario: The application should not be vulnerable to Xml External Entity Attacks
 Meta: @id scan_xxe @cwe-611
 Given a scanner with all policies disabled
 And all existing alerts are deleted
@@ -229,7 +215,7 @@ And the XML report is written to the file xxe.xml
 Then no Medium or higher risk vulnerabilities should be present
 
 Scenario: The application should not be vulnerable to the Generic Padding Oracle attack
-Meta: @id scan_padding_oracle @cwe-209
+Meta: @id scan_padding_oracle @cwe-209-poodle
 Given a scanner with all policies disabled
 And all existing alerts are deleted
 And the URL regular expressions listed in the file: tables/exclude_urls.table are excluded from the scanner

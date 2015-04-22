@@ -8,7 +8,7 @@ I want to verify that the application does not allow the browser to cache my sen
 Meta: @story data_security
 
 Scenario: Prevent browser caching of sensitive data
-Meta: @id cache_control_headers
+Meta: @id cache_control_headers @cwe-525
 Given a new browser instance
 And the browser is configured to use an intercepting proxy
 And the login page

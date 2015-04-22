@@ -25,7 +25,7 @@ tables/authorised.resources.table
 
 
 Scenario: Users must not be able to view resources for which they are not authorised
-Meta: @id access_control_restricted
+Meta: @id access_control_restricted @cwe-639
 Given the access control map for authorised users has been populated
 And a new browser instance
 And the username <username>
@@ -39,7 +39,7 @@ tables/unauthorised.resources.table
 
 
 Scenario: Un-authenticated users should not be able to view restricted resources
-Meta: @id anon_access_control
+Meta: @id anon_access_control @cwe-306
 Given the access control map for authorised users has been populated
 And a new browser instance
 And the login page
