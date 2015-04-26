@@ -124,8 +124,8 @@
     <target name="junit.run" depends="compile">
         <junit printsummary="yes" haltonfailure="no">
             <!-- run specific stories through meta filtering
-            <sysproperty key="filters" value="-m +story data_security"/>
-            -->
+            <sysproperty key="filters" value=""/> -->
+
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${build.dir}"/>

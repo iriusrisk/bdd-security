@@ -8,7 +8,7 @@ I want to have a robust authentication system
 Meta: @story authentication
 
 Scenario: Passwords should be case sensitive
-Meta: @id auth_case
+Meta: @id auth_case @cwe-178-auth
 Given a new browser instance
 When the default user logs in with credentials from: users.table
 Then the user is logged in

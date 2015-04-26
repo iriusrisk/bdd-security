@@ -25,10 +25,11 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         super();
         List<String> filters = createFilters();
         String filter = System.getProperty("filters");
+        if (filter == null) filter = "";
         String stories = System.getProperty("stories");
         if (stories != null) {
             filters.addAll(createStoryMetaFilters(stories));
-        } else if (filter != null && !filter.contains("groovy:")) {
+        } else if (!filter.contains("groovy:")) {
             filters.add("-skip");
         }
         filters.add(filter);
@@ -56,9 +57,7 @@ public class JUnitStoryRunner extends BaseStoryRunner {
 
     protected void prepareReportsDir() throws IOException {
         FileUtils.deleteQuietly(new File(WrapUpScanSteps.LATEST_REPORTS));
-        //FileUtils.cleanDirectory(new File(WrapUpScanSteps.JUNIT_REPORTS_DIR));
         FileUtils.forceMkdir(new File(WrapUpScanSteps.LATEST_REPORTS+File.separator+"zap"));
-
         File viewDir = new File(WrapUpScanSteps.LATEST_REPORTS + File.separator+"view");
         FileUtils.copyDirectory(new File(WrapUpScanSteps.RESOURCES_DIR), viewDir);
     }
