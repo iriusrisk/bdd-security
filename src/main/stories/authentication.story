@@ -37,7 +37,7 @@ Then the protocol should be HTTPS
 
 
 Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code.  
-Meta: @id auth_return_redirect @cwe-525
+Meta: @id auth_return_redirect @cwe-525-repost
 Given a new browser instance
 And the browser is configured to use an intercepting proxy
 And the proxy logs are cleared
@@ -47,7 +47,7 @@ Then the response status code should start with 3
 
 
 Scenario: Disable browser auto-completion on the login form
-Meta: @id auth_autocomplete_login_form @cwe-525
+Meta: @id auth_autocomplete_login_form @cwe-525-autocomplete-form
 Given a new browser instance
 And the login page
 When the login form is inspected
