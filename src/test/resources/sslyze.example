@@ -116,18 +116,7 @@
                  ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=AZK7VID6EoWFVLDKgNAB
 
   * SSLV3 Cipher Suites:
-      Preferred:
-                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=A5K7VJuhCM6BVNLngIgE
-      Accepted:
-                 AES256-SHA                    -              256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VPGaF9jBVMyLgegM
-                 RC4-MD5                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VPCQMIWAVIHDgrgF
-                 ECDHE-RSA-RC4-SHA             ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VNDXKpfBVILqgZAH
-                 AES128-SHA                    -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VMDaKojAVJaQgfAO
-                 ECDHE-RSA-DES-CBC3-SHA        ECDH-256 bits  112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VLKKM82BVNuJgOgH
-                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VKHTGdfHVNm-gNgG
-                 RC4-SHA                       -              128 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VKGQMMqDVO3rgPgJ
-                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VJzDDISFVP6egbgN
-                 DES-CBC3-SHA                  -              112 bits      HTTP 302 Found - https://www.google.es/?gfe_rd=cr&ei=ApK7VImoOcjCVNmpgbgL
+      Server rejected all cipher suites.
 
 
 

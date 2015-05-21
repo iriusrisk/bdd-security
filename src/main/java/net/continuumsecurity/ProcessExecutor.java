@@ -6,6 +6,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -29,6 +32,8 @@ public class ProcessExecutor {
     }
 
     private void createOutputFile(String filename) throws IOException {
+        Path path = Paths.get(filename);
+        if (Files.exists(path)) Files.delete(path);
         outputFile = new File(filename);
         outputFile.createNewFile();
     }

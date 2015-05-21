@@ -17,7 +17,6 @@ public class TestSteps {
 
     @BeforeTest
     public void beforeScenario() {
-        webAppSteps.createAppAndCredentials();
         webAppSteps.createApp();
         String workingDirectory = System.getProperty("user.dir");
         this.authorisedTable = Utils.createListOfMaps(workingDirectory + "/src/main/stories/tables/authorised.resources.table");
