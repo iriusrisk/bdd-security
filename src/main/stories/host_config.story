@@ -9,11 +9,11 @@ Meta: @story host_config
 Scenario: Only the required ports should be open
 Meta: @id open_ports
 
-Given the target host from the base URL
-When TCP ports from 1 to 1000 are scanned using 100 threads and a timeout of 300 milliseconds
+Given the target host name <host>
+When TCP ports from 1 to 65535 are scanned using 100 threads and a timeout of 300 milliseconds
 And the open ports are selected
-Then only the following ports should be selected
-|port|
-|80|
-|443|
+Then the ports should be <ports_open>
+
+Examples:
+auto-generated/hosts.table
 

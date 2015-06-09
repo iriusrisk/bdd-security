@@ -15,7 +15,7 @@ And the login page
 When the user logs in
 Then the user is logged in
 Examples:
-users.table
+auto-generated/users.table
 
 
 Scenario: Verify that users are not logged in when using an incorrect password
@@ -27,7 +27,7 @@ And an incorrect password
 When the user logs in
 Then the user is not logged in
 Examples:
-users.table
+auto-generated/users.table
 
 
 Scenario: Verify that if users don't login, then they are not logged in (According to the ILogin.isLoggedIn() method)

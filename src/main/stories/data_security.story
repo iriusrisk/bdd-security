@@ -22,4 +22,4 @@ Then the HTTP Cache-control header has the value: no-cache, no-store, must-reval
 And the HTTP Pragma header has the value: no-cache
 
 Examples:
-tables/authorised.resources.table
+auto-generated/authorised.resources.table

@@ -13,7 +13,6 @@ And the following URLs are spidered:
 |url|
 |baseUrl|
 And the spider status reaches 100% complete
-When the following false positives are removed
-|url                           |parameter           |cweid  |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file passive.xml
 Then no Medium or higher risk vulnerabilities should be present

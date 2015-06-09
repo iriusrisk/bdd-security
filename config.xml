@@ -20,6 +20,14 @@
 
     <sslyze>/opt/sslyze/sslyze.py --regular</sslyze>
 
+    <!-- Hosts to scan with Nessus and the port scanner -->
+    <hosts>
+        <host name="localhost">
+            <port number="80" state="open"/>
+            <port number="443" state="open"/>
+        </host>
+    </hosts>
+
     <!-- Optional names of the session ID cookies for session management testing. -->
     <sessionIds>
         <name>JSESSIONID</name>

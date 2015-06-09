@@ -17,7 +17,7 @@ public class HostConfigTest {
 
     @Test
     public void test_open_ports() throws MalformedURLException, ExecutionException, InterruptedException {
-        steps.setTargetHostFromBaseURL();
+        steps.setTargetHost("localhost");
         steps.scanPorts(1, 1024, 10, 300);
         steps.selectPorts("open");
         assertThat(steps.getSelectedPorts(), contains(80,443));

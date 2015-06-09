@@ -88,6 +88,7 @@ public class AppScanningSteps {
     }
 
     @When("the XML report is written to the file $file")
+    @Given("the XML report is written to the file $file")
     public void writeXmlReport(String filename) throws IOException {
         byte[] xmlReport = scanner.getXmlReport();
         Files.write(Paths.get(Config.getInstance().getLatestReportsDir()+ File.separator+"zap"+File.separator+filename), xmlReport);
@@ -265,7 +266,8 @@ public class AppScanningSteps {
         }
     }
 
-    @When("the following false positives are removed $falsePositives")
+    @When("the following false positives are removed: $falsePositives")
+    @Given("the following false positives are removed: $falsePositives")
     public void removeFalsePositives(ExamplesTable falsePositives) {
         alerts = getScanner().getAlerts();
         List<Alert> clean = new ArrayList<Alert>();

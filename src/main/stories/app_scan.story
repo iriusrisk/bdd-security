@@ -18,8 +18,7 @@ And the SQL-Injection policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file sql_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -33,8 +32,7 @@ And the Cross-Site-Scripting policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file xss.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -48,8 +46,7 @@ And the Path-traversal policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file ssi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -63,8 +60,7 @@ And the Remote-file-inclusion policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file sfi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -78,8 +74,7 @@ And the Server-side-include policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file ssi.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -93,8 +88,7 @@ And the Server-side-code-injection policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file ss_code_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -108,8 +102,7 @@ And the Remote-os-command-injection policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file os_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -123,8 +116,7 @@ And the crlf-injection policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file crlf_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -138,8 +130,7 @@ And the External-redirect policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low 
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file redirect.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -152,8 +143,7 @@ And the source-code-disclosure policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file source_disclosure.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -166,8 +156,7 @@ And the shell-shock policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file shell_shock.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -180,8 +169,7 @@ And the ldap-injection policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file ldap_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -194,8 +182,7 @@ And the xpath-injection policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file xpath_injection.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -209,8 +196,7 @@ And the xml-external-entity policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file xxe.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -223,8 +209,7 @@ And the padding-oracle policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file padding_oracle.xml
 Then no Medium or higher risk vulnerabilities should be present
 
@@ -237,7 +222,6 @@ And the insecure-http-methods policy is enabled
 And the attack strength is set to High
 And the alert threshold is set to Low
 When the scanner is run
-And the following false positives are removed
-|url                           |parameter           |cweid  |wascid |
+And the following false positives are removed: tables/zap.false_positives.table
 And the XML report is written to the file insecure_methods.xml
 Then no Medium or higher risk vulnerabilities should be present

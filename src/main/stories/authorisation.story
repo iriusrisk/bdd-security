@@ -21,7 +21,7 @@ And the HTTP requests and responses on recorded
 And they access the restricted resource: <method>
 Then the string: <sensitiveData> should be present in one of the HTTP responses
 Examples:
-tables/authorised.resources.table
+auto-generated/authorised.resources.table
 
 
 Scenario: Users must not be able to view resources for which they are not authorised
@@ -35,7 +35,7 @@ When the user logs in
 And the previously recorded HTTP Requests for <method> are replayed using the current session ID
 Then the string: <sensitiveData> should not be present in any of the HTTP responses
 Examples:
-tables/unauthorised.resources.table
+auto-generated/unauthorised.resources.table
 
 
 Scenario: Un-authenticated users should not be able to view restricted resources
@@ -46,4 +46,4 @@ And the login page
 When the previously recorded HTTP Requests for <method> are replayed using the current session ID
 Then the string: <sensitiveData> should not be present in any of the HTTP responses
 Examples:
-tables/authorised.resources.table
+auto-generated/authorised.resources.table

@@ -24,6 +24,7 @@ import net.continuumsecurity.web.WebApplication;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -32,8 +33,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,16 +73,30 @@ public class Config {
         loadConfig("config.xml");
     }
 
-
     public void initialiseTables() {
         Application app = createApp();
-        writeTable(getStoryDir() + "users.table", usersToTable(getUsers()));
-        writeTable(getStoryDir() + "tables" + File.separator + "authorised.resources.table",
+        writeTable(getStoryDir() + "auto-generated"+File.separator+"users.table", usersToTable(getUsers()));
+        writeTable(getStoryDir() + "auto-generated"+File.separator+"hosts.table", hostsToTable(getHosts()));
+        writeTable(getStoryDir() + "auto-generated" + File.separator + "authorised.resources.table",
                 authorisedResourcesToTable(app, getUsers()));
-        writeTable(getStoryDir() + "tables" + File.separator + "unauthorised.resources.table",
+        writeTable(getStoryDir() + "auto-generated" + File.separator + "unauthorised.resources.table",
                 unAuthorisedResourcesToTable(app, getUsers()));
     }
 
+    public Hosts getHosts() {
+        Hosts hosts = new Hosts();
+        List<HierarchicalConfiguration> hostsInXml = getXml().configurationsAt("hosts.host");
+        for (HierarchicalConfiguration hostConfig : hostsInXml) {
+            Host host = new Host(hostConfig.getString("[@name]"));
+            hosts.addHost(host);
+            List<HierarchicalConfiguration> ports = hostConfig.configurationsAt("port");
+            for (HierarchicalConfiguration portConfig : ports) {
+                Port port = new Port(portConfig.getInt("[@number]"), Port.State.fromString(portConfig.getString("[@state]")));
+                host.addPort(port);
+            }
+        }
+        return hosts;
+    }
 
     public  Users getUsers() {
         Users users = new Users();
@@ -269,6 +282,21 @@ public class Config {
             row = new ArrayList<String>();
             row.add(user.getCredentials().get("username"));
             row.add(user.getCredentials().get("password"));
+            table.add(row);
+        }
+        return table;
+    }
+
+    public  List<List<String>> hostsToTable(Hosts hosts) {
+        List<List<String>> table = new ArrayList<List<String>>();
+        List<String> row = new ArrayList<String>();
+        row.add("host");
+        row.add("ports_open");
+        table.add(row);
+        for (Host host : hosts.getHosts()) {
+            row = new ArrayList<String>();
+            row.add(host.getName());
+            row.add(StringUtils.join(host.getPortNumbers(),','));
             table.add(row);
         }
         return table;

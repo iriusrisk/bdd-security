@@ -61,15 +61,10 @@ public class NessusScanningSteps {
     	this.policyName = policyName;
     }
     
-    @Given("the target hosts $hosts")
+    @Given("the target host names from: $hostsTable")
     public void setTargetHosts(ExamplesTable hostsTable) throws MalformedURLException {
     	for (Map<String,String> host : hostsTable.getRows()) {
-    		String hostname = host.get("hostname");
-    		if ("baseUrl".equalsIgnoreCase(hostname)) {
-    			URL url = new URL(Config.getInstance().getBaseUrl());
-    			hostname = url.getHost();
-    		} 
-    		hostNames.add(hostname);    		
+    		hostNames.add(host.get("host"));
     	}
     }
 
@@ -96,7 +91,7 @@ public class NessusScanningSteps {
         issues = reportClient.getAllIssuesSortedByPluginId(scanUuid);
     }
 
-    @When("the following nessus false positives are removed $falsep")
+    @When("the nessus false positives listed in: $falsePositivesTable are removed")
     public void removeFalsePositives(ExamplesTable falsePositivesTable) {
         for (Map<String,String> row : falsePositivesTable.getRows()) {
             Integer pluginId = Integer.parseInt(row.get("PluginID"));

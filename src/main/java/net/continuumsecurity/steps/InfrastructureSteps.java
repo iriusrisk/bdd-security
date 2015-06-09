@@ -1,7 +1,7 @@
 package net.continuumsecurity.steps;
 
 import net.continuumsecurity.Config;
-import net.continuumsecurity.scanner.PortResult;
+import net.continuumsecurity.Port;
 import net.continuumsecurity.scanner.PortScanner;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
@@ -21,13 +21,13 @@ public class InfrastructureSteps {
     Logger log = Logger.getLogger(InfrastructureSteps.class);
     String targetHost;
     PortScanner portScanner;
-    List<PortResult> portScanResults;
+    List<Port> portScanResults;
     List<Integer> selectedPorts;
     List<Integer> expectedPorts;
 
-    @Given("the target host from the base URL")
-    public void setTargetHostFromBaseURL() throws MalformedURLException {
-        targetHost = new URL(Config.getInstance().getBaseUrl()).getHost();
+    @Given("the target host name <host>")
+    public void setTargetHost(@Named("host") String hostname) throws MalformedURLException {
+        targetHost = hostname;
     }
 
     @When("TCP ports from $from to $to are scanned using $threads threads and a timeout of $timeout milliseconds")
@@ -39,20 +39,20 @@ public class InfrastructureSteps {
     @When("the $state ports are selected")
     public void selectPorts(String state) {
         selectedPorts = new ArrayList<Integer>();
-        for (PortResult result : portScanResults) {
-            if (result.getState().equals(PortResult.PortState.fromString(state))) {
-                selectedPorts.add(result.getPort());
+        for (Port result : portScanResults) {
+            if (result.getState().equals(Port.State.fromString(state))) {
+                selectedPorts.add(result.getNumber());
             }
         }
     }
 
-    @Then("only the following ports should be selected $portsTable")
-    public void checkOpenPorts(ExamplesTable portsTable) {
+    @Then("the ports should be <ports_open>")
+    public void checkPortStates(@Named("ports_open") String csvPorts) {
         expectedPorts = new ArrayList<Integer>();
-        for (Map<String,String> row : portsTable.getRows()) {
-             expectedPorts.add(Integer.parseInt(row.get("port")));
+        for (String portAsString : csvPorts.split(",")) {
+            expectedPorts.add(Integer.parseInt(portAsString));
         }
-        assertThat("Only the expected ports are open",selectedPorts, hasItems(expectedPorts.toArray(new Integer[expectedPorts.size()])));
+        assertThat("Only the expected ports are open",selectedPorts, containsInAnyOrder(expectedPorts.toArray(new Integer[expectedPorts.size()])));
     }
 
     public List<Integer> getSelectedPorts() {

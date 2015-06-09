@@ -1,5 +1,0 @@
-|method		|username		|password		|sensitiveData		|
-|viewProfileForBob		|alice		|password		|Robert		|
-|viewProfileForAlice		|bob		|password		|alice@continuumsecurity.net		|
-|viewUserList		|alice		|password		|User List		|
-|viewUserList		|bob		|password		|User List		|
