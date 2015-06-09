@@ -1,7 +1,7 @@
 # Release
 Version: 0.9
 
-## Changes
+## v0.9 Changelog
 - Moved tables that are auto-generated during startup into the stories/auto-generated folder. Tables that are user editable stay in the stories/tables folder.
 - Hosts and expected open ports are defined in the config.xml.  Nessus and port scanning stories now read the target data from these files
 - Moved the Nessus false positives to tables/nessus.false_positives.table
