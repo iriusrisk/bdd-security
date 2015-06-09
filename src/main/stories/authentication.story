@@ -13,8 +13,8 @@ Given a new browser instance
 When the default user logs in with credentials from: users.table
 Then the user is logged in
 When the case of the password is changed
-And the user logs in from a fresh login page
 Then the user is not logged in
+And the user logs in from a fresh login page
 
 Scenario: Present the login form itself over an HTTPS connection
 Meta: @id auth_login_form_over_ssl @cwe-295-auth
