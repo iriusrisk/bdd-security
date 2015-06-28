@@ -1,5 +1,8 @@
 # Release
-Version: 0.9
+Version: 0.9.1
+
+## v0.9.1 Changelog
+- Added HtmlUnitDriver support, it is also the default driver if no other driver is specified in config.xml
 
 ## v0.9 Changelog
 - Moved tables that are auto-generated during startup into the stories/auto-generated folder. Tables that are user editable stay in the stories/tables folder.

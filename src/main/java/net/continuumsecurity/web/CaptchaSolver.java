@@ -35,7 +35,7 @@ public class CaptchaSolver extends CaptchaFinder implements ICaptchaSolver {
 		try {            
             solver = CaptchaSolverFactory.createSolver(properties);
             img = ((ICaptcha)app).getCaptchaImage();
-			File screenshot = ((TakesScreenshot)app.getWebDriver()).getScreenshotAs(OutputType.FILE);
+			File screenshot = ((TakesScreenshot)((WebApplication)app).getBrowser().getWebDriver()).getScreenshotAs(OutputType.FILE);
 			Point point = img.getLocation();
 			int eleWidth = img.getSize().getWidth();
 			int eleHeight = img.getSize().getHeight();

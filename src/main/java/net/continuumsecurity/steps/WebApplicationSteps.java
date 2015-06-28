@@ -32,6 +32,7 @@ import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.FakeCaptchaSolver;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.WebApplication;
+import net.continuumsecurity.web.clients.Browser;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
@@ -73,21 +74,21 @@ public class WebApplicationSteps {
     public void beforeStories() {
         Config.getInstance().initialiseTables();
     }
+
     /*
      * This has to be called explicitly when using an examples table in order to
      * start with a fresh browser instance, because @BeforeScenario is only
      * called once for the whole scenario, not each example.
      */
-    @Given("a new browser instance")
+    @Given("a new browser or client instance")
     public void createApp() {
         app = Config.getInstance().createApp();
         app.enableDefaultClient();
-        assert app.getWebDriver() != null;
-        app.getWebDriver().manage().deleteAllCookies();
+        assert app.getWebClient() != null;
+        app.getWebClient().clearAuthenticationTokens();
         credentials = new UserPassCredentials("", "");
         sessionIds = new ArrayList<Cookie>();
     }
-
 
     @Given("the login page")
     @When("the login page is displayed")
@@ -181,13 +182,6 @@ public class WebApplicationSteps {
         } else {
             credentials.setPassword(wrongCasePassword);
         }
-    }
-
-    @When("the request for the login form is submitted over HTTP")
-    public void submitLoginOverHttp() {
-        String url = currentHar.getRequest().getUrl().replaceFirst("https", "http");
-        ((WebApplication) app).getWebDriver().get(url);
-
     }
 
     @Given("the user logs in from a fresh login page $limit times")
@@ -285,12 +279,6 @@ public class WebApplicationSteps {
         currentHar = responses.get(0);
     }
 
-    @Then("the protocol of the current URL should be HTTPS")
-    public void verifyProtocolBrowserUrlHttps() {
-        String currentUrl = ((WebApplication) app).getWebDriver().getCurrentUrl();
-        assertThat(currentUrl, currentUrl.substring(0, 4), equalToIgnoringCase("https"));
-    }
-
     @Then("the response status code should start with 3")
     public void statusCode3xx() {
         assertThat(Integer.toString(currentHar.getResponse().getStatus()).substring(0, 1), equalTo("3"));
@@ -299,7 +287,7 @@ public class WebApplicationSteps {
     @Given("the value of the session cookie is noted")
     public void findAndSetSessionIds() {
         for (String name : Config.getInstance().getSessionIDs()) {
-            Cookie cookie = app.getCookieByName(name);
+            Cookie cookie = ((Browser)app.getWebClient()).getCookieByName(name);
             if (cookie != null)
                 sessionIds.add(cookie);
         }
@@ -307,14 +295,15 @@ public class WebApplicationSteps {
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
+        Browser browser = (Browser)app.getWebClient();
         for (String name : Config.getInstance().getSessionIDs()) {
             Cookie initialSessionCookie = findCookieByName(sessionIds, name);
             if (initialSessionCookie != null) {
                 String existingCookieValue = findCookieByName(sessionIds, name)
                         .getValue();
-                assertThat(app.getCookieByName(name).getValue(),
+                assertThat(browser.getCookieByName(name).getValue(),
                         not(initialSessionCookie.getValue()));
-            } else if (app.getCookieByName(name).getValue() == null) {
+            } else if (browser.getCookieByName(name).getValue() == null) {
                 throw new RuntimeException(
                         "No session IDs found after login with name: " + name);
             }
@@ -324,7 +313,7 @@ public class WebApplicationSteps {
     @Then("the session cookie should have the secure flag set")
     public void sessionCookiesSecureFlag() {
         for (String name : Config.getInstance().getSessionIDs()) {
-            assertThat(app.getCookieByName(name).isSecure(), equalTo(true));
+            assertThat(((Browser)app.getWebClient()).getCookieByName(name).isSecure(), equalTo(true));
         }
     }
 
@@ -355,19 +344,24 @@ public class WebApplicationSteps {
 
     @When("the password field is inspected")
     public void selectPasswordField() {
+        checkIfWebApplication();
         String xpath = "//input[@type='password']";
-        List<WebElement> passwds = ((WebApplication) app).getWebDriver().findElements(
+        List<WebElement> passwds = ((WebApplication) app).getBrowser().getWebDriver().findElements(
                 By.xpath(xpath));
         if (passwds.size() != 1)
             throw new UnexpectedContentException("Found " + passwds.size() + " password fields using XPath: " + xpath);
         currentElement = passwds.get(0);
     }
 
+    public void checkIfWebApplication() {
+        if (!(app instanceof WebApplication)) throw new RuntimeException("This scenario can only be run against a WebApplication");
+    }
 
     @When("the login form is inspected")
     public void selectLoginFormElement() {
+        checkIfWebApplication();
         String xpath = "//form[.//input[@type='password']]";
-        List<WebElement> loginForms = ((WebApplication) app).getWebDriver().findElements(
+        List<WebElement> loginForms = ((WebApplication) app).getBrowser().getWebDriver().findElements(
                 By.xpath(xpath));
         if (loginForms.size() != 1)
             throw new UnexpectedContentException("Found " + loginForms.size() + " login forms using XPath: " + xpath);
@@ -572,7 +566,7 @@ public class WebApplicationSteps {
 
     @When("the secure base Url for the application is accessed")
     public void openBaseSecureUrl() {
-        app.getWebDriver().get(Config.getInstance().getBaseSecureUrl());
+
     }
 
     @Then("the Access-Control-Allow-Origin header must not be: $value")
@@ -585,7 +579,7 @@ public class WebApplicationSteps {
         if (!httpHeadersRecorded) {
             enableLoggingDriver();
             clearProxy();
-            openBaseSecureUrl();
+            ((Browser)app.getWebClient()).getUrl(Config.getInstance().getBaseSecureUrl());
             recordFirstHarEntry();
             httpHeadersRecorded = true;
         }

@@ -114,34 +114,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.xpath("//input[@value='Recover']")).click();
     }
     
-    /*
-        To enable CAPTCHA solving, there should be a deathbycaptcha.properties file in the project root with the format:
-        type=DeathByCaptcha
-        username=deathbycaptcha.com username
-        password=my password
 
-    @Override
-	public WebElement getCaptchaImage() {
-		return driver.findElement(By.id("recaptcha_challenge_image"));		
-	}
-
-	@Override
-	public WebElement getCaptchaResponseField() {
-		return driver.findElement(By.id("recaptcha_response_field"));
-	}
-
-	@Override
-	public void setDefaultSolver() {
-		Properties props = new Properties();
-		try {
-			props.load(new FileInputStream("deathbycaptcha.properties"));
-			setCaptchaSolver(new CaptchaSolver(this, props));
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-	}
-    */
 }
 

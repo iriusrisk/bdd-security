@@ -18,21 +18,22 @@
  ******************************************************************************/
 package net.continuumsecurity.web;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.behaviour.ICaptcha;
+import net.continuumsecurity.web.clients.Browser;
+import net.continuumsecurity.web.clients.WebClient;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Driver;
 import java.util.concurrent.TimeUnit;
 
 
 public class WebApplication extends Application {
+    protected Browser browser;
     protected WebDriver driver;
     protected ICaptchaSolver captchaSolver;
 
@@ -51,16 +52,17 @@ public class WebApplication extends Application {
         this.captchaSolver = captchaHelper;
     }
 
-    public WebDriver getWebDriver() {
-        return driver;
+    public Browser getBrowser() {
+        return browser;
     }
 
-    public void setWebDriver(WebDriver driver) {
-        this.driver = driver;
+    public void setBrowser(Browser browser) {
+        this.browser = browser;
+        this.driver = browser.getWebDriver();
     }
 
     public void verifyTextPresent(String text) {
-        if (!this.driver.getPageSource().contains(text)) throw new UnexpectedContentException("Expected text: ["+text+"] was not found.");
+        if (!this.browser.getWebDriver().getPageSource().contains(text)) throw new UnexpectedContentException("Expected text: ["+text+"] was not found.");
     }
 
     public void setImplicitWait(long time, TimeUnit unit) {
@@ -70,31 +72,32 @@ public class WebApplication extends Application {
 
     public WebElement findAndWaitForElement(By by) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(browser.getWebDriver(), 10);
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         } catch (TimeoutException e) {
             throw new NoSuchElementException(e.getMessage());
         }
-        return driver.findElement(by);
+        return browser.getWebDriver().findElement(by);
     }
 
     public void navigate() {
-        driver.get(Config.getInstance().getBaseUrl());
-        driver.get(Config.getInstance().getBaseSecureUrl());
-    }
-
-    @Override
-    public Cookie getCookieByName(String name) {
-        return driver.manage().getCookieNamed(name);
+        browser.getWebDriver().get(Config.getInstance().getBaseUrl());
+        browser.getWebDriver().get(Config.getInstance().getBaseSecureUrl());
     }
 
     @Override
     public void enableHttpLoggingClient() {
-        setWebDriver(DriverFactory.getProxyDriver(Config.getInstance().getDefaultDriver()));
+        setBrowser(new Browser(DriverFactory.getProxyDriver(Config.getInstance().getDefaultDriver())));
     }
 
     @Override
     public void enableDefaultClient() {
-        setWebDriver(DriverFactory.getDriver(Config.getInstance().getDefaultDriver()));
+        setBrowser(new Browser(DriverFactory.getDriver(Config.getInstance().getDefaultDriver())));
     }
+
+    @Override
+    public WebClient getWebClient() {
+        return browser;
+    }
+
 }

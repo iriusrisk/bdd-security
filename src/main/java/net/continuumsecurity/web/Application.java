@@ -22,9 +22,9 @@ package net.continuumsecurity.web;
  */
 
 import net.continuumsecurity.Restricted;
+import net.continuumsecurity.web.clients.WebClient;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,7 +33,6 @@ import java.util.List;
 
 public abstract class Application {
     public static Logger log = Logger.getLogger(Application.class);
-
 
     public List<Method> getRestrictedMethods() {
         List<Method> methods = new ArrayList<Method>();
@@ -66,12 +65,10 @@ public abstract class Application {
         return null;
     }
 
-    public abstract Cookie getCookieByName(String name);
-
     public abstract void enableHttpLoggingClient();
 
     public abstract void enableDefaultClient();
     
-    public abstract WebDriver getWebDriver();
+    public abstract WebClient getWebClient();
 }
 

@@ -34,16 +34,6 @@ public class AuthenticationTest extends BrowserBasedTest {
     }
 
     @Test
-    public void the_login_form_must_not_be_available_over_clear_text_HTTP() throws UnsupportedEncodingException {
-        webAppSteps.enableLoggingDriver();
-        webAppSteps.clearProxy();
-        webAppSteps.openLoginPage();
-        webAppSteps.findResponseWithLoginform();
-        webAppSteps.submitLoginOverHttp();
-        webAppSteps.verifyProtocolBrowserUrlHttps();
-    }
-
-    @Test
     public void authentication_credentials_should_be_transmitted_over_SSL() throws UnsupportedEncodingException {
         webAppSteps.enableLoggingDriver();
         webAppSteps.clearProxy();

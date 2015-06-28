@@ -2,7 +2,7 @@
 Scenario: Navigate and spider the application and find vulnerabilities through passive scanning
 Meta: @pre navigate
 
-Given a new browser instance
+Given a new browser or client instance
 And a new scanning session
 And the passive scanner is enabled
 And the page flow described in the method: navigate is run through the proxy

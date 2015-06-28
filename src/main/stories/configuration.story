@@ -8,7 +8,7 @@ Meta: @story configuration
 
 Scenario: Verify that all configured user accounts can login correctly
 Meta: @id config_login_ok
-Given a new browser instance
+Given a new browser or client instance
 And the username <username> 
 And the password <password>
 And the login page
@@ -20,7 +20,7 @@ auto-generated/users.table
 
 Scenario: Verify that users are not logged in when using an incorrect password
 Meta: @id config_wrong_password
-Given a new browser instance
+Given a new browser or client instance
 And the login page
 And the username <username>
 And an incorrect password
@@ -32,7 +32,7 @@ auto-generated/users.table
 
 Scenario: Verify that if users don't login, then they are not logged in (According to the ILogin.isLoggedIn() method)
 Meta: @id config_is_logged_in
-Given a new browser instance
+Given a new browser or client instance
 And the login page
 Then the user is not logged in
 

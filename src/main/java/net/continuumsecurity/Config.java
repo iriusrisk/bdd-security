@@ -20,7 +20,6 @@ package net.continuumsecurity;
 
 import net.continuumsecurity.scanner.ZapManager;
 import net.continuumsecurity.web.Application;
-import net.continuumsecurity.web.WebApplication;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -56,8 +55,8 @@ public class Config {
             return (Application) app;
         } catch (Exception e) {
             log.warning("Error instantiating the class defined in config.xml");
-            log.warning("Using the basic WebApplication");
-            return new WebApplication();
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -134,10 +133,8 @@ public class Config {
         return validateAndGetString("baseUrl");
     }
 
-
-
     public String getDefaultDriver() {
-        String driver="Chrome";
+        String driver="htmlunit";
         try {
             driver = validateAndGetString("defaultDriver");
         } catch (RuntimeException e) {
