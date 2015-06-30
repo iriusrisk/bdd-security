@@ -22,7 +22,7 @@ package net.continuumsecurity.web;
  */
 
 import net.continuumsecurity.Restricted;
-import net.continuumsecurity.web.clients.WebClient;
+import net.continuumsecurity.clients.WebClient;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Cookie;
 

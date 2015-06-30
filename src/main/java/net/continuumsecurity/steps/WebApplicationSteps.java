@@ -26,13 +26,13 @@ import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
+import net.continuumsecurity.clients.Browser;
 import net.continuumsecurity.proxy.LoggingProxy;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
 import net.continuumsecurity.web.FakeCaptchaSolver;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.WebApplication;
-import net.continuumsecurity.web.clients.Browser;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
@@ -562,11 +562,6 @@ public class WebApplicationSteps {
     public void checkHeaderValue(@Named("name") String name, @Named("value") String value) {
         assertNotNull("No HTTP header named: " + name + " was found.", Utils.getResponseHeaderValue(currentHar.getResponse(), name));
         assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), name), equalTo(value));
-    }
-
-    @When("the secure base Url for the application is accessed")
-    public void openBaseSecureUrl() {
-
     }
 
     @Then("the Access-Control-Allow-Origin header must not be: $value")
