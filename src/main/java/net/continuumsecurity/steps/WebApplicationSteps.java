@@ -42,7 +42,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,8 +83,8 @@ public class WebApplicationSteps {
     public void createApp() {
         app = Config.getInstance().createApp();
         app.enableDefaultClient();
-        assert app.getWebClient() != null;
-        app.getWebClient().clearAuthenticationTokens();
+        assert app.getClient() != null;
+        app.getClient().clearAuthenticationTokens();
         credentials = new UserPassCredentials("", "");
         sessionIds = new ArrayList<Cookie>();
     }
@@ -287,7 +286,7 @@ public class WebApplicationSteps {
     @Given("the value of the session cookie is noted")
     public void findAndSetSessionIds() {
         for (String name : Config.getInstance().getSessionIDs()) {
-            Cookie cookie = ((Browser)app.getWebClient()).getCookieByName(name);
+            Cookie cookie = ((Browser)app.getClient()).getCookieByName(name);
             if (cookie != null)
                 sessionIds.add(cookie);
         }
@@ -295,7 +294,7 @@ public class WebApplicationSteps {
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
-        Browser browser = (Browser)app.getWebClient();
+        Browser browser = (Browser)app.getClient();
         for (String name : Config.getInstance().getSessionIDs()) {
             Cookie initialSessionCookie = findCookieByName(sessionIds, name);
             if (initialSessionCookie != null) {
@@ -313,7 +312,7 @@ public class WebApplicationSteps {
     @Then("the session cookie should have the secure flag set")
     public void sessionCookiesSecureFlag() {
         for (String name : Config.getInstance().getSessionIDs()) {
-            assertThat(((Browser)app.getWebClient()).getCookieByName(name).isSecure(), equalTo(true));
+            assertThat(((Browser)app.getClient()).getCookieByName(name).isSecure(), equalTo(true));
         }
     }
 
@@ -574,7 +573,7 @@ public class WebApplicationSteps {
         if (!httpHeadersRecorded) {
             enableLoggingDriver();
             clearProxy();
-            ((Browser)app.getWebClient()).getUrl(Config.getInstance().getBaseSecureUrl());
+            ((Browser)app.getClient()).getUrl(Config.getInstance().getBaseSecureUrl());
             recordFirstHarEntry();
             httpHeadersRecorded = true;
         }

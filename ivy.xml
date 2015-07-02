@@ -24,7 +24,7 @@
         <!-- Needed for Nessus REST interface -->
 
         <!-- Jersey client -->
-        <dependency org="org.glassfish.jersey.core" name="jersey-client" rev="2.18"/>
+        <dependency org="org.apache.cxf" name="cxf-rt-rs-client" rev="3.1.1"/>
 
         <dependency org="junit" name="junit-dep" rev="4.11" />
         <dependency org="org.hamcrest" name="hamcrest-all" rev="1.3"/>

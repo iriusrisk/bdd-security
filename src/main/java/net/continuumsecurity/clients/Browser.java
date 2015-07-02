@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * Created by stephen on 30/06/15.
  */
-public class Browser implements WebClient {
+public class Browser implements GenericClient {
     WebDriver driver;
 
     public Browser(WebDriver driver) {

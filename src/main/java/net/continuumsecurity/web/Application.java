@@ -22,9 +22,8 @@ package net.continuumsecurity.web;
  */
 
 import net.continuumsecurity.Restricted;
-import net.continuumsecurity.clients.WebClient;
+import net.continuumsecurity.clients.GenericClient;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Cookie;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -69,6 +68,6 @@ public abstract class Application {
 
     public abstract void enableDefaultClient();
     
-    public abstract WebClient getWebClient();
+    public abstract GenericClient getClient();
 }
 

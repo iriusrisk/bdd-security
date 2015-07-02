@@ -41,18 +41,6 @@ public class TransportTest {
         webAppSteps.createApp();
     }
 
-    @Test
-    public void http_security_headers_should_be_set () {
-        webAppSteps.enableLoggingDriver();
-        webAppSteps.clearProxy();
-        webAppSteps.openBaseSecureUrl();
-        webAppSteps.recordFirstHarEntry();
-        webAppSteps.checkIfHSTSHeaderIsSet();
-        webAppSteps.checkIfXFrameOptionsHeaderIsSet(Constants.SAMEORIGIN,Constants.DENY);
-        webAppSteps.checkHeaderValue(Constants.XXSSPROTECTION, Constants.XXSSPROTECTION_VALUE);
-        webAppSteps.checkThatAccessControlAllowOriginIsNotStar(Constants.STAR);
-        webAppSteps.checkHeaderValue(Constants.XCONTENTTYPEOPTIONS, Constants.NOSNIFF);
-    }
 
     @Test
     public void cache_controls_are_set_on_sensitive_content() {
