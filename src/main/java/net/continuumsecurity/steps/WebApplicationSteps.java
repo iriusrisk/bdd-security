@@ -27,7 +27,7 @@ import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.clients.Browser;
-import net.continuumsecurity.clients.SessionTokensInCookies;
+import net.continuumsecurity.clients.AuthTokenManager;
 import net.continuumsecurity.proxy.LoggingProxy;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
@@ -43,7 +43,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,8 +83,8 @@ public class WebApplicationSteps {
     public void createApp() {
         app = Config.getInstance().createApp();
         app.enableDefaultClient();
-        assert app.getClient() != null;
-        app.getClient().clearSessionTokens();
+        assert app.getAuthTokenManager() != null;
+        app.getAuthTokenManager().deleteAuthTokens();
         credentials = new UserPassCredentials("", "");
         sessionIds = new HashMap<String,String>();
     }
@@ -93,8 +92,8 @@ public class WebApplicationSteps {
     @Given("a new browser instance")
     public void createAppForBrowser() {
         createApp();
-        if (!(app.getClient() instanceof Browser)) {
-            throw new ConfigurationException("This scenario can only be run with a Browser instance, but application.getClient() returns a non-browser client.");
+        if (!(app.getAuthTokenManager() instanceof Browser)) {
+            throw new ConfigurationException("This scenario can only be run with a Browser instance, but application.getAuthTokenManager() returns a non-browser client.");
         }
     }
 
@@ -296,14 +295,15 @@ public class WebApplicationSteps {
     @Given("the value of the session ID is noted")
     public void findAndSetSessionIds() {
         sessionIds.clear();
-        sessionIds.putAll(((SessionTokensInCookies)app.getClient()).getSessionTokens());
+        sessionIds.putAll(app.getAuthTokenManager().getAuthTokens());
     }
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
-        SessionTokensInCookies sessionClient = (SessionTokensInCookies)app.getClient();
         for (String name : sessionIds.keySet()) {
-            assertThat(sessionClient.getSessionTokens().get(name),
+            String a = app.getAuthTokenManager().getAuthTokens().get(name);
+            String b = sessionIds.get(name);
+            assertThat(app.getAuthTokenManager().getAuthTokens().get(name),
                     not(sessionIds.get(name)));
         }
     }
@@ -311,7 +311,7 @@ public class WebApplicationSteps {
     @Then("the session cookie should have the secure flag set")
     public void sessionCookiesSecureFlag() {
         for (String name : Config.getInstance().getSessionIDs()) {
-            assertThat(((Browser)app.getClient()).getCookieByName(name).isSecure(), equalTo(true));
+            assertThat(((Browser)app.getAuthTokenManager()).getCookieByName(name).isSecure(), equalTo(true));
         }
     }
 
@@ -503,7 +503,7 @@ public class WebApplicationSteps {
                 try {
                     manual = Utils.replaceCookies(entry.getRequest(), sessionIds);
                 } catch (Exception e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e.printStackTrace();
                     throw new RuntimeException("Could not copy Har request");
                 }
                 getProxy().clear();
@@ -568,7 +568,7 @@ public class WebApplicationSteps {
         if (!httpHeadersRecorded) {
             enableLoggingDriver();
             clearProxy();
-            ((Browser)app.getClient()).getUrl(Config.getInstance().getBaseSecureUrl());
+            ((Browser)app.getAuthTokenManager()).getUrl(Config.getInstance().getBaseSecureUrl());
             recordFirstHarEntry();
             httpHeadersRecorded = true;
         }

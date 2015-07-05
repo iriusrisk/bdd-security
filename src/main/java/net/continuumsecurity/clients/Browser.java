@@ -6,20 +6,16 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by stephen on 30/06/15.
  */
-public class Browser implements SessionClient, SessionTokensInCookies {
+public class Browser implements AuthTokenManager {
     WebDriver driver;
 
     public Browser(WebDriver driver) {
         this.driver = driver;
-    }
-
-    @Override
-    public void clearSessionTokens() {
-        this.driver.manage().deleteAllCookies();
     }
 
     public Cookie getCookieByName(String name) {
@@ -40,13 +36,27 @@ public class Browser implements SessionClient, SessionTokensInCookies {
 
 
     @Override
-    public Map<String, String> getSessionTokens() {
+    public Map<String, String> getAuthTokens() {
         Map<String,String> tokens = new HashMap<>();
         for (String name : Config.getInstance().getSessionIDs()) {
             Cookie cookie = driver.manage().getCookieNamed(name);
+            Set<Cookie> all = driver.manage().getCookies();
             if (cookie != null)
                 tokens.put(cookie.getName(), cookie.getValue());
         }
         return tokens;
+    }
+
+    @Override
+    public void setAuthTokens(Map<String, String> tokens) {
+        for (String name : tokens.keySet()) {
+            driver.manage().deleteCookieNamed(name);
+            driver.manage().addCookie(new Cookie.Builder(name,tokens.get(name)).build());
+        }
+    }
+
+    @Override
+    public void deleteAuthTokens() {
+        driver.manage().deleteAllCookies();
     }
 }

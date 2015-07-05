@@ -3,7 +3,7 @@ package net.continuumsecurity.examples.ropeytasks.webservice;
 import net.continuumsecurity.*;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
-import net.continuumsecurity.clients.SessionClient;
+import net.continuumsecurity.clients.AuthTokenManager;
 import net.continuumsecurity.web.Application;
 
 import javax.ws.rs.core.Response;
@@ -29,7 +29,7 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
     }
 
     @Override
-    public SessionClient getClient() {
+    public AuthTokenManager getAuthTokenManager() {
         return client;
     }
 
@@ -41,7 +41,8 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
 
     @Override
     public void openLoginPage() {
-        //Do nothing, N/A to web service
+        // Make un-authenticated request to any webService endpoint that generates a session token
+        client.get("/");
     }
 
     @Override

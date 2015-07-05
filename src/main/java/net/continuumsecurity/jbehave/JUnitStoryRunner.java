@@ -5,7 +5,6 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.clients.Browser;
 import net.continuumsecurity.steps.*;
 import org.apache.commons.io.FileUtils;
-import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
@@ -14,7 +13,6 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -47,7 +45,7 @@ public class JUnitStoryRunner extends BaseStoryRunner {
     }
 
     public String createFilterForBrowserOnlyScenarios() {
-        if (!(Config.getInstance().createApp().getClient() instanceof Browser)) {
+        if (!(Config.getInstance().createApp().getAuthTokenManager() instanceof Browser)) {
             //If we're not testing with a Browser, then disable scenarios that require a browser
             return "-browser_only";
         }

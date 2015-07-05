@@ -122,7 +122,7 @@
     </target>
 
     <target name="junit.run" depends="compile">
-        <junit printsummary="yes" haltonfailure="no">
+        <junit printsummary="yes" haltonfailure="no" showoutput="true">
             <!-- run specific stories through meta filtering
             <sysproperty key="filters" value=""/> -->
 
@@ -194,22 +194,6 @@
             <fileset dir="${reports.dir}/junit" includes="TEST-*.xml"/>
             <report todir="${reports.dir}/junit/html"/>
         </junitreport>
-    </target>
-
-
-    <taskdef resource="testngtasks" classpathref="build.classpath" classpath="lib/testng-jar-6.1.1.jar"/>
-
-    <target name="testng.run" depends="compile">
-        <mkdir dir="${reports.dir}/testng"/>
-
-        <testng classpathref="run.classpath" outputDir="${reports.dir}/testng"
-                haltonfailure="false">
-            <classpath>
-                <path refid="build.classpath"/>
-                <pathelement location="${build.dir}"/>
-            </classpath>
-            <xmlfileset dir="." includes="testng.xml"/>
-        </testng>
     </target>
 
     <target name="demo.run">

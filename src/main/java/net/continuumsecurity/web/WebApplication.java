@@ -21,8 +21,8 @@ package net.continuumsecurity.web;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.behaviour.ICaptcha;
+import net.continuumsecurity.clients.AuthTokenManager;
 import net.continuumsecurity.clients.Browser;
-import net.continuumsecurity.clients.SessionClient;
 import net.continuumsecurity.web.drivers.DriverFactory;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -96,7 +96,7 @@ public class WebApplication extends Application {
     }
 
     @Override
-    public SessionClient getClient() {
+    public AuthTokenManager getAuthTokenManager() {
         return browser;
     }
 

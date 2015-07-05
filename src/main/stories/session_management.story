@@ -8,8 +8,8 @@ I want to verify that there are no weaknesses in the session management implemen
 Meta: @story session_management
 
 Scenario: Issue a new session ID after authentication
-Meta: @id session_fixation @cwe-664-fix @browser_only
-Given a new browser instance
+Meta: @id session_fixation @cwe-664-fix
+Given a new browser or client instance
 And the login page
 And the value of the session ID is noted
 When the default user logs in with credentials from: auto-generated/users.table

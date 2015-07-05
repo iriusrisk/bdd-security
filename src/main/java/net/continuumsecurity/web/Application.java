@@ -22,7 +22,7 @@ package net.continuumsecurity.web;
  */
 
 import net.continuumsecurity.Restricted;
-import net.continuumsecurity.clients.SessionClient;
+import net.continuumsecurity.clients.AuthTokenManager;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Method;
@@ -68,6 +68,6 @@ public abstract class Application {
 
     public abstract void enableDefaultClient();
     
-    public abstract SessionClient getClient();
+    public abstract AuthTokenManager getAuthTokenManager();
 }
 
