@@ -1,6 +1,8 @@
 package net.continuumsecurity.jbehave;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
+import net.continuumsecurity.Config;
+import net.continuumsecurity.clients.Browser;
 import net.continuumsecurity.steps.*;
 import org.apache.commons.io.FileUtils;
 import org.jbehave.core.embedder.Embedder;
@@ -33,6 +35,7 @@ public class JUnitStoryRunner extends BaseStoryRunner {
             filters.add("-skip");
         }
         filters.add(filter);
+        filters.add(createFilterForBrowserOnlyScenarios());
         configuredEmbedder().useMetaFilters(filters);
         configuredEmbedder().generateReportsView();
         JUnitReportingRunner.recommandedControls(configuredEmbedder());
@@ -41,6 +44,14 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String createFilterForBrowserOnlyScenarios() {
+        if (!(Config.getInstance().createApp().getClient() instanceof Browser)) {
+            //If we're not testing with a Browser, then disable scenarios that require a browser
+            return "-browser_only";
+        }
+        return null;
     }
 
     private Collection<? extends String> createStoryMetaFilters(String stories) {

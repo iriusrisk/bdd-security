@@ -1,11 +1,9 @@
 package net.continuumsecurity.examples.ropeytasks.webservice;
 
-import net.continuumsecurity.Config;
-import net.continuumsecurity.Credentials;
-import net.continuumsecurity.UserPassCredentials;
+import net.continuumsecurity.*;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
-import net.continuumsecurity.clients.GenericClient;
+import net.continuumsecurity.clients.SessionClient;
 import net.continuumsecurity.web.Application;
 
 import javax.ws.rs.core.Response;
@@ -22,16 +20,16 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
 
     @Override
     public void enableHttpLoggingClient() {
-
+        //client is an httpLoggingClient by default and can't be disabled
     }
 
     @Override
     public void enableDefaultClient() {
-
+        //client is an httpLoggingClient by default and can't be disabled
     }
 
     @Override
-    public GenericClient getClient() {
+    public SessionClient getClient() {
         return client;
     }
 
@@ -43,18 +41,32 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
 
     @Override
     public void openLoginPage() {
-
-        Response response = client.get(Config.getInstance().getBaseUrl());
-        System.out.println(response.getStatus());
+        //Do nothing, N/A to web service
     }
 
     @Override
     public boolean isLoggedIn() {
+        Response response = client.get("task/list");
+        String responseBody = response.readEntity(String.class);
+        if (responseBody.contains("Welcome")) return true;
         return false;
     }
 
     @Override
     public void logout() {
+        client.get("user/logout");
+    }
 
+    @Restricted(users = {"bob", "admin"},
+            sensitiveData = "Robert")
+    public void viewProfileForBob() {
+        client.get("user/edit/1");
+    }
+
+    public void navigate() {
+        login(Config.getInstance().getUsers().getDefaultCredentials());
+        client.get("task/list");
+        if (!client.getLastResponse().readEntity(String.class).contains("Welcome")) throw new UnexpectedContentException("Expected text: 'Welcome' was not found.");
+        client.getWebClientWithSessionCookie().path("/task/search").query("q","test").query("search","Search").get();
     }
 }

@@ -66,6 +66,7 @@ public class StoryRunner extends JUnitStoryRunner {
             filters.add("+id "+idName);
         }
         filters.add("-skip");
+        filters.add(super.createFilterForBrowserOnlyScenarios());
         log.debug(" running with filters:");
         for (String filter : filters) {
             log.debug("\t"+filter);
@@ -73,10 +74,8 @@ public class StoryRunner extends JUnitStoryRunner {
         return filters;
     }
 
-
     public void execute(String... argv) throws CmdLineException,IOException {
         parser.parseArgument(argv);
-
         if (help) {
             parser.setUsageWidth(Integer.MAX_VALUE);
             parser.printUsage(System.err);

@@ -10,7 +10,7 @@ Meta: @story authorisation
 Scenario: Users can view restricted resources for which they are authorised
 Meta: @id config_authorised_resources
 Given a new browser or client instance
-And the browser is configured to use an intercepting proxy
+And the client/browser is configured to use an intercepting proxy
 And the proxy logs are cleared
 And the login page
 And the username <username>

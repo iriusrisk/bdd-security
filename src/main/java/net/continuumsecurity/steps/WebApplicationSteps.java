@@ -27,6 +27,7 @@ import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.clients.Browser;
+import net.continuumsecurity.clients.SessionTokensInCookies;
 import net.continuumsecurity.proxy.LoggingProxy;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
@@ -58,7 +59,7 @@ public class WebApplicationSteps {
     UserPassCredentials credentials;
     HarEntry currentHar;
     LoggingProxy proxy;
-    List<Cookie> sessionIds;
+    Map<String,String> sessionIds;
     String methodName;
     Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     List<HarEntry> recordedEntries;
@@ -84,9 +85,17 @@ public class WebApplicationSteps {
         app = Config.getInstance().createApp();
         app.enableDefaultClient();
         assert app.getClient() != null;
-        app.getClient().clearAuthenticationTokens();
+        app.getClient().clearSessionTokens();
         credentials = new UserPassCredentials("", "");
-        sessionIds = new ArrayList<Cookie>();
+        sessionIds = new HashMap<String,String>();
+    }
+
+    @Given("a new browser instance")
+    public void createAppForBrowser() {
+        createApp();
+        if (!(app.getClient() instanceof Browser)) {
+            throw new ConfigurationException("This scenario can only be run with a Browser instance, but application.getClient() returns a non-browser client.");
+        }
     }
 
     @Given("the login page")
@@ -213,7 +222,8 @@ public class WebApplicationSteps {
         ((ILogout) app).logout();
     }
 
-    @Given("the browser is configured to use an intercepting proxy")
+    @Given("the client/browser is configured to use an intercepting proxy")
+    @Alias("the browser is configured to use an intercepting proxy")
     public void enableLoggingDriver() {
         app.enableHttpLoggingClient();
     }
@@ -283,29 +293,18 @@ public class WebApplicationSteps {
         assertThat(Integer.toString(currentHar.getResponse().getStatus()).substring(0, 1), equalTo("3"));
     }
 
-    @Given("the value of the session cookie is noted")
+    @Given("the value of the session ID is noted")
     public void findAndSetSessionIds() {
-        for (String name : Config.getInstance().getSessionIDs()) {
-            Cookie cookie = ((Browser)app.getClient()).getCookieByName(name);
-            if (cookie != null)
-                sessionIds.add(cookie);
-        }
+        sessionIds.clear();
+        sessionIds.putAll(((SessionTokensInCookies)app.getClient()).getSessionTokens());
     }
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
-        Browser browser = (Browser)app.getClient();
-        for (String name : Config.getInstance().getSessionIDs()) {
-            Cookie initialSessionCookie = findCookieByName(sessionIds, name);
-            if (initialSessionCookie != null) {
-                String existingCookieValue = findCookieByName(sessionIds, name)
-                        .getValue();
-                assertThat(browser.getCookieByName(name).getValue(),
-                        not(initialSessionCookie.getValue()));
-            } else if (browser.getCookieByName(name).getValue() == null) {
-                throw new RuntimeException(
-                        "No session IDs found after login with name: " + name);
-            }
+        SessionTokensInCookies sessionClient = (SessionTokensInCookies)app.getClient();
+        for (String name : sessionIds.keySet()) {
+            assertThat(sessionClient.getSessionTokens().get(name),
+                    not(sessionIds.get(name)));
         }
     }
 
@@ -500,13 +499,9 @@ public class WebApplicationSteps {
         findAndSetSessionIds();
         for (HarEntry entry : methodProxyMap.get(methodName)) {
             if (entry.getResponse().getBodySize() > 0) {
-                Map<String, String> cookieMap = new HashMap<String, String>();
-                for (Cookie cookie : sessionIds) {
-                    cookieMap.put(cookie.getName(), cookie.getValue());
-                }
                 HarRequest manual = null;
                 try {
-                    manual = Utils.replaceCookies(entry.getRequest(), cookieMap);
+                    manual = Utils.replaceCookies(entry.getRequest(), sessionIds);
                 } catch (Exception e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     throw new RuntimeException("Could not copy Har request");

@@ -7,8 +7,8 @@ I want to have a password reset system that does not leak sensitive information
 Meta: @story password_recovery @skip
 
 Scenario: Display a CAPTCHA on the password reset page
-Meta: @id recover_captcha @skip
-Given a new browser or client instance
+Meta: @id recover_captcha @browser_only @skip
+Given a new browser instance
 And a CAPTCHA solver that always fails
 When the password recovery feature is requested
 Then the CAPTCHA is displayed

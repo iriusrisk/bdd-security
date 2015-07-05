@@ -1,23 +1,22 @@
 package net.continuumsecurity.examples.ropeytasks.webservice;
 
 import net.continuumsecurity.Config;
-import net.continuumsecurity.clients.GenericClient;
+import net.continuumsecurity.clients.SessionClient;
+import net.continuumsecurity.clients.SessionTokensInCookies;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.cxf.transport.http.HTTPConduit;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.*;
 import java.util.*;
 
 /**
  * Created by stephen on 30/06/15.
  */
-public class RopeyClient implements GenericClient{
+public class RopeyClient implements SessionClient, SessionTokensInCookies {
     WebClient webClient;
     String sessionID;
+    static final String SESSION_ID_NAME="JSESSIONID";
+    Response lastResponse;
 
     public RopeyClient() {
         webClient = WebClient.create(Config.getInstance().getBaseUrl());
@@ -27,18 +26,45 @@ public class RopeyClient implements GenericClient{
     }
 
     public void login(String username, String password) {
-        MultivaluedHashMap<String,String> postBody = new MultivaluedHashMap<>();
-        postBody.put("username",username);
-        webClient.path("user/index").accept(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(postBody);
+        Form postBody = new Form();
+        postBody.param("username",username).param("password",password).param("_action_login","Login");
+        lastResponse = post("user/index", postBody);
+        NewCookie sessionCookie = lastResponse.getCookies().get(SESSION_ID_NAME);
+        if (sessionCookie != null) sessionID = sessionCookie.getValue();
     }
 
-
     public Response get(String path) {
-        return webClient.path(path).get();
+        lastResponse = getWebClientWithSessionCookie().path(path).get();
+        return lastResponse;
+    }
+
+    public Response post(String path, Form form) {
+        lastResponse = getWebClientWithSessionCookie().path(path).accept(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(form);
+        return lastResponse;
+    }
+
+    public Response getLastResponse() {
+        return lastResponse;
     }
 
     @Override
-    public void clearAuthenticationTokens() {
+    public void clearSessionTokens() {
+        sessionID = null;
+    }
 
+    @Override
+    public Map<String,String> getSessionTokens() {
+        Map<String,String> cookies = new HashMap<>();
+        cookies.put(SESSION_ID_NAME,sessionID);
+        return cookies;
+    }
+
+    public WebClient getWebClientWithSessionCookie() {
+        webClient.reset();
+        if (sessionID != null) {
+            Cookie cookie = new Cookie(SESSION_ID_NAME,sessionID);
+            return webClient.cookie(cookie);
+        }
+        return webClient;
     }
 }

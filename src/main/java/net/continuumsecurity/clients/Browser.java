@@ -1,12 +1,16 @@
 package net.continuumsecurity.clients;
 
+import net.continuumsecurity.Config;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by stephen on 30/06/15.
  */
-public class Browser implements GenericClient {
+public class Browser implements SessionClient, SessionTokensInCookies {
     WebDriver driver;
 
     public Browser(WebDriver driver) {
@@ -14,7 +18,7 @@ public class Browser implements GenericClient {
     }
 
     @Override
-    public void clearAuthenticationTokens() {
+    public void clearSessionTokens() {
         this.driver.manage().deleteAllCookies();
     }
 
@@ -32,5 +36,17 @@ public class Browser implements GenericClient {
 
     public void getUrl(String url) {
         driver.get(url);
+    }
+
+
+    @Override
+    public Map<String, String> getSessionTokens() {
+        Map<String,String> tokens = new HashMap<>();
+        for (String name : Config.getInstance().getSessionIDs()) {
+            Cookie cookie = driver.manage().getCookieNamed(name);
+            if (cookie != null)
+                tokens.put(cookie.getName(), cookie.getValue());
+        }
+        return tokens;
     }
 }
