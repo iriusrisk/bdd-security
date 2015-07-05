@@ -40,7 +40,6 @@ public class Browser implements AuthTokenManager {
         Map<String,String> tokens = new HashMap<>();
         for (String name : Config.getInstance().getSessionIDs()) {
             Cookie cookie = driver.manage().getCookieNamed(name);
-            Set<Cookie> all = driver.manage().getCookies();
             if (cookie != null)
                 tokens.put(cookie.getName(), cookie.getValue());
         }

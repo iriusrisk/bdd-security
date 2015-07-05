@@ -43,6 +43,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -301,8 +302,6 @@ public class WebApplicationSteps {
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
         for (String name : sessionIds.keySet()) {
-            String a = app.getAuthTokenManager().getAuthTokens().get(name);
-            String b = sessionIds.get(name);
             assertThat(app.getAuthTokenManager().getAuthTokens().get(name),
                     not(sessionIds.get(name)));
         }
@@ -495,10 +494,37 @@ public class WebApplicationSteps {
         if (methodProxyMap == null || methodProxyMap.get(methodName).size() == 0)
             throw new ConfigurationException(
                     "No HTTP messages were recorded for the method: " + methodName);
-        boolean accessible = false;
         findAndSetSessionIds();
+        if (app instanceof WebApplication) {
+            checkAccessUsingCookieMethod(sensitiveData);
+        } else {
+            checkAccessUsingAuthTokenMethod(sensitiveData);
+        }
+    }
+
+    private void checkAccessUsingAuthTokenMethod(String sensitiveData) {
+        boolean accessible = false;
+        app.getAuthTokenManager().deleteAuthTokens();
+        app.getAuthTokenManager().setAuthTokens(sessionIds);
+        getProxy().clear();
+        try {
+            app.getClass().getMethod(methodName).invoke(app);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<HarEntry> results = getProxy().findInResponseHistory(sensitiveData);
+        accessible = results != null && results.size() > 0;
+        if (!accessible) {
+            log.debug("User: " + credentials.getUsername() + " has no access to resource: " + methodName);
+        }
+        assertThat(accessible, equalTo(false));
+    }
+
+    private void checkAccessUsingCookieMethod(String sensitiveData) {
+        boolean accessible = false;
         for (HarEntry entry : methodProxyMap.get(methodName)) {
             if (entry.getResponse().getBodySize() > 0) {
+                getProxy().clear();
                 HarRequest manual = null;
                 try {
                     manual = Utils.replaceCookies(entry.getRequest(), sessionIds);
@@ -506,7 +532,6 @@ public class WebApplicationSteps {
                     e.printStackTrace();
                     throw new RuntimeException("Could not copy Har request");
                 }
-                getProxy().clear();
                 List<HarEntry> results = getProxy().makeRequest(manual, true);
                 results = getProxy().findInResponseHistory(sensitiveData);
                 accessible = results != null && results.size() > 0;

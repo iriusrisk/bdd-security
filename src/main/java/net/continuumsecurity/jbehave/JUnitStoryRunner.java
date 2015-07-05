@@ -4,6 +4,7 @@ import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.clients.Browser;
 import net.continuumsecurity.steps.*;
+import net.continuumsecurity.web.WebApplication;
 import org.apache.commons.io.FileUtils;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
@@ -45,8 +46,9 @@ public class JUnitStoryRunner extends BaseStoryRunner {
     }
 
     public String createFilterForBrowserOnlyScenarios() {
-        if (!(Config.getInstance().createApp().getAuthTokenManager() instanceof Browser)) {
-            //If we're not testing with a Browser, then disable scenarios that require a browser
+        Object o = Config.getInstance().createApp().getAuthTokenManager();
+        if (!(Config.getInstance().createApp() instanceof WebApplication)) {
+            //If not a webApplication then disable scenarios that require a browser
             return "-browser_only";
         }
         return null;
