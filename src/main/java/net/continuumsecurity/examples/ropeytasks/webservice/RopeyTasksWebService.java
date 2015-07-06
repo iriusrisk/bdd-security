@@ -9,7 +9,11 @@ import net.continuumsecurity.web.Application;
 import javax.ws.rs.core.Response;
 
 /**
- * Created by stephen on 30/06/15.
+ *
+ * Example of how to test a web service. In this case, we're testing the same 'ropeytasks' web application,
+ * but instead of using a browser, we're using a bespoke HTTP client built with Apache CXF and we're
+ * pretending that the web app is an HTTP API.
+ *
  */
 public class RopeyTasksWebService extends Application implements ILogin, ILogout {
     RopeyClient client;
@@ -20,12 +24,12 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
 
     @Override
     public void enableHttpLoggingClient() {
-        //client is an httpLoggingClient by default and can't be disabled
+        //client uses ZAP to log HTTP traffic by default and can't be disabled
     }
 
     @Override
     public void enableDefaultClient() {
-        //client is an httpLoggingClient by default and can't be disabled
+        //client uses ZAP to log HTTP traffic by default and can't be disabled
     }
 
     @Override
@@ -64,6 +68,10 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
         client.get("user/edit/1");
     }
 
+    /*
+    This method is called before spidering and scanning the service. It should include a workflow that excercises all
+    of the key service methods
+     */
     public void navigate() {
         login(Config.getInstance().getUsers().getDefaultCredentials());
         client.get("task/list");

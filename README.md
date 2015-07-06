@@ -2,7 +2,9 @@
 Version: 0.9.1
 
 ## v0.9.1 Changelog
-- Added HtmlUnitDriver support, it is also the default driver if no other driver is specified in config.xml
+- HtmlUnitDriver support, it is also the default driver if no other driver is specified in config.xml.  BIG speed improvements.
+- Support for testing non-browser based web services and APIs.  See the [getting started guide](http://www.continuumsecurity.net/bdd-getstarted.html#httpclient) for more details.
+- Removed all TestNG tests.
 
 ## v0.9 Changelog
 - Moved tables that are auto-generated during startup into the stories/auto-generated folder. Tables that are user editable stay in the stories/tables folder.
@@ -15,6 +17,7 @@ Version: 0.9.1
 
 # Overview
 BDD-Security is a framework written in Java and based on JBehave and Selenium 2 (WebDriver) that uses predefined security tests and an integrated security scanner to perform automated security assessments of web applications.
+The test are dynamic and can be run against any web application or web service and _do not require access to the source_.
 
 - [Detailed introduction](http://www.continuumsecurity.net/bdd-intro.html)
 - [Getting Started](http://www.continuumsecurity.net/bdd-getstarted.html)
