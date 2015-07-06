@@ -15,7 +15,7 @@
     <!-- Base Secure URL of the application to test.  Used for the SSL and the HTTP header tests -->
     <baseSecureUrl>https://www.ssllabs.com/</baseSecureUrl>
 
-    <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth selenium testing.-->
+    <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth authn/z and session management testing. -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
 
     <sslyze>/opt/sslyze/sslyze.py --regular</sslyze>
