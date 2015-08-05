@@ -124,7 +124,7 @@
     <target name="junit.run" depends="compile">
         <junit printsummary="yes" haltonfailure="no" showoutput="true">
             <!-- run specific stories through meta filtering
-            <sysproperty key="filters" value=""/> -->
+            <sysproperty key="stories" value="authentication,session_management"/>-->
 
             <classpath>
                 <path refid="build.classpath"/>
@@ -137,7 +137,6 @@
             </test>
         </junit>
         <antcall target="junit.report"/>
-
     </target>
 
     <target name="junit.nessus.run" depends="compile">

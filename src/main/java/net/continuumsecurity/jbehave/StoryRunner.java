@@ -66,7 +66,7 @@ public class StoryRunner extends JUnitStoryRunner {
             filters.add("+id "+idName);
         }
         filters.add("-skip");
-        filters.add(super.createFilterForBrowserOnlyScenarios());
+        filters.add(super.createFilterForBrowserOnlyScenarios(null));
         log.debug(" running with filters:");
         for (String filter : filters) {
             log.debug("\t"+filter);

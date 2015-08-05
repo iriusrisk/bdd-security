@@ -6,6 +6,7 @@ import net.continuumsecurity.clients.Browser;
 import net.continuumsecurity.steps.*;
 import net.continuumsecurity.web.WebApplication;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;
@@ -34,7 +35,7 @@ public class JUnitStoryRunner extends BaseStoryRunner {
             filters.add("-skip");
         }
         filters.add(filter);
-        filters.add(createFilterForBrowserOnlyScenarios());
+        filters.add(createFilterForBrowserOnlyScenarios(filters));
         configuredEmbedder().useMetaFilters(filters);
         configuredEmbedder().generateReportsView();
         JUnitReportingRunner.recommandedControls(configuredEmbedder());
@@ -45,10 +46,13 @@ public class JUnitStoryRunner extends BaseStoryRunner {
         }
     }
 
-    public String createFilterForBrowserOnlyScenarios() {
-        Object o = Config.getInstance().createApp().getAuthTokenManager();
+    /*
+    If not a webApplication then disable scenarios that require a browser.  Return a different filter depending on whether we're using
+    groovy filtering or not
+     */
+    public String createFilterForBrowserOnlyScenarios(List<String> filters) {
         if (!(Config.getInstance().createApp() instanceof WebApplication)) {
-            //If not a webApplication then disable scenarios that require a browser
+            if (filters != null && StringUtils.join(filters).contains("groovy:")) return " && browser_only == false";
             return "-browser_only";
         }
         return null;
