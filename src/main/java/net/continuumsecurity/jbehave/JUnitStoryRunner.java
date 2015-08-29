@@ -85,7 +85,8 @@ public class JUnitStoryRunner extends BaseStoryRunner {
                 new NessusScanningSteps(),
                 new SSLyzeSteps(),
                 new AppScanningSteps(),
-                new WrapUpScanSteps()
+                new WrapUpScanSteps(),
+                new CorsSteps()
                 );
     }
 
