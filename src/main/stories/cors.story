@@ -3,7 +3,7 @@ In order to reduce the risk of Cross Site Request Forgery
 As a system owner
 I want to verify that the application does not allow the browser to perform requests outside of the allowed origins
 
-Meta: @story cors
+Meta: @story cors @skip
 
 Scenario: Permit allowed origins to make CORS requests
 Meta: @id cors_successful_from_allowed_origins @cwe-942-cors
