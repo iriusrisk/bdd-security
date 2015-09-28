@@ -1,3 +1,5 @@
+![Logo](http://www.continuumsecurity.net/images/bdd-security-logo-small.png)
+
 # Release
 Version: 0.9.1
 
