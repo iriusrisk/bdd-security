@@ -37,7 +37,8 @@ public class ZapManager {
             port = findOpenPortOnAllLocalInterfaces();
             String[] cmd = {zapProgramFile.getAbsolutePath(), "-daemon",
                     "-host", HOST,
-                    "-port", String.valueOf(port)};
+                    "-port", String.valueOf(port),
+                    "-dir", "tmp"};
             log.info("Start ZAProxy [" + zapProgramFile.getAbsolutePath() + "] on port: " + port);
             ProcessBuilder pb = new ProcessBuilder().inheritIO();
             pb.directory(zapProgramFile.getParentFile());
