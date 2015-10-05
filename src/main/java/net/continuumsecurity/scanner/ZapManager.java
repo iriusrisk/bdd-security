@@ -8,7 +8,6 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 /**
@@ -20,7 +19,7 @@ public class ZapManager {
     private int port;
     String HOST = "127.0.0.1";
     int CONNECTION_TIMEOUT = 15000; //milliseconds
-    String API_KEY = "";
+    public static final String API_KEY = "";
     Process process;
 
     private ZapManager() {

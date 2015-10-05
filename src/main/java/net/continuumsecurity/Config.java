@@ -176,7 +176,7 @@ public class Config {
             try {
                 proxyPort = ZapManager.getInstance().startZAP(Config.getInstance().getZapPath());
                 proxyHost = "127.0.0.1";
-                proxyApi = "";
+                proxyApi = ZapManager.API_KEY;
             } catch (Exception re) {
                 log.warning("Error starting embedded ZAP");
                 re.printStackTrace();
