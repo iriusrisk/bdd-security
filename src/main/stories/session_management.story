@@ -47,6 +47,7 @@ Then the session cookie should have the secure flag set
 Scenario: Set the 'httpOnly' flag on the session cookie
 Meta: @id session_cookie_httponly @wasc-13 @browser_only
 Given a new browser or client instance
+And the client/browser is configured to use an intercepting proxy
 And the default user logs in with credentials from: auto-generated/users.table
 And the user is logged in
 Then the session cookie should have the httpOnly flag set
