@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by stephen on 30/06/15.
@@ -34,6 +33,13 @@ public class Browser implements AuthTokenManager {
         driver.get(url);
     }
 
+    public void pause(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+
+        }
+    }
 
     @Override
     public Map<String, String> getAuthTokens() {

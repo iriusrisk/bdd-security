@@ -1,22 +1,25 @@
+
 /*******************************************************************************
- *    BDD-Security, application security testing framework
- *
+ * BDD-Security, application security testing framework
+ * <p/>
  * Copyright (C) `2014 Stephen de Vries`
- *
+ * <p/>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
+
 package net.continuumsecurity.steps;
+
 
 import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
@@ -27,7 +30,6 @@ import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.clients.Browser;
-import net.continuumsecurity.clients.AuthTokenManager;
 import net.continuumsecurity.proxy.LoggingProxy;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
@@ -43,7 +45,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +91,11 @@ public class WebApplicationSteps {
         sessionIds = new HashMap<String,String>();
     }
 
+    @When("the authentication tokens on the client are deleted")
+    public void deleteAuthTokens() {
+        app.getAuthTokenManager().deleteAuthTokens();
+    }
+
     @Given("a new browser instance")
     public void createAppForBrowser() {
         createApp();
@@ -131,8 +137,13 @@ public class WebApplicationSteps {
     public void loginFromTable(ExamplesTable credentialsTable) {
         assert credentialsTable != null;
         openLoginPage();
-        credentials = Utils.getDefaultCredentialsFromTable(credentialsTable);
+        setDefaultCredentials(credentialsTable);
         loginWithSetCredentials();
+    }
+
+    @When("the default credentials from: $credentialsTable are set")
+    public void setDefaultCredentials(ExamplesTable credentialsTable) {
+        credentials = Utils.getDefaultCredentialsFromTable(credentialsTable);
     }
 
     @Given("the username $username")
@@ -176,7 +187,7 @@ public class WebApplicationSteps {
     }
 
     @When("the case of the password is changed")
-    public void loginWithWrongCasedPassword() {
+    public void changeCaseOfPassword() {
         String wrongCasePassword = credentials.getPassword().toUpperCase();
 
         if (wrongCasePassword.equals(credentials.getPassword())) {
@@ -233,14 +244,15 @@ public class WebApplicationSteps {
     public void clearProxy() {
         getProxy().clear();
     }
-    
+
     public LoggingProxy getProxy() {
-    	if (proxy == null) proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
-    	return proxy;
+        if (proxy == null) proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
+        return proxy;
     }
 
     @Given("the HTTP request-response containing the default credentials is selected")
     public void findRequestWithPassword() {
+        List<HarEntry> all = getProxy().getHistory();
         List<HarEntry> requests = getProxy().findInRequestHistory(credentials.getPassword());
         if (requests == null || requests.size() == 0)
             throw new StepException(
@@ -476,17 +488,17 @@ public class WebApplicationSteps {
     public void checkCacheControlHeaders(@Named("value") String value) {
         assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), Constants.CACHECONTROL), equalTo(value));
     }
-    
+
     @When("they access the restricted resource: <method>")
     @Alias("the previously recorded HTTP Requests for <method> are replayed using the current session ID")
     public void setMethodName(@Named("method") String method) {
-    	methodName = method;
+        methodName = method;
     }
-        
-    
+
+
     @When("the HTTP requests and responses on recorded")
     public void noActionForRecordingHttpRequestResponses() {
-    	
+
     }
 
     @Then("the string: <sensitiveData> should not be present in any of the HTTP responses")

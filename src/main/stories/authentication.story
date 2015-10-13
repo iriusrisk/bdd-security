@@ -12,7 +12,11 @@ Meta: @id auth_case @cwe-178-auth
 Given a new browser or client instance
 When the default user logs in with credentials from: auto-generated/users.table
 Then the user is logged in
-When the case of the password is changed
+When the default credentials from: auto-generated/users.table are set
+And the case of the password is changed
+And the authentication tokens on the client are deleted
+And the login page is displayed
+And the user logs in
 Then the user is not logged in
 
 Scenario: Present the login form itself over an HTTPS connection
