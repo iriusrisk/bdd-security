@@ -59,8 +59,7 @@ public class ProcessExecutor {
     }
 
     public String getOutput() throws IOException {
-        //return FileUtils.readFileToString(outputFile);
-        return FileUtils.readFileToString(new File("src/test/resources/sslyze.example"));
+        return FileUtils.readFileToString(outputFile);
     }
 
 
