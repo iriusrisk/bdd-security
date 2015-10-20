@@ -1,0 +1,109 @@
+
+ AVAILABLE PLUGINS
+ -----------------
+
+  PluginChromeSha1Deprecation
+  PluginCertInfo
+  PluginOpenSSLCipherSuites
+  PluginSessionResumption
+  PluginHeartbleed
+  PluginCompression
+  PluginHSTS
+  PluginSessionRenegotiation
+
+
+ CHECKING HOST(S) AVAILABILITY
+ -----------------------------
+
+   www.dev.pookleberry.com:443             => 170.149.162.135:443
+
+
+
+ SCAN RESULTS FOR WWW.DEV.pookleberry.COM:443 - 170.149.162.135:443
+ --------------------------------------------------------------
+
+  * Session Renegotiation:
+      Client-initiated Renegotiations:   OK - Rejected
+      Secure Renegotiation:              OK - Supported
+
+  * Deflate Compression:
+      OK - Compression disabled
+
+  * TLSV1_2 Cipher Suites:
+      Preferred:
+                 ECDHE-RSA-AES256-GCM-SHA384   ECDH-256 bits  256 bits      HTTP 200 OK
+      Accepted:
+                 ECDHE-RSA-AES256-SHA384       ECDH-256 bits  256 bits      HTTP 200 OK
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 200 OK
+                 ECDHE-RSA-AES256-GCM-SHA384   ECDH-256 bits  256 bits      HTTP 200 OK
+                 AES256-SHA                    -              256 bits      HTTP 200 OK
+                 ECDHE-RSA-AES128-SHA256       ECDH-256 bits  128 bits      HTTP 200 OK
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 200 OK
+                 ECDHE-RSA-AES128-GCM-SHA256   ECDH-256 bits  128 bits      HTTP 200 OK
+                 AES128-SHA                    -              128 bits      HTTP 200 OK
+      Undefined - An unexpected error happened:
+                 ECDH-RSA-AES256-GCM-SHA384          OpenSSLError -
+error:1409441A:SSL routines:ssl3_read_bytes:tlsv1 alert decode error
+                 ECDH-RSA-AES128-GCM-SHA256          OpenSSLError -
+error:1409441A:SSL routines:ssl3_read_bytes:tlsv1 alert decode error
+
+  * Session Resumption:
+      With Session IDs:                  OK - Supported (5 successful, 0 failed, 0 errors, 5 total attempts).
+      With TLS Session Tickets:          NOT SUPPORTED - TLS ticket not assigned.
+
+  * OpenSSL Heartbleed:
+      OK - Not vulnerable to Heartbleed
+
+  * SSLV2 Cipher Suites:
+      Server rejected all cipher suites.
+
+  * TLSV1_1 Cipher Suites:
+      Preferred:
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 200 OK
+      Accepted:
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 200 OK
+                 AES256-SHA                    -              256 bits      HTTP 200 OK
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 200 OK
+                 AES128-SHA                    -              128 bits      HTTP 200 OK
+
+  * SSLV3 Cipher Suites:
+      Server rejected all cipher suites.
+
+  * TLSV1 Cipher Suites:
+      Preferred:
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 200 OK
+      Accepted:
+                 ECDHE-RSA-AES256-SHA          ECDH-256 bits  256 bits      HTTP 200 OK
+                 AES256-SHA                    -              256 bits      HTTP 200 OK
+                 ECDHE-RSA-AES128-SHA          ECDH-256 bits  128 bits      HTTP 200 OK
+                 AES128-SHA                    -              128 bits      HTTP 200 OK
+
+  * Certificate - Content:
+      SHA1 Fingerprint:                  cc05cc7769c029f6b561fcc885839c0405a8ceb9
+      Common Name:                       blah.balh.com
+      Issuer:                            COMODO RSA Domain Validation Secure Server CA
+      Serial Number:                     89E1BA2AB76C87A926BF961905615B9A
+      Not Before:                        Aug 26 00:00:00 2015 GMT
+      Not After:                         Oct 24 23:59:59 2018 GMT
+      Signature Algorithm:               sha256WithRSAEncryption
+      Public Key Algorithm:              rsaEncryption
+      Key Size:                          2048 bit
+      Exponent:                          65537 (0x10001)
+      X509v3 Subject Alternative Name:   {'DNS': ['dev.pookleberry.com', '*.dev.ewr1.pookleberry.com', '*.dev.lga1.pookleberry.com', '*.dev.pookleberry.com', '*.dev.sea1.pookleberry.com']}
+
+  * Certificate - Trust:
+      Hostname Validation:               OK - Subject Alternative Name matches
+      Google CA Store (09/2015):         OK - Certificate is trusted
+      Java 6 CA Store (Update 65):       OK - Certificate is trusted
+      Microsoft CA Store (09/2015):      OK - Certificate is trusted
+      Mozilla NSS CA Store (09/2015):    OK - Certificate is trusted
+      Apple CA Store (OS X 10.10.5):     OK - Certificate is trusted
+      Certificate Chain Received:        ['dev.pookleberry.com', 'COMODO RSA Domain Validation Secure Server CA', 'COMODO RSA Certification Authority']
+
+  * Certificate - OCSP Stapling:
+      NOT SUPPORTED - Server did not send back an OCSP response.
+
+
+
+ SCAN COMPLETED IN 0.75 S
+ ------------------------

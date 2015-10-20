@@ -119,7 +119,7 @@ public class SSLyzeParser {
         List<CipherElement> found = new ArrayList<>();
         while (lineScanner.hasNext()) {
             String line = lineScanner.next();
-            if (line.length() == 0) {
+            if (line.length() == 0 || line.contains("Undefined")) {
                 break;
             } else {
                 Scanner wordScanner = new Scanner(line);

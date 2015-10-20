@@ -17,7 +17,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Created by stephen on 18/01/15.
  */
-public class SSLyseParserTest {
+public class SSLyseParserSimpleTest {
     String output;
     SSLyzeParser parser;
 
