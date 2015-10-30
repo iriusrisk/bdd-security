@@ -53,7 +53,7 @@ public class FalsePositive {
     }
 
     public boolean matches(String url, String parameter, int cweid, int wascId) {
-        if (this.url != null && this.url.equals(url) && this.parameter != null && this.parameter.equals(parameter) && (this.cweId == cweId || this.wascId == this.wascId)) return true;
+        if (this.url != null && url != null && url.matches(this.url) && this.parameter != null && parameter != null && parameter.matches(this.parameter) && (this.cweId == cweId || this.wascId == this.wascId)) return true;
         return false;
     }
 }

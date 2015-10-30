@@ -308,11 +308,18 @@ public class AppScanningSteps {
     @Given("the spider status reaches 100% complete")
     public void waitForSpiderToComplete() {
         int status = 0;
+        int counter99 = 0; //hack to detect a ZAP spider that gets stuck on 99%
         int scanId = getSpider().getLastSpiderScanId();
         while (status < 100) {
             status = getSpider().getSpiderProgress(scanId);
+            if (status == 99) {
+                counter99++;
+            }
+            if (counter99 > 10) {
+                break;
+            }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

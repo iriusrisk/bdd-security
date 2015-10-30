@@ -31,6 +31,14 @@ Then the following protocols must not be supported
 |SSLV2      |
 |SSLV3      |
 
+Scenario: Support TLSv1.2
+Meta: @id ssl_support_strong_protocols
+Given the SSLyze command is run against the secure base Url
+Then the following protocols must be supported
+|protocol   |
+|TLSV1_2    |
+
+
 Scenario: Enable Perfect forward secrecy
 Meta: @id ssl_perfect_forward_secrecy
 Given the SSLyze command is run against the secure base Url
@@ -51,12 +59,7 @@ Then any of the following ciphers must be supported
 |ECDH-RSA-CAMELLIA128-SHA256    |
 |ECDH-RSA-CAMELLIA256-SHA384    |
 
-Scenario: Support TLSv1.2
-Meta: @id ssl_support_strong_protocols
-Given the SSLyze command is run against the secure base Url
-Then the following protocols must be supported
-|protocol   |
-|TLSV1_2    |
+
 
 Scenario: Patch OpenSSL against the Heartbleed vulnerability
 Meta: @id ssl_heartbleed
