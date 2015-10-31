@@ -39,6 +39,13 @@
         <user username="admin" password="password"/>
     </users>
 
+    <!-- An upstream proxy through which all HTTP traffic must pass before hitting the target
+    application under test.  The framework will configure both the WebDriver instance and ZAP to use this proxy.  Note that non-HTTP traffic will not use this proxy. -->
+    <upstreamProxy>
+        <host></host>
+        <port></port>
+    </upstreamProxy>
+
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>
     <incorrectUsername>bobbles</incorrectUsername>
 

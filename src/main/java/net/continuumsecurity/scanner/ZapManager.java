@@ -1,5 +1,6 @@
 package net.continuumsecurity.scanner;
 
+import net.continuumsecurity.Config;
 import org.zaproxy.clientapi.core.ClientApi;
 
 import java.io.File;
@@ -8,6 +9,8 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -33,18 +36,28 @@ public class ZapManager {
     public int startZAP(String zapPath) throws Exception {
         if (process == null) {
             File zapProgramFile = new File(zapPath);
-
             port = findOpenPortOnAllLocalInterfaces();
-            String[] cmd = {zapProgramFile.getAbsolutePath(), "-daemon",
-                    "-host", HOST,
-                    "-port", String.valueOf(port),
-                    "-dir", "tmp"};
+            List<String> params = new ArrayList<>();
+            params.add(zapProgramFile.getAbsolutePath()); params.add("-daemon");
+            params.add( "-host");  params.add( HOST);
+            params.add("-port"); params.add(String.valueOf(port));
+            params.add("-dir"); params.add("tmp");
+            params.add("-config"); params.add("scanner.threadPerHost=20");
+            params.add("-config"); params.add("spider.thread=10");
+            String upstreamProxyHost = Config.getInstance().getUpstreamProxyHost();
+            if (upstreamProxyHost != null) {
+                int upstreamProxyPort = Config.getInstance().getUpstreamProxyPort();
+                log.info("Setting upstream proxy for ZAP to: "+upstreamProxyHost+":"+upstreamProxyPort);
+                params.add("-config"); params.add("connection.proxyChain.hostName="+upstreamProxyHost);
+                params.add("-config"); params.add("connection.proxyChain.port="+upstreamProxyPort);
+                params.add("-config"); params.add("connection.proxyChain.enabled=true");
+            }
             log.info("Start ZAProxy [" + zapProgramFile.getAbsolutePath() + "] on port: " + port);
             ProcessBuilder pb = new ProcessBuilder().inheritIO();
             pb.directory(zapProgramFile.getParentFile());
-
-            process = pb.command(cmd).start();
+            process = pb.command(params.toArray(new String[params.size()])).start();
             waitForSuccessfulConnectionToZap();
+
         } else {
             log.info("ZAP already started.");
         }
@@ -78,6 +91,7 @@ public class ZapManager {
                 socket = new Socket();
                 socket.connect(new InetSocketAddress(HOST, port), connectionTimeoutInMs);
                 connectionSuccessful = true;
+                log.info("Connected to ZAP");
             } catch (SocketTimeoutException ignore) {
                 throw new RuntimeException("Unable to connect to ZAP's proxy after " + timeoutInMs + " milliseconds.");
             } catch (IOException ignore) {

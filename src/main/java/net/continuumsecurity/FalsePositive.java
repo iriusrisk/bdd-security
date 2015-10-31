@@ -3,8 +3,8 @@ package net.continuumsecurity;
 public class FalsePositive {
     String url;
     String parameter;
-    int cweId = 0;
-    int wascId = 0;
+    Integer cweId;
+    Integer wascId;
 
     public FalsePositive(String url, String parameter, int cweId, int wascId) {
         this.url = url;
@@ -16,15 +16,23 @@ public class FalsePositive {
     public FalsePositive(String url, String parameter, String cweId, String wascId) {
         this.url = url;
         this.parameter = parameter;
-        try {
-            this.cweId = Integer.parseInt(cweId);
-        } catch (NumberFormatException e) {
-
+        if (cweId == null || "".equals(cweId)) {
+            this.cweId = null;
+        } else {
+            try {
+                this.cweId = Integer.parseInt(cweId);
+            } catch (NumberFormatException e) {
+            }
         }
-        try {
-            this.wascId = Integer.parseInt(cweId);
-        } catch (NumberFormatException e) {
 
+        if (wascId == null || "".equals(wascId)) {
+            this.wascId = null;
+        } else {
+            try {
+                this.wascId = Integer.parseInt(cweId);
+            } catch (NumberFormatException e) {
+
+            }
         }
     }
 
@@ -53,7 +61,10 @@ public class FalsePositive {
     }
 
     public boolean matches(String url, String parameter, int cweid, int wascId) {
-        if (this.url != null && url != null && url.matches(this.url) && this.parameter != null && parameter != null && parameter.matches(this.parameter) && (this.cweId == cweId || this.wascId == this.wascId)) return true;
+        if (this.url != null && url != null && url.matches(this.url) && this.parameter != null && parameter != null && parameter.matches(this.parameter)) {
+            if (this.cweId != null && this.cweId == cweid) return true;
+            if (this.wascId != null && this.wascId == wascId) return true;
+        }
         return false;
     }
 }

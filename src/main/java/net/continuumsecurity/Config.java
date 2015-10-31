@@ -213,7 +213,6 @@ public class Config {
         return validateAndGetString("incorrectPassword");
     }
 
-
     public String getLatestReportsDir() {
         return validateAndGetString("latestReportsDir");
     }
@@ -225,6 +224,14 @@ public class Config {
     public String getNessusUsername() { return validateAndGetString("nessus.username");}
 
     public String getNessusPassword() { return validateAndGetString("nessus.password");}
+
+    public String getUpstreamProxyHost() { return validateAndGetString("upstreamProxy.host"); }
+
+    public int getUpstreamProxyPort() {
+        String portAsString = validateAndGetString("upstreamProxy.port");
+        if (portAsString != null && portAsString.length() > 0) return Integer.parseInt(portAsString);
+        return 80;
+    }
 
     public List<String> getSessionIDs() {
         List<String> ids = new ArrayList<String>();
@@ -350,7 +357,7 @@ public class Config {
     }
 
     public  void writeTable(String file,
-                                               List<List<String>> table) {
+                            List<List<String>> table) {
         PrintStream writer = null;
         log.info("Writing to table file: " + file);
         try {
