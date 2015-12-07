@@ -136,7 +136,7 @@ public class AppScanningSteps {
 
 
     private void spider(String url) throws InterruptedException {
-        getSpider().spider(url);
+        getSpider().spider(url,null,true,null);
         int scanId = getSpider().getLastSpiderScanId();
         int complete = getSpider().getSpiderProgress(scanId);
         while (complete < 100) {

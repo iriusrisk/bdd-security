@@ -22,7 +22,7 @@ public class ZapManager {
     private int port;
     String HOST = "127.0.0.1";
     int CONNECTION_TIMEOUT = 15000; //milliseconds
-    public static final String API_KEY = "";
+    public static final String API_KEY = "zapapisecret";
     Process process;
 
     private ZapManager() {
@@ -44,6 +44,8 @@ public class ZapManager {
             params.add("-dir"); params.add("tmp");
             params.add("-config"); params.add("scanner.threadPerHost=20");
             params.add("-config"); params.add("spider.thread=10");
+            params.add("-config"); params.add("api.key="+API_KEY);
+            Config.getInstance().setProxyApi(API_KEY);
             String upstreamProxyHost = Config.getInstance().getUpstreamProxyHost();
             if (upstreamProxyHost != null) {
                 int upstreamProxyPort = Config.getInstance().getUpstreamProxyPort();

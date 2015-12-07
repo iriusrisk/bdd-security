@@ -1,209 +1,1084 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../../out" />
+    <output-test url="file://$MODULE_DIR$/../../out/test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="ivylib" level="project" />
-  </component>
-  <component name="org.twodividedbyzero.idea.findbugs">
-    <option name="_basePreferences">
-      <map>
-        <entry key="property.analysisEffortLevel" value="default" />
-        <entry key="property.analyzeAfterCompile" value="false" />
-        <entry key="property.annotationGutterIconEnabled" value="true" />
-        <entry key="property.annotationSuppressWarningsClass" value="edu.umd.cs.findbugs.annotations.SuppressFBWarnings" />
-        <entry key="property.annotationTextRangeMarkupEnabled" value="true" />
-        <entry key="property.exportAsHtml" value="true" />
-        <entry key="property.exportAsXml" value="true" />
-        <entry key="property.exportBaseDir" value="" />
-        <entry key="property.exportCreateArchiveDir" value="false" />
-        <entry key="property.exportOpenBrowser" value="true" />
-        <entry key="property.minPriorityToReport" value="Medium" />
-        <entry key="property.runAnalysisInBackground" value="false" />
-        <entry key="property.showHiddenDetectors" value="false" />
-        <entry key="property.toolWindowToFront" value="true" />
-      </map>
-    </option>
-    <option name="_detectors">
-      <map>
-        <entry key="AppendingToAnObjectOutputStream" value="true" />
-        <entry key="AtomicityProblem" value="true" />
-        <entry key="BadAppletConstructor" value="false" />
-        <entry key="BadResultSetAccess" value="true" />
-        <entry key="BadSyntaxForRegularExpression" value="true" />
-        <entry key="BadUseOfReturnValue" value="true" />
-        <entry key="BadlyOverriddenAdapter" value="true" />
-        <entry key="BooleanReturnNull" value="true" />
-        <entry key="BuildInterproceduralCallGraph" value="false" />
-        <entry key="BuildObligationPolicyDatabase" value="true" />
-        <entry key="CallToUnsupportedMethod" value="false" />
-        <entry key="CalledMethods" value="true" />
-        <entry key="CheckCalls" value="false" />
-        <entry key="CheckExpectedWarnings" value="false" />
-        <entry key="CheckImmutableAnnotation" value="true" />
-        <entry key="CheckRelaxingNullnessAnnotation" value="true" />
-        <entry key="CheckTypeQualifiers" value="true" />
-        <entry key="CloneIdiom" value="true" />
-        <entry key="ComparatorIdiom" value="true" />
-        <entry key="ConfusedInheritance" value="true" />
-        <entry key="ConfusionBetweenInheritedAndOuterMethod" value="true" />
-        <entry key="CrossSiteScripting" value="true" />
-        <entry key="DefaultEncodingDetector" value="true" />
-        <entry key="DoInsideDoPrivileged" value="true" />
-        <entry key="DontCatchIllegalMonitorStateException" value="true" />
-        <entry key="DontIgnoreResultOfPutIfAbsent" value="true" />
-        <entry key="DontUseEnum" value="true" />
-        <entry key="DroppedException" value="true" />
-        <entry key="DumbMethodInvocations" value="true" />
-        <entry key="DumbMethods" value="true" />
-        <entry key="DuplicateBranches" value="true" />
-        <entry key="EmptyZipFileEntry" value="false" />
-        <entry key="EqualsOperandShouldHaveClassCompatibleWithThis" value="true" />
-        <entry key="ExplicitSerialization" value="true" />
-        <entry key="FieldItemSummary" value="true" />
-        <entry key="FinalizerNullsFields" value="true" />
-        <entry key="FindBadCast2" value="true" />
-        <entry key="FindBadForLoop" value="true" />
-        <entry key="FindBugsSummaryStats" value="true" />
-        <entry key="FindCircularDependencies" value="false" />
-        <entry key="FindDeadLocalStores" value="true" />
-        <entry key="FindDoubleCheck" value="true" />
-        <entry key="FindEmptySynchronizedBlock" value="true" />
-        <entry key="FindFieldSelfAssignment" value="true" />
-        <entry key="FindFinalizeInvocations" value="true" />
-        <entry key="FindFloatEquality" value="true" />
-        <entry key="FindFloatMath" value="false" />
-        <entry key="FindHEmismatch" value="true" />
-        <entry key="FindInconsistentSync2" value="true" />
-        <entry key="FindJSR166LockMonitorenter" value="true" />
-        <entry key="FindLocalSelfAssignment2" value="true" />
-        <entry key="FindMaskedFields" value="true" />
-        <entry key="FindMismatchedWaitOrNotify" value="true" />
-        <entry key="FindNakedNotify" value="true" />
-        <entry key="FindNonSerializableStoreIntoSession" value="false" />
-        <entry key="FindNonSerializableValuePassedToWriteObject" value="false" />
-        <entry key="FindNonShortCircuit" value="true" />
-        <entry key="FindNullDeref" value="true" />
-        <entry key="FindNullDerefsInvolvingNonShortCircuitEvaluation" value="true" />
-        <entry key="FindOpenStream" value="true" />
-        <entry key="FindPuzzlers" value="true" />
-        <entry key="FindRefComparison" value="true" />
-        <entry key="FindReturnRef" value="true" />
-        <entry key="FindRoughConstants" value="true" />
-        <entry key="FindRunInvocations" value="true" />
-        <entry key="FindSelfComparison" value="true" />
-        <entry key="FindSelfComparison2" value="true" />
-        <entry key="FindSleepWithLockHeld" value="true" />
-        <entry key="FindSpinLoop" value="true" />
-        <entry key="FindSqlInjection" value="true" />
-        <entry key="FindTwoLockWait" value="true" />
-        <entry key="FindUncalledPrivateMethods" value="true" />
-        <entry key="FindUnconditionalWait" value="true" />
-        <entry key="FindUninitializedGet" value="true" />
-        <entry key="FindUnrelatedTypesInGenericContainer" value="true" />
-        <entry key="FindUnreleasedLock" value="true" />
-        <entry key="FindUnsatisfiedObligation" value="true" />
-        <entry key="FindUnsyncGet" value="true" />
-        <entry key="FindUseOfNonSerializableValue" value="true" />
-        <entry key="FindUselessControlFlow" value="true" />
-        <entry key="FormatStringChecker" value="true" />
-        <entry key="FunctionsThatMightBeMistakenForProcedures" value="true" />
-        <entry key="HugeSharedStringConstants" value="true" />
-        <entry key="IDivResultCastToDouble" value="true" />
-        <entry key="IncompatMask" value="true" />
-        <entry key="InconsistentAnnotations" value="true" />
-        <entry key="InefficientIndexOf" value="true" />
-        <entry key="InefficientMemberAccess" value="false" />
-        <entry key="InefficientToArray" value="true" />
-        <entry key="InfiniteLoop" value="true" />
-        <entry key="InfiniteRecursiveLoop" value="true" />
-        <entry key="InheritanceUnsafeGetResource" value="true" />
-        <entry key="InitializationChain" value="true" />
-        <entry key="InitializeNonnullFieldsInConstructor" value="true" />
-        <entry key="InstantiateStaticClass" value="true" />
-        <entry key="IntCast2LongAsInstant" value="true" />
-        <entry key="InvalidJUnitTest" value="true" />
-        <entry key="IteratorIdioms" value="true" />
-        <entry key="LazyInit" value="true" />
-        <entry key="LoadOfKnownNullValue" value="true" />
-        <entry key="LostLoggerDueToWeakReference" value="true" />
-        <entry key="MethodReturnCheck" value="true" />
-        <entry key="Methods" value="true" />
-        <entry key="MultithreadedInstanceAccess" value="true" />
-        <entry key="MutableLock" value="true" />
-        <entry key="MutableStaticFields" value="true" />
-        <entry key="Naming" value="true" />
-        <entry key="Noise" value="false" />
-        <entry key="NoiseNullDeref" value="false" />
-        <entry key="NoteAnnotationRetention" value="true" />
-        <entry key="NoteCheckReturnValueAnnotations" value="true" />
-        <entry key="NoteDirectlyRelevantTypeQualifiers" value="true" />
-        <entry key="NoteJCIPAnnotation" value="true" />
-        <entry key="NoteNonNullAnnotations" value="false" />
-        <entry key="NoteNonnullReturnValues" value="false" />
-        <entry key="NoteSuppressedWarnings" value="true" />
-        <entry key="NoteUnconditionalParamDerefs" value="true" />
-        <entry key="NumberConstructor" value="true" />
-        <entry key="OptionalReturnNull" value="true" />
-        <entry key="OverridingEqualsNotSymmetrical" value="true" />
-        <entry key="PreferZeroLengthArrays" value="true" />
-        <entry key="PublicSemaphores" value="false" />
-        <entry key="QuestionableBooleanAssignment" value="true" />
-        <entry key="ReadOfInstanceFieldInMethodInvokedByConstructorInSuperclass" value="true" />
-        <entry key="ReadReturnShouldBeChecked" value="true" />
-        <entry key="RedundantInterfaces" value="true" />
-        <entry key="ReflectiveClasses" value="true" />
-        <entry key="RepeatedConditionals" value="true" />
-        <entry key="ResolveAllReferences" value="false" />
-        <entry key="RuntimeExceptionCapture" value="true" />
-        <entry key="SerializableIdiom" value="true" />
-        <entry key="StartInConstructor" value="true" />
-        <entry key="StaticCalendarDetector" value="true" />
-        <entry key="StringConcatenation" value="true" />
-        <entry key="SuperfluousInstanceOf" value="true" />
-        <entry key="SuspiciousThreadInterrupted" value="true" />
-        <entry key="SwitchFallthrough" value="true" />
-        <entry key="SynchronizationOnSharedBuiltinConstant" value="true" />
-        <entry key="SynchronizeAndNullCheckField" value="true" />
-        <entry key="SynchronizeOnClassLiteralNotGetClass" value="true" />
-        <entry key="SynchronizingOnContentsOfFieldToProtectField" value="true" />
-        <entry key="TestASM" value="false" />
-        <entry key="TestDataflowAnalysis" value="false" />
-        <entry key="TestingGround" value="false" />
-        <entry key="TestingGround2" value="false" />
-        <entry key="TrainFieldStoreTypes" value="true" />
-        <entry key="TrainLongInstantfParams" value="true" />
-        <entry key="TrainNonNullAnnotations" value="true" />
-        <entry key="TrainUnconditionalDerefParams" value="true" />
-        <entry key="URLProblems" value="true" />
-        <entry key="UncallableMethodOfAnonymousClass" value="true" />
-        <entry key="UnnecessaryMath" value="true" />
-        <entry key="UnreadFields" value="true" />
-        <entry key="UselessSubclassMethod" value="false" />
-        <entry key="VarArgsProblems" value="true" />
-        <entry key="VolatileUsage" value="true" />
-        <entry key="WaitInLoop" value="true" />
-        <entry key="WrongMapIterator" value="true" />
-        <entry key="XMLFactoryBypass" value="true" />
-      </map>
-    </option>
-    <option name="_reportCategories">
-      <map>
-        <entry key="BAD_PRACTICE" value="true" />
-        <entry key="CORRECTNESS" value="true" />
-        <entry key="EXPERIMENTAL" value="true" />
-        <entry key="I18N" value="true" />
-        <entry key="MALICIOUS_CODE" value="true" />
-        <entry key="MT_CORRECTNESS" value="true" />
-        <entry key="PERFORMANCE" value="true" />
-        <entry key="SECURITY" value="true" />
-        <entry key="STYLE" value="true" />
-      </map>
-    </option>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/captchaswerve-1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/ivy-2.3.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/nessus-java-client-0.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/proxy-2.4.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/testng-6.8.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/TestSSL-1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/zap-api-2.4-v1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../lib/harlib-1.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../lib/harlib-1.1.1.jar!/docs/api" />
+        </JAVADOC>
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/aopalliance-repackaged-jar-2.4.0-b06.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/args4j-jar-2.0.16.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/cglib-nodep-jar-2.1_3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/cloning-bundle-1.9.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/com.sun.el-orbit-2.2.0.v201108011116.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-codec-jar-1.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-collections-jar-3.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-configuration-jar-1.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-exec-jar-1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-io-jar-2.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-jxpath-jar-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-lang-jar-2.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-lang3-jar-3.3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/commons-logging-jar-1.1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/cssparser-jar-0.9.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/cxf-core-bundle-3.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/cxf-rt-frontend-jaxrs-bundle-3.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/cxf-rt-rs-client-bundle-3.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/cxf-rt-transports-http-bundle-3.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/diffutils-jar-1.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/freemarker-jar-2.3.19.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/groovy-all-jar-1.8.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/gson-jar-2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/guava-bundle-18.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/hamcrest-all-jar-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/hamcrest-core-jar-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/hk2-api-jar-2.4.0-b06.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/hk2-locator-jar-2.4.0-b06.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/hk2-utils-jar-2.4.0-b06.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/htmlunit-core-js-jar-2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/htmlunit-jar-2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/httpclient-jar-4.3.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/httpcore-jar-4.3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/httpmime-jar-4.3.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-annotations-bundle-2.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-core-asl-jar-1.9.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-core-bundle-2.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-databind-bundle-2.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-jaxrs-base-bundle-2.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-jaxrs-json-provider-bundle-2.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-mapper-asl-jar-1.9.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jackson-module-jaxb-annotations-bundle-2.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javassist-bundle-3.18.1-GA.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.activation-orbit-1.1.0.v201105071233.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.annotation-api-jar-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.annotation-orbit-1.1.0.v201108011116.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.el-orbit-2.2.0.v201108011116.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.inject-jar-2.4.0-b06.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.mail.glassfish-orbit-1.4.1.v201005082020.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.servlet-orbit-3.0.0.v201112011016.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.servlet.jsp-orbit-2.2.0.v201112011158.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.servlet.jsp.jstl-orbit-1.2.0.v201105211821.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.transaction-orbit-1.1.1.v201105210645.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/javax.ws.rs-api-jar-2.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jbehave-core-jar-3.9.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jbehave-junit-runner-jar-1.1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jericho-html-jar-3.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jersey-apache-connector-jar-2.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jersey-client-jar-2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jersey-common-jar-2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jersey-entity-filtering-jar-2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jersey-guava-bundle-2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jersey-media-moxy-jar-2.15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-annotations-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-continuation-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-http-jar-8.1.15.v20140411.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-io-jar-8.1.15.v20140411.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-jndi-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-plus-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-runner-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-security-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-server-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-servlet-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-util-jar-8.1.15.v20140411.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-webapp-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-websocket-jar-8.1.15.v20140411.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jetty-xml-jar-8.1.14.v20131031.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jline-jar-2.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/jna-jar-3.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/junit-jar-4.11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/log4j-bundle-1.2.17.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/nekohtml-jar-1.9.21.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/netty-bundle-3.5.2.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/objenesis-jar-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.apache.jasper.glassfish-orbit-2.2.2.v201112011158.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.apache.taglibs.standard.glassfish-orbit-1.2.0.v201112081803.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.eclipse.jdt.core-orbit-3.7.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.eclipse.persistence.antlr-jar-2.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.eclipse.persistence.asm-jar-2.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.eclipse.persistence.core-jar-2.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.eclipse.persistence.moxy-jar-2.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/org.objectweb.asm-orbit-3.1.0.v200803061910.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/osgi-resource-locator-jar-1.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/paranamer-jar-2.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/platform-jar-3.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/plexus-utils-jar-3.0.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/sac-jar-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-api-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-chrome-driver-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-firefox-driver-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-htmlunit-driver-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-ie-driver-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-java-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-remote-driver-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-safari-driver-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/selenium-support-jar-2.44.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/serializer-jar-2.7.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/stax2-api-bundle-3.1.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/webbit-jar-0.4.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/woodstox-core-asl-jar-4.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/xalan-jar-2.7.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/xercesImpl-jar-2.11.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/xml-apis-jar-1.4.01.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/xmlpull-jar-1.1.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/xmlschema-core-bundle-2.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/xpp3_min-jar-1.1.4c.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/ivy/xstream-jar-1.4.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

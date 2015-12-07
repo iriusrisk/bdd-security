@@ -193,6 +193,10 @@ public class Config {
         return proxyApi;
     }
 
+    public void setProxyApi(String key) {
+        proxyApi = key;
+    }
+
     public String getZapPath() {
         return validateAndGetString("zapPath");
     }
