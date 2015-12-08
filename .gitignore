@@ -4,3 +4,5 @@ reports/
 /target
 lib/ivy
 vagrant/
+zap/tmp
+src/main/stories/auto-generated/
