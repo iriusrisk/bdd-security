@@ -1,7 +1,11 @@
 ![Logo](http://www.continuumsecurity.net/images/bdd-security-logo-small.png)
 
 # Release
-Version: 0.9.1
+Version: 0.9.2
+
+## v0.9.2 Changelog
+- Integrated with OWASP ZAP 2.4.3.
+- Support setting an API KEY for ZAP
 
 ## v0.9.1 Changelog
 - HtmlUnitDriver support, it is also the default driver if no other driver is specified in config.xml.  BIG speed improvements.
