@@ -59,7 +59,6 @@ public class ZapManager {
             pb.directory(zapProgramFile.getParentFile());
             process = pb.command(params.toArray(new String[params.size()])).start();
             waitForSuccessfulConnectionToZap();
-
         } else {
             log.info("ZAP already started.");
         }
@@ -90,6 +89,7 @@ public class ZapManager {
         Socket socket = null;
         do {
             try {
+                log.info("Attempting to connect to ZAP API on: "+HOST+" port: "+port);
                 socket = new Socket();
                 socket.connect(new InetSocketAddress(HOST, port), connectionTimeoutInMs);
                 connectionSuccessful = true;
