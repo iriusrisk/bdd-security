@@ -49,6 +49,7 @@ public class AppScanningSteps {
     Application app;
     List<Alert> alerts = new ArrayList<Alert>();
     String scannerIds = null;
+    int spiderMaxChildren = 1000;
 
     public AppScanningSteps() {
 
@@ -134,9 +135,14 @@ public class AppScanningSteps {
         getSpider().setThreadCount(threads);
     }
 
+    @Given("the spider is configured for $children maximum children")
+    public void setSpiderMaxChildren(@Named("children") int children) {
+        spiderMaxChildren = children;
+    }
+
 
     private void spider(String url) throws InterruptedException {
-        getSpider().spider(url,null,true,null);
+        getSpider().spider(url,spiderMaxChildren,true,null);
         int scanId = getSpider().getLastSpiderScanId();
         int complete = getSpider().getSpiderProgress(scanId);
         while (complete < 100) {
