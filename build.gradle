@@ -95,7 +95,7 @@ task junitRun(type: Test)<<{
     include '**/JUnitStoryRunner.class'
 
     /**specific stories through meta filtering**/ 
-    systemProperty 'stories', 'authentication,session_management'
+    systemProperty 'stories', 'authentication'
     ignoreFailures = true
     reports.html.enabled = false
     classpath = sourceSets.main.compileClasspath  + sourceSets.test.runtimeClasspath
