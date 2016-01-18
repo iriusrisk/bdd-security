@@ -59,7 +59,7 @@ dependencies {
 task jbehaveRun(type:JavaExec) {
     main = "net.continuumsecurity.jbehave.StoryRunner"
     systemProperties = System.properties
-    classpath = sourceSets.main.runtimeClasspath
+    classpath = sourceSets.main.runtimeClasspath + sourceSets.test.runtimeClasspath
 
 }
 
@@ -98,7 +98,7 @@ task junitRun(type: Test)<<{
     systemProperty 'stories', 'authentication,session_management'
     ignoreFailures = true
     reports.html.enabled = false
-    classpath = sourceSets.main.compileClasspath
+    classpath = sourceSets.main.compileClasspath  + sourceSets.test.runtimeClasspath
 }
 
 
