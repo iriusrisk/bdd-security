@@ -1,3 +1,3 @@
 #!/bin/sh
-export ANT_OPTS=-Xmx500m
-ant test -Dargs="-story $1"
+export GRADLE_OPTS=-Xmx512m
+./gradlew testStory -Dargs="-story $1"

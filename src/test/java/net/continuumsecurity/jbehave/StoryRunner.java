@@ -18,19 +18,13 @@
  ******************************************************************************/
 package net.continuumsecurity.jbehave;
 
-import net.continuumsecurity.Config;
-import net.continuumsecurity.steps.WrapUpScanSteps;
-import org.apache.commons.io.FileUtils;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StoryRunner extends JUnitStoryRunner {
 
@@ -84,25 +78,6 @@ public class StoryRunner extends JUnitStoryRunner {
         prepareReportsDir();
         List<String> filters = createFilters();
         configuredEmbedder().useMetaFilters(filters);
-
-        if (justRunConfig) {
-            try {
-                log.debug("Running configuration stories");
-                ConfigurationStoryRunner configRunner = new ConfigurationStoryRunner();
-                configRunner.setFilters(filters);
-                configRunner.run();
-                log.debug("Configuration stories completed.");
-            } catch (Throwable t) {
-                StringWriter sw = new StringWriter();
-                t.printStackTrace(new PrintWriter(sw));
-                log.error("Configuration stories failed: " + t.getMessage());
-                log.error("Halting execution");
-                log.error(sw.toString());
-                t.printStackTrace();
-                System.exit(1);
-            }
-            System.exit(0);
-        }
 
         try {
             run();
