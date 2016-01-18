@@ -8,13 +8,18 @@ repositories { jcenter() }
 buildscript {
     repositories { jcenter()  }
 
-    //dependencies { classpath 'org.jbehave:jbehave-core:3.9.5' }
+    dependencies { classpath 'org.jbehave:jbehave-core:3.9.5' }
 }
 
 sourceSets {
     test {
         resources {
             srcDir 'src/test/stories'
+        }
+    }
+    internalTest {
+        java {
+            srcDir 'src/internalTest/java'
         }
     }
 }
@@ -31,7 +36,6 @@ dependencies {
         exclude group: 'junit'
     }
     testRuntime 'org.jbehave:jbehave-core:3.9.5'
-    runtime 'org.jbehave:jbehave-core:3.9.5'
     runtime 'org.codehaus.groovy:groovy-all:2.3.7'
     compile('org.seleniumhq.selenium:selenium-java:2.44.0'){ exclude group: 'junit' }
     compile 'de.codecentric:jbehave-junit-runner:1.1.2'
@@ -92,9 +96,7 @@ task junitZapRun(type: Test) <<{
 }
 
 task junitRun(type: Test)<<{
-    include '**/JUnitStoryRunner.class'
-
-    /**specific stories through meta filtering**/ 
+    /**specific stories through meta filtering**/
     systemProperty 'stories', 'authentication'
     ignoreFailures = true
     reports.html.enabled = false
