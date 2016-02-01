@@ -11,6 +11,6 @@ import org.junit.runner.RunWith;
                 "src/test/resources/stories/authentication.feature"
         }
 )
-public class AuthenticationTestSuite extends WebDriverTestSuite {
+public class AuthenticationTestSuite extends BaseCucumberTestSuite {
 
 }

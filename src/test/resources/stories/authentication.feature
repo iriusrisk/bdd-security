@@ -15,23 +15,23 @@ Feature: Authentication
     Then login fails
 
 
-#  @browser_only @cwe-295-auth @id-auth_login_form_over_ssl
-#  Scenario: Present the login form itself over an HTTPS connection
-#    Given a new browser instance
-#    And the client/browser is configured to use an intercepting proxy
-#    And the proxy logs are cleared
-#    And the login page
-#    And the HTTP request-response containing the login form
-#    Then the protocol should be HTTPS
-#
-#  @cwe-319-auth @id-auth_https
-#  Scenario: Transmit authentication credentials over HTTPS
-#    Given a new browser or client instance
-#    And the client/browser is configured to use an intercepting proxy
-#    And the proxy logs are cleared
-#    And the default user logs in with credentials from: auto-generated/users.table
-#    And the HTTP request-response containing the default credentials is selected
-#    Then the protocol should be HTTPS
+  @browser_only @cwe-295-auth @id-auth_login_form_over_ssl
+  Scenario: Present the login form itself over an HTTPS connection
+    Given a new browser instance
+    And the client/browser is configured to use an intercepting proxy
+    And the proxy logs are cleared
+    And the login page
+    And the HTTP request-response containing the login form
+    Then the protocol should be HTTPS
+
+  @cwe-319-auth @id-auth_https
+  Scenario: Transmit authentication credentials over HTTPS
+    Given a new browser or client instance
+    And the client/browser is configured to use an intercepting proxy
+    And the proxy logs are cleared
+    And the default user logs in
+    And the HTTP request-response containing the default credentials is selected
+    Then the protocol should be HTTPS
 #
 #  @browser_only @cwe-525-repost @id-auth_return_redirect
 #  Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code.

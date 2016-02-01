@@ -107,6 +107,11 @@ public class WebApplicationSteps {
         ((ILogin) app).openLoginPage();
     }
 
+    @Given("the login page$")
+    public void openLoginPageFromGiven() {
+        openLoginPage();
+    }
+
     @When("the user logs in")
     public void loginWithSetCredentials() {
         assert credentials != null;
