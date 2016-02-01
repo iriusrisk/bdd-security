@@ -39,7 +39,6 @@ import net.continuumsecurity.web.FakeCaptchaSolver;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.WebApplication;
 import org.apache.log4j.Logger;
-import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
@@ -54,7 +53,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -76,14 +74,9 @@ public class WebApplicationSteps {
 
     }
 
-    @BeforeClass
-    public void beforeStories() {
-        Config.getInstance().initialiseTables();
-    }
-
     /*
      * This has to be called explicitly when using an examples table in order to
-     * start with a fresh browser instance, because @BeforeScenario is only
+     * start with a fresh browser getInstance, because @BeforeScenario is only
      * called once for the whole scenario, not each example.
      */
     @Given("a new browser or client instance")
@@ -105,7 +98,7 @@ public class WebApplicationSteps {
     public void createAppForBrowser() {
         createApp();
         if (!(app.getAuthTokenManager() instanceof Browser)) {
-            throw new ConfigurationException("This scenario can only be run with a Browser instance, but application.getAuthTokenManager() returns a non-browser client.");
+            throw new ConfigurationException("This scenario can only be run with a Browser getInstance, but application.getAuthTokenManager() returns a non-browser client.");
         }
     }
 
@@ -127,9 +120,8 @@ public class WebApplicationSteps {
         return new String(encoded, encoding);
     }
 
-    @When("the default user logs in with credentials from: (.*)")
-    public void loginFromTable(String credentialsTablePath) throws IOException{
-        assert credentialsTablePath != null;
+    @When("the default user logs in")
+    public void loginDefaultUser() throws IOException {
         openLoginPage();
         setDefaultCredentials(Config.getInstance().getUsers().getDefaultCredentials());
         loginWithSetCredentials();

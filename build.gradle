@@ -32,6 +32,16 @@ task cucumber() {
     }
 }
 
+task ropeyRun(type: JavaExec)  {
+    main = "org.mortbay.jetty.runner.Runner"
+    args = [
+            "--port",
+            "9090",
+            "src/test/resources/demo/ropeytasks-0.1.war"
+    ]
+    classpath = configurations.runtime
+}
+
 //Ensure the cucumber tests are executed as part of the build. Makes for a very pretty output.
 build.dependsOn cucumber
 

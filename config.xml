@@ -6,8 +6,8 @@
 
     <!-- The web driver to use, can be either Firefox, Chrome or HtmlUnit.  Optionally specify path to the driver (required for linux)
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver.  If these values are not specified, we'll use HtmlUnit
-    <defaultDriver>firefox</defaultDriver>
-    <defaultDriver path="drivers/chromedriver-mac">Chrome</defaultDriver>-->
+    <defaultDriver>firefox</defaultDriver> -->
+    <defaultDriver path="src/test/resources/drivers/chromedriver-linux64">Chrome</defaultDriver>
 
     <!-- Base URL of the application to test -->
     <baseUrl>http://localhost:9090/</baseUrl>
@@ -20,23 +20,14 @@
 
     <sslyze>/opt/sslyze/sslyze.py --regular</sslyze>
 
-    <!-- Hosts to scan with Nessus and the port scanner -->
-    <hosts>
-        <host name="localhost">
-            <port number="80" state="open"/>
-            <port number="443" state="open"/>
-        </host>
-    </hosts>
-
     <!-- Optional names of the session ID cookies for session management testing. -->
     <sessionIds>
         <name>JSESSIONID</name>
     </sessionIds>
 
+    <!-- the default user to use when logging in to the app for most of the functional requirements -->
     <users>
-        <user username="alice" password="password"/>
         <user username="bob" password="password"/>
-        <user username="admin" password="password"/>
     </users>
 
     <!-- An upstream proxy through which all HTTP traffic must pass before hitting the target
@@ -64,9 +55,4 @@
 
     <zapPath>zap/zap.sh</zapPath>
 
-    <displayStackTrace>true</displayStackTrace>
-    <storyDir>src/main/stories/</storyDir>
-    <reportsDir>reports</reportsDir>
-    <latestReportsDir>reports/latest</latestReportsDir>
-    <storyTimeout>3600</storyTimeout> <!-- for a single story in seconds -->
 </web-app>

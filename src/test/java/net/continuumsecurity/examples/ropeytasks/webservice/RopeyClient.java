@@ -68,7 +68,7 @@ public class RopeyClient implements AuthTokenManager {
     }
 
     /*
-    Convenience method that will be called from the ILogin interface on the Application instance
+    Convenience method that will be called from the ILogin interface on the Application getInstance
      */
     public void login(String username, String password) {
         Form postBody = new Form();

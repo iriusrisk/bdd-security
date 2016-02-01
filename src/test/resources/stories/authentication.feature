@@ -1,15 +1,14 @@
 Feature: Authentication
   In order to protect sensitive user data
-  As a n application owner
+  As an application owner
   I want to have a robust authentication system
 
   @cwe-178-auth @id-auth_case
   Scenario: Passwords should be case sensitive
     Given a new browser or client instance
-    When the default user logs in with credentials from: users.table
+    When the default user logs in
     Then the user is logged in
-    When the default credentials from: users.table are set
-    And the case of the password is changed
+    When the case of the password is changed
     And the authentication tokens on the client are deleted
     And the login page is displayed
     And the user logs in

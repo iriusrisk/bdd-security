@@ -71,31 +71,6 @@ public class Config {
         loadConfig("config.xml");
     }
 
-    public void initialiseTables() {
-        Application app = createApp();
-        writeTable(getStoryDir() + "auto-generated"+File.separator+"users.table", usersToTable(getUsers()));
-        writeTable(getStoryDir() + "auto-generated"+File.separator+"hosts.table", hostsToTable(getHosts()));
-        writeTable(getStoryDir() + "auto-generated" + File.separator + "authorised.resources.table",
-                authorisedResourcesToTable(app, getUsers()));
-        writeTable(getStoryDir() + "auto-generated" + File.separator + "unauthorised.resources.table",
-                unAuthorisedResourcesToTable(app, getUsers()));
-    }
-
-    public Hosts getHosts() {
-        Hosts hosts = new Hosts();
-        List<HierarchicalConfiguration> hostsInXml = getXml().configurationsAt("hosts.host");
-        for (HierarchicalConfiguration hostConfig : hostsInXml) {
-            Host host = new Host(hostConfig.getString("[@name]"));
-            hosts.addHost(host);
-            List<HierarchicalConfiguration> ports = hostConfig.configurationsAt("port");
-            for (HierarchicalConfiguration portConfig : ports) {
-                Port port = new Port(portConfig.getInt("[@number]"), Port.State.fromString(portConfig.getString("[@state]")));
-                host.addPort(port);
-            }
-        }
-        return hosts;
-    }
-
     public  Users getUsers() {
         Users users = new Users();
 
@@ -122,7 +97,6 @@ public class Config {
         }
         return users;
     }
-
 
     public String getClassName() {
         return validateAndGetString("class");
@@ -244,25 +218,14 @@ public class Config {
         return ids;
     }
 
-
     public void setXml(XMLConfiguration xml) {
         getInstance().xml = xml;
     }
-
 
     public String getStoryDir() {
         return System.getProperty("user.dir")
                 + File.separator
                 + getXml().getString("storyDir");
-    }
-
-
-    public long getStoryTimeout() {
-        return getXml().getLong("storyTimeout");
-    }
-
-    public String getStoryUrl() {
-        return "file:///" + getStoryDir();
     }
 
     public  static XMLConfiguration getXml() {
@@ -280,105 +243,4 @@ public class Config {
         }
     }
 
-    public  List<List<String>> usersToTable(Users users) {
-        List<List<String>> table = new ArrayList<List<String>>();
-        List<String> row = new ArrayList<String>();
-        row.add("username");
-        row.add("password");
-        table.add(row);
-        for (User user : users.getAll()) {
-            row = new ArrayList<String>();
-            row.add(user.getCredentials().get("username"));
-            row.add(user.getCredentials().get("password"));
-            table.add(row);
-        }
-        return table;
-    }
-
-    public  List<List<String>> hostsToTable(Hosts hosts) {
-        List<List<String>> table = new ArrayList<List<String>>();
-        List<String> row = new ArrayList<String>();
-        row.add("host");
-        row.add("ports_open");
-        table.add(row);
-        for (Host host : hosts.getHosts()) {
-            row = new ArrayList<String>();
-            row.add(host.getName());
-            row.add(StringUtils.join(host.getPortNumbers(),','));
-            table.add(row);
-        }
-        return table;
-    }
-
-    public  List<List<String>> authorisedResourcesToTable(
-            Application app, Users users) {
-        List<List<String>> table = new ArrayList<List<String>>();
-        List<String> row = new ArrayList<String>();
-        row.add("method");
-        row.add("username");
-        row.add("password");
-        row.add("sensitiveData");
-        table.add(row);
-        for (Method method : app.getRestrictedMethods()) {
-            for (String username : app.getAuthorisedUsernames(method.getName())) {
-                row = new ArrayList<String>();
-                row.add(method.getName());
-                row.add(username);
-                User user = users.findByCredential("username", username);
-                if (user == null) throw new RuntimeException("User with username: "+username+" not found.  This username is required for executing the method: "+method.getName());
-                row.add(users.findByCredential("username",username).getCredentials().get("password"));
-                row.add(method.getAnnotation(Restricted.class).sensitiveData());
-                table.add(row);
-            }
-        }
-        return table;
-    }
-
-    /*
-      * Create a matrix of restricted methods and the users who are not
-      * authorised to access them
-      */
-    public  List<List<String>> unAuthorisedResourcesToTable(
-            Application app, Users users) {
-        List<List<String>> table = new ArrayList<List<String>>();
-        List<String> row = new ArrayList<String>();
-        row.add("method");
-        row.add("username");
-        row.add("password");
-        row.add("sensitiveData");
-        table.add(row);
-        for (Method method : app.getRestrictedMethods()) {
-            for (User user : users.getAllUsersExcept(app.getAuthorisedUsernames(method.getName()))) {
-                row = new ArrayList<String>();
-                row.add(method.getName());
-                row.add(user.getCredentials().get("username"));
-                row.add(user.getCredentials().get("password"));
-                row.add(method.getAnnotation(Restricted.class).sensitiveData());
-                table.add(row);
-            }
-        }
-        return table;
-    }
-
-    public  void writeTable(String file,
-                            List<List<String>> table) {
-        PrintStream writer = null;
-        log.info("Writing to table file: " + file);
-        try {
-            writer = new PrintStream(new FileOutputStream(file, false));
-            for (List<String> row : table) {
-                StringBuilder sb = new StringBuilder();
-                for (String col : row) {
-                    sb.append("|").append(col).append("\t\t");
-                }
-                sb.append("|");
-                writer.println(sb.toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            writer.close();
-        }
-
-    }
 }

@@ -62,8 +62,6 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
         client.get("user/logout");
     }
 
-    @Restricted(users = {"bob", "admin"},
-            sensitiveData = "Robert")
     public void viewProfileForBob() {
         client.get("user/edit/1");
     }

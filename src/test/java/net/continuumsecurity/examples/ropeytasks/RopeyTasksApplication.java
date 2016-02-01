@@ -2,7 +2,6 @@ package net.continuumsecurity.examples.ropeytasks;
 
 import net.continuumsecurity.Config;
 import net.continuumsecurity.Credentials;
-import net.continuumsecurity.Restricted;
 import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
@@ -54,20 +53,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.linkText("Profile")).click();
     }
 
-    @Restricted(users = {"bob", "admin"},
-            sensitiveData = "Robert")
-    public void viewProfileForBob() {
-        viewProfile();
-    }
-
-    @Restricted(users = {"alice", "admin"},
-            sensitiveData = "alice@continuumsecurity.net")
-    public void viewProfileForAlice() {
-        viewProfile();
-    }
-
-    @Restricted(users = {"admin"},
-            sensitiveData = "User List")
     public void viewUserList() {
         driver.get(Config.getInstance().getBaseUrl() + "admin/list");
     }
