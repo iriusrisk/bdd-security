@@ -3,7 +3,8 @@ Feature: Authentication
   As an application owner
   I want to have a robust authentication system
 
-  @cwe-178-auth @id-auth_case
+  @cwe-178-auth
+  @id-auth_case
   Scenario: Passwords should be case sensitive
     Given a new browser or client instance
     When the default user logs in with default credentials

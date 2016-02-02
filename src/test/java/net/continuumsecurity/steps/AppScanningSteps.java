@@ -1,29 +1,29 @@
 /*******************************************************************************
- *    BDD-Security, application security testing framework
- *
+ * BDD-Security, application security testing framework
+ * <p>
  * Copyright (C) `2014 Stephen de Vries`
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
 package net.continuumsecurity.steps;
 
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.FalsePositive;
 import net.continuumsecurity.UnexpectedContentException;
-import net.continuumsecurity.Utils;
 import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
@@ -36,10 +36,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.Policy;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -80,20 +78,19 @@ public class AppScanningSteps {
 
     public ZAProxyScanner getScanner() {
         if (scanner == null) {
-            scanner = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
+            scanner = new ZAProxyScanner(Config.getInstance().getProxyHost(), Config.getInstance().getProxyPort(), Config.getInstance().getProxyApi());
         }
         return scanner;
     }
 
     public Spider getSpider() {
-        return (Spider)getScanner();
+        return (Spider) getScanner();
     }
 
     @When("the XML report is written to the file $file")
-    @Given("the XML report is written to the file $file")
     public void writeXmlReport(String filename) throws IOException {
         byte[] xmlReport = scanner.getXmlReport();
-        Files.write(Paths.get(Config.getInstance().getLatestReportsDir()+ File.separator+"zap"+File.separator+filename), xmlReport);
+        Files.write(Paths.get(Config.getInstance().getLatestReportsDir() + File.separator + "zap" + File.separator + filename), xmlReport);
     }
 
     @Given("a scanner with all policies enabled")
@@ -101,8 +98,8 @@ public class AppScanningSteps {
         getScanner().enableAllScanners();
     }
 
-    @Given("the page flow described in the method: $methodName is run through the proxy")
-    public void navigateApp(@Named("methodName") String methodName) throws Exception {
+    @Given("the page flow described in the method: (.*) is run through the proxy")
+    public void navigateApp(String methodName) throws Exception {
         Method method = app.getClass().getMethod(methodName);
         app.enableHttpLoggingClient();
         log.debug("Navigating method: " + method.getName());
@@ -110,13 +107,12 @@ public class AppScanningSteps {
     }
 
     @Given("the following URLs are spidered: $urlsTable")
-    public void spiderUrls(ExamplesTable urlsTable) throws InterruptedException {
-        for (Map<String, String> row : urlsTable.getRows()) {
-            String url = row.get("url");
-            if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
-            else if (url.equalsIgnoreCase("basesecureurl")) url = Config.getInstance().getBaseSecureUrl();
-            spider(url);
-        }
+    public void spiderUrls(String url) throws InterruptedException {
+
+        if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
+        else if (url.equalsIgnoreCase("basesecureurl")) url = Config.getInstance().getBaseSecureUrl();
+        spider(url);
+
     }
 
     @Given("the spider is configured for a maximum depth of $depth")
@@ -124,11 +120,10 @@ public class AppScanningSteps {
         getSpider().setMaxDepth(depth);
     }
 
-    @Given("the URL regular expressions listed in the file: $excludedUrlsTable are excluded from the spider")
-    public void setExcludedRegex(ExamplesTable exRegex) {
-        for (Map<String, String> row : exRegex.getRows()) {
-            getSpider().excludeFromSpider(row.get("regex"));
-        }
+    @Given("the following URL regular expressions are excluded from the spider: (.*)")
+    public void setExcludedRegex(String exRegex) {
+        getSpider().excludeFromSpider(exRegex);
+
     }
 
     @Given("the spider is configured for $threads concurrent threads")
@@ -143,7 +138,7 @@ public class AppScanningSteps {
 
 
     private void spider(String url) throws InterruptedException {
-        getSpider().spider(url,spiderMaxChildren,true,null);
+        getSpider().spider(url, spiderMaxChildren, true, null);
         int scanId = getSpider().getLastSpiderScanId();
         int complete = getSpider().getSpiderProgress(scanId);
         while (complete < 100) {
@@ -228,7 +223,8 @@ public class AppScanningSteps {
             case "parameter-pollution":
                 scannerIds = "20014";
                 break;
-            default : throw new RuntimeException("No policy found for: "+policyName);
+            default:
+                throw new RuntimeException("No policy found for: " + policyName);
 
         }
         if (scannerIds == null) throw new UnexpectedContentException("No matching policy found for: " + policyName);
@@ -253,16 +249,16 @@ public class AppScanningSteps {
         }
     }
 
-    @Given("the URL regular expressions listed in the file: $exclude are excluded from the scanner")
-    public void excludeUrlsFromScan(ExamplesTable exclude) {
-        for (Policy.Parameters param : exclude.getRowsAsParameters()) {
-            getScanner().excludeFromScanner(param.values().get("regex"));
-        }
+    @Given("the following URL regular expressions are excluded from the scanner (.*)")
+    public void excludeUrlsFromScan(String exclude) {
+
+        getScanner().excludeFromScanner(exclude);
+
     }
 
     @When("the scanner is run")
     public void runScanner() throws Exception {
-        log.info("Scanning: "+Config.getInstance().getBaseUrl());
+        log.info("Scanning: " + Config.getInstance().getBaseUrl());
         getScanner().scan(Config.getInstance().getBaseUrl());
         int complete = 0;
         int scanId = getScanner().getLastScannerScanId();
@@ -273,20 +269,21 @@ public class AppScanningSteps {
         }
     }
 
-    @When("the following false positives are removed: $falsePositives")
-    @Given("the following false positives are removed: $falsePositives")
-    public void removeFalsePositives(ExamplesTable falsePositives) {
+    @When("the following false positives are removed: (.*)")
+    public void removeFalsePositives(String url, String param, String cweid, String wascid) {
         alerts = getScanner().getAlerts();
-        List<Alert> clean = new ArrayList<Alert>();
+        List<Alert> clean = new ArrayList<>();
 
         for (Alert alert : alerts) {
             boolean falsePositive = false;
-            for (FalsePositive falsep : Utils.getFalsePositivesFromTable(falsePositives)) {
-                if (falsep.matches(alert.getUrl(), alert.getParam(),alert.getCweId(), alert.getWascId())) {
-                    falsePositive = true;
-                }
+
+            FalsePositive falsePos = new FalsePositive(url, param, cweid, wascid);
+
+            if (falsePos.matches(alert.getUrl(), alert.getParam(), alert.getCweId(), alert.getWascId())) {
+                falsePositive = true;
             }
-            if (!falsePositive && !containsAlertByValue(clean,alert)) {
+
+            if (!falsePositive && !containsAlertByValue(clean, alert)) {
                 clean.add(alert);
             }
         }
@@ -349,7 +346,7 @@ public class AppScanningSteps {
                         + "URL: " + alert.getUrl() + "\n"
                         + "Parameter: " + alert.getParam() + "\n"
                         + "CWE-ID: " + alert.getCweId() + "\n"
-                        + "WASC-ID: " + alert.getWascId() +"\n";
+                        + "WASC-ID: " + alert.getWascId() + "\n";
             }
         }
         return detail;
