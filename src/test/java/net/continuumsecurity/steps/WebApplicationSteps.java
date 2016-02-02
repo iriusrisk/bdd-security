@@ -20,13 +20,13 @@ package net.continuumsecurity.steps;
  ******************************************************************************/
 
 
-import net.continuumsecurity.*;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarRequest;
+import net.continuumsecurity.*;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
@@ -54,7 +54,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -93,7 +92,7 @@ public class WebApplicationSteps {
         assert app.getAuthTokenManager() != null;
         app.getAuthTokenManager().deleteAuthTokens();
         credentials = new UserPassCredentials("", "");
-        sessionIds = new HashMap<String,String>();
+        sessionIds = new HashMap<>();
     }
 
     @When("the authentication tokens on the client are deleted")
@@ -127,9 +126,8 @@ public class WebApplicationSteps {
         return new String(encoded, encoding);
     }
 
-    @When("the default user logs in with credentials from: (.*)")
-    public void loginFromTable(String credentialsTablePath) throws IOException{
-        assert credentialsTablePath != null;
+    @When("the default user logs in with default credentials")
+    public void loginFromTable() throws IOException{
         openLoginPage();
         setDefaultCredentials(Config.getInstance().getUsers().getDefaultCredentials());
         loginWithSetCredentials();
