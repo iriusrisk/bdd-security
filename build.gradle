@@ -27,7 +27,6 @@ task cucumber() {
             main = "cucumber.api.cli.Main"
             classpath = configurations.cucumberRuntime
             args = ['--plugin', 'pretty', '--glue', 'src/test/java', 'src/test/resources/stories']
-
         }
     }
 }
