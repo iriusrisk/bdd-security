@@ -4,8 +4,6 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import net.continuumsecurity.scanner.ZapManager;
 import net.continuumsecurity.web.drivers.DriverFactory;
-import net.masterthought.cucumber.Configuration;
-import net.masterthought.cucumber.ReportBuilder;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 

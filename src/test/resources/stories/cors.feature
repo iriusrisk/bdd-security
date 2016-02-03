@@ -1,12 +1,10 @@
-@skip @story-cors
+@skip @cors
 Feature: 
   In order to reduce the risk of Cross Site Request Forgery
   As a system owner
   I want to verify that the application does not allow the browser to perform requests outside of the allowed origins
-  
-  Meta: @story cors @skip
 
-  @cwe-942-cors @id-cors_successful_from_allowed_origins
+  @cwe-942-cors @cors_successful_from_allowed_origins
   Scenario Outline: Permit allowed origins to make CORS requests
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy
@@ -16,7 +14,7 @@ Feature:
     Examples: 
       | tables/allowed.cors.requests.table |
 
-  @cwe-942-cors @id-cors_unsuccessful_from_disallowed_origins
+  @cwe-942-cors @cors_unsuccessful_from_disallowed_origins
   Scenario Outline: Forbid disallowed origins from making CORS requests
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy

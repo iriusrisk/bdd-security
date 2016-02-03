@@ -1,4 +1,4 @@
-@story-nessus_scan @skip
+@nessus_scan @skip
 Feature: Automated Nessus scanning
   In order to identify security vulnerabilities on the hosts
   As a system owner

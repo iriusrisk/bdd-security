@@ -20,6 +20,8 @@ package net.continuumsecurity.steps;
  ******************************************************************************/
 
 
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -158,7 +160,7 @@ public class WebApplicationSteps {
         assertThat("The user is logged in", ((ILogin) app).isLoggedIn(), is(true));
     }
 
-    @Then("login fails")
+    @Then("the user is not logged in")
     public void loginFails() {
         assertThat("The user is not logged in", ((ILogin) app).isLoggedIn(), is(false));
     }
@@ -480,4 +482,13 @@ public class WebApplicationSteps {
         }
     }
 
+    @And("^the default username$")
+    public void theDefaultUsername() throws Throwable {
+        credentials.setUsername(((UserPassCredentials)Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
+    }
+
+    @When("^the default password$")
+    public void theDefaultPassword() throws Throwable {
+        credentials.setPassword(((UserPassCredentials)Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
+    }
 }

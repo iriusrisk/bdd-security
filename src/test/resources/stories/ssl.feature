@@ -1,25 +1,25 @@
-@story-ssl
+@ssl
 Feature:
   In order to protect my data transmitted over the network
   As a user
   I want to verify that good SSL practices have been implemented and known weaknesses have been avoided
 
-  @id-ssl_crime
+  @ssl_crime
   Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack
     Given the SSLyze command is run against the secure base Url
     Then the output must contain the text "Compression disabled"
 
-  @id-ssl_client_renegotiations
+  @ssl_client_renegotiations
   Scenario: Disable client renegotiations
     Given the SSLyze command is run against the secure base Url
     Then the output must contain a line that matches the regular expression ".*Client-initiated Renegotiations:\s+OK - Rejected.*"
 
-  @id-ssl_strong_cipher
+  @ssl_strong_cipher
   Scenario: The minimum cipher strength should be at least 128 bit
     Given the SSLyze command is run against the secure base Url
     Then the minimum key size must be 128 bits
 
-  @id-ssl_disabled_protocols
+  @ssl_disabled_protocols
   Scenario Outline: Disable weak SSL protocols due to numerous cryptographic weaknesses
     Given the SSLyze command is run against the secure base Url
     Then the following protocols must not be supported: <protocol>
@@ -29,7 +29,7 @@ Feature:
       | SSLV2    |
       | SSLV3    |
 
-  @id-ssl_support_strong_protocols
+  @ssl_support_strong_protocols
   Scenario Outline: Support TLSv1.2
     Given the SSLyze command is run against the secure base Url
     Then the following protocols must be supported <protocol>
@@ -37,7 +37,7 @@ Feature:
       | protocol |
       | TLSV1_2  |
 
-  @id-ssl_perfect_forward_secrecy
+  @ssl_perfect_forward_secrecy
   Scenario Outline: Enable Perfect forward secrecy
     Given the SSLyze command is run against the secure base Url
     Then any of the following ciphers must be supported <cipher>
@@ -58,7 +58,7 @@ Feature:
       | ECDH-RSA-CAMELLIA128-SHA256    |
       | ECDH-RSA-CAMELLIA256-SHA384    |
 
-  @id-ssl_heartbleed
+  @ssl_heartbleed
   Scenario: Patch OpenSSL against the Heartbleed vulnerability
     Given the SSLyze command is run against the secure base Url
     Then the output must contain the text "Not vulnerable to Heartbleed"
