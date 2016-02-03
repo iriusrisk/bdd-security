@@ -1,8 +1,7 @@
 .DS_Store*
 .idea/*
-reports/
 /target
-lib/ivy
-vagrant/
 zap/tmp
-src/main/stories/auto-generated/
+build/
+.gradle
+*.iml

@@ -1,10 +1,8 @@
 @story-ssl
-Feature: 
+Feature:
   In order to protect my data transmitted over the network
   As a user
   I want to verify that good SSL practices have been implemented and known weaknesses have been avoided
-  
-  Meta: @story ssl
 
   @id-ssl_crime
   Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack
@@ -22,28 +20,28 @@ Feature:
     Then the minimum key size must be 128 bits
 
   @id-ssl_disabled_protocols
-  Scenario: Disable weak SSL protocols due to numerous cryptographic weaknesses
+  Scenario Outline: Disable weak SSL protocols due to numerous cryptographic weaknesses
     Given the SSLyze command is run against the secure base Url
-    Then the following protocols must not be supported
-
+    Then the following protocols must not be supported: <protocol>
+    Examples:
       | protocol |
       | SSLV1    |
       | SSLV2    |
       | SSLV3    |
 
   @id-ssl_support_strong_protocols
-  Scenario: Support TLSv1.2
+  Scenario Outline: Support TLSv1.2
     Given the SSLyze command is run against the secure base Url
-    Then the following protocols must be supported
-
+    Then the following protocols must be supported <protocol>
+    Examples:
       | protocol |
       | TLSV1_2  |
 
   @id-ssl_perfect_forward_secrecy
-  Scenario: Enable Perfect forward secrecy
+  Scenario Outline: Enable Perfect forward secrecy
     Given the SSLyze command is run against the secure base Url
-    Then any of the following ciphers must be supported
-
+    Then any of the following ciphers must be supported <cipher>
+    Examples:
       | cipher                         |
       | ECDHE-RSA-AES128-SHA           |
       | ECDHE-RSA-AES256-SHA           |

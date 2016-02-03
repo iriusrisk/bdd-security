@@ -161,7 +161,7 @@ public class Utils {
           line = br.readLine();
           while (line != null) {
             String[] lineList = line.split("\\|");
-            HashMap map = new HashMap();
+            HashMap<String, String> map = new HashMap<String, String>();
             int i = 0;
             for(String item: lineList){
               map.put(firstLine[i].trim(),item.trim());

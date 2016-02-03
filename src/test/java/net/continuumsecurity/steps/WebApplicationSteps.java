@@ -20,13 +20,13 @@ package net.continuumsecurity.steps;
  ******************************************************************************/
 
 
-import net.continuumsecurity.*;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarRequest;
+import net.continuumsecurity.*;
 import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
@@ -86,7 +86,7 @@ public class WebApplicationSteps {
         assert app.getAuthTokenManager() != null;
         app.getAuthTokenManager().deleteAuthTokens();
         credentials = new UserPassCredentials("", "");
-        sessionIds = new HashMap<String,String>();
+        sessionIds = new HashMap<>();
     }
 
     @When("the authentication tokens on the client are deleted")
