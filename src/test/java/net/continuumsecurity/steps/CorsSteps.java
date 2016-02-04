@@ -2,7 +2,6 @@ package net.continuumsecurity.steps;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import net.continuumsecurity.Config;
 import net.continuumsecurity.behaviour.ICors;
 import net.continuumsecurity.web.Application;
 import org.junit.BeforeClass;
@@ -24,12 +23,12 @@ public class CorsSteps {
 
     }
 
-    @When("the path <path> is requested with the HTTP method GET with the 'Origin' header set to <origin>")
+    @When("the path (.*) is requested with the HTTP method GET with the 'Origin' header set to (.*)")
     public void corsRequest(@Named("path") String path, @Named("origin") String origin) {
     	((ICors) app).makeCorsRequest(path, origin);
     }
     
-    @Then("the returned 'Access-Control-Allow-Origin' header has the value <origin>")
+    @Then("the returned 'Access-Control-Allow-Origin' header has the value (.*)")
     public void checkAccessControlAllowOriginHeader(@Named("origin") String origin) {
     	String returnedHeader = ((ICors) app).getAccessControlAllowOriginHeader();
     	assertThat("The returned Access-Control-Allow-Origin header equals the Origin", returnedHeader, equalTo(origin));

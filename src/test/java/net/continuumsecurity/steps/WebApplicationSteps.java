@@ -2,25 +2,24 @@ package net.continuumsecurity.steps;
 
 /*******************************************************************************
  * BDD-Security, application security testing framework
- * <p/>
+ * <p>
  * Copyright (C) `2016 Continuum Security`
- * <p/>
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * <p/>
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * <p/>
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
 
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -57,6 +56,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 public class WebApplicationSteps {
@@ -65,7 +65,7 @@ public class WebApplicationSteps {
     UserPassCredentials credentials;
     HarEntry currentHar;
     LoggingProxy proxy;
-    Map<String,String> sessionIds;
+    Map<String, String> sessionIds;
     String methodName;
     Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     List<HarEntry> recordedEntries;
@@ -121,8 +121,7 @@ public class WebApplicationSteps {
     }
 
     static String readFile(String path, Charset encoding)
-            throws IOException
-    {
+            throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }
@@ -134,8 +133,8 @@ public class WebApplicationSteps {
         loginWithSetCredentials();
     }
 
-    public void setDefaultCredentials(Credentials creds) throws IOException{
-        credentials = (UserPassCredentials)creds;
+    public void setDefaultCredentials(Credentials creds) throws IOException {
+        credentials = (UserPassCredentials) creds;
     }
 
     @Given("an invalid username")
@@ -207,7 +206,8 @@ public class WebApplicationSteps {
     }
 
     public LoggingProxy getProxy() {
-        if (proxy == null) proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(),Config.getInstance().getProxyPort(),Config.getInstance().getProxyApi());
+        if (proxy == null)
+            proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(), Config.getInstance().getProxyPort(), Config.getInstance().getProxyApi());
         return proxy;
     }
 
@@ -283,7 +283,7 @@ public class WebApplicationSteps {
     @Then("the session cookie should have the secure flag set")
     public void sessionCookiesSecureFlag() {
         for (String name : Config.getInstance().getSessionIDs()) {
-            assertThat(((Browser)app.getAuthTokenManager()).getCookieByName(name).isSecure(), equalTo(true));
+            assertThat(((Browser) app.getAuthTokenManager()).getCookieByName(name).isSecure(), equalTo(true));
         }
     }
 
@@ -324,7 +324,8 @@ public class WebApplicationSteps {
     }
 
     public void checkIfWebApplication() {
-        if (!(app instanceof WebApplication)) throw new RuntimeException("This scenario can only be run against a WebApplication");
+        if (!(app instanceof WebApplication))
+            throw new RuntimeException("This scenario can only be run against a WebApplication");
     }
 
     @When("the login form is inspected")
@@ -375,6 +376,27 @@ public class WebApplicationSteps {
                 .getAll().get(0).getRecoverPasswordMap());
     }
 
+    @When("they access the restricted resource: (.*)")
+    public void setMethodName(String method) {
+        methodName = method;
+    }
+
+    @When("the response that contains the string: (.*) is recorded")
+    public void recordSensitiveResponse(String sensitiveData) {
+        try {
+            app.getClass().getMethod(methodName).invoke(app);
+            // For web services, calling the method might throw an exception if
+            // access is denied.
+        } catch (Exception e) {
+            fail("User with credentials: " + credentials.getUsername() + " "
+                    + credentials.getPassword()
+                    + " could not access the method: " + methodName + "()");
+        }
+        recordedEntries = getProxy().findInResponseHistory(sensitiveData);
+        assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", recordedEntries.size(), greaterThan(0));
+        currentHar = recordedEntries.get(0);
+    }
+
     @Then("the CAPTCHA is displayed")
     public void checkCaptchaPresent() {
         try {
@@ -384,6 +406,20 @@ public class WebApplicationSteps {
         }
     }
 
+    @Given("the username (.*)")
+    public void setUsernameFromExamples(String username) {
+        credentials.setUsername(username);
+    }
+
+    @Given("the password (.*)")
+    public void setCredentialsFromExamples(String password) {
+        credentials.setPassword(password);
+    }
+
+    @Then("the X-Frame-Options header is either (.*) or (.*)")
+    public void checkIfXFrameOptionsHeaderIsSet(String sameOrigin, String deny) {
+        assertThat(Utils.responseHeaderValueIsOneOf(currentHar.getResponse(), Constants.XFRAMEOPTIONS, new String[]{sameOrigin, deny}), equalTo(true));
+    }
 
     @Given("the access control map for authorised users has been populated")
     public void checkIfMapPopulated() {
@@ -391,7 +427,6 @@ public class WebApplicationSteps {
             throw new RuntimeException(
                     "Access control map has not been populated.");
     }
-
 
 
     @When("the HTTP requests and responses on recorded")
@@ -470,13 +505,25 @@ public class WebApplicationSteps {
         assertThat(Utils.responseContainsHeader(currentHar.getResponse(), Constants.HSTS), equalTo(true));
     }
 
+    @Then("the HTTP (.*) header has the value: (.*)")
+    public void checkHeaderValue(String name, String value) {
+        assertNotNull("No HTTP header named: " + name + " was found.", Utils.getResponseHeaderValue(currentHar.getResponse(), name));
+        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), name), equalTo(value));
+        ;
+    }
+
+
+    @Then("the Access-Control-Allow-Origin header must not be: (.*)")
+    public void checkThatAccessControlAllowOriginIsNotStar(String star) {
+        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), Constants.XXSSPROTECTION), not(star));
+    }
 
     @When("the secure base Url is accessed and the HTTP response recorded")
     public void accessSecureBaseUrlAndRecordHTTPResponse() {
         if (!httpHeadersRecorded) {
             enableLoggingDriver();
             clearProxy();
-            ((Browser)app.getAuthTokenManager()).getUrl(Config.getInstance().getBaseSecureUrl());
+            ((Browser) app.getAuthTokenManager()).getUrl(Config.getInstance().getBaseSecureUrl());
             recordFirstHarEntry();
             httpHeadersRecorded = true;
         }
@@ -484,11 +531,14 @@ public class WebApplicationSteps {
 
     @And("^the default username$")
     public void theDefaultUsername() throws Throwable {
-        credentials.setUsername(((UserPassCredentials)Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
+        credentials.setUsername(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
     }
 
     @When("^the default password$")
     public void theDefaultPassword() throws Throwable {
-        credentials.setPassword(((UserPassCredentials)Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
+        credentials.setPassword(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
     }
+
 }
+
+

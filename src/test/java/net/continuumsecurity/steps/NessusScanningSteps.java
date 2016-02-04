@@ -93,7 +93,7 @@ public class NessusScanningSteps {
         issues = reportClient.getAllIssuesSortedByPluginId(scanUuid);
     }
 
-    @When("the following nessus false positive are removed: (.*) (.*)")
+    @When("the following nessus false positive are removed: plugID (.*) hostname (.*)")
     public void removeFalsePositives(int plugID, String hostname) {
         Issue issue = issues.get(plugID);
         if (issue != null) {

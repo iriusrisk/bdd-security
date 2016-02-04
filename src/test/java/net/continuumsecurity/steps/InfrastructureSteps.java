@@ -24,7 +24,7 @@ public class InfrastructureSteps {
     List<Integer> selectedPorts;
     List<Integer> expectedPorts;
 
-    @Given("the target host name <host>")
+    @Given("the target host name (.*)")
     public void setTargetHost(@Named("host") String hostname) throws MalformedURLException {
         targetHost = hostname;
     }
@@ -45,7 +45,7 @@ public class InfrastructureSteps {
         }
     }
 
-    @Then("the ports should be <ports_open>")
+    @Then("the ports should be (.*)")
     public void checkPortStates(@Named("ports_open") String csvPorts) {
         expectedPorts = new ArrayList<Integer>();
         for (String portAsString : csvPorts.split(",")) {
