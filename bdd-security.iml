@@ -151,7 +151,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-http:8.1.15.v20140411" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.3.2" level="project" />
     <orderEntry type="module-library" scope="TEST">
-      <library name="Gradle: _home_stephen_src_bdd_security_lib_captchaswerve_1_0_SNAPSHOT_jar">
+      <library name="Gradle: _Users_bogdanmoldovan_workspace_bdd_security_lib_captchaswerve_1_0_SNAPSHOT_jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/captchaswerve-1.0-SNAPSHOT.jar!/" />
         </CLASSES>
