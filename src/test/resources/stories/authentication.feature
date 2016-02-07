@@ -15,7 +15,7 @@ Feature: Authentication
     And the user logs in
     Then the user is not logged in
 
-  @browser_only @cwe-295-auth @auth_login_form_over_ssl
+   @cwe-295-auth @auth_login_form_over_ssl
   Scenario: Present the login form itself over an HTTPS connection
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy
@@ -32,7 +32,7 @@ Feature: Authentication
     And the HTTP request-response containing the default credentials is selected
     Then the protocol should be HTTPS
 
-  @browser_only @cwe-525-repost @auth_return_redirect
+   @cwe-525-repost @auth_return_redirect
   Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code.
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy
@@ -41,14 +41,14 @@ Feature: Authentication
     And the HTTP request-response containing the default credentials is selected
     Then the response status code should start with 3
 
-  @browser_only @cwe-525-autocomplete-form @auth_autocomplete_login_form
+   @cwe-525-autocomplete-form @auth_autocomplete_login_form
   Scenario: Disable browser auto-completion on the login form
     Given a new browser instance
     And the login page is displayed
     When the login form is inspected
     Then it should have the autocomplete attribute set to 'off'
 
-  @browser_only @cwe-525 @auth_autocomplete_password @skip
+   @cwe-525 @auth_autocomplete_password @skip
   Scenario: Disable browser auto-completion on the password field
     Given a new browser instance
     And the login page is displayed

@@ -4,7 +4,7 @@ Feature:
   As a user
   I want to have a password reset system that does not leak sensitive information 
 
-  @browser_only @recover_captcha @skip
+   @recover_captcha @skip
   Scenario: Display a CAPTCHA on the password reset page
     Given a new browser instance
     And a CAPTCHA solver that always fails

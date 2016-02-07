@@ -1,10 +1,9 @@
 package net.continuumsecurity.steps;
 
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.ProcessExecutor;
-import net.continuumsecurity.Utils;
 import net.continuumsecurity.scanner.SSLyzeParser;
 
 import java.io.IOException;
@@ -26,12 +25,9 @@ public class SSLyzeSteps {
     SSLyzeParser parser;
     final static String OUTFILENAME="sslyze.output";
 
-    private ProcessExecutor createSSLyzeProcess() throws MalformedURLException {
+    private ProcessExecutor createSSLyzeProcess(String target, int port) throws MalformedURLException {
         List<String> cmds = new ArrayList<>();
         cmds.addAll(Arrays.asList(Config.getInstance().getSSLyze().split("\\s+")));
-        int port = Utils.getPortFromUrl(Config.getInstance().getBaseSecureUrl());
-
-        String target = Utils.getHostFromUrl(Config.getInstance().getBaseSecureUrl());
         if (port > -1) {
             target = target+":"+port;
         }
@@ -39,29 +35,29 @@ public class SSLyzeSteps {
         return new ProcessExecutor(cmds);
     }
 
-    @Given("the SSLyze command is run against the secure base Url")
-    public void runSSLTestsOnSecureBaseUrl() throws IOException {
+    @When("^the SSLyze command is run against the (.*) on (\\d+)$")
+    public void runSSLTestsOnSecureBaseUrl(String host, int port) throws IOException {
         if (sslTester == null) {
-            sslTester = createSSLyzeProcess();
+            sslTester = createSSLyzeProcess(host, port);
             sslTester.setOutputFile(OUTFILENAME);
             sslTester.start();
             parser = new SSLyzeParser(sslTester.getOutput());
         }
     }
     
-    @Then("the output must contain the text $text")
+    @Then("the output must contain the text (.*)")
     public void verifyThatOutputContainsText(String text) throws IOException {
         if (text.startsWith("\"") || text.startsWith("'")) text = text.substring(1,text.length()-1);
         assertThat(sslTester.getOutput(), containsString(text));
     }
 
-    @Then("the output must contain a line that matches the regular expression $text")
+    @Then("^the output must contain a line that matches (.*)")
     public void verifyThatOutputMatchesRegex(String regex) throws IOException {
         if (regex.startsWith("\"") || regex.startsWith("'")) regex = regex.substring(1,regex.length()-1);
         assertThat(parser.doesAnyLineMatch(regex), equalTo(true));
     }
 
-    @Then("the minimum key size must be $size bits")
+    @Then("the minimum key size must be (\\d+) bits")
     public void verifyMinimumKeySize(int size) {
         assertThat(parser.findSmallestAcceptedKeySize(), greaterThanOrEqualTo(size));
     }

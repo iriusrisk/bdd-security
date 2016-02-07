@@ -19,7 +19,7 @@ Feature:
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy
     When the path <path> is requested with the HTTP method GET with the 'Origin' header set to <origin>
-    Then the header 'Access-Control-Allow-Origin' header is not returned
+    Then the 'Access-Control-Allow-Origin' header is not returned
     Examples:
       |path                         |origin               |
 

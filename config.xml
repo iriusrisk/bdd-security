@@ -7,13 +7,10 @@
     <!-- The web driver to use, can be either Firefox, Chrome or HtmlUnit.  Optionally specify path to the driver (required for linux)
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver.  If these values are not specified, we'll use HtmlUnit
     <defaultDriver>firefox</defaultDriver> -->
-    <defaultDriver path="src/test/resources/drivers/chromedriver-linux64">Chrome</defaultDriver>
+    <defaultDriver path="src/test/resources/drivers/chromedriver-mac">Chrome</defaultDriver>
 
     <!-- Base URL of the application to test -->
     <baseUrl>http://localhost:8080/</baseUrl>
-
-    <!-- Base Secure URL of the application to test.  Used for the SSL and the HTTP header tests -->
-    <baseSecureUrl>https://www.ssllabs.com/</baseSecureUrl>
 
     <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth authn/z and session management testing. -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>

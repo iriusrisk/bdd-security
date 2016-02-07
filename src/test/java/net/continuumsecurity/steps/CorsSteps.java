@@ -34,7 +34,7 @@ public class CorsSteps {
     	assertThat("The returned Access-Control-Allow-Origin header equals the Origin", returnedHeader, equalTo(origin));
     }
 
-    @Then("the header 'Access-Control-Allow-Origin' header is not returned")
+    @Then("the 'Access-Control-Allow-Origin' header is not returned")
     public void checkAccessControlAllowOriginHeader() {
     	String returnedHeader = ((ICors) app).getAccessControlAllowOriginHeader();
     	assertThat("The header 'Access-Control-Allow-Origin' header was not returned", returnedHeader, equalTo(null));

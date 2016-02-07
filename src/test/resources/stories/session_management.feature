@@ -29,14 +29,14 @@ Feature:
     When the session is inactive for 15 minutes
     Then the user is not logged in
 
-  @browser_only @cwe-614 @session_cookie_secure
+  @cwe-614 @session_cookie_secure
   Scenario: Set the 'secure' flag on the session cookie
     Given a new browser or client instance
     When the default user logs in
     And the user is logged in
     Then the session cookie should have the secure flag set
 
-  @browser_only @session_cookie_httponly @wasc-13
+  @session_cookie_httponly @wasc-13
   Scenario: Set the 'httpOnly' flag on the session cookie
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy

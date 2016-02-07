@@ -299,7 +299,7 @@ public class WebApplicationSteps {
         assertThat(cookieCount, equalTo(numCookies));
     }
 
-    @When("the session is inactive for $minutes minutes")
+    @When("the session is inactive for (\\d+) minutes")
     public void waitForTime(int minutes) {
         try {
             Thread.sleep(minutes * 60 * 1000);
@@ -478,14 +478,17 @@ public class WebApplicationSteps {
         assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), Constants.XXSSPROTECTION), not(star));
     }
 
-    @When("the secure base Url is accessed and the HTTP response recorded")
-    public void accessSecureBaseUrlAndRecordHTTPResponse() {
-        if (!httpHeadersRecorded) {
-            enableLoggingDriver();
-            clearProxy();
-            ((Browser) app.getAuthTokenManager()).getUrl(Config.getInstance().getBaseSecureUrl());
-            recordFirstHarEntry();
-            httpHeadersRecorded = true;
+    @When("the following URLs are visited and their HTTP responses recorded")
+    public void accessSecureBaseUrlAndRecordHTTPResponse(List<String> urls) {
+        for (String url : urls) {
+            if (!httpHeadersRecorded) {
+                enableLoggingDriver();
+                clearProxy();
+                if ("baseUrl".equalsIgnoreCase(url)) url = Config.getInstance().getBaseUrl();
+                ((Browser) app.getAuthTokenManager()).getUrl(url);
+                recordFirstHarEntry();
+                httpHeadersRecorded = true;
+            }
         }
     }
 
