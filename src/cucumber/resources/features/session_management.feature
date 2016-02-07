@@ -17,7 +17,7 @@ Feature:
   Scenario: Invalidate the session when the user logs out
     Given a new browser or client instance
     When the default user logs in
-    And the user is logged in
+    Then the user is logged in
     When the user logs out
     Then the user is not logged in
 
@@ -25,7 +25,7 @@ Feature:
   Scenario: Invalidate the session after a period of inactivity
     Given a new browser or client instance
     When the default user logs in
-    And the user is logged in
+    Then the user is logged in
     When the session is inactive for 15 minutes
     Then the user is not logged in
 

@@ -7,10 +7,6 @@ import net.continuumsecurity.web.drivers.DriverFactory;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by stephen on 1/02/16.
  */
@@ -27,5 +23,7 @@ public class BaseCucumberTestSuite {
         DriverFactory.quitAll();
         ZapManager.getInstance().stopZap();
     }
+
+
 
 }

@@ -77,7 +77,11 @@ public class WebApplicationSteps {
      * start with a fresh browser getInstance, because @BeforeScenario is only
      * called once for the whole scenario, not each example.
      */
-    @Given("a new browser or client instance")
+    @Given("^a new browser or client instance$")
+    public void createAppForAnyClient() {
+        createApp();
+    }
+
     public void createApp() {
         app = Config.getInstance().createApp();
         app.enableDefaultClient();
@@ -88,11 +92,15 @@ public class WebApplicationSteps {
     }
 
     @When("the authentication tokens on the client are deleted")
+    public void deleteAuthTokensOnClient() {
+        deleteAuthTokens();
+    }
+
     public void deleteAuthTokens() {
         app.getAuthTokenManager().deleteAuthTokens();
     }
 
-    @Given("a new browser instance")
+    @Given("^a new browser instance$")
     public void createAppForBrowser() {
         createApp();
         if (!(app.getAuthTokenManager() instanceof Browser)) {
@@ -101,6 +109,10 @@ public class WebApplicationSteps {
     }
 
     @When("the login page is displayed")
+    public void displayLoginPage() {
+        openLoginPage();
+    }
+
     public void openLoginPage() {
         ((ILogin) app).openLoginPage();
     }
@@ -150,7 +162,7 @@ public class WebApplicationSteps {
         loginWithSetCredentials();
     }
 
-    @When("the user is logged in")
+    @Then("the user is logged in")
     public void loginSucceeds() {
         assertThat("The user is logged in", ((ILogin) app).isLoggedIn(), is(true));
     }
@@ -186,7 +198,7 @@ public class WebApplicationSteps {
         }
     }
 
-    @When("the user logs out")
+    @When("^the user logs out$")
     public void logout() {
         ((ILogout) app).logout();
     }
