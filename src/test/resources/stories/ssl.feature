@@ -20,28 +20,25 @@ Feature:
     Then the minimum key size must be 128 bits
 
   @ssl_disabled_protocols
-  Scenario Outline: Disable weak SSL protocols due to numerous cryptographic weaknesses
+  Scenario: Disable weak SSL protocols due to numerous cryptographic weaknesses
     Given the SSLyze command is run against the secure base Url
-    Then the following protocols must not be supported: <protocol>
-    Examples:
+    Then the following protocols must not be supported
       | protocol |
       | SSLV1    |
       | SSLV2    |
       | SSLV3    |
 
   @ssl_support_strong_protocols
-  Scenario Outline: Support TLSv1.2
+  Scenario: Support TLSv1.2
     Given the SSLyze command is run against the secure base Url
-    Then the following protocols must be supported <protocol>
-    Examples:
+    Then the following protocols must be supported
       | protocol |
       | TLSV1_2  |
 
   @ssl_perfect_forward_secrecy
-  Scenario Outline: Enable Perfect forward secrecy
+  Scenario: Enable Perfect forward secrecy
     Given the SSLyze command is run against the secure base Url
-    Then any of the following ciphers must be supported <cipher>
-    Examples:
+    Then any of the following ciphers must be supported
       | cipher                         |
       | ECDHE-RSA-AES128-SHA           |
       | ECDHE-RSA-AES256-SHA           |

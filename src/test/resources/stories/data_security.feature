@@ -18,10 +18,6 @@ Feature: Confidentiality of sensitive user data
     Then the HTTP Cache-control header has the value: no-cache, no-store, must-revalidate
     And the HTTP Pragma header has the value: no-cache
     Examples:
-      | method              | username | password | sensitiveData               |
-      | viewProfileForBob   | bob      | password | Robert                      |
-      | viewProfileForBob   | admin    | password | Robert                      |
-      | viewProfileForAlice | alice    | password | alice@continuumsecurity.net |
-      | viewProfileForAlice | admin    | password | alice@continuumsecurity.net |
-      | viewUserList        | admin    | password | User List                   |
+      | method              | username   | password   | sensitiveData               |
+      | viewProfileForBob   | bob        | password   | Robert                      |
 

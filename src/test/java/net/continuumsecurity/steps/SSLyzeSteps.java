@@ -66,26 +66,30 @@ public class SSLyzeSteps {
         assertThat(parser.findSmallestAcceptedKeySize(), greaterThanOrEqualTo(size));
     }
 
-    @Then("the following protocols must not be supported: (.*)")
-    public void verifyDisabledProcotols(String prot) {
+    @Then("the following protocols must not be supported")
+    public void verifyDisabledProcotols(List<String> forbiddenProtocols) {
         List<String> supported = parser.listAllSupportedProtocols();
-        assertThat(supported, not(hasItem(prot)));
+        for (String forbidden : forbiddenProtocols) {
+            assertThat(supported, not(hasItem(forbidden)));
+        }
     }
 
-    @Then("the following protocols must be supported (.*)")
-    public void verifySupportedProcotols(String proto) {
+    @Then("the following protocols must be supported")
+    public void verifySupportedProcotols(List<String> mandatoryProtocols) {
         List<String> supported = parser.listAllSupportedProtocols();
-        assertThat(supported, hasItem(proto));
+        for (String mandatory : mandatoryProtocols) {
+            assertThat(supported, hasItem(mandatory));
+        }
 
     }
 
-    @Then("any of the following ciphers must be supported (.*)")
-    public void verifyAnyCipherSupported(String cipher) {
+    @Then("any of the following ciphers must be supported")
+    public void verifyAnyCipherSupported(List<String> ciphers) {
         boolean foundCipher = false;
-
-        if (parser.supportsCipher(cipher))
+        for (String cipher : ciphers) {
+            if (parser.supportsCipher(cipher))
                 foundCipher = true;
-
+        }
         assertThat(foundCipher, equalTo(true));
     }
 

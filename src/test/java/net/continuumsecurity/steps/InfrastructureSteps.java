@@ -7,7 +7,6 @@ import net.continuumsecurity.Port;
 import net.continuumsecurity.scanner.PortScanner;
 import org.apache.log4j.Logger;
 
-import javax.inject.Named;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +24,17 @@ public class InfrastructureSteps {
     List<Integer> expectedPorts;
 
     @Given("the target host name (.*)")
-    public void setTargetHost(@Named("host") String hostname) throws MalformedURLException {
+    public void setTargetHost(String hostname) throws MalformedURLException {
         targetHost = hostname;
     }
 
-    @When("TCP ports from $from to $to are scanned using $threads threads and a timeout of $timeout milliseconds")
+    @When("^TCP ports from (\\d+) to (\\d+) are scanned using (\\d+) threads and a timeout of (\\d+) milliseconds$")
     public void scanPorts(int from, int to, int threads, int timeout) throws ExecutionException, InterruptedException {
         portScanner = new PortScanner(targetHost,from,to,threads,timeout);
         portScanResults = portScanner.scan();
     }
 
-    @When("the $state ports are selected")
+    @When("the (.*) ports are selected")
     public void selectPorts(String state) {
         selectedPorts = new ArrayList<Integer>();
         for (Port result : portScanResults) {
@@ -46,7 +45,7 @@ public class InfrastructureSteps {
     }
 
     @Then("the ports should be (.*)")
-    public void checkPortStates(@Named("ports_open") String csvPorts) {
+    public void checkPortStates(String csvPorts) {
         expectedPorts = new ArrayList<Integer>();
         for (String portAsString : csvPorts.split(",")) {
             expectedPorts.add(Integer.parseInt(portAsString));

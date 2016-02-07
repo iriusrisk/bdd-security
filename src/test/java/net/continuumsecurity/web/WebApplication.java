@@ -20,7 +20,6 @@ package net.continuumsecurity.web;
 
 import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
-import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.clients.AuthTokenManager;
 import net.continuumsecurity.clients.Browser;
 import net.continuumsecurity.web.drivers.DriverFactory;
@@ -35,21 +34,9 @@ import java.util.concurrent.TimeUnit;
 public class WebApplication extends Application {
     protected Browser browser;
     protected WebDriver driver;
-    protected ICaptchaSolver captchaSolver;
 
     public WebApplication() {
         log = Logger.getLogger(WebApplication.class);
-        if (this instanceof ICaptcha) {
-        	((ICaptcha)this).setDefaultSolver();
-        }
-    }
-
-    public ICaptchaSolver getCaptchaSolver() {
-        return captchaSolver;
-    }
-
-    public void setCaptchaSolver(ICaptchaSolver captchaHelper) {
-        this.captchaSolver = captchaHelper;
     }
 
     public Browser getBrowser() {

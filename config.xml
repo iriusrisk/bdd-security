@@ -10,7 +10,7 @@
     <defaultDriver path="src/test/resources/drivers/chromedriver-linux64">Chrome</defaultDriver>
 
     <!-- Base URL of the application to test -->
-    <baseUrl>http://localhost:9090/</baseUrl>
+    <baseUrl>http://localhost:8080/</baseUrl>
 
     <!-- Base Secure URL of the application to test.  Used for the SSL and the HTTP header tests -->
     <baseSecureUrl>https://www.ssllabs.com/</baseSecureUrl>

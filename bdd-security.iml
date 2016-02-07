@@ -14,15 +14,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" scope="TEST">
-      <library name="Gradle: captchaswerve-1.0-SNAPSHOT">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/captchaswerve-1.0-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="TEST">
       <library name="Gradle: zap-api-2.4-v9">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/zap-api-2.4-v9.jar!/" />
@@ -67,33 +58,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.mortbay.jetty:jetty-runner:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-plus:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-annotations:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-jndi:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-jsp:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.transaction:1.1.1.v201105210645" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-webapp:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.annotation:1.1.0.v201108011116" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:org.objectweb.asm:3.1.0.v200803061910" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-server:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.mail.glassfish:1.4.1.v201005082020" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.servlet.jsp:2.2.0.v201112011158" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:org.apache.jasper.glassfish:2.2.2.v201112011158" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.servlet.jsp.jstl:1.2.0.v201105211821" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:org.apache.taglibs.standard.glassfish:1.2.0.v201112081803" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.el:2.2.0.v201108011116" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:com.sun.el:2.2.0.v201108011116" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:org.eclipse.jdt.core:3.7.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-xml:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-servlet:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-continuation:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty.orbit:javax.activation:1.1.0.v201105071233" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-security:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-http:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-util:8.1.14.v20131031" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.eclipse.jetty:jetty-io:8.1.14.v20131031" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: info.cukes:cucumber-junit:1.2.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: info.cukes:cucumber-java:1.2.4" level="project" />
@@ -186,5 +150,14 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-io:8.1.15.v20140411" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.eclipse.jetty:jetty-http:8.1.15.v20140411" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.3.2" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: _home_stephen_src_bdd_security_lib_captchaswerve_1_0_SNAPSHOT_jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/captchaswerve-1.0-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -5,14 +5,13 @@ import net.continuumsecurity.Credentials;
 import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
-import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.web.WebApplication;
 import org.openqa.selenium.By;
 
 import java.util.Map;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
-        ILogout, IRecoverPassword {
+        ILogout {
 
     public RopeyTasksApplication() {
         super();
@@ -53,10 +52,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.linkText("Profile")).click();
     }
 
-    public void viewUserList() {
-        driver.get(Config.getInstance().getBaseUrl() + "admin/list");
-    }
-
     @Override
     public void logout() {
         driver.findElement(By.linkText("Logout")).click();
@@ -76,23 +71,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         viewProfile();
         search("test");
     }
-
-    /*
-     * The details map will be created from the name and value attributes of the
-     * <recoverpassword> tags defined for each user in the config.xml file.
-     *
-     * (non-Javadoc)
-     *
-     * @see
-     * IRecoverPassword#submitRecover(java.util.Map)
-     */
-    @Override
-    public void submitRecover(Map<String, String> details) {
-        driver.get(Config.getInstance().getBaseUrl() + "user/recover");
-        driver.findElement(By.id("email")).sendKeys(details.get("email"));
-        driver.findElement(By.xpath("//input[@value='Recover']")).click();
-    }
-    
 
 }
 

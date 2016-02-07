@@ -56,18 +56,8 @@ public class NessusScanningSteps {
     }
 
     @Given("the target host names")
-    public void setTargetHosts(Map<String, String> hostsTable) throws MalformedURLException {
-
-        String hosts = hostsTable.get("hosts");
-        String ports_open = hostsTable.get("posts_open");
-
-        int size = hosts.split(";").length;
-
-        assert size >= 0;
-
-        Collections.addAll(hostNames, hosts.split(";"));
-
-
+    public void setTargetHosts(List<String> hosts) throws MalformedURLException {
+        hostNames.addAll(hosts);
     }
 
     @When("the scanner is run with scan name $scanName")

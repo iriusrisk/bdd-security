@@ -31,16 +31,6 @@ task cucumber() {
     }
 }
 
-task ropeyRun(type: JavaExec)  {
-    main = "org.mortbay.jetty.runner.Runner"
-    args = [
-            "--port",
-            "9090",
-            "src/test/resources/demo/ropeytasks-0.1.war"
-    ]
-    classpath = configurations.runtime
-}
-
 //Ensure the cucumber tests are executed as part of the build. Makes for a very pretty output.
 build.dependsOn cucumber
 
@@ -73,6 +63,5 @@ dependencies {
     testCompile 'net.htmlparser.jericho:jericho-html:3.3'
     testCompile files ("lib/captchaswerve-1.0-SNAPSHOT.jar","lib/zap-api-2.4-v9.jar", "lib/harlib-1.1.1.jar",
             "lib/proxy-2.4.3.jar", "lib/testng-6.8.21.jar", "lib/nessus-java-client-0.1-SNAPSHOT.jar")
-    runtime 'org.mortbay.jetty:jetty-runner:8.1.14.v20131031'
 }
 

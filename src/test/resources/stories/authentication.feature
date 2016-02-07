@@ -1,3 +1,4 @@
+@authentication
 Feature: Authentication
   In order to protect sensitive user data
   As an application owner

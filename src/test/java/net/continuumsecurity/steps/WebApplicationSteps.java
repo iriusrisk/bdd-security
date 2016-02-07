@@ -28,21 +28,17 @@ import edu.umass.cs.benchlab.har.HarCookie;
 import edu.umass.cs.benchlab.har.HarEntry;
 import edu.umass.cs.benchlab.har.HarRequest;
 import net.continuumsecurity.*;
-import net.continuumsecurity.behaviour.ICaptcha;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
-import net.continuumsecurity.behaviour.IRecoverPassword;
 import net.continuumsecurity.clients.Browser;
 import net.continuumsecurity.proxy.LoggingProxy;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
-import net.continuumsecurity.web.FakeCaptchaSolver;
 import net.continuumsecurity.web.StepException;
 import net.continuumsecurity.web.WebApplication;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
@@ -349,33 +345,6 @@ public class WebApplicationSteps {
 
     }
 
-    @Then("the CAPTCHA should be present")
-    public void checkCaptchaRequestPresent() {
-        if (!(app instanceof ICaptcha))
-            throw new RuntimeException(
-                    "Application doesn't implement ICaptcha, can't run captcha scenarios");
-        ICaptcha captchaApp = (ICaptcha) app;
-        try {
-            assertThat(captchaApp.getCaptchaImage(), notNullValue());
-        } catch (NoSuchElementException nse) {
-            fail("Captcha image not found.");
-        }
-    }
-
-    @Given("a CAPTCHA solver that always fails")
-    public void setIncorrectCaptchaHelper() {
-        if (!(app instanceof ICaptcha))
-            throw new RuntimeException(
-                    "App does not implement ICaptcha, skipping.");
-        ((ICaptcha) app).setCaptchaSolver(new FakeCaptchaSolver(app));
-    }
-
-    @When("the password recovery feature is requested")
-    public void submitPasswordRecovery() {
-        ((IRecoverPassword) app).submitRecover(Config.getInstance().getUsers()
-                .getAll().get(0).getRecoverPasswordMap());
-    }
-
     @When("they access the restricted resource: (.*)")
     public void setMethodName(String method) {
         methodName = method;
@@ -395,15 +364,6 @@ public class WebApplicationSteps {
         recordedEntries = getProxy().findInResponseHistory(sensitiveData);
         assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", recordedEntries.size(), greaterThan(0));
         currentHar = recordedEntries.get(0);
-    }
-
-    @Then("the CAPTCHA is displayed")
-    public void checkCaptchaPresent() {
-        try {
-            assertThat(((ICaptcha) app).getCaptchaImage(), notNullValue());
-        } catch (NoSuchElementException nse) {
-            fail("CAPTCHA not found");
-        }
     }
 
     @Given("the username (.*)")
