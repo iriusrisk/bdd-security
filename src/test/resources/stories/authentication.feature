@@ -64,12 +64,3 @@ Feature: Authentication
     When the default password
     And the user logs in from a fresh login page
     Then the user is not logged in
-
-  @browser_only @auth_login_captcha @skip
-  Scenario: Display a Captcha after 4 failed authentication attempts
-    Given a new browser instance
-    And the default username
-    And an incorrect password
-    And the user logs in from a fresh login page 4 times
-    When the login page is displayed
-    Then the CAPTCHA is displayed

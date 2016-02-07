@@ -7,7 +7,7 @@ Feature: Navigate App
     And a new scanning session
     And the passive scanner is enabled
     And the page flow described in the method: navigate is run through the proxy
-    And the following URL regular expressions are excluded from the spider: exRegex
+    And the following URL regular expressions are excluded from the spider
       | exRegex    |
       | .*logout.* |
     And the spider is configured for a maximum depth of 10
