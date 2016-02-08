@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        format = { "pretty", "html:target/cucumber", "json:target/cucumber.json", "junit:target/cucumber.xml" },
+        format = { "pretty", "html:build/cucumber", "json:build/cucumber.json", "junit:build/cucumber.xml" },
         glue = { "net.continuumsecurity.steps" },
         tags = { "~@skip" }
 )

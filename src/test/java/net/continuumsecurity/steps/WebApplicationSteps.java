@@ -378,6 +378,34 @@ public class WebApplicationSteps {
         currentHar = recordedEntries.get(0);
     }
 
+
+
+    @Then("the string: (.*)should be present in one of the HTTP responses")
+    public void checkAccessToResource(  String sensitiveData) {
+        try {
+            app.getClass().getMethod(methodName).invoke(app);
+            // For web services, calling the method might throw an exception if
+            // access is denied.
+        } catch (Exception e) {
+            fail("User with credentials: " + credentials.getUsername() + " "
+                    + credentials.getPassword()
+                    + " could not access the method: " + methodName + "()");
+        }
+        if (methodProxyMap.get(methodName) != null) {
+            log.info("The method: "
+                    + methodName
+                    + " has already been added to the map, using the existing HTTP logs");
+            return;
+        }
+        methodProxyMap.put(methodName, getProxy().getHistory());
+        boolean accessible = getProxy().findInResponseHistory(sensitiveData).size() > 0;
+        if (accessible) {
+            log.debug("User: " + credentials.getUsername() + " can access resource: " + methodName);
+        }
+        assertThat("User: " + credentials.getUsername() + " could access resource: " + methodName + " because the text: " + sensitiveData + " was present in the responses", accessible, equalTo(true));
+    }
+
+
     @Given("the username (.*)")
     public void setUsernameFromExamples(String username) {
         credentials.setUsername(username);
@@ -386,6 +414,11 @@ public class WebApplicationSteps {
     @Given("the password (.*)")
     public void setCredentialsFromExamples(String password) {
         credentials.setPassword(password);
+    }
+
+    @When("the previously recorded HTTP Requests for (.*) are replayed using the current session ID")
+    public void areReplayedUsingCSessID(String method) {
+        methodName = method;
     }
 
     @Then("the X-Frame-Options header is either (.*) or (.*)")
@@ -406,6 +439,18 @@ public class WebApplicationSteps {
 
     }
 
+    @Then("the string: (.*) should not be present in any of the HTTP responses")
+    public void checkNoAccessToResource(String sensitiveData) {
+        if (methodProxyMap == null || methodProxyMap.get(methodName).size() == 0)
+            throw new ConfigurationException(
+                    "No HTTP messages were recorded for the method: " + methodName);
+        findAndSetSessionIds();
+        if (app instanceof WebApplication) {
+            checkAccessUsingCookieMethod(sensitiveData);
+        } else {
+            checkAccessUsingAuthTokenMethod(sensitiveData);
+        }
+    }
 
     private void checkAccessUsingAuthTokenMethod(String sensitiveData) {
         boolean accessible = false;
