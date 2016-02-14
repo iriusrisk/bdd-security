@@ -16,14 +16,12 @@ import org.junit.runner.RunWith;
         glue = { "net.continuumsecurity.steps" },
         tags = { "~@skip" }
 )
-public class BaseCucumberTestSuite {
+public class BaseCucumberTestCase {
 
     @AfterClass
     public static void tearDown() {
         DriverFactory.quitAll();
         ZapManager.getInstance().stopZap();
     }
-
-
 
 }

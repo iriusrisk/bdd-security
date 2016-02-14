@@ -8,8 +8,6 @@ import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.web.WebApplication;
 import org.openqa.selenium.By;
 
-import java.util.Map;
-
 public class RopeyTasksApplication extends WebApplication implements ILogin,
         ILogout {
 
@@ -20,7 +18,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     @Override
     public void openLoginPage() {
         driver.get(Config.getInstance().getBaseUrl() + "user/login");
-        verifyTextPresent("Login");
+        findAndWaitForElement(By.id("username"));
     }
 
     @Override
@@ -58,7 +56,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     }
 
     public void search(String query) {
-        driver.findElement(By.linkText("Tasks")).click();
+        findAndWaitForElement(By.linkText("Tasks")).click();
         driver.findElement(By.id("q")).clear();
         driver.findElement(By.id("q")).sendKeys(query);
         driver.findElement(By.id("search")).click();
@@ -67,7 +65,6 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
     public void navigate() {
         openLoginPage();
         login(Config.getInstance().getUsers().getDefaultCredentials());
-        verifyTextPresent("Welcome");
         viewProfile();
         search("test");
     }

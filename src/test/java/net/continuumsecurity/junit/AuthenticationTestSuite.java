@@ -9,6 +9,6 @@ import cucumber.api.CucumberOptions;
                 "src/test/resources/features/authentication.feature"
         }
 )
-public class AuthenticationTestSuite extends BaseCucumberTestSuite {
+public class AuthenticationTestSuite extends BaseCucumberTestCase {
 
 }

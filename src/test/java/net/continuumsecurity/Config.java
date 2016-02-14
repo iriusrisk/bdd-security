@@ -178,10 +178,6 @@ public class Config {
         return getXml().getBoolean("displayStackTrace");
     }
 
-    public String getBaseSecureUrl() {
-        return getXml().getString("baseSecureUrl");
-    }
-
     public String getIncorrectUsername() {
         return validateAndGetString("incorrectUsername");
     }

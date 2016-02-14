@@ -30,7 +30,6 @@ import net.continuumsecurity.web.Application;
 import org.apache.log4j.Logger;
 import org.zaproxy.clientapi.core.Alert;
 
-import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -49,9 +48,15 @@ public class AppScanningSteps {
     List<Alert> alerts = new ArrayList<Alert>();
     String scannerIds = null;
     int spiderMaxChildren = 1000;
+    boolean navigated = false;
 
     public AppScanningSteps() {
 
+    }
+
+    @Given("the application has been navigated")
+    public void checkIfApplicationHasBeenNavigated() {
+        if (!navigated) throw new RuntimeException("The navigate_app feature must be run before scanning");
     }
 
     @Given("the passive scanner has already run during the app navigation")
@@ -87,7 +92,7 @@ public class AppScanningSteps {
         return (Spider) getScanner();
     }
 
-    @When("the XML report is written to the file $file")
+    @When("the XML report is written to the file (.*)")
     public void writeXmlReport(String filename) throws IOException {
         byte[] xmlReport = scanner.getXmlReport();
         Files.write(Paths.get(Config.getInstance().getLatestReportsDir() + File.separator + "zap" + File.separator + filename), xmlReport);
@@ -104,35 +109,36 @@ public class AppScanningSteps {
         app.enableHttpLoggingClient();
         log.debug("Navigating method: " + method.getName());
         method.invoke(app);
+        navigated = true;
     }
 
-    @Given("the following URLs are spidered: $urlsTable")
-    public void spiderUrls(String url) throws InterruptedException {
-
-        if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
-        else if (url.equalsIgnoreCase("basesecureurl")) url = Config.getInstance().getBaseSecureUrl();
-        spider(url);
-
+    @Given("the following URLs are spidered")
+    public void spiderUrls(List<String> urls) throws InterruptedException {
+        for (String url : urls) {
+            if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
+            spider(url);
+        }
     }
 
-    @Given("the spider is configured for a maximum depth of $depth")
-    public void setSpiderDepth(@Named("depth") int depth) {
+    @Given("the spider is configured for a maximum depth of (\\d+)")
+    public void setSpiderDepth(int depth) {
         getSpider().setMaxDepth(depth);
     }
 
-    @Given("the following URL regular expressions are excluded from the spider: (.*)")
-    public void setExcludedRegex(String exRegex) {
-        getSpider().excludeFromSpider(exRegex);
-
+    @Given("the following URL regular expressions are excluded from the spider")
+    public void setExcludedRegex(List<String> exRegexes) {
+        for (String regex : exRegexes) {
+            getSpider().excludeFromSpider(regex);
+        }
     }
 
-    @Given("the spider is configured for $threads concurrent threads")
-    public void setSpiderThreads(@Named("threads") int threads) {
+    @Given("the spider is configured for (\\d+) concurrent threads")
+    public void setSpiderThreads(int threads) {
         getSpider().setThreadCount(threads);
     }
 
-    @Given("the spider is configured for $children maximum children")
-    public void setSpiderMaxChildren(@Named("children") int children) {
+    @Given("the spider is configured for (\\d+) maximum children")
+    public void setSpiderMaxChildren(int children) {
         spiderMaxChildren = children;
     }
 
@@ -157,8 +163,8 @@ public class AppScanningSteps {
     }
 
 
-    @Given("the $policyName policy is enabled")
-    public void enablePolicy(@Named("policyName") String policyName) {
+    @Given("the (\\S+) policy is enabled")
+    public void enablePolicy(String policyName) {
         switch (policyName.toLowerCase()) {
             case "directory-browsing":
                 scannerIds = "0";
@@ -231,7 +237,7 @@ public class AppScanningSteps {
         getScanner().setEnableScanners(scannerIds, true);
     }
 
-    @Given("the attack strength is set to $strength")
+    @Given("the attack strength is set to (\\S+)")
     public void setAttackStrength(String strength) {
         if (scannerIds == null)
             throw new RuntimeException("First set the scanning policy before setting attack strength or alert threshold");
@@ -240,7 +246,7 @@ public class AppScanningSteps {
         }
     }
 
-    @Given("the alert threshold is set to $threshold")
+    @Given("the alert threshold is set to (\\S+)")
     public void setAlertThreshold(String threshold) {
         if (scannerIds == null)
             throw new RuntimeException("First set the scanning policy before setting attack strength or alert threshold");
@@ -291,8 +297,8 @@ public class AppScanningSteps {
         alerts = clean;
     }
 
-    @Then("no $riskRating or higher risk vulnerabilities should be present")
-    public void checkVulnerabilities(@Named("riskRating") String risk) {
+    @Then("^no (\\S+) or higher risk vulnerabilities should be present$")
+    public void checkVulnerabilities(String risk) {
         List<Alert> filteredAlerts = null;
         Alert.Risk riskLevel = Alert.Risk.High;
 

@@ -9,5 +9,5 @@ import org.junit.runner.RunWith;
     //Enable tags to run specific Scenarios
     tags = "@authentication"
 )
-public class AllStoriesTestSuite extends BaseCucumberTestSuite{
+public class AllStoriesTestSuite extends BaseCucumberTestCase {
 }

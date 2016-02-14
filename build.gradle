@@ -45,8 +45,8 @@ dependencies {
     testCompile 'org.apache.cxf:cxf-rt-rs-client:3.1.1'  //Jersey client
     testCompile 'junit:junit-dep:4.11'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile ('org.seleniumhq.selenium:selenium-java:2.44.0') { exclude group: 'junit' }
-    testCompile 'org.seleniumhq.selenium:selenium-api:2.44.0'
+    testCompile ('org.seleniumhq.selenium:selenium-java:2.52.0') { exclude group: 'junit' }
+    testCompile 'org.seleniumhq.selenium:selenium-api:2.52.0'
     testCompile 'log4j:log4j:1.2.17'
     testCompile 'args4j:args4j:2.0.16'
     testCompile 'commons-configuration:commons-configuration:1.8'

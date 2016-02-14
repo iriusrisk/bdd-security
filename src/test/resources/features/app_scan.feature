@@ -5,15 +5,33 @@ Feature: Automated Application Security Scanning
   I want to ensure that the application does not suffer from common security vulnerabilities
 
   Background:
-    Given a scanner with all policies disabled
+    Given the application has been navigated
+    And a scanner with all policies disabled
     And all existing alerts are deleted
     And the following URL regular expressions are excluded from the scanner regex
       | regex      |
       | .*logout.* |
 
+  Scenario: Navigate and spider the application and find vulnerabilities through passive scanning
+    Given a new browser or client instance
+    And a new scanning session
+    And the passive scanner is enabled
+    And the page flow described in the method: navigate is run through the proxy
+    And the following URL regular expressions are excluded from the spider
+      | .*logout.* |
+    And the spider is configured for a maximum depth of 10
+    And the spider is configured for 1000 maximum children
+    And the spider is configured for 10 concurrent threads
+    And the following URLs are spidered
+      | baseUrl |
+    And the spider status reaches 100% complete
+    And the following false positives are removed: <url> <parameter> <cweid> <wascid>
+      | url     | parameter | cweid     | wascid     |
+    When the XML report is written to the file passive.xml
+    Then no Medium or higher risk vulnerabilities should be present
+
   @cwe-89 @id-scan_sql_injection
   Scenario: The application should not contain SQL injection vulnerabilities
-
     And the SQL-Injection policy is enabled
     And the attack strength is set to High
     And the alert threshold is set to Low
