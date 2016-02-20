@@ -3,10 +3,7 @@ package net.continuumsecurity.steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import net.continuumsecurity.ClientFactory;
-import net.continuumsecurity.Config;
-import net.continuumsecurity.ReportClient;
-import net.continuumsecurity.ScanClient;
+import net.continuumsecurity.*;
 import net.continuumsecurity.v5.model.Issue;
 import org.apache.log4j.Logger;
 import org.testng.internal.Utils;
@@ -83,13 +80,15 @@ public class NessusScanningSteps {
         issues = reportClient.getAllIssuesSortedByPluginId(scanUuid);
     }
 
-    @When("the following nessus false positive are removed: plugID (.*) hostname (.*)")
-    public void removeFalsePositives(int plugID, String hostname) {
-        Issue issue = issues.get(plugID);
-        if (issue != null) {
-            issue.getHostnames().remove(hostname);
-            if (issue.getHostnames().size() == 0) {
-                issues.remove(plugID);
+    @When("the following nessus false positive are removed")
+    public void removeFalsePositives(List<NessusFalsePositive> falsePositives) {
+        for (NessusFalsePositive falsePositive : falsePositives) {
+            Issue issue = issues.get(falsePositive.getPluginId());
+            if (issue != null) {
+                issue.getHostnames().remove(falsePositive.getHostname());
+                if (issue.getHostnames().size() == 0) {
+                    issues.remove(falsePositive.getPluginId());
+                }
             }
         }
     }

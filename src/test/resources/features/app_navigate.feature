@@ -1,7 +1,7 @@
-@navigate_app
+@app_navigate
 Feature: Navigate App
 
-  @navigate_app
+  @app_navigate
   Scenario: Navigate and spider the application and find vulnerabilities through passive scanning
     Given a new browser or client instance
     And a new scanning session
@@ -15,7 +15,7 @@ Feature: Navigate App
     And the following URLs are spidered
       | baseUrl |
     And the spider status reaches 100% complete
-    And the following false positives are removed: <url> <parameter> <cweid> <wascid>
+    And the following false positives are removed
       | url     | parameter | cweid     | wascid     |
-    When the XML report is written to the file passive.xml
+    When the XML report is written to the file build/reports/zap/passive.xml
     Then no Medium or higher risk vulnerabilities should be present

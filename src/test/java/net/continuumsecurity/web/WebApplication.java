@@ -37,6 +37,7 @@ public class WebApplication extends Application {
 
     public WebApplication() {
         log = Logger.getLogger(WebApplication.class);
+        setImplicitWait(3, TimeUnit.SECONDS);
     }
 
     public Browser getBrowser() {
@@ -69,7 +70,6 @@ public class WebApplication extends Application {
 
     public void navigate() {
         browser.getWebDriver().get(Config.getInstance().getBaseUrl());
-        browser.getWebDriver().get(Config.getInstance().getBaseSecureUrl());
     }
 
     @Override

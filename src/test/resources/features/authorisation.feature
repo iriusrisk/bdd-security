@@ -5,7 +5,7 @@ Feature: Authorisation and Access Control
   I want to ensure that only the authorised users have access to my data
 
 
-  @id-config_authorised_resources
+  @config_authorised_resources
   Scenario Outline: Users can view restricted resources for which they are authorised
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy
@@ -27,7 +27,7 @@ Feature: Authorisation and Access Control
       | viewUserList        | admin    | password | User List                   |
 
 
-  @cwe-639 @id-access_control_restricted
+  @cwe-639 @access_control_restricted
   Scenario Outline: Users must not be able to view resources for which they are not authorised
     Given the access control map for authorised users has been populated
     And a new browser or client instance
@@ -44,7 +44,7 @@ Feature: Authorisation and Access Control
       | viewUserList        | alice    | password | User List                   |
       | viewUserList        | bob      | password | User List                   |
 
-  @cwe-306 @id-anon_access_control
+  @cwe-306 @anon_access_control
   Scenario Outline: Un-authenticated users should not be able to view restricted resources
     Given the access control map for authorised users has been populated
     And a new browser or client instance

@@ -13,6 +13,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 
     public RopeyTasksApplication() {
         super();
+
     }
 
     @Override

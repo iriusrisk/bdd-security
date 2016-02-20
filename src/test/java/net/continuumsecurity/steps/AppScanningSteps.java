@@ -1,18 +1,18 @@
 /*******************************************************************************
  * BDD-Security, application security testing framework
- * <p>
+ * <p/>
  * Copyright (C) `2014 Stephen de Vries`
- * <p>
+ * <p/>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * <p>
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * <p>
+ * <p/>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see `<http://www.gnu.org/licenses/>`.
  ******************************************************************************/
@@ -22,18 +22,18 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.continuumsecurity.Config;
-import net.continuumsecurity.FalsePositive;
 import net.continuumsecurity.UnexpectedContentException;
+import net.continuumsecurity.ZAPFalsePositive;
 import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
 import org.apache.log4j.Logger;
 import org.zaproxy.clientapi.core.Alert;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +52,6 @@ public class AppScanningSteps {
 
     public AppScanningSteps() {
 
-    }
-
-    @Given("the application has been navigated")
-    public void checkIfApplicationHasBeenNavigated() {
-        if (!navigated) throw new RuntimeException("The navigate_app feature must be run before scanning");
     }
 
     @Given("the passive scanner has already run during the app navigation")
@@ -93,9 +88,11 @@ public class AppScanningSteps {
     }
 
     @When("the XML report is written to the file (.*)")
-    public void writeXmlReport(String filename) throws IOException {
+    public void writeXmlReport(String path) throws IOException {
         byte[] xmlReport = scanner.getXmlReport();
-        Files.write(Paths.get(Config.getInstance().getLatestReportsDir() + File.separator + "zap" + File.separator + filename), xmlReport);
+        Path pathToFile = Paths.get(path);
+        Files.createDirectories(pathToFile.getParent());
+        Files.write(pathToFile, xmlReport);
     }
 
     @Given("a scanner with all policies enabled")
@@ -125,7 +122,7 @@ public class AppScanningSteps {
         getSpider().setMaxDepth(depth);
     }
 
-    @Given("the following URL regular expressions are excluded from the spider")
+    @Given("^the following URL regular expressions are excluded from the spider$")
     public void setExcludedRegex(List<String> exRegexes) {
         for (String regex : exRegexes) {
             getSpider().excludeFromSpider(regex);
@@ -255,11 +252,11 @@ public class AppScanningSteps {
         }
     }
 
-    @Given("the following URL regular expressions are excluded from the scanner (.*)")
-    public void excludeUrlsFromScan(String exclude) {
-
-        getScanner().excludeFromScanner(exclude);
-
+    @Given("the following URL regular expressions are excluded from the scanner")
+    public void excludeUrlsFromScan(List<String> excludedRegexes) {
+        for (String excluded : excludedRegexes) {
+            getScanner().excludeFromScanner(excluded);
+        }
     }
 
 
@@ -276,25 +273,20 @@ public class AppScanningSteps {
         }
     }
 
-    @When("the following false positives are removed: (.*)")
-    public void removeFalsePositives(String url, String param, String cweid, String wascid) {
+    @When("the following false positives are removed")
+    public void removeFalsePositives(List<ZAPFalsePositive> falsePositives) {
         alerts = getScanner().getAlerts();
-        List<Alert> clean = new ArrayList<>();
-
+        List<Alert> validFindings = new ArrayList<>();
+        validFindings.addAll(alerts);
         for (Alert alert : alerts) {
             boolean falsePositive = false;
-
-            FalsePositive falsePos = new FalsePositive(url, param, cweid, wascid);
-
-            if (falsePos.matches(alert.getUrl(), alert.getParam(), alert.getCweId(), alert.getWascId())) {
-                falsePositive = true;
-            }
-
-            if (!falsePositive && !containsAlertByValue(clean, alert)) {
-                clean.add(alert);
+            for (ZAPFalsePositive zapFalsePositive : falsePositives) {
+                if (zapFalsePositive.matches(alert.getUrl(), alert.getParam(), alert.getCweId(), alert.getWascId())) {
+                    validFindings.remove(alert);
+                }
             }
         }
-        alerts = clean;
+        alerts = validFindings;
     }
 
     @Then("^no (\\S+) or higher risk vulnerabilities should be present$")

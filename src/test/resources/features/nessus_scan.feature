@@ -9,10 +9,9 @@ Feature: Automated Nessus scanning
     And a nessus version 6 server at https://localhost:8834
     And the scanning policy named bdd-policy
     And the target host names
-      | host       |
       | localhost  |
     When the scanner is run with scan name bddscan
     And the list of issues is stored
-    And the following nessus false positive are removed:
+    And the following nessus false positive are removed
       |pluginId    |hostname          |
     Then no severity: 2 or higher issues should be present
