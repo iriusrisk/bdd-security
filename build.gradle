@@ -1,8 +1,25 @@
+import groovyx.gpars.GParsPool
+import net.masterthought.cucumber.ReportBuilder
+
+apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'idea'
-
+apply plugin: 'maven'
 def cucumberVersion = "1.2.4"
 
+buildscript {
+    repositories {
+        maven {
+            url "http://repo.bodar.com"
+        }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.codehaus.gpars:gpars:1.2.1",
+                "net.masterthought:cucumber-reporting:1.4.0"
+    }
+}
 
 allprojects {
     apply plugin: 'java'
@@ -11,6 +28,9 @@ allprojects {
 }
 
 repositories {
+    maven {
+        url "http://repo.bodar.com"
+    }
     mavenCentral()
 }
 
@@ -28,13 +48,50 @@ task cucumber() {
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = ['--plugin', 'pretty', '--glue', 'net.continuumsecurity.steps', 'src/test/resources/features']
         }
+        generateReport()
     }
+}
+
+task generateReportTask() {
+    doLast {
+        generateReport()
+    }
+}
+
+test {
+    finalizedBy(generateReportTask)
 }
 
 //Ensure the cucumber tests are executed as part of the build. Makes for a very pretty output.
 build.dependsOn cucumber
 
+def generateReport() {
+    File reportOutputDirectory = new File("build/reports/cucumber");
+
+    List<String> jsonReportFiles = new ArrayList<String>();
+    jsonReportFiles.add("build/reports/cucumber.json");
+
+    String projectName = "BDD-Security";
+    boolean skippedFails = false;
+    boolean pendingFails = false;
+    boolean undefinedFails = true;
+    boolean missingFails = true;
+    boolean runWithJenkins = false;
+    boolean parallelTesting = false;
+
+    net.masterthought.cucumber.Configuration configuration = new net.masterthought.cucumber.Configuration(reportOutputDirectory, projectName);
+// optionally only if you need
+    configuration.setStatusFlags(skippedFails, pendingFails, undefinedFails, missingFails);
+    configuration.setParallelTesting(parallelTesting);
+    configuration.setRunWithJenkins(runWithJenkins);
+    configuration.setBuildNumber("SecTests.1");
+    ReportBuilder reportBuilder = new ReportBuilder(jsonReportFiles, configuration);
+    reportBuilder.generateReports();
+    println("\nReport available on: ${reporting.baseDir}/cucumber/feature-overview.html")
+}
+
 dependencies {
+    compile group: 'net.masterthought', name: 'cucumber-reporting', version: "1.4.0"
     testCompile 'junit:junit:4.11'
     testCompile "info.cukes:cucumber-junit:$cucumberVersion"
     testCompile "info.cukes:cucumber-java:$cucumberVersion"
