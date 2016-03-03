@@ -18,19 +18,15 @@
  ******************************************************************************/
 package net.continuumsecurity;
 
+import edu.umass.cs.benchlab.har.HarEntry;
 import net.continuumsecurity.scanner.ZapManager;
 import net.continuumsecurity.web.Application;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +54,8 @@ public class Config {
             throw new RuntimeException(e);
         }
     }
+
+
 
     public synchronized static Config getInstance() {
         if (config == null) {

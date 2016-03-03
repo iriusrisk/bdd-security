@@ -1,11 +1,10 @@
-@story-authorisation
+@authorisation
 Feature: Authorisation and Access Control
   In order to protect my sensitive data
   As a user
   I want to ensure that only the authorised users have access to my data
 
-
-  @config_authorised_resources
+  @authorised_resources
   Scenario Outline: Users can view restricted resources for which they are authorised
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy
@@ -15,19 +14,17 @@ Feature: Authorisation and Access Control
     And the password <password>
     When the user logs in
     And the proxy logs are cleared
-    And the HTTP requests and responses on recorded
+    And the HTTP requests and responses are recorded
     And they access the restricted resource: <method>
     Then the string: <sensitiveData> should be present in one of the HTTP responses
     Examples:
       | method              | username | password | sensitiveData               |
-      | viewProfileForBob   | bob      | password | Robert                      |
-      | viewProfileForBob   | admin    | password | Robert                      |
-      | viewProfileForAlice | alice    | password | alice@continuumsecurity.net |
-      | viewProfileForAlice | admin    | password | alice@continuumsecurity.net |
-      | viewUserList        | admin    | password | User List                   |
+      | viewBobsProfile     | bob      | password | Robert                      |
+      | viewAlicesProfile   | alice    | password | alice@continuumsecurity.net |
+      | viewAllUsers        | admin    | password | User List                   |
 
 
-  @cwe-639 @access_control_restricted
+  @cwe-639
   Scenario Outline: Users must not be able to view resources for which they are not authorised
     Given the access control map for authorised users has been populated
     And a new browser or client instance
@@ -39,12 +36,12 @@ Feature: Authorisation and Access Control
     Then the string: <sensitiveData> should not be present in any of the HTTP responses
     Examples:
       | method              | username | password | sensitiveData               |
-      | viewProfileForBob   | alice    | password | Robert                      |
-      | viewProfileForAlice | bob      | password | alice@continuumsecurity.net |
-      | viewUserList        | alice    | password | User List                   |
-      | viewUserList        | bob      | password | User List                   |
+      | viewBobsProfile     | alice    | password | Robert                      |
+      | viewAlicesProfile   | bob      | password | alice@continuumsecurity.net |
+      | viewAllUsers        | alice    | password | User List                   |
+      | viewAllUsers        | bob      | password | User List                   |
 
-  @cwe-306 @anon_access_control
+  @cwe-306
   Scenario Outline: Un-authenticated users should not be able to view restricted resources
     Given the access control map for authorised users has been populated
     And a new browser or client instance
@@ -53,8 +50,6 @@ Feature: Authorisation and Access Control
     Then the string: <sensitiveData> should not be present in any of the HTTP responses
     Examples:
       | method              |  sensitiveData                |
-      | viewProfileForBob   |   Robert                      |
-      | viewProfileForBob   |   Robert                      |
-      | viewProfileForAlice |   alice@continuumsecurity.net |
-      | viewProfileForAlice |   alice@continuumsecurity.net |
-      | viewUserList        |   User List                   |
+      | viewBobsProfile     |   Robert                      |
+      | viewAlicesProfile   |   alice@continuumsecurity.net |
+      | viewAllUsers        |   User List                   |

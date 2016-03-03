@@ -8,7 +8,7 @@ import cucumber.api.CucumberOptions;
         features = {
                 "src/test/resources/features/authentication.feature"
         },
-        tags = {"@cwe-295-auth"}
+        tags = {}
 )
 public class AuthenticationTestSuite extends BaseCucumberTestCase {
 

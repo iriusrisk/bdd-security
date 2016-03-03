@@ -95,6 +95,7 @@ dependencies {
     testCompile 'junit:junit:4.11'
     testCompile "info.cukes:cucumber-junit:$cucumberVersion"
     testCompile "info.cukes:cucumber-java:$cucumberVersion"
+    testCompile "info.cukes:cucumber-picocontainer:$cucumberVersion"
 
     testCompile 'org.glassfish.jersey.core:jersey-client:2.15'
     testCompile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.4.1'

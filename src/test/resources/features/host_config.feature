@@ -1,4 +1,4 @@
-@host_config
+@host_config @skip
 Feature: 
   In order to reduce the risk of vulnerabilities introduced through software running on the host
   As a system owner

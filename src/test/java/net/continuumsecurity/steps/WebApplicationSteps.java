@@ -57,19 +57,18 @@ import static org.junit.Assert.fail;
 
 public class WebApplicationSteps {
     Logger log = Logger.getLogger(WebApplicationSteps.class);
-    public Application app;
-    UserPassCredentials credentials;
     HarEntry currentHar;
+    String methodName;
+    WebElement currentElement;
+
+    Application app;
+    UserPassCredentials credentials;
     LoggingProxy proxy;
     Map<String, String> sessionIds;
-    String methodName;
-    Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     List<HarEntry> recordedEntries;
-    WebElement currentElement;
-    private boolean httpHeadersRecorded = false;
+    boolean httpHeadersRecorded = false;
 
     public WebApplicationSteps() {
-
     }
 
     /*
@@ -380,29 +379,31 @@ public class WebApplicationSteps {
 
 
 
-    @Then("the string: (.*)should be present in one of the HTTP responses")
-    public void checkAccessToResource(  String sensitiveData) {
+    @Then("the string: (.*) should be present in one of the HTTP responses")
+    public void checkAccessToResource(String sensitiveData) throws NoSuchMethodException {
         try {
             app.getClass().getMethod(methodName).invoke(app);
             // For web services, calling the method might throw an exception if
             // access is denied.
+        } catch (NoSuchMethodException nsm) {
+            throw nsm;
         } catch (Exception e) {
             fail("User with credentials: " + credentials.getUsername() + " "
                     + credentials.getPassword()
                     + " could not access the method: " + methodName + "()");
         }
-        if (methodProxyMap.get(methodName) != null) {
+        if (SharedState.getInstance().getMethodProxyMap().get(methodName) != null) {
             log.info("The method: "
                     + methodName
                     + " has already been added to the map, using the existing HTTP logs");
             return;
         }
-        methodProxyMap.put(methodName, getProxy().getHistory());
+        SharedState.getInstance().getMethodProxyMap().put(methodName, getProxy().getHistory());
         boolean accessible = getProxy().findInResponseHistory(sensitiveData).size() > 0;
         if (accessible) {
             log.debug("User: " + credentials.getUsername() + " can access resource: " + methodName);
         }
-        assertThat("User: " + credentials.getUsername() + " could access resource: " + methodName + " because the text: " + sensitiveData + " was present in the responses", accessible, equalTo(true));
+        assertThat("User: " + credentials.getUsername() + " could access resource: " + methodName + " because the text: [" + sensitiveData + "] was present in the responses", accessible, equalTo(true));
     }
 
 
@@ -428,20 +429,19 @@ public class WebApplicationSteps {
 
     @Given("the access control map for authorised users has been populated")
     public void checkIfMapPopulated() {
-        if (methodProxyMap.size() == 0)
+        if (SharedState.getInstance().getMethodProxyMap().size() == 0)
             throw new RuntimeException(
                     "Access control map has not been populated.");
     }
 
-
-    @When("the HTTP requests and responses on recorded")
+    @When("the HTTP requests and responses are recorded")
     public void noActionForRecordingHttpRequestResponses() {
-
+        //HTTP traffic is recorded in checkAccessToResource
     }
 
     @Then("the string: (.*) should not be present in any of the HTTP responses")
     public void checkNoAccessToResource(String sensitiveData) {
-        if (methodProxyMap == null || methodProxyMap.get(methodName).size() == 0)
+        if (SharedState.getInstance().getMethodProxyMap() == null || SharedState.getInstance().getMethodProxyMap().get(methodName).size() == 0)
             throw new ConfigurationException(
                     "No HTTP messages were recorded for the method: " + methodName);
         findAndSetSessionIds();
@@ -472,7 +472,7 @@ public class WebApplicationSteps {
 
     private void checkAccessUsingCookieMethod(String sensitiveData) {
         boolean accessible = false;
-        for (HarEntry entry : methodProxyMap.get(methodName)) {
+        for (HarEntry entry : SharedState.getInstance().getMethodProxyMap().get(methodName)) {
             if (entry.getResponse().getBodySize() > 0) {
                 getProxy().clear();
                 HarRequest manual = null;
