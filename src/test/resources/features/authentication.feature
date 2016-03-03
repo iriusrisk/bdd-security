@@ -4,7 +4,7 @@ Feature: Authentication
   As an application owner
   I want to have a robust authentication system
 
-  @cwe-178-auth @auth_case
+  @cwe-178-auth
   Scenario: Passwords should be case sensitive
     Given a new browser or client instance
     When the default user logs in
@@ -15,15 +15,16 @@ Feature: Authentication
     And the user logs in
     Then the user is not logged in
 
-   @cwe-295-auth @auth_login_form_over_ssl
+  @cwe-295-auth
   Scenario: Present the login form itself over an HTTPS connection
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy
     And the proxy logs are cleared
+    And the login page is displayed
     And the HTTP request-response containing the login form
     Then the protocol should be HTTPS
 
-  @cwe-319-auth @auth_https
+  @cwe-319-auth
   Scenario: Transmit authentication credentials over HTTPS
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy
@@ -32,7 +33,7 @@ Feature: Authentication
     And the HTTP request-response containing the default credentials is selected
     Then the protocol should be HTTPS
 
-   @cwe-525-repost @auth_return_redirect
+  @cwe-525-repost
   Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code.
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy
@@ -41,14 +42,14 @@ Feature: Authentication
     And the HTTP request-response containing the default credentials is selected
     Then the response status code should start with 3
 
-   @cwe-525-autocomplete-form @auth_autocomplete_login_form
+  @cwe-525-autocomplete-form
   Scenario: Disable browser auto-completion on the login form
     Given a new browser instance
     And the login page is displayed
     When the login form is inspected
     Then it should have the autocomplete attribute set to 'off'
 
-   @cwe-525 @auth_autocomplete_password @skip
+  @cwe-525-autocomplete-password @skip
   Scenario: Disable browser auto-completion on the password field
     Given a new browser instance
     And the login page is displayed
