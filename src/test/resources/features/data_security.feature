@@ -4,7 +4,7 @@ Feature: Confidentiality of sensitive user data
   As a user
   I want to verify that the application does not allow the browser to cache my sensitive data
 
-   @cwe-525 @cache_control_headers
+  @cwe-525
   Scenario Outline: Prevent browser caching of sensitive data
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy

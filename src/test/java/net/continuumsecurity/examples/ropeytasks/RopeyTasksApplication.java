@@ -51,6 +51,14 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.linkText("Profile")).click();
     }
 
+    public void viewAlicesProfile() {
+        viewProfile();
+    }
+
+    public void viewBobsProfile() {
+        viewProfile();
+    }
+
     @Override
     public void logout() {
         driver.findElement(By.linkText("Logout")).click();
@@ -61,6 +69,10 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         driver.findElement(By.id("q")).clear();
         driver.findElement(By.id("q")).sendKeys(query);
         driver.findElement(By.id("search")).click();
+    }
+
+    public void viewAllUsers() {
+        driver.get(Config.getInstance().getBaseUrl() + "admin/list");
     }
 
     public void navigate() {

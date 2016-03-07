@@ -1,4 +1,4 @@
-@app_navigate
+@app_navigate @skip
 Feature: Navigate App
 
   @app_navigate
