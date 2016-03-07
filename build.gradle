@@ -117,6 +117,6 @@ dependencies {
     testCompile 'org.glassfish.jersey.connectors:jersey-apache-connector:2.6'
     testCompile 'net.htmlparser.jericho:jericho-html:3.3'
     testCompile files ("lib/captchaswerve-1.0-SNAPSHOT.jar","lib/zap-api-2.4-v9.jar", "lib/harlib-1.1.1.jar",
-            "lib/proxy-2.4.3.jar", "lib/testng-6.8.21.jar", "lib/nessus-java-client-0.1-SNAPSHOT.jar")
+            "lib/proxy-2.4.3.jar", "lib/nessus-java-client-0.1-SNAPSHOT.jar")
 }
 

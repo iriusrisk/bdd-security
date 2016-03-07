@@ -5,8 +5,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.continuumsecurity.*;
 import net.continuumsecurity.v5.model.Issue;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.testng.internal.Utils;
 
 import javax.security.auth.login.LoginException;
 import java.net.MalformedURLException;
@@ -64,7 +64,7 @@ public class NessusScanningSteps {
             password = Config.getInstance().getNessusPassword();
         }
         scanClient.login(username, password);
-        scanUuid = scanClient.newScan(scanName, policyName, Utils.join(hostNames, ","));
+        scanUuid = scanClient.newScan(scanName, policyName, StringUtils.join(hostNames, ","));
         if (nessusVersion == 5) {
             scanIdentifierForStatus = scanName;
         } else {
