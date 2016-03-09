@@ -9,7 +9,7 @@ Tests should be run through the JUnit runners.
 ## Launch the application to test
 * Download the RopeyTasks vulnerable application: https://github.com/continuumsecurity/RopeyTasks
 * Start the vulnerable app: java -jar ropeytasks.jar
-* 
+
 ## Run BDD-Security tests
 * Checkout the BDD-Security cukesecure branch
 * (The default config.xml and RopeyTasksApplication.java are already configured to test that vulnerable app)
