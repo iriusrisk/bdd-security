@@ -7,7 +7,7 @@
     <!-- The web driver to use, can be either Firefox, Chrome or HtmlUnit.  Optionally specify path to the driver (required for linux)
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver.  If these values are not specified, we'll use HtmlUnit
     <defaultDriver>firefox</defaultDriver> -->
-    <defaultDriver path="src/test/resources/drivers/chromedriver-mac">Chrome</defaultDriver>
+    <defaultDriver path="src/test/resources/drivers/chromedriver-linux64">Chrome</defaultDriver>
 
     <!-- Base URL of the application to test -->
     <baseUrl>http://localhost:8080/</baseUrl>
@@ -26,6 +26,12 @@
     <users>
         <user username="bob" password="password"/>
     </users>
+
+    <scanner>
+        <ignoreUrl>.*logout.*</ignoreUrl>
+
+        <spiderUrl>baseUrl</spiderUrl>
+    </scanner>
 
     <!-- An upstream proxy through which all HTTP traffic must pass before hitting the target
     application under test.  The framework will configure both the WebDriver instance and ZAP to use this proxy.  Note that non-HTTP traffic will not use this proxy. -->

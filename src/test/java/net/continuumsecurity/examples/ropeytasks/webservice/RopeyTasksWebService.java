@@ -3,6 +3,7 @@ package net.continuumsecurity.examples.ropeytasks.webservice;
 import net.continuumsecurity.*;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
+import net.continuumsecurity.behaviour.INavigable;
 import net.continuumsecurity.clients.AuthTokenManager;
 import net.continuumsecurity.web.Application;
 
@@ -15,7 +16,7 @@ import javax.ws.rs.core.Response;
  * pretending that the web app is an HTTP API.
  *
  */
-public class RopeyTasksWebService extends Application implements ILogin, ILogout {
+public class RopeyTasksWebService extends Application implements ILogin, ILogout,INavigable {
     RopeyClient client;
 
     public RopeyTasksWebService() {

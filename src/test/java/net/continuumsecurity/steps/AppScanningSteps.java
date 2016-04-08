@@ -18,12 +18,15 @@
  ******************************************************************************/
 package net.continuumsecurity.steps;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.ZAPFalsePositive;
+import net.continuumsecurity.behaviour.INavigable;
 import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
@@ -48,10 +51,9 @@ public class AppScanningSteps {
     List<Alert> alerts = new ArrayList<Alert>();
     String scannerIds = null;
     int spiderMaxChildren = 1000;
-    boolean navigated = false;
 
     public AppScanningSteps() {
-
+        app = Config.getInstance().createApp();
     }
 
     @Given("the passive scanner has already run during the app navigation")
@@ -61,7 +63,6 @@ public class AppScanningSteps {
 
     @Given("a new scanning session")
     public void createNewScanSession() {
-        app = Config.getInstance().createApp();
         app.enableHttpLoggingClient();
     }
 
@@ -98,45 +99,6 @@ public class AppScanningSteps {
     @Given("a scanner with all policies enabled")
     public void enableAllScanners() {
         getScanner().enableAllScanners();
-    }
-
-    @Given("the page flow described in the method: (.*) is run through the proxy")
-    public void navigateApp(String methodName) throws Exception {
-        Method method = app.getClass().getMethod(methodName);
-        app.enableHttpLoggingClient();
-        log.debug("Navigating method: " + method.getName());
-        method.invoke(app);
-        navigated = true;
-    }
-
-    @Given("the following URLs are spidered")
-    public void spiderUrls(List<String> urls) throws InterruptedException {
-        for (String url : urls) {
-            if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
-            spider(url);
-        }
-    }
-
-    @Given("the spider is configured for a maximum depth of (\\d+)")
-    public void setSpiderDepth(int depth) {
-        getSpider().setMaxDepth(depth);
-    }
-
-    @Given("^the following URL regular expressions are excluded from the spider$")
-    public void setExcludedRegex(List<String> exRegexes) {
-        for (String regex : exRegexes) {
-            getSpider().excludeFromSpider(regex);
-        }
-    }
-
-    @Given("the spider is configured for (\\d+) concurrent threads")
-    public void setSpiderThreads(int threads) {
-        getSpider().setThreadCount(threads);
-    }
-
-    @Given("the spider is configured for (\\d+) maximum children")
-    public void setSpiderMaxChildren(int children) {
-        spiderMaxChildren = children;
     }
 
 
@@ -308,8 +270,7 @@ public class AppScanningSteps {
                 equalTo(0));
     }
 
-    @Given("the spider status reaches 100% complete")
-    public void waitForSpiderToComplete() {
+    private void waitForSpiderToComplete() {
         int status = 0;
         int counter99 = 0; //hack to detect a ZAP spider that gets stuck on 99%
         int scanId = getSpider().getLastSpiderScanId();
@@ -372,4 +333,37 @@ public class AppScanningSteps {
         return found;
     }
 
+    @And("^the application is navigated$")
+    public void navigateApp() {
+        if (!Config.getInstance().isNavigated()) {
+            if (!(app instanceof INavigable))
+                throw new RuntimeException("The application must implement the 'INavigable' interface to be navigable");
+            app.enableHttpLoggingClient();
+            log.debug("Navigating");
+            ((INavigable) app).navigate();
+            Config.getInstance().setNavigated(true);
+        }
+    }
+
+    @And("^the application is spidered$")
+    public void theApplicationIsSpidered() {
+        if (!Config.getInstance().isSpidered()) {
+            for (String regex : Config.getInstance().getIgnoreUrls()) {
+                getSpider().excludeFromSpider(regex);
+            }
+            getSpider().setMaxDepth(10);
+            spiderMaxChildren = 10;
+            getSpider().setThreadCount(10);
+            for (String url : Config.getInstance().getSpiderUrls()) {
+                if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
+                try {
+                    spider(url);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            waitForSpiderToComplete();
+            Config.getInstance().setSpidered(true);
+        }
+    }
 }

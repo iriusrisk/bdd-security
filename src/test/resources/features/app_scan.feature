@@ -1,14 +1,23 @@
-@app_scan @skip
+@app_scan
 Feature: Automated Application Security Scanning
   In order to protect user data
   As a n application owner
   I want to ensure that the application does not suffer from common security vulnerabilities
 
   Background:
-    Given a scanner with all policies disabled
+    Given a new scanning session
+    And a scanner with all policies disabled
     And all existing alerts are deleted
-    And the following URL regular expressions are excluded from the scanner
-      | .*logout.* |
+    And the application is navigated
+    And the application is spidered
+
+  @passive
+  Scenario: The application should not contain vulnerabilities identified through passive scanning
+    And the passive scanner is enabled
+    And the following false positives are removed
+      | url     | parameter | cweid     | wascid     |
+    When the XML report is written to the file build/reports/zap/passive.xml
+    Then no Medium or higher risk vulnerabilities should be present
 
   @cwe-89
   Scenario: The application should not contain SQL injection vulnerabilities

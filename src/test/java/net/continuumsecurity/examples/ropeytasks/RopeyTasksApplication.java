@@ -5,11 +5,12 @@ import net.continuumsecurity.Credentials;
 import net.continuumsecurity.UserPassCredentials;
 import net.continuumsecurity.behaviour.ILogin;
 import net.continuumsecurity.behaviour.ILogout;
+import net.continuumsecurity.behaviour.INavigable;
 import net.continuumsecurity.web.WebApplication;
 import org.openqa.selenium.By;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
-        ILogout {
+        ILogout,INavigable {
 
     public RopeyTasksApplication() {
         super();

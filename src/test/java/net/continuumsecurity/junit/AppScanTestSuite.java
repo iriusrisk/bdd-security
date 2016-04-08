@@ -5,10 +5,9 @@ import cucumber.api.CucumberOptions;
 
 @CucumberOptions(
         features = {
-                "src/test/resources/features/app_navigate.feature",
                 "src/test/resources/features/app_scan.feature"
         },
-        tags = { "@app_navigate,@scan_sql_injection" }
+        tags = { "@cwe-89, @cwe-79" }
 )
 public class AppScanTestSuite extends BaseCucumberTestCase {
 

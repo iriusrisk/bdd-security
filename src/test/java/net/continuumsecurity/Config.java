@@ -41,6 +41,25 @@ public class Config {
     private int proxyPort = 0;
     private String proxyApi;
     private static Config config;
+    private boolean navigated;
+    private boolean spidered;
+
+    public boolean isNavigated() {
+        return navigated;
+    }
+
+    public void setNavigated(boolean navigated) {
+        this.navigated = navigated;
+    }
+
+    public boolean isSpidered() {
+        return spidered;
+    }
+
+    public void setSpidered(boolean spidered) {
+        this.spidered = spidered;
+    }
+
 
     public Application createApp() {
         Object app = null;
@@ -96,6 +115,23 @@ public class Config {
         return users;
     }
 
+    public List<String> getIgnoreUrls() {
+        List<String> ignoreUrls = new ArrayList<>();
+        for (HierarchicalConfiguration ignoreUrl : getXml().configurationsAt("scanner.ignoreUrl")) {
+            ignoreUrls.add(ignoreUrl.getRoot().getValue().toString());
+            System.out.println(ignoreUrl);
+        }
+        return ignoreUrls;
+    }
+
+    public List<String> getSpiderUrls() {
+        List<String> spiderUrls = new ArrayList<>();
+        for (HierarchicalConfiguration ignoreUrl : getXml().configurationsAt("scanner.spiderUrl")) {
+            spiderUrls.add(ignoreUrl.getRoot().getValue().toString());
+        }
+        return spiderUrls;
+    }
+
     public String getClassName() {
         return validateAndGetString("class");
     }
@@ -139,6 +175,8 @@ public class Config {
     public String getSSLyze() { return validateAndGetString("sslyze"); }
 
     public String getProxyHost() {
+        if (proxyHost != null) return proxyHost;
+
         try {
             proxyHost = validateAndGetString("proxy.host");
             proxyPort = Integer.parseInt(validateAndGetString("proxy.port"));
