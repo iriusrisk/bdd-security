@@ -18,7 +18,6 @@
  ******************************************************************************/
 package net.continuumsecurity.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -34,7 +33,6 @@ import org.apache.log4j.Logger;
 import org.zaproxy.clientapi.core.Alert;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -335,19 +333,19 @@ public class AppScanningSteps {
 
     @And("^the application is navigated$")
     public void navigateApp() {
-        if (!SharedState.getInstance().isNavigated()) {
+        if (!World.getInstance().isNavigated()) {
             if (!(app instanceof INavigable))
                 throw new RuntimeException("The application must implement the 'INavigable' interface to be navigable");
             app.enableHttpLoggingClient();
             log.debug("Navigating");
             ((INavigable) app).navigate();
-            SharedState.getInstance().setNavigated(true);
+            World.getInstance().setNavigated(true);
         }
     }
 
     @And("^the application is spidered$")
     public void theApplicationIsSpidered() {
-        if (!SharedState.getInstance().isSpidered()) {
+        if (!World.getInstance().isSpidered()) {
             for (String regex : Config.getInstance().getIgnoreUrls()) {
                 getSpider().excludeFromSpider(regex);
             }
@@ -363,7 +361,7 @@ public class AppScanningSteps {
                 }
             }
             waitForSpiderToComplete();
-            SharedState.getInstance().setSpidered(true);
+            World.getInstance().setSpidered(true);
         }
     }
 }

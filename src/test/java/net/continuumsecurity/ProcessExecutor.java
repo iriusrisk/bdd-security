@@ -18,6 +18,7 @@ public class ProcessExecutor {
     ProcessBuilder pb;
     Process process;
     File outputFile;
+    String filename;
 
     public ProcessExecutor(String... cmds) {
         pb = new ProcessBuilder(cmds).inheritIO();
@@ -27,19 +28,19 @@ public class ProcessExecutor {
         pb = new ProcessBuilder(cmds).inheritIO();
     }
 
-    public void setOutputFile(String filename) throws IOException {
-        createOutputFile(filename);
+    public void setFilename(String filename) throws IOException {
+        this.filename = filename;
+        outputFile = new File(filename);
     }
 
-    private void createOutputFile(String filename) throws IOException {
+    private void createNewOutputFile(String filename) throws IOException {
         Path path = Paths.get(filename);
         if (Files.exists(path)) Files.delete(path);
-        outputFile = new File(filename);
         outputFile.createNewFile();
     }
 
     public void start() throws IOException {
-        if (outputFile == null) createOutputFile("cmd.out");
+        if (outputFile == null) createNewOutputFile(filename);
         pb.redirectOutput(outputFile);
         process = pb.start();
         int exitValue = 0;

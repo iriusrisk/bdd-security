@@ -10,9 +10,11 @@ import java.util.Map;
 
 /**
  * Created by stephen on 04/03/2016.
+ *
+ * Singleton to store shared state between scenarios
  */
-public class SharedState {
-    private static SharedState ourInstance = new SharedState();
+public class World {
+    private static World ourInstance = new World();
     Map<String, List<HarEntry>> methodProxyMap = new HashMap<String, List<HarEntry>>();
     private Map<String, String> sessionIds = new HashMap<>();
     private List<HarEntry> recordedEntries;
@@ -20,8 +22,8 @@ public class SharedState {
     private boolean navigated;
     private boolean spidered;
     private Credentials credentials;
-
-
+    private boolean sslRunCompleted;
+    private HarEntry currentHar;
 
     public synchronized Map<String, List<HarEntry>> getMethodProxyMap() {
         return methodProxyMap;
@@ -43,11 +45,11 @@ public class SharedState {
         this.spidered = spidered;
     }
 
-    public static SharedState getInstance() {
+    public static World getInstance() {
         return ourInstance;
     }
 
-    private SharedState() {
+    private World() {
     }
 
     public Map<String, String> getSessionIds() {
@@ -84,5 +86,21 @@ public class SharedState {
 
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
+    }
+
+    public boolean isSslRunCompleted() {
+        return sslRunCompleted;
+    }
+
+    public void setSslRunCompleted(boolean sslRunCompleted) {
+        this.sslRunCompleted = sslRunCompleted;
+    }
+
+    public HarEntry getCurrentHar() {
+        return currentHar;
+    }
+
+    public void setCurrentHar(HarEntry currentHar) {
+        this.currentHar = currentHar;
     }
 }

@@ -46,9 +46,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -57,12 +55,10 @@ import static org.junit.Assert.fail;
 
 public class WebApplicationSteps {
     Logger log = Logger.getLogger(WebApplicationSteps.class);
-    HarEntry currentHar;
     String methodName;
     WebElement currentElement;
     Application app;
     LoggingProxy proxy;
-
 
     public WebApplicationSteps() {
     }
@@ -82,7 +78,7 @@ public class WebApplicationSteps {
         app.enableDefaultClient();
         assert app.getAuthTokenManager() != null;
         app.getAuthTokenManager().deleteAuthTokens();
-        SharedState.getInstance().setCredentials(new UserPassCredentials("", ""));
+        World.getInstance().setCredentials(new UserPassCredentials("", ""));
     }
 
     @When("the authentication tokens on the client are deleted")
@@ -118,8 +114,8 @@ public class WebApplicationSteps {
 
     @When("the user logs in")
     public void loginWithSetCredentials() {
-        assert SharedState.getInstance().getCredentials() != null;
-        ((ILogin) app).login(SharedState.getInstance().getCredentials());
+        assert World.getInstance().getCredentials() != null;
+        ((ILogin) app).login(World.getInstance().getCredentials());
     }
 
     static String readFile(String path, Charset encoding)
@@ -136,17 +132,17 @@ public class WebApplicationSteps {
     }
 
     public void setDefaultCredentials(Credentials creds) throws IOException {
-        SharedState.getInstance().setCredentials(creds);
+        World.getInstance().setCredentials(creds);
     }
 
     @Given("an invalid username")
     public void setInvalidUsername() {
-        SharedState.getInstance().getUserPassCredentials().setUsername(Config.getInstance().getIncorrectUsername());
+        World.getInstance().getUserPassCredentials().setUsername(Config.getInstance().getIncorrectUsername());
     }
 
     @Given("an incorrect password")
     public void incorrectPassword() {
-        SharedState.getInstance().getUserPassCredentials().setPassword(Config.getInstance().getIncorrectPassword());
+        World.getInstance().getUserPassCredentials().setPassword(Config.getInstance().getIncorrectPassword());
     }
 
     @When("the user logs in from a fresh login page")
@@ -168,7 +164,7 @@ public class WebApplicationSteps {
 
     @When("the case of the password is changed")
     public void changeCaseOfPassword() {
-        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
+        UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
         String wrongCasePassword = credentials.getPassword().toUpperCase();
 
         if (wrongCasePassword.equals(credentials.getPassword())) {
@@ -216,7 +212,7 @@ public class WebApplicationSteps {
 
     @Given("the HTTP request-response containing the default credentials is selected")
     public void findRequestWithPassword() {
-        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
+        UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
         List<HarEntry> all = getProxy().getHistory();
         List<HarEntry> requests = getProxy().findInRequestHistory(credentials.getPassword());
         if (requests == null || requests.size() == 0)
@@ -224,24 +220,25 @@ public class WebApplicationSteps {
                     "Could not find HTTP request with credentials: "
                             + credentials.getUsername() + " "
                             + credentials.getPassword());
-        currentHar = requests.get(0);
+        World.getInstance().setCurrentHar(requests.get(0));
     }
 
 
     @Given("the HTTP request containing the string $value is selected")
     public void findRequestWithString(String value) {
-        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
+        UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
         List<HarEntry> requests = getProxy().findInRequestHistory(value);
         if (requests == null || requests.size() == 0)
             throw new StepException(
                     "Could not find HTTP request with credentials: "
                             + credentials.getUsername() + " "
                             + credentials.getPassword());
-        currentHar = requests.get(0);
+        World.getInstance().setCurrentHar(requests.get(0));
     }
 
     @Then("the protocol should be HTTPS")
     public void verifyProtocolHttps() {
+        HarEntry currentHar = World.getInstance().getCurrentHar();
         assertThat(currentHar.getRequest().getUrl(), currentHar.getRequest().getUrl().substring(0, 5), equalTo("https"));
     }
 
@@ -254,7 +251,7 @@ public class WebApplicationSteps {
             throw new StepException(
                     "Could not find HTTP response with password form using regex: "
                             + regex);
-        currentHar = responses.get(0);
+        World.getInstance().setCurrentHar(responses.get(0));
     }
 
     @Given("the first HTTP request-response stored by the proxy is selected")
@@ -263,25 +260,25 @@ public class WebApplicationSteps {
         if (responses == null || responses.size() == 0)
             throw new StepException(
                     "No request-responses found");
-        currentHar = responses.get(0);
+        World.getInstance().setCurrentHar(responses.get(0));
     }
 
     @Then("the response status code should start with 3")
     public void statusCode3xx() {
-        assertThat(Integer.toString(currentHar.getResponse().getStatus()).substring(0, 1), equalTo("3"));
+        assertThat(Integer.toString(World.getInstance().getCurrentHar().getResponse().getStatus()).substring(0, 1), equalTo("3"));
     }
 
     @Given("the value of the session ID is noted")
     public void findAndSetSessionIds() {
-        SharedState.getInstance().getSessionIds().clear();
-        SharedState.getInstance().getSessionIds().putAll(app.getAuthTokenManager().getAuthTokens());
+        World.getInstance().getSessionIds().clear();
+        World.getInstance().getSessionIds().putAll(app.getAuthTokenManager().getAuthTokens());
     }
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
-        for (String name : SharedState.getInstance().getSessionIds().keySet()) {
+        for (String name : World.getInstance().getSessionIds().keySet()) {
             assertThat(app.getAuthTokenManager().getAuthTokens().get(name),
-                    not(SharedState.getInstance().getSessionIds().get(name)));
+                    not(World.getInstance().getSessionIds().get(name)));
         }
     }
 
@@ -361,7 +358,7 @@ public class WebApplicationSteps {
 
     @When("the response that contains the string: (.*) is recorded")
     public void recordSensitiveResponse(String sensitiveData) {
-        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
+        UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
         try {
             app.getClass().getMethod(methodName).invoke(app);
             // For web services, calling the method might throw an exception if
@@ -372,16 +369,16 @@ public class WebApplicationSteps {
                     + " could not access the method: " + methodName + "()");
         }
 
-        SharedState.getInstance().setRecordedEntries(getProxy().findInResponseHistory(sensitiveData));
-        assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", SharedState.getInstance().getRecordedEntries().size(), greaterThan(0));
-        currentHar = SharedState.getInstance().getRecordedEntries().get(0);
+        World.getInstance().setRecordedEntries(getProxy().findInResponseHistory(sensitiveData));
+        assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", World.getInstance().getRecordedEntries().size(), greaterThan(0));
+        World.getInstance().setCurrentHar(World.getInstance().getRecordedEntries().get(0));
     }
 
 
 
     @Then("the string: (.*) should be present in one of the HTTP responses")
     public void checkAccessToResource(String sensitiveData) throws NoSuchMethodException {
-        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
+        UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
         try {
             app.getClass().getMethod(methodName).invoke(app);
             // For web services, calling the method might throw an exception if
@@ -393,13 +390,13 @@ public class WebApplicationSteps {
                     + credentials.getPassword()
                     + " could not access the method: " + methodName + "()");
         }
-        if (SharedState.getInstance().getMethodProxyMap().get(methodName) != null) {
+        if (World.getInstance().getMethodProxyMap().get(methodName) != null) {
             log.info("The method: "
                     + methodName
                     + " has already been added to the map, using the existing HTTP logs");
             return;
         }
-        SharedState.getInstance().getMethodProxyMap().put(methodName, getProxy().getHistory());
+        World.getInstance().getMethodProxyMap().put(methodName, getProxy().getHistory());
         boolean accessible = getProxy().findInResponseHistory(sensitiveData).size() > 0;
         if (accessible) {
             log.debug("User: " + credentials.getUsername() + " can access resource: " + methodName);
@@ -410,12 +407,12 @@ public class WebApplicationSteps {
 
     @Given("the username (.*)")
     public void setUsernameFromExamples(String username) {
-        SharedState.getInstance().getUserPassCredentials().setUsername(username);
+        World.getInstance().getUserPassCredentials().setUsername(username);
     }
 
     @Given("the password (.*)")
     public void setCredentialsFromExamples(String password) {
-        SharedState.getInstance().getUserPassCredentials().setPassword(password);
+        World.getInstance().getUserPassCredentials().setPassword(password);
     }
 
     @When("the previously recorded HTTP Requests for (.*) are replayed using the current session ID")
@@ -425,12 +422,12 @@ public class WebApplicationSteps {
 
     @Then("the X-Frame-Options header is either (.*) or (.*)")
     public void checkIfXFrameOptionsHeaderIsSet(String sameOrigin, String deny) {
-        assertThat(Utils.responseHeaderValueIsOneOf(currentHar.getResponse(), Constants.XFRAMEOPTIONS, new String[]{sameOrigin, deny}), equalTo(true));
+        assertThat(Utils.responseHeaderValueIsOneOf(World.getInstance().getCurrentHar().getResponse(), Constants.XFRAMEOPTIONS, new String[]{sameOrigin, deny}), equalTo(true));
     }
 
     @Given("the access control map for authorised users has been populated")
     public void checkIfMapPopulated() {
-        if (SharedState.getInstance().getMethodProxyMap().size() == 0)
+        if (World.getInstance().getMethodProxyMap().size() == 0)
             throw new RuntimeException(
                     "Access control map has not been populated.");
     }
@@ -442,7 +439,7 @@ public class WebApplicationSteps {
 
     @Then("the string: (.*) should not be present in any of the HTTP responses")
     public void checkNoAccessToResource(String sensitiveData) {
-        if (SharedState.getInstance().getMethodProxyMap() == null || SharedState.getInstance().getMethodProxyMap().get(methodName).size() == 0)
+        if (World.getInstance().getMethodProxyMap() == null || World.getInstance().getMethodProxyMap().get(methodName).size() == 0)
             throw new ConfigurationException(
                     "No HTTP messages were recorded for the method: " + methodName);
         findAndSetSessionIds();
@@ -456,7 +453,7 @@ public class WebApplicationSteps {
     private void checkAccessUsingAuthTokenMethod(String sensitiveData) {
         boolean accessible = false;
         app.getAuthTokenManager().deleteAuthTokens();
-        app.getAuthTokenManager().setAuthTokens(SharedState.getInstance().getSessionIds());
+        app.getAuthTokenManager().setAuthTokens(World.getInstance().getSessionIds());
         getProxy().clear();
         try {
             app.getClass().getMethod(methodName).invoke(app);
@@ -466,19 +463,19 @@ public class WebApplicationSteps {
         List<HarEntry> results = getProxy().findInResponseHistory(sensitiveData);
         accessible = results != null && results.size() > 0;
         if (!accessible) {
-            log.debug("User: " + SharedState.getInstance().getUserPassCredentials().getUsername() + " has no access to resource: " + methodName);
+            log.debug("User: " + World.getInstance().getUserPassCredentials().getUsername() + " has no access to resource: " + methodName);
         }
         assertThat(accessible, equalTo(false));
     }
 
     private void checkAccessUsingCookieMethod(String sensitiveData) {
         boolean accessible = false;
-        for (HarEntry entry : SharedState.getInstance().getMethodProxyMap().get(methodName)) {
+        for (HarEntry entry : World.getInstance().getMethodProxyMap().get(methodName)) {
             if (entry.getResponse().getBodySize() > 0) {
                 getProxy().clear();
                 HarRequest manual = null;
                 try {
-                    manual = Utils.replaceCookies(entry.getRequest(), SharedState.getInstance().getSessionIds());
+                    manual = Utils.replaceCookies(entry.getRequest(), World.getInstance().getSessionIds());
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new RuntimeException("Could not copy Har request");
@@ -490,7 +487,7 @@ public class WebApplicationSteps {
             }
         }
         if (!accessible) {
-            log.debug("User: " + SharedState.getInstance().getUserPassCredentials().getUsername() + " has no access to resource: " + methodName);
+            log.debug("User: " + World.getInstance().getUserPassCredentials().getUsername() + " has no access to resource: " + methodName);
         }
         assertThat(accessible, equalTo(false));
     }
@@ -515,49 +512,49 @@ public class WebApplicationSteps {
     public void recordFirstHarEntry() {
         List<HarEntry> history = getProxy().getHistory();
         if (history == null || history.size() == 0) throw new RuntimeException("No HTTP requests-responses recorded");
-        currentHar = history.get(0);
+        World.getInstance().setCurrentHar(history.get(0));
     }
 
     @Then("the Strict-Transport-Security header is set")
     public void checkIfHSTSHeaderIsSet() {
-        assertThat(Utils.responseContainsHeader(currentHar.getResponse(), Constants.HSTS), equalTo(true));
+        assertThat(Utils.responseContainsHeader(World.getInstance().getCurrentHar().getResponse(), Constants.HSTS), equalTo(true));
     }
 
     @Then("the HTTP (.*) header has the value: (.*)")
     public void checkHeaderValue(String name, String value) {
+        HarEntry currentHar = World.getInstance().getCurrentHar();
         assertNotNull("No HTTP header named: " + name + " was found.", Utils.getResponseHeaderValue(currentHar.getResponse(), name));
         assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), name), equalTo(value));
-        ;
     }
 
 
     @Then("the Access-Control-Allow-Origin header must not be: (.*)")
     public void checkThatAccessControlAllowOriginIsNotStar(String star) {
-        assertThat(Utils.getResponseHeaderValue(currentHar.getResponse(), Constants.XXSSPROTECTION), not(star));
+        assertThat(Utils.getResponseHeaderValue(World.getInstance().getCurrentHar().getResponse(), Constants.XXSSPROTECTION), not(star));
     }
 
     @When("the following URLs are visited and their HTTP responses recorded")
     public void accessSecureBaseUrlAndRecordHTTPResponse(List<String> urls) {
         for (String url : urls) {
-            if (!SharedState.getInstance().isHttpHeadersRecorded()) {
+            if (!World.getInstance().isHttpHeadersRecorded()) {
                 enableLoggingDriver();
                 clearProxy();
                 if ("baseUrl".equalsIgnoreCase(url)) url = Config.getInstance().getBaseUrl();
                 ((Browser) app.getAuthTokenManager()).getUrl(url);
                 recordFirstHarEntry();
-                SharedState.getInstance().setHttpHeadersRecorded(true);
+                World.getInstance().setHttpHeadersRecorded(true);
             }
         }
     }
 
     @And("^the default username$")
     public void theDefaultUsername() throws Throwable {
-        SharedState.getInstance().getUserPassCredentials().setUsername(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
+        World.getInstance().getUserPassCredentials().setUsername(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
     }
 
     @When("^the default password$")
     public void theDefaultPassword() throws Throwable {
-        SharedState.getInstance().getUserPassCredentials().setPassword(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
+        World.getInstance().getUserPassCredentials().setPassword(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
     }
 
 }
