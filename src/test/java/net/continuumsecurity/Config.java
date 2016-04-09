@@ -41,24 +41,6 @@ public class Config {
     private int proxyPort = 0;
     private String proxyApi;
     private static Config config;
-    private boolean navigated;
-    private boolean spidered;
-
-    public boolean isNavigated() {
-        return navigated;
-    }
-
-    public void setNavigated(boolean navigated) {
-        this.navigated = navigated;
-    }
-
-    public boolean isSpidered() {
-        return spidered;
-    }
-
-    public void setSpidered(boolean spidered) {
-        this.spidered = spidered;
-    }
 
 
     public Application createApp() {

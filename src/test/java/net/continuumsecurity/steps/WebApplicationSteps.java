@@ -60,13 +60,9 @@ public class WebApplicationSteps {
     HarEntry currentHar;
     String methodName;
     WebElement currentElement;
-
     Application app;
-    UserPassCredentials credentials;
     LoggingProxy proxy;
-    Map<String, String> sessionIds;
-    List<HarEntry> recordedEntries;
-    boolean httpHeadersRecorded = false;
+
 
     public WebApplicationSteps() {
     }
@@ -86,8 +82,7 @@ public class WebApplicationSteps {
         app.enableDefaultClient();
         assert app.getAuthTokenManager() != null;
         app.getAuthTokenManager().deleteAuthTokens();
-        credentials = new UserPassCredentials("", "");
-        sessionIds = new HashMap<>();
+        SharedState.getInstance().setCredentials(new UserPassCredentials("", ""));
     }
 
     @When("the authentication tokens on the client are deleted")
@@ -123,8 +118,8 @@ public class WebApplicationSteps {
 
     @When("the user logs in")
     public void loginWithSetCredentials() {
-        assert credentials != null;
-        ((ILogin) app).login(credentials);
+        assert SharedState.getInstance().getCredentials() != null;
+        ((ILogin) app).login(SharedState.getInstance().getCredentials());
     }
 
     static String readFile(String path, Charset encoding)
@@ -141,17 +136,17 @@ public class WebApplicationSteps {
     }
 
     public void setDefaultCredentials(Credentials creds) throws IOException {
-        credentials = (UserPassCredentials) creds;
+        SharedState.getInstance().setCredentials(creds);
     }
 
     @Given("an invalid username")
     public void setInvalidUsername() {
-        credentials.setUsername(Config.getInstance().getIncorrectUsername());
+        SharedState.getInstance().getUserPassCredentials().setUsername(Config.getInstance().getIncorrectUsername());
     }
 
     @Given("an incorrect password")
     public void incorrectPassword() {
-        credentials.setPassword(Config.getInstance().getIncorrectPassword());
+        SharedState.getInstance().getUserPassCredentials().setPassword(Config.getInstance().getIncorrectPassword());
     }
 
     @When("the user logs in from a fresh login page")
@@ -173,6 +168,7 @@ public class WebApplicationSteps {
 
     @When("the case of the password is changed")
     public void changeCaseOfPassword() {
+        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
         String wrongCasePassword = credentials.getPassword().toUpperCase();
 
         if (wrongCasePassword.equals(credentials.getPassword())) {
@@ -220,6 +216,7 @@ public class WebApplicationSteps {
 
     @Given("the HTTP request-response containing the default credentials is selected")
     public void findRequestWithPassword() {
+        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
         List<HarEntry> all = getProxy().getHistory();
         List<HarEntry> requests = getProxy().findInRequestHistory(credentials.getPassword());
         if (requests == null || requests.size() == 0)
@@ -233,6 +230,7 @@ public class WebApplicationSteps {
 
     @Given("the HTTP request containing the string $value is selected")
     public void findRequestWithString(String value) {
+        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
         List<HarEntry> requests = getProxy().findInRequestHistory(value);
         if (requests == null || requests.size() == 0)
             throw new StepException(
@@ -275,15 +273,15 @@ public class WebApplicationSteps {
 
     @Given("the value of the session ID is noted")
     public void findAndSetSessionIds() {
-        sessionIds.clear();
-        sessionIds.putAll(app.getAuthTokenManager().getAuthTokens());
+        SharedState.getInstance().getSessionIds().clear();
+        SharedState.getInstance().getSessionIds().putAll(app.getAuthTokenManager().getAuthTokens());
     }
 
     @Then("the value of the session cookie issued after authentication should be different from that of the previously noted session ID")
     public void compareSessionIds() {
-        for (String name : sessionIds.keySet()) {
+        for (String name : SharedState.getInstance().getSessionIds().keySet()) {
             assertThat(app.getAuthTokenManager().getAuthTokens().get(name),
-                    not(sessionIds.get(name)));
+                    not(SharedState.getInstance().getSessionIds().get(name)));
         }
     }
 
@@ -363,6 +361,7 @@ public class WebApplicationSteps {
 
     @When("the response that contains the string: (.*) is recorded")
     public void recordSensitiveResponse(String sensitiveData) {
+        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
         try {
             app.getClass().getMethod(methodName).invoke(app);
             // For web services, calling the method might throw an exception if
@@ -372,15 +371,17 @@ public class WebApplicationSteps {
                     + credentials.getPassword()
                     + " could not access the method: " + methodName + "()");
         }
-        recordedEntries = getProxy().findInResponseHistory(sensitiveData);
-        assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", recordedEntries.size(), greaterThan(0));
-        currentHar = recordedEntries.get(0);
+
+        SharedState.getInstance().setRecordedEntries(getProxy().findInResponseHistory(sensitiveData));
+        assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", SharedState.getInstance().getRecordedEntries().size(), greaterThan(0));
+        currentHar = SharedState.getInstance().getRecordedEntries().get(0);
     }
 
 
 
     @Then("the string: (.*) should be present in one of the HTTP responses")
     public void checkAccessToResource(String sensitiveData) throws NoSuchMethodException {
+        UserPassCredentials credentials = SharedState.getInstance().getUserPassCredentials();
         try {
             app.getClass().getMethod(methodName).invoke(app);
             // For web services, calling the method might throw an exception if
@@ -409,12 +410,12 @@ public class WebApplicationSteps {
 
     @Given("the username (.*)")
     public void setUsernameFromExamples(String username) {
-        credentials.setUsername(username);
+        SharedState.getInstance().getUserPassCredentials().setUsername(username);
     }
 
     @Given("the password (.*)")
     public void setCredentialsFromExamples(String password) {
-        credentials.setPassword(password);
+        SharedState.getInstance().getUserPassCredentials().setPassword(password);
     }
 
     @When("the previously recorded HTTP Requests for (.*) are replayed using the current session ID")
@@ -455,7 +456,7 @@ public class WebApplicationSteps {
     private void checkAccessUsingAuthTokenMethod(String sensitiveData) {
         boolean accessible = false;
         app.getAuthTokenManager().deleteAuthTokens();
-        app.getAuthTokenManager().setAuthTokens(sessionIds);
+        app.getAuthTokenManager().setAuthTokens(SharedState.getInstance().getSessionIds());
         getProxy().clear();
         try {
             app.getClass().getMethod(methodName).invoke(app);
@@ -465,7 +466,7 @@ public class WebApplicationSteps {
         List<HarEntry> results = getProxy().findInResponseHistory(sensitiveData);
         accessible = results != null && results.size() > 0;
         if (!accessible) {
-            log.debug("User: " + credentials.getUsername() + " has no access to resource: " + methodName);
+            log.debug("User: " + SharedState.getInstance().getUserPassCredentials().getUsername() + " has no access to resource: " + methodName);
         }
         assertThat(accessible, equalTo(false));
     }
@@ -477,7 +478,7 @@ public class WebApplicationSteps {
                 getProxy().clear();
                 HarRequest manual = null;
                 try {
-                    manual = Utils.replaceCookies(entry.getRequest(), sessionIds);
+                    manual = Utils.replaceCookies(entry.getRequest(), SharedState.getInstance().getSessionIds());
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new RuntimeException("Could not copy Har request");
@@ -489,7 +490,7 @@ public class WebApplicationSteps {
             }
         }
         if (!accessible) {
-            log.debug("User: " + credentials.getUsername() + " has no access to resource: " + methodName);
+            log.debug("User: " + SharedState.getInstance().getUserPassCredentials().getUsername() + " has no access to resource: " + methodName);
         }
         assertThat(accessible, equalTo(false));
     }
@@ -538,25 +539,25 @@ public class WebApplicationSteps {
     @When("the following URLs are visited and their HTTP responses recorded")
     public void accessSecureBaseUrlAndRecordHTTPResponse(List<String> urls) {
         for (String url : urls) {
-            if (!httpHeadersRecorded) {
+            if (!SharedState.getInstance().isHttpHeadersRecorded()) {
                 enableLoggingDriver();
                 clearProxy();
                 if ("baseUrl".equalsIgnoreCase(url)) url = Config.getInstance().getBaseUrl();
                 ((Browser) app.getAuthTokenManager()).getUrl(url);
                 recordFirstHarEntry();
-                httpHeadersRecorded = true;
+                SharedState.getInstance().setHttpHeadersRecorded(true);
             }
         }
     }
 
     @And("^the default username$")
     public void theDefaultUsername() throws Throwable {
-        credentials.setUsername(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
+        SharedState.getInstance().getUserPassCredentials().setUsername(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
     }
 
     @When("^the default password$")
     public void theDefaultPassword() throws Throwable {
-        credentials.setPassword(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
+        SharedState.getInstance().getUserPassCredentials().setPassword(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
     }
 
 }

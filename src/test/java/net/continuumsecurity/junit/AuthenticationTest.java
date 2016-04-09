@@ -10,6 +10,6 @@ import cucumber.api.CucumberOptions;
         },
         tags = {}
 )
-public class AuthenticationTestSuite extends BaseCucumberTestCase {
+public class AuthenticationTest extends BaseCucumberTest {
 
 }

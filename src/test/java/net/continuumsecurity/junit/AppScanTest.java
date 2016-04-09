@@ -7,8 +7,8 @@ import cucumber.api.CucumberOptions;
         features = {
                 "src/test/resources/features/app_scan.feature"
         },
-        tags = { "@cwe-89, @cwe-79" }
+        tags = {  }
 )
-public class AppScanTestSuite extends BaseCucumberTestCase {
+public class AppScanTest extends BaseCucumberTest {
 
 }

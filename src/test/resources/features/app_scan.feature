@@ -10,14 +10,7 @@ Feature: Automated Application Security Scanning
     And all existing alerts are deleted
     And the application is navigated
     And the application is spidered
-
-  @passive
-  Scenario: The application should not contain vulnerabilities identified through passive scanning
-    And the passive scanner is enabled
-    And the following false positives are removed
-      | url     | parameter | cweid     | wascid     |
-    When the XML report is written to the file build/reports/zap/passive.xml
-    Then no Medium or higher risk vulnerabilities should be present
+    
 
   @cwe-89
   Scenario: The application should not contain SQL injection vulnerabilities

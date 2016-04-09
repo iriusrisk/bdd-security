@@ -66,10 +66,10 @@ test {
 build.dependsOn cucumber
 
 def generateReport() {
-    File reportOutputDirectory = new File("build/reports/cucumber");
-
-    List<String> jsonReportFiles = new ArrayList<String>();
-    jsonReportFiles.add("build/reports/cucumber.json");
+    File reportOutputDirectory = new File("build/reports/cucumber")
+    reportOutputDirectory.deleteDir()
+    List<String> jsonReportFiles = new ArrayList<String>()
+    jsonReportFiles.add("build/reports/cucumber.json")
 
     String projectName = "BDD-Security";
     boolean skippedFails = false;

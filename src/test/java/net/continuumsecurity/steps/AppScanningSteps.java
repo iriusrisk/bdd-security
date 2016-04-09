@@ -335,19 +335,19 @@ public class AppScanningSteps {
 
     @And("^the application is navigated$")
     public void navigateApp() {
-        if (!Config.getInstance().isNavigated()) {
+        if (!SharedState.getInstance().isNavigated()) {
             if (!(app instanceof INavigable))
                 throw new RuntimeException("The application must implement the 'INavigable' interface to be navigable");
             app.enableHttpLoggingClient();
             log.debug("Navigating");
             ((INavigable) app).navigate();
-            Config.getInstance().setNavigated(true);
+            SharedState.getInstance().setNavigated(true);
         }
     }
 
     @And("^the application is spidered$")
     public void theApplicationIsSpidered() {
-        if (!Config.getInstance().isSpidered()) {
+        if (!SharedState.getInstance().isSpidered()) {
             for (String regex : Config.getInstance().getIgnoreUrls()) {
                 getSpider().excludeFromSpider(regex);
             }
@@ -363,7 +363,7 @@ public class AppScanningSteps {
                 }
             }
             waitForSpiderToComplete();
-            Config.getInstance().setSpidered(true);
+            SharedState.getInstance().setSpidered(true);
         }
     }
 }

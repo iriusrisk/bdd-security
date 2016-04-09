@@ -9,5 +9,5 @@ import org.junit.runner.RunWith;
     //Enable tags to run specific Scenarios and/or Features
     tags = {"@authorisation"}
 )
-public class AllFeaturesTestSuite extends BaseCucumberTestCase {
+public class AllFeaturesTest extends BaseCucumberTest {
 }

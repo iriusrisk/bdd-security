@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
         glue = { "net.continuumsecurity.steps" },
         tags = { "~@skip" }
 )
-public class BaseCucumberTestCase {
+public class BaseCucumberTest {
 
     @AfterClass
     public static void tearDown() {
