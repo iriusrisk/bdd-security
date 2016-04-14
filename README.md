@@ -13,5 +13,5 @@ Tests should be run through the JUnit runners.
 ## Run BDD-Security tests
 * Checkout the BDD-Security cukesecure branch
 * (The default config.xml and RopeyTasksApplication.java are already configured to test that vulnerable app)
-* Run a single BDD-Security feature: ./gradlew -Dtest.single=AuthenticationTestSuite test
+* Run a single BDD-Security feature: ./gradlew -Dtest.single=AuthenticationTest test
 
