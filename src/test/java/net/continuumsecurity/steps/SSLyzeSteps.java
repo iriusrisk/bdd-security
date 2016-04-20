@@ -1,7 +1,7 @@
 package net.continuumsecurity.steps;
 
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import net.continuumsecurity.Config;
 import net.continuumsecurity.ProcessExecutor;
 import net.continuumsecurity.scanner.SSLyzeParser;
@@ -35,11 +35,11 @@ public class SSLyzeSteps {
         return new ProcessExecutor(cmds);
     }
 
-    @Given("^the SSLyze command is run against the host (.*) on port (\\d+)$")
+    @When("^the SSLyze command is run against the host (.*) on port (\\d+)$")
     public void runSSLTestsOnSecureBaseUrl(String host, int port) throws IOException {
-        sslTester = createSSLyzeProcess(host, port);
-        sslTester.setFilename(OUTFILENAME);
         if (!World.getInstance().isSslRunCompleted()) {
+            sslTester = createSSLyzeProcess(host, port);
+            sslTester.setFilename(OUTFILENAME);
             sslTester.start();
             World.getInstance().setSslRunCompleted(true);
         }

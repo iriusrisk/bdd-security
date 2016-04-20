@@ -18,7 +18,6 @@
  ******************************************************************************/
 package net.continuumsecurity;
 
-import edu.umass.cs.benchlab.har.HarEntry;
 import net.continuumsecurity.scanner.ZapManager;
 import net.continuumsecurity.web.Application;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -42,7 +41,6 @@ public class Config {
     private String proxyApi;
     private static Config config;
 
-
     public Application createApp() {
         Object app = null;
         try {
@@ -55,8 +53,6 @@ public class Config {
             throw new RuntimeException(e);
         }
     }
-
-
 
     public synchronized static Config getInstance() {
         if (config == null) {

@@ -5,7 +5,7 @@ Feature:
   I want to verify that good SSL practices have been implemented and known weaknesses have been avoided
 
   Background: Run the SSLyze command only once for all features
-    Given the SSLyze command is run against the host www.continuumsecurity.net on port 443
+    When the SSLyze command is run against the host www.continuumsecurity.net on port 443
 
   @ssl_crime
   Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack
@@ -37,7 +37,7 @@ Feature:
 
   @ssl_perfect_forward_secrecy
   Scenario: Enable Perfect forward secrecy
-    And any of the following ciphers must be supported
+    Then any of the following ciphers must be supported
       | ECDHE-RSA-AES128-SHA           |
       | ECDHE-RSA-AES256-SHA           |
       | DHE-DSS-CAMELLIA128-SHA        |
