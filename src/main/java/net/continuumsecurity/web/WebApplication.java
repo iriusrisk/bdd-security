@@ -42,6 +42,7 @@ public class WebApplication extends Application {
         if (this instanceof ICaptcha) {
         	((ICaptcha)this).setDefaultSolver();
         }
+        setImplicitWait(3,TimeUnit.SECONDS);
     }
 
     public ICaptchaSolver getCaptchaSolver() {

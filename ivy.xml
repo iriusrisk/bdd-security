@@ -17,6 +17,9 @@
     </configurations>
 
     <dependencies>
+        <dependency org="org.apache.commons" name="commons-lang3" rev="3.4"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-htmlunit-driver" rev="2.52.0"/>
+
         <!-- Needed for Nessus REST interface -->
         <dependency org="org.glassfish.jersey.core" name="jersey-client" rev="2.15"/>
         <dependency org="com.fasterxml.jackson.jaxrs" name="jackson-jaxrs-json-provider" rev="2.4.1"/>
@@ -32,11 +35,11 @@
             <exclude org="org.hamcrest"/>
             <exclude org="junit"/>
         </dependency>
-        <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.44.0">
+        <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.53.0">
             <exclude org="junit"/>
         </dependency>
         <dependency org="de.codecentric" name="jbehave-junit-runner" rev="1.1.2"/>
-        <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.44.0"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.53.0"/>
         <dependency org="log4j" name="log4j" rev="1.2.17"/>
         <dependency org="args4j" name="args4j" rev="2.0.16"/>
         <dependency org="org.codehaus.groovy" name="groovy-all" rev="1.8.5"/>
