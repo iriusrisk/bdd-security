@@ -1,5 +1,5 @@
-@http_headers @broken
-Feature: 
+@http_headers
+Feature: HTTP Headers
   Verify that HTTP headers adequately protect data from attackers
 
   Background:

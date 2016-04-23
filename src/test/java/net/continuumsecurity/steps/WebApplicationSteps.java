@@ -422,7 +422,9 @@ public class WebApplicationSteps {
 
     @Then("the X-Frame-Options header is either (.*) or (.*)")
     public void checkIfXFrameOptionsHeaderIsSet(String sameOrigin, String deny) {
-        assertThat(Utils.responseHeaderValueIsOneOf(World.getInstance().getCurrentHar().getResponse(), Constants.XFRAMEOPTIONS, new String[]{sameOrigin, deny}), equalTo(true));
+        String xFrameOptionsValue = Utils.getResponseHeaderValue(World.getInstance().getCurrentHar().getResponse(),Constants.XFRAMEOPTIONS);
+        assertThat(Constants.XFRAMEOPTIONS+" header is not set",xFrameOptionsValue,notNullValue());
+        assertThat("X-FRAME-Options header is: "+xFrameOptionsValue,Utils.responseHeaderValueIsOneOf(World.getInstance().getCurrentHar().getResponse(), Constants.XFRAMEOPTIONS, new String[]{sameOrigin, deny}), equalTo(true));
     }
 
     @Given("the access control map for authorised users has been populated")
@@ -517,7 +519,7 @@ public class WebApplicationSteps {
 
     @Then("the Strict-Transport-Security header is set")
     public void checkIfHSTSHeaderIsSet() {
-        assertThat(Utils.responseContainsHeader(World.getInstance().getCurrentHar().getResponse(), Constants.HSTS), equalTo(true));
+        assertThat("No "+Constants.HSTS+" header found",Utils.responseContainsHeader(World.getInstance().getCurrentHar().getResponse(), Constants.HSTS), equalTo(true));
     }
 
     @Then("the HTTP (.*) header has the value: (.*)")

@@ -66,9 +66,8 @@ public class SSLyzeSteps {
     @Then("any of the following ciphers must be supported")
     public void verifyAnyCipherSupported(List<String> ciphers) {
         boolean foundCipher = false;
-        List<String> supported = World.getInstance().getjSSLyze().getParser().listAllAcceptedCiphers();
         for (String cipher : ciphers) {
-            if (World.getInstance().getjSSLyze().getParser().containsCipherWithPartialName(cipher))
+            if (World.getInstance().getjSSLyze().getParser().acceptsCipherWithPartialName(cipher))
                 foundCipher = true;
         }
         assertThat(foundCipher, equalTo(true));
