@@ -150,7 +150,8 @@ public class Config {
         return ret;
     }
 
-    public String getSSLyze() { return validateAndGetString("sslyze"); }
+    public String getSSLyzePath() { return validateAndGetString("sslyze.path"); }
+    public String getSSLyzeOption() { return validateAndGetString("sslyze.option"); }
 
     public String getProxyHost() {
         if (proxyHost != null) return proxyHost;

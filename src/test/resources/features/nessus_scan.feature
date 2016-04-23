@@ -1,8 +1,6 @@
 @nessus_scan @skip
-Feature: Automated Nessus scanning
-  In order to identify security vulnerabilities on the hosts
-  As a system owner
-  I want to scan the hosts for known security vulnerabilities
+Feature: Nessus scanning
+  Scan the hosts for known security vulnerabilities
 
   Scenario: The host systems should not expose known security vulnerabilities
     Given a nessus API client that accepts all hostnames in SSL certificates

@@ -1,8 +1,6 @@
 @cors @skip
 Feature: 
-  In order to reduce the risk of Cross Site Request Forgery
-  As a system owner
-  I want to verify that the application does not allow the browser to perform requests outside of the allowed origins
+  Verify that the application does not allow the browser to perform requests outside of the allowed origins
 
   @cwe-942-cors_allowed
   Scenario Outline: Permit allowed origins to make CORS requests

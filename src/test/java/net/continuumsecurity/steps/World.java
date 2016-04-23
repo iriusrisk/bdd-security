@@ -3,6 +3,7 @@ package net.continuumsecurity.steps;
 import edu.umass.cs.benchlab.har.HarEntry;
 import net.continuumsecurity.Credentials;
 import net.continuumsecurity.UserPassCredentials;
+import net.continuumsecurity.jsslyze.JSSLyze;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ public class World {
     private Credentials credentials;
     private boolean sslRunCompleted;
     private HarEntry currentHar;
+    private JSSLyze jSSLyze;
 
     public synchronized Map<String, List<HarEntry>> getMethodProxyMap() {
         return methodProxyMap;
@@ -50,6 +52,14 @@ public class World {
     }
 
     private World() {
+    }
+
+    public JSSLyze getjSSLyze() {
+        return jSSLyze;
+    }
+
+    public void setjSSLyze(JSSLyze jSSLyze) {
+        this.jSSLyze = jSSLyze;
     }
 
     public Map<String, String> getSessionIds() {

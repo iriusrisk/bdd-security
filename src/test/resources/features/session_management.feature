@@ -1,8 +1,6 @@
 @session_management
 Feature: 
-  In order to protect the integrity of the user session
-  As a n application owner
-  I want to verify that there are no weaknesses in the session management implementation
+  Verify that there are no weaknesses in the session management implementation
 
   @cwe-664-fixation
   Scenario: Issue a new session ID after authentication

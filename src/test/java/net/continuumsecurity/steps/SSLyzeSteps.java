@@ -3,13 +3,9 @@ package net.continuumsecurity.steps;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.continuumsecurity.Config;
-import net.continuumsecurity.ProcessExecutor;
-import net.continuumsecurity.scanner.SSLyzeParser;
+import net.continuumsecurity.jsslyze.JSSLyze;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,51 +17,38 @@ import static org.hamcrest.core.IsNot.not;
  * Created by stephen on 18/01/15.
  */
 public class SSLyzeSteps {
-    ProcessExecutor sslTester;
-    SSLyzeParser parser;
     final static String OUTFILENAME = "sslyze.output";
-
-    private ProcessExecutor createSSLyzeProcess(String target, int port) throws MalformedURLException {
-        List<String> cmds = new ArrayList<>();
-        cmds.addAll(Arrays.asList(Config.getInstance().getSSLyze().split("\\s+")));
-        if (port > -1) {
-            target = target + ":" + port;
-        }
-        cmds.add(target);
-        return new ProcessExecutor(cmds);
-    }
 
     @When("^the SSLyze command is run against the host (.*) on port (\\d+)$")
     public void runSSLTestsOnSecureBaseUrl(String host, int port) throws IOException {
         if (!World.getInstance().isSslRunCompleted()) {
-            sslTester = createSSLyzeProcess(host, port);
-            sslTester.setFilename(OUTFILENAME);
-            sslTester.start();
+            JSSLyze jSSLLyze = new JSSLyze(Config.getInstance().getSSLyzePath(), OUTFILENAME);
+            jSSLLyze.execute(Config.getInstance().getSSLyzeOption(),host,port);
+            World.getInstance().setjSSLyze(jSSLLyze);
             World.getInstance().setSslRunCompleted(true);
         }
-        parser = new SSLyzeParser(sslTester.getOutput());
     }
 
     @Then("the output must contain the text (.*)")
     public void verifyThatOutputContainsText(String text) throws IOException {
         if (text.startsWith("\"") || text.startsWith("'")) text = text.substring(1, text.length() - 1);
-        assertThat(sslTester.getOutput(), containsString(text));
+        assertThat(World.getInstance().getjSSLyze().getOutput(), containsString(text));
     }
 
     @Then("^the output must contain a line that matches (.*)")
     public void verifyThatOutputMatchesRegex(String regex) throws IOException {
         if (regex.startsWith("\"") || regex.startsWith("'")) regex = regex.substring(1, regex.length() - 1);
-        assertThat(parser.doesAnyLineMatch(regex), equalTo(true));
+        assertThat(World.getInstance().getjSSLyze().getParser().doesAnyLineMatch(regex), equalTo(true));
     }
 
     @Then("the minimum key size must be (\\d+) bits")
     public void verifyMinimumKeySize(int size) {
-        assertThat(parser.findSmallestAcceptedKeySize(), greaterThanOrEqualTo(size));
+        assertThat(World.getInstance().getjSSLyze().getParser().findSmallestAcceptedKeySize(), greaterThanOrEqualTo(size));
     }
 
     @Then("the following protocols must not be supported")
     public void verifyDisabledProcotols(List<String> forbiddenProtocols) {
-        List<String> supported = parser.listAllSupportedProtocols();
+        List<String> supported = World.getInstance().getjSSLyze().getParser().listAllSupportedProtocols();
         for (String forbidden : forbiddenProtocols) {
             assertThat(supported, not(hasItem(forbidden)));
         }
@@ -73,7 +56,7 @@ public class SSLyzeSteps {
 
     @Then("the following protocols must be supported")
     public void verifySupportedProcotols(List<String> mandatoryProtocols) {
-        List<String> supported = parser.listAllSupportedProtocols();
+        List<String> supported = World.getInstance().getjSSLyze().getParser().listAllSupportedProtocols();
         for (String mandatory : mandatoryProtocols) {
             assertThat(supported, hasItem(mandatory));
         }
@@ -83,8 +66,9 @@ public class SSLyzeSteps {
     @Then("any of the following ciphers must be supported")
     public void verifyAnyCipherSupported(List<String> ciphers) {
         boolean foundCipher = false;
+        List<String> supported = World.getInstance().getjSSLyze().getParser().listAllAcceptedCiphers();
         for (String cipher : ciphers) {
-            if (parser.supportsCipher(cipher))
+            if (World.getInstance().getjSSLyze().getParser().containsCipherWithPartialName(cipher))
                 foundCipher = true;
         }
         assertThat(foundCipher, equalTo(true));

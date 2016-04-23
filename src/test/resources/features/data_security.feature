@@ -1,8 +1,6 @@
 @data_security
-Feature: Confidentiality of sensitive user data
-  In order to protect the confidentiality of my sensitive data
-  As a user
-  I want to verify that the application does not allow the browser to cache my sensitive data
+Feature: Data confidentiality
+  Verify that the application does not allow the browser to cache sensitive data
 
   @cwe-525
   Scenario Outline: Prevent browser caching of sensitive data

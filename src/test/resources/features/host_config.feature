@@ -1,8 +1,6 @@
 @host_config @skip
 Feature: 
-  In order to reduce the risk of vulnerabilities introduced through software running on the host
-  As a system owner
-  I want to ensure that the configuration of the host and network are as expected 
+  Verify that the configuration of the host and network are as expected
 
   @open_ports
   Scenario Outline: Only the required ports should be open

@@ -1,8 +1,6 @@
 @http_headers @broken
 Feature: 
-  In order to protect my data
-  As a user
-  I want to verify that HTTP headers adequately protect my data from attackers 
+  Verify that HTTP headers adequately protect data from attackers
 
   Background:
     Given a new browser or client instance

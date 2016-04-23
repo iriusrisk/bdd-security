@@ -1,8 +1,6 @@
 @app_scan
 Feature: Automated Application Security Scanning
-  In order to protect user data
-  As a n application owner
-  I want to ensure that the application does not suffer from common security vulnerabilities
+  Run automated application level tests against the application using OWASP ZAP
 
   Background:
     Given a new scanning session

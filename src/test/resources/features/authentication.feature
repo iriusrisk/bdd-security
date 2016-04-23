@@ -1,8 +1,6 @@
 @authentication
 Feature: Authentication
-  In order to protect sensitive user data
-  As an application owner
-  I want to have a robust authentication system
+  Verify that the authentication system is robust
 
   @cwe-178-auth
   Scenario: Passwords should be case sensitive

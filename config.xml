@@ -15,7 +15,10 @@
     <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth authn/z and session management testing. -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
 
-    <sslyze>/opt/sslyze/sslyze_cli.py --regular</sslyze>
+    <sslyze>
+        <path>/opt/sslyze/sslyze_cli.py</path>
+        <option>--regular</option>
+    </sslyze>
 
     <!-- Optional names of the session ID cookies for session management testing. -->
     <sessionIds>

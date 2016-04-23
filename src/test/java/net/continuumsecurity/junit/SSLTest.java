@@ -9,5 +9,4 @@ import cucumber.api.CucumberOptions;
         tags = {}
 )
 public class SSLTest extends BaseCucumberTest {
-
 }

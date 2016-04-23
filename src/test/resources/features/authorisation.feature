@@ -1,8 +1,6 @@
 @authorisation
 Feature: Authorisation and Access Control
-  In order to protect my sensitive data
-  As a user
-  I want to ensure that only the authorised users have access to my data
+  Verify that only the authorised users have access to their own data
 
   @authorised_resources
   Scenario Outline: Users can view restricted resources for which they are authorised
