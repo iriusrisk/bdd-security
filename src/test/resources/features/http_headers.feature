@@ -1,11 +1,11 @@
 @http_headers
-Feature: HTTP Headers
+Feature: Security settings on HTTP headers
   Verify that HTTP headers adequately protect data from attackers
 
   Background:
     Given a new browser or client instance
     When the following URLs are visited and their HTTP responses recorded
-      |baseUrl        |
+      | baseUrl |
 
   @cwe-693-clickjack
   Scenario: Restrict other sites from placing it in an iframe in order to prevent ClickJacking attacks

@@ -27,9 +27,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 public class Config {
@@ -66,31 +64,14 @@ public class Config {
         loadConfig("config.xml");
     }
 
-    public  Users getUsers() {
-        Users users = new Users();
+    public User getDefaultUser() {
+        return new User(getDefaultCredentials());
+    }
 
-        List<HierarchicalConfiguration> usersInXml = getXml()
-                .configurationsAt("users.user");
-        for (HierarchicalConfiguration user : usersInXml) {
-            User theUser = new User(new UserPassCredentials(
-                    user.getString("[@username]"),
-                    user.getString("[@password]")));
-            List<String> roles = new ArrayList<String>();
-            for (Object o : user.getList("role")) {
-                roles.add((String) o);
-            }
-            theUser.setRoles(roles);
-            //There's got to be a cleaner way to do this...
-            List names = user.getList("recoverpassword[@name]");
-            List values = user.getList("recoverpassword[@value]");
-            Map<String, String> recoverMap = new HashMap<String, String>();
-            for (int i = 0; i < names.size(); i++) {
-                recoverMap.put((String) names.get(i), (String) values.get(i));
-            }
-            theUser.setRecoverPasswordMap(recoverMap);
-            users.add(theUser);
-        }
-        return users;
+    public Credentials getDefaultCredentials() {
+        return new UserPassCredentials(
+                validateAndGetString("defaultUsername"),
+                validateAndGetString("defaultPassword"));
     }
 
     public List<String> getIgnoreUrls() {

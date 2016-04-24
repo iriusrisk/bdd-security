@@ -1,5 +1,5 @@
 @cors @skip
-Feature: 
+Feature: Cross Origin Resource Sharing
   Verify that the application does not allow the browser to perform requests outside of the allowed origins
 
   @cwe-942-cors_allowed

@@ -72,7 +72,7 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
     of the key service methods
      */
     public void navigate() {
-        login(Config.getInstance().getUsers().getDefaultCredentials());
+        login(Config.getInstance().getDefaultCredentials());
         client.get("task/list");
         if (!client.getLastResponse().readEntity(String.class).contains("Welcome")) throw new UnexpectedContentException("Expected text: 'Welcome' was not found.");
         client.getWebClientWithSessionCookie().path("/task/search").query("q","test").query("search","Search").get();

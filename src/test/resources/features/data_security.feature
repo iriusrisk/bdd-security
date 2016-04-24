@@ -17,5 +17,5 @@ Feature: Data confidentiality
     And the HTTP Pragma header has the value: no-cache
     Examples:
       | method              | username   | password   | sensitiveData               |
-      | viewProfileForBob   | bob        | password   | Robert                      |
+      | viewBobsProfile     | bob        | password   | Robert                      |
 

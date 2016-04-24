@@ -39,8 +39,13 @@ configurations {
     }
 }
 
+task cleanReports() {
+    File reportOutputDirectory = new File("build/reports/cucumber")
+    reportOutputDirectory.deleteDir()
+}
+
 task cucumber() {
-    dependsOn assemble, compileTestJava
+    dependsOn clean, cleanReports, assemble, compileTestJava
     doLast {
         javaexec {
             main = "cucumber.api.cli.Main"
@@ -58,6 +63,7 @@ task generateReportTask() {
 }
 
 test {
+    dependsOn assemble, compileTestJava, cleanReports
     finalizedBy(generateReportTask)
 }
 
@@ -65,10 +71,14 @@ test {
 build.dependsOn cucumber
 
 def generateReport() {
-    File reportOutputDirectory = new File("build/reports/cucumber")
+    File reportOutputDirectory = new File("build/reports/cucumber/pretty")
     reportOutputDirectory.deleteDir()
+
+    def jsonReports = fileTree(dir: "${reporting.baseDir}/cucumber").include '**/*.json'.toString()
     List<String> jsonReportFiles = new ArrayList<String>()
-    jsonReportFiles.add("build/reports/cucumber.json")
+    jsonReports.each { File file ->
+        jsonReportFiles.add("${reporting.baseDir}/cucumber/${file.name}".toString());
+    }
 
     String projectName = "BDD-Security";
     boolean skippedFails = false;
@@ -86,7 +96,7 @@ def generateReport() {
     configuration.setBuildNumber("SecTests.1");
     ReportBuilder reportBuilder = new ReportBuilder(jsonReportFiles, configuration);
     reportBuilder.generateReports();
-    println("\nReport available on: ${reporting.baseDir}/cucumber/feature-overview.html")
+    println("\nReport available on: "+reportOutputDirectory.getCanonicalPath()+"/feature-overview.html")
 }
 
 dependencies {

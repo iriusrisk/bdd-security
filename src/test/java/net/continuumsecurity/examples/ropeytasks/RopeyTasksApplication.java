@@ -78,7 +78,7 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
 
     public void navigate() {
         openLoginPage();
-        login(Config.getInstance().getUsers().getDefaultCredentials());
+        login(Config.getInstance().getDefaultCredentials());
         viewProfile();
         search("test");
     }

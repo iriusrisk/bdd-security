@@ -1,5 +1,5 @@
-@host_config @skip
-Feature: 
+@host_config
+Feature: Host Configuration
   Verify that the configuration of the host and network are as expected
 
   @open_ports
@@ -9,5 +9,5 @@ Feature:
     And the <state> ports are selected
     Then the ports should be <ports>
     Examples:
-      |host         |startPort  |endPort  |threads |timeout   |state      |ports      |
-      |localhost    |1          |65535    |100     |500       |open       |80,443     |
+      | host      | startPort | endPort | threads | timeout | state | ports  |
+      | localhost | 1         | 65535   | 100     | 500     | open  | 80,443 |

@@ -1,5 +1,5 @@
 @nessus_scan @skip
-Feature: Nessus scanning
+Feature: Nessus Scan
   Scan the hosts for known security vulnerabilities
 
   Scenario: The host systems should not expose known security vulnerabilities

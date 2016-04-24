@@ -1,6 +1,6 @@
 @authorisation
 Feature: Authorisation and Access Control
-  Verify that only the authorised users have access to their own data
+  Verify that the access control model is enforced so that only the authorised users have access to their own data
 
   @authorised_resources
   Scenario Outline: Users can view restricted resources for which they are authorised

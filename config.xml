@@ -25,14 +25,12 @@
         <name>JSESSIONID</name>
     </sessionIds>
 
-    <!-- the default user to use when logging in to the app for most of the functional requirements -->
-    <users>
-        <user username="bob" password="password"/>
-    </users>
+    <!-- the default user to use when logging in to the app -->
+    <defaultUsername>bob</defaultUsername>
+    <defaultPassword>password</defaultPassword>
 
     <scanner>
         <ignoreUrl>.*logout.*</ignoreUrl>
-
         <spiderUrl>baseUrl</spiderUrl>
     </scanner>
 

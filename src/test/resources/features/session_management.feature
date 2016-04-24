@@ -1,5 +1,5 @@
 @session_management
-Feature: 
+Feature: Session Management
   Verify that there are no weaknesses in the session management implementation
 
   @cwe-664-fixation

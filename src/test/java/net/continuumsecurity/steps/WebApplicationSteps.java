@@ -127,7 +127,7 @@ public class WebApplicationSteps {
     @When("the default user logs in")
     public void loginDefaultUser() throws IOException {
         openLoginPage();
-        setDefaultCredentials(Config.getInstance().getUsers().getDefaultCredentials());
+        setDefaultCredentials(Config.getInstance().getDefaultCredentials());
         loginWithSetCredentials();
     }
 
@@ -361,20 +361,17 @@ public class WebApplicationSteps {
         UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
         try {
             app.getClass().getMethod(methodName).invoke(app);
-            // For web services, calling the method might throw an exception if
-            // access is denied.
+            World.getInstance().setRecordedEntries(getProxy().findInResponseHistory(sensitiveData));
+            assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", World.getInstance().getRecordedEntries().size(), greaterThan(0));
+            World.getInstance().setCurrentHar(World.getInstance().getRecordedEntries().get(0));
         } catch (Exception e) {
+            e.printStackTrace();
             fail("User with credentials: " + credentials.getUsername() + " "
                     + credentials.getPassword()
                     + " could not access the method: " + methodName + "()");
+
         }
-
-        World.getInstance().setRecordedEntries(getProxy().findInResponseHistory(sensitiveData));
-        assertThat("The string: " + sensitiveData + " was not found in the HTTP responses", World.getInstance().getRecordedEntries().size(), greaterThan(0));
-        World.getInstance().setCurrentHar(World.getInstance().getRecordedEntries().get(0));
     }
-
-
 
     @Then("the string: (.*) should be present in one of the HTTP responses")
     public void checkAccessToResource(String sensitiveData) throws NoSuchMethodException {
@@ -551,12 +548,12 @@ public class WebApplicationSteps {
 
     @And("^the default username$")
     public void theDefaultUsername() throws Throwable {
-        World.getInstance().getUserPassCredentials().setUsername(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getUsername());
+        World.getInstance().getUserPassCredentials().setUsername(((UserPassCredentials) Config.getInstance().getDefaultCredentials()).getUsername());
     }
 
     @When("^the default password$")
     public void theDefaultPassword() throws Throwable {
-        World.getInstance().getUserPassCredentials().setPassword(((UserPassCredentials) Config.getInstance().getUsers().getDefaultCredentials()).getPassword());
+        World.getInstance().getUserPassCredentials().setPassword(((UserPassCredentials) Config.getInstance().getDefaultCredentials()).getPassword());
     }
 
 }
