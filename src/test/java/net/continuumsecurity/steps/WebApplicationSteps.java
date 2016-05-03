@@ -145,7 +145,7 @@ public class WebApplicationSteps {
         World.getInstance().getUserPassCredentials().setPassword(Config.getInstance().getIncorrectPassword());
     }
 
-    @When("the user logs in from a fresh login page")
+    @When("^the user logs in from a fresh login page$")
     public void loginFromFreshPage() {
         createApp();
         openLoginPage();
@@ -180,7 +180,7 @@ public class WebApplicationSteps {
         }
     }
 
-    @Given("the user logs in from a fresh login page $limit times")
+    @Given("^the user logs in from a fresh login page (\\d+) times$")
     public void whenTheUserLogsInFromAFreshLoginPageXTimes(int limit) {
         for (int i = 0; i < limit; i++) {
             createApp();
@@ -224,7 +224,7 @@ public class WebApplicationSteps {
     }
 
 
-    @Given("the HTTP request containing the string $value is selected")
+    @Given("^the HTTP request containing the string (\\s+) is selected$")
     public void findRequestWithString(String value) {
         UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
         List<HarEntry> requests = getProxy().findInRequestHistory(value);
@@ -314,7 +314,7 @@ public class WebApplicationSteps {
         }
     }
 
-    @When("the password field is inspected")
+    @When("^the password field is inspected$")
     public void selectPasswordField() {
         checkIfWebApplication();
         String xpath = "//input[@type='password']";
@@ -402,12 +402,12 @@ public class WebApplicationSteps {
     }
 
 
-    @Given("the username (.*)")
+    @Given("^the username (\\s+)$")
     public void setUsernameFromExamples(String username) {
         World.getInstance().getUserPassCredentials().setUsername(username);
     }
 
-    @Given("the password (.*)")
+    @Given("^the password (\\s+)$")
     public void setCredentialsFromExamples(String password) {
         World.getInstance().getUserPassCredentials().setPassword(password);
     }

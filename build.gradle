@@ -63,6 +63,7 @@ task generateReportTask() {
 }
 
 test {
+    systemProperties = System.properties
     dependsOn assemble, compileTestJava, cleanReports
     finalizedBy(generateReportTask)
 }
