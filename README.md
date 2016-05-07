@@ -1,7 +1,7 @@
 
 ![](http://www.continuumsecurity.net/images/bdd-security-logo-small.png) 
 
-Powered by <img src="https://cucumber.io/images/cucumber-logo.svg" width="200"/> and <img src="http://gradle.wpengine.netdna-cdn.com/wp-content/uploads/2015/10/gradle-logo-horizontal2.svg" width="100"/>
+Powered by <img src="https://cucumber.io/images/cucumber-logo.svg" width="200"/>
 
 BDD-Security is a security testing framework that uses Behaviour Driven Development concepts to create self-verifying security specifications.
 
