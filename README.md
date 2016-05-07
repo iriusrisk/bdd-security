@@ -11,3 +11,5 @@ BDD-Security uses the [Gradle](http://www.gradle.org) build system.
 
 [Documentation on the Wiki](https://github.com/continuumsecurity/bdd-security/wiki)
 
+## Legacy JBehave version
+The old version is available under the jbehave branch and will no longer be updated
