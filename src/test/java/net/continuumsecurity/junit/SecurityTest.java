@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         features = {
                 "src/test/resources/features/"
         },
-        format = {"pretty", "html:build/reports/cucumber/html", "json:build/reports/cucumber/all_tests.json", "junit:build/reports/cucumber/all_tests.xml"},
+        format = {"pretty", "html:build/reports/cucumber/html", "json:build/reports/cucumber/all_tests.json", "junit:build/reports/junit/all_tests.xml"},
         glue = {"net.continuumsecurity.steps"},
         tags = {"~@skip"}
 )
