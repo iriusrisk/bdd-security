@@ -1,18 +1,13 @@
 
-BDD-Security migration to Cucumber and Gradle
-=================================================
-Current working branch for Cucumber migration, expect much brokeness while we complete the migration.
+![](http://www.continuumsecurity.net/images/bdd-security-logo-small.png)
 
-Configuration uses same concepts as the JBehave version: config.xml and the bespoke Java class file for recording selenium steps.
-Tests should be run through the JUnit runners.
+BDD-Security is a security testing framework that uses Behaviour Driven Development concepts to create self-verifying security specifications.
 
-# Getting Started
-## Launch the application to test
-* Download the RopeyTasks vulnerable application: https://github.com/continuumsecurity/RopeyTasks
-* Start the vulnerable app: java -jar ropeytasks.jar
+The framework is essentially a set of [Cucumber-JVM](http://cucumber.io) features that are pre-wired with Selenium/WebDriver, [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project), [SSLyze](https://github.com/nabla-c0d3/sslyze) and [Tennable's Nessus scanner](http://www.tenable.com/products/nessus-vulnerability-scanner).
 
-## Run BDD-Security tests
-* Checkout the BDD-Security cukesecure branch
-* (The default config.xml and RopeyTasksApplication.java are already configured to test that vulnerable app)
-* Run all the features: ./gradlew test
+It tests Web Applications and API's from an external point of view and does not require access to the target source code.
+
+BDD-Security uses the [Gradle](http://www.gradle.org) build system.
+
+[Documentation on the Wiki](https://github.com/continuumsecurity/bdd-security/wiki)
 

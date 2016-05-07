@@ -6,6 +6,8 @@ apply plugin: 'idea'
 apply plugin: 'maven'
 def cucumberVersion = "1.2.4"
 
+defaultTasks 'test'
+
 buildscript {
     repositories {
         maven {
