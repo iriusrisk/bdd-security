@@ -1,0 +1,133 @@
+import net.masterthought.cucumber.ReportBuilder
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+def cucumberVersion = "1.2.4"
+
+buildscript {
+    repositories {
+        maven {
+            url "http://repo.bodar.com"
+        }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.codehaus.gpars:gpars:1.2.1",
+                "net.masterthought:cucumber-reporting:1.4.0"
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+repositories {
+    maven {
+        url "http://repo.bodar.com"
+    }
+    mavenCentral()
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
+task cleanReports() {
+    File reportOutputDirectory = new File("build/reports/cucumber")
+    reportOutputDirectory.deleteDir()
+}
+
+task cucumber() {
+    dependsOn clean, cleanReports, assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'net.continuumsecurity.steps', 'src/test/resources/features']
+        }
+        generateReport()
+    }
+}
+
+task generateReportTask() {
+    doLast {
+        generateReport()
+    }
+}
+
+test {
+    systemProperties = System.properties
+    dependsOn assemble, compileTestJava, cleanReports
+    finalizedBy(generateReportTask)
+}
+
+//Ensure the cucumber tests are executed as part of the build. Makes for a very pretty output.
+build.dependsOn cucumber
+
+def generateReport() {
+    File reportOutputDirectory = new File("build/reports/cucumber/pretty")
+    reportOutputDirectory.deleteDir()
+
+    def jsonReports = fileTree(dir: "${reporting.baseDir}/cucumber").include '**/*.json'.toString()
+    List<String> jsonReportFiles = new ArrayList<String>()
+    jsonReports.each { File file ->
+        jsonReportFiles.add("${reporting.baseDir}/cucumber/${file.name}".toString());
+    }
+
+    String projectName = "BDD-Security";
+    boolean skippedFails = false;
+    boolean pendingFails = false;
+    boolean undefinedFails = true;
+    boolean missingFails = true;
+    boolean runWithJenkins = false;
+    boolean parallelTesting = false;
+
+    net.masterthought.cucumber.Configuration configuration = new net.masterthought.cucumber.Configuration(reportOutputDirectory, projectName);
+// optionally only if you need
+    configuration.setStatusFlags(skippedFails, pendingFails, undefinedFails, missingFails);
+    configuration.setParallelTesting(parallelTesting);
+    configuration.setRunWithJenkins(runWithJenkins);
+    configuration.setBuildNumber("SecTests.1");
+    ReportBuilder reportBuilder = new ReportBuilder(jsonReportFiles, configuration);
+    reportBuilder.generateReports();
+    println("\nReport available on: "+reportOutputDirectory.getCanonicalPath()+"/feature-overview.html")
+}
+
+dependencies {
+    compile group: 'net.masterthought', name: 'cucumber-reporting', version: "1.4.0"
+    testCompile 'junit:junit:4.11'
+    testCompile "info.cukes:cucumber-junit:$cucumberVersion"
+    testCompile "info.cukes:cucumber-java:$cucumberVersion"
+    testCompile "info.cukes:cucumber-picocontainer:$cucumberVersion"
+
+    testCompile 'org.glassfish.jersey.core:jersey-client:2.15'
+    testCompile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.4.1'
+    testCompile 'org.glassfish.jersey.media:jersey-media-moxy:2.15'
+    testCompile 'org.apache.cxf:cxf-rt-rs-client:3.1.1'  //Jersey client
+    testCompile 'junit:junit-dep:4.11'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+    testCompile ('org.seleniumhq.selenium:selenium-java:2.52.0') { exclude group: 'junit' }
+    testCompile 'org.seleniumhq.selenium:selenium-api:2.52.0'
+    testCompile 'log4j:log4j:1.2.17'
+    testCompile 'args4j:args4j:2.0.16'
+    testCompile 'commons-configuration:commons-configuration:1.8'
+    testCompile 'uk.com.robust-it:cloning:1.9.0'
+    testCompile 'jline:jline:2.6'
+    testCompile 'com.googlecode.java-diff-utils:diffutils:1.2.1'
+    testCompile 'org.apache.httpcomponents:httpcore:4.2.3'
+    testCompile 'org.codehaus.jackson:jackson-mapper-asl:1.9.12'
+    testCompile 'commons-jxpath:commons-jxpath:1.3'
+    testCompile 'org.glassfish.jersey.core:jersey-client:2.6'
+    testCompile 'org.glassfish.jersey.connectors:jersey-apache-connector:2.6'
+    testCompile 'net.htmlparser.jericho:jericho-html:3.3'
+    testCompile files ("lib/captchaswerve-1.0-SNAPSHOT.jar","lib/zap-api-2.4-v9.jar", "lib/harlib-1.1.1.jar",
+            "lib/proxy-2.4.3.jar", "lib/nessus-java-client-0.1-SNAPSHOT.jar","lib/jssylze-0.2-SNAPSHOT.jar")
+}
+
