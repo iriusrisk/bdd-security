@@ -4,6 +4,7 @@ Feature: Passive Application Security Scanning
 
   Scenario: The application should not contain vulnerabilities identified using passive scanning
     Given a new scanning session
+    And the navigation and spider status is reset
     And a scanner with all policies disabled
     And the passive scanner is enabled
     And all existing alerts are deleted

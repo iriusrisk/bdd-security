@@ -229,7 +229,7 @@ public class AppScanningSteps {
         while (complete < 100) {
             complete = getScanner().getScanProgress(scanId);
             log.debug("Scan is " + complete + "% complete.");
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         }
     }
 
@@ -239,7 +239,6 @@ public class AppScanningSteps {
         List<Alert> validFindings = new ArrayList<>();
         validFindings.addAll(alerts);
         for (Alert alert : alerts) {
-            boolean falsePositive = false;
             for (ZAPFalsePositive zapFalsePositive : falsePositives) {
                 if (zapFalsePositive.matches(alert.getUrl(), alert.getParam(), alert.getCweId(), alert.getWascId())) {
                     validFindings.remove(alert);
@@ -331,8 +330,14 @@ public class AppScanningSteps {
         return found;
     }
 
+    @And("^the navigation and spider status is reset$")
+    public void setAppNotNavigatedNorSpidered() {
+        World.getInstance().setNavigated(false);
+        World.getInstance().setSpidered(false);
+    }
+
     @And("^the application is navigated$")
-    public void navigateApp() {
+    public void navigateAppIfNotAlreadyNavigated() {
         if (!World.getInstance().isNavigated()) {
             if (!(app instanceof INavigable))
                 throw new RuntimeException("The application must implement the 'INavigable' interface to be navigable");
