@@ -26,7 +26,7 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.ZAPFalsePositive;
 import net.continuumsecurity.behaviour.INavigable;
-import net.continuumsecurity.proxy.Context;
+import net.continuumsecurity.proxy.ContextModifier;
 import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
@@ -87,8 +87,8 @@ public class AppScanningSteps {
         return (Spider) getScanner();
     }
 
-    public Context getContext() {
-        return (Context) getScanner();
+    public ContextModifier getContext() {
+        return (ContextModifier) getScanner();
     }
 
     @When("the XML report is written to the file (.*)")
@@ -106,7 +106,7 @@ public class AppScanningSteps {
 
 
     private void spider(String url) throws InterruptedException {
-        getSpider().spider(url, ZAP_CONTEXT_NAME);
+        getSpider().spider(url, true, ZAP_CONTEXT_NAME);
         int scanId = getSpider().getLastSpiderScanId();
         int complete = getSpider().getSpiderProgress(scanId);
         while (complete < 100) {
