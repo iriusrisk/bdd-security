@@ -26,6 +26,7 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.UnexpectedContentException;
 import net.continuumsecurity.ZAPFalsePositive;
 import net.continuumsecurity.behaviour.INavigable;
+import net.continuumsecurity.proxy.Context;
 import net.continuumsecurity.proxy.Spider;
 import net.continuumsecurity.proxy.ZAProxyScanner;
 import net.continuumsecurity.web.Application;
@@ -48,7 +49,7 @@ public class AppScanningSteps {
     Application app;
     List<Alert> alerts = new ArrayList<Alert>();
     String scannerIds = null;
-    int spiderMaxChildren = 1000;
+    private final static String ZAP_CONTEXT_NAME= "Default Context";
 
     public AppScanningSteps() {
         app = Config.getInstance().createApp();
@@ -86,6 +87,10 @@ public class AppScanningSteps {
         return (Spider) getScanner();
     }
 
+    public Context getContext() {
+        return (Context) getScanner();
+    }
+
     @When("the XML report is written to the file (.*)")
     public void writeXmlReport(String path) throws IOException {
         byte[] xmlReport = scanner.getXmlReport();
@@ -101,7 +106,7 @@ public class AppScanningSteps {
 
 
     private void spider(String url) throws InterruptedException {
-        getSpider().spider(url, spiderMaxChildren, true, null);
+        getSpider().spider(url, ZAP_CONTEXT_NAME);
         int scanId = getSpider().getLastSpiderScanId();
         int complete = getSpider().getSpiderProgress(scanId);
         while (complete < 100) {
@@ -354,8 +359,8 @@ public class AppScanningSteps {
             for (String regex : Config.getInstance().getIgnoreUrls()) {
                 getSpider().excludeFromSpider(regex);
             }
+            getContext().setIncludeInContext(ZAP_CONTEXT_NAME, ".*"); //if URLs are not in context then they won't be spidered
             getSpider().setMaxDepth(10);
-            spiderMaxChildren = 10;
             getSpider().setThreadCount(10);
             for (String url : Config.getInstance().getSpiderUrls()) {
                 if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();
