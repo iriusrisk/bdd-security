@@ -402,12 +402,12 @@ public class WebApplicationSteps {
     }
 
 
-    @Given("^the username (\\s+)$")
+    @Given("^the username (.*)$")
     public void setUsernameFromExamples(String username) {
         World.getInstance().getUserPassCredentials().setUsername(username);
     }
 
-    @Given("^the password (\\s+)$")
+    @Given("^the password (.*)$")
     public void setCredentialsFromExamples(String password) {
         World.getInstance().getUserPassCredentials().setPassword(password);
     }
