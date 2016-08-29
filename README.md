@@ -11,6 +11,10 @@ It tests Web Applications and API's from an external point of view and does not 
 
 [Documentation on the Wiki](https://github.com/continuumsecurity/bdd-security/wiki)
 
+## Version 2.1 Changelog
+- Upgraded to OWASP ZAP 2.5.0
+- Upgraded ZAP Client API to 1.0.0 from maven central
+
 ## Version 2.0 Changelog
 - Cucumber-JVM replaced JBehave
 - Gradle replaced Ant

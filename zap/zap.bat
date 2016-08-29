@@ -4,4 +4,4 @@ if exist "%HOMEPATH%\OWASP ZAP\.ZAP_JVM.properties" (
 	set jvmopts=-Xmx512m
 )
 
-java %jvmopts% -jar zap-2.4.3.jar %*
+java %jvmopts% -jar zap-2.5.0.jar %*

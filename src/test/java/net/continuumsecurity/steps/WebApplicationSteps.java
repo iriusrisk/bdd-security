@@ -180,7 +180,7 @@ public class WebApplicationSteps {
         }
     }
 
-    @Given("^the user logs in from a fresh login page (\\d+) times$")
+    @Given("^the user logs in from a fresh login page\\ (\\d+) times$")
     public void whenTheUserLogsInFromAFreshLoginPageXTimes(int limit) {
         for (int i = 0; i < limit; i++) {
             createApp();

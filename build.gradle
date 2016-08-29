@@ -115,21 +115,22 @@ dependencies {
     testCompile 'org.apache.cxf:cxf-rt-rs-client:3.1.1'  //Jersey client
     testCompile 'junit:junit-dep:4.11'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile ('org.seleniumhq.selenium:selenium-java:2.52.0') { exclude group: 'junit' }
-    testCompile 'org.seleniumhq.selenium:selenium-api:2.52.0'
+    testCompile ('org.seleniumhq.selenium:selenium-java:2.53.1') { exclude group: 'junit' }
+    testCompile 'org.seleniumhq.selenium:selenium-api:2.53.1'
     testCompile 'log4j:log4j:1.2.17'
     testCompile 'args4j:args4j:2.0.16'
     testCompile 'commons-configuration:commons-configuration:1.8'
     testCompile 'uk.com.robust-it:cloning:1.9.0'
     testCompile 'jline:jline:2.6'
     testCompile 'com.googlecode.java-diff-utils:diffutils:1.2.1'
-    testCompile 'org.apache.httpcomponents:httpcore:4.2.3'
+    //testCompile 'org.apache.httpcomponents:httpcore:4.2.5'
     testCompile 'org.codehaus.jackson:jackson-mapper-asl:1.9.12'
     testCompile 'commons-jxpath:commons-jxpath:1.3'
     testCompile 'org.glassfish.jersey.core:jersey-client:2.6'
     testCompile 'org.glassfish.jersey.connectors:jersey-apache-connector:2.6'
     testCompile 'net.htmlparser.jericho:jericho-html:3.3'
-    testCompile files ("lib/captchaswerve-1.0-SNAPSHOT.jar","lib/zap-api-2.4-v9.jar", "lib/harlib-1.1.1.jar",
-            "lib/zap-java-api-2.4.3.jar", "lib/nessus-java-client-0.1-SNAPSHOT.jar","lib/jssylze-0.2-SNAPSHOT.jar")
+    testCompile 'edu.umass.cs.benchlab:harlib:1.1.2'
+    testCompile 'org.zaproxy:zap-clientapi:1.0.0'
+    testCompile files ("lib/zap-client-1.0.0.jar", "lib/nessus-java-client-0.1-SNAPSHOT.jar","lib/jssylze-0.2-SNAPSHOT.jar")
 }
 
