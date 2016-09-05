@@ -10,9 +10,6 @@ defaultTasks 'test'
 
 buildscript {
     repositories {
-        maven {
-            url "http://repo.bodar.com"
-        }
         mavenCentral()
     }
 
@@ -29,9 +26,6 @@ allprojects {
 }
 
 repositories {
-    maven {
-        url "http://repo.bodar.com"
-    }
     mavenCentral()
 }
 
