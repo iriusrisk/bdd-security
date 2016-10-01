@@ -34,20 +34,20 @@ public class NessusScanningSteps {
         ignoreHostNamesInSSLCert = true;
     }
 
-    @Given("a nessus version $version server at $nessusUrl")
+    @Given("a nessus version (\\d+) server at (https?:\\/\\/.+)$")
     public void createNessusClient(int version, String url) {
         nessusUrl = url;
         nessusVersion = version;
         scanClient = ClientFactory.createScanClient(url, nessusVersion, ignoreHostNamesInSSLCert);
     }
 
-    @Given("the nessus username $username and the password $password")
+    @Given("the nessus username (.*) and the password (.*)$")
     public void setNessusCredentials(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    @Given("the scanning policy named $policyName")
+    @Given("the scanning policy named (.*)$")
     public void setScanningPolicy(String policyName) {
         this.policyName = policyName;
     }
@@ -57,7 +57,7 @@ public class NessusScanningSteps {
         hostNames.addAll(hosts);
     }
 
-    @When("the scanner is run with scan name $scanName")
+    @When("the scanner is run with scan name (.*)$")
     public void runScan(String scanName) throws LoginException {
         if (username == null) {
             username = Config.getInstance().getNessusUsername();
@@ -93,7 +93,7 @@ public class NessusScanningSteps {
         }
     }
 
-    @Then("no severity: $severity or higher issues should be present")
+    @Then("no severity: (\\d+) or higher issues should be present")
     public void verifyRiskOfIssues(int severity) {
         List<Issue> notable = new ArrayList<Issue>();
         for (Issue issue : issues.values()) {
