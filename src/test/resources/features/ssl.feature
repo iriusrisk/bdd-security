@@ -3,7 +3,7 @@ Feature: SSL
   Ensure that the SSL configuration of the service is robust
 
   Background: Run the SSLyze command only once for all features
-    When the SSLyze command is run against the host www.continuumsecurity.net on port 443
+    When the SSLyze command is run against the application on port 443
 
   @ssl_crime
   Scenario: Disable SSL deflate compression in order to mitigate the risk of the CRIME attack
