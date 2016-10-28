@@ -2,7 +2,7 @@
 Feature: Cross Origin Resource Sharing
   Verify that the application does not allow the browser to perform requests outside of the allowed origins
 
-  @cwe-942-cors_allowed
+  @iriusriskcwe-942-cors_allowed
   Scenario Outline: Permit allowed origins to make CORS requests
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy
@@ -12,7 +12,7 @@ Feature: Cross Origin Resource Sharing
      |path                         |origin               |
 
 
-  @cwe-942-cors_disallowed
+  @iriusrisk-cwe-942-cors_disallowed
   Scenario Outline: Forbid disallowed origins from making CORS requests
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy

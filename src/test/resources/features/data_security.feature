@@ -2,7 +2,7 @@
 Feature: Data confidentiality
   Verify that the application does not allow the browser to cache sensitive data
 
-  @cwe-525
+  @iriusrisk-cwe-525
   Scenario Outline: Prevent browser caching of sensitive data
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy

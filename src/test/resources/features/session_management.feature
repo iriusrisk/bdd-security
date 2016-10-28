@@ -2,7 +2,7 @@
 Feature: Session Management
   Verify that there are no weaknesses in the session management implementation
 
-  @cwe-664-fixation
+  @iriusrisk-cwe-664-fixation
   Scenario: Issue a new session ID after authentication
     Given a new browser or client instance
     And the login page
@@ -11,7 +11,7 @@ Feature: Session Management
     And the user is logged in
     Then the value of the session cookie issued after authentication should be different from that of the previously noted session ID
 
-  @cwe-613-logout
+  @iriusrisk-cwe-613-logout
   Scenario: Invalidate the session when the user logs out
     Given a new browser or client instance
     When the default user logs in
@@ -19,7 +19,7 @@ Feature: Session Management
     When the user logs out
     Then the user is not logged in
 
-  @cwe-613 @skip
+  @iriusrisk-cwe-613 @skip
   Scenario: Invalidate the session after a period of inactivity
     Given a new browser or client instance
     When the default user logs in
@@ -27,14 +27,14 @@ Feature: Session Management
     When the session is inactive for 15 minutes
     Then the user is not logged in
 
-  @cwe-614
+  @iriusrisk-cwe-614
   Scenario: Set the 'secure' flag on the session cookie
     Given a new browser or client instance
     When the default user logs in
     And the user is logged in
     Then the session cookie should have the secure flag set
 
-  @wasc-13
+  @iriusrisk-wasc-13
   Scenario: Set the 'httpOnly' flag on the session cookie
     Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy

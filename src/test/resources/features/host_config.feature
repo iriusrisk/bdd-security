@@ -2,7 +2,7 @@
 Feature: Host Configuration
   Verify that the configuration of the host and network are as expected
 
-  @open_ports
+  @iriusrisk-open_ports
   Scenario Outline: Only the required ports should be open
     Given the target host name <host>
     When TCP ports from <startPort> to <endPort> are scanned using <threads> threads and a timeout of <timeout> milliseconds
