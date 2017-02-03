@@ -1,5 +1,5 @@
 
-![](http://www.continuumsecurity.net/images/bdd-security-logo-small.png) 
+![](https://www.continuumsecurity.net/wp-content/uploads/2016/10/bdd-security160.png) 
 
 Powered by <img src="https://cucumber.io/images/cucumber-logo.svg" width="200"/>
 
