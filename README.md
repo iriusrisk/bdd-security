@@ -29,7 +29,7 @@ Legacy JBehave version is available on the jbehave branch
 
 ## v0.9.1 Changelog
 - HtmlUnitDriver support, it is also the default driver if no other driver is specified in config.xml.  BIG speed improvements.
-- Support for testing non-browser based web services and APIs.  See the [getting started guide](http://www.continuumsecurity.net/bdd-getstarted.html#httpclient) for more details.
+- Support for testing non-browser based web services and APIs.  See the [getting started guide](https://github.com/continuumsecurity/bdd-security/wiki/2-Getting-Started) for more details.
 - Removed all TestNG tests.
 
 ## v0.9 Changelog
