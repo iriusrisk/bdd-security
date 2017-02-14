@@ -75,7 +75,7 @@ Feature: Automated Application Security Scanning
     And the XML report is written to the file build/zap/ss_code_injection.xml
     Then no Medium or higher risk vulnerabilities should be present
 
-  @cwe-78
+  @iriusrisk-cwe-78
   Scenario: The application should not contain Remote OS Command injection vulnerabilities
     And the Remote-os-command-injection policy is enabled
     And the attack strength is set to High

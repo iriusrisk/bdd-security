@@ -26,3 +26,9 @@ Feature: Security settings on HTTP headers
   @iriusrisk-cwe-693-nosniff
   Scenario: Enable anti-MIME sniffing prevention in browsers
     Then the HTTP X-Content-Type-Options header has the value: nosniff
+
+  @iriusrisk-cwe-693
+  Scenario: Enable anti-MIME sniffing prevention in browsers
+    Then the HTTP XDDDD header has the value: sdfsdfsdf
+
+

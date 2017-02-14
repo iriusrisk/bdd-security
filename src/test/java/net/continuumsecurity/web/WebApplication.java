@@ -34,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class WebApplication extends Application {
     protected Browser browser;
     protected WebDriver driver;
+    protected IContentDiscoverer contentDiscoverer;
 
     public WebApplication() {
         log = Logger.getLogger(WebApplication.class);
