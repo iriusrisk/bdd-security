@@ -13,7 +13,7 @@
     <baseUrl>http://localhost:8080/</baseUrl>
 
     <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth authn/z and session management testing. -->
-    <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
+    <class>net.continuumsecurity.examples.ropeytasks.webservice.RopeyTasksWebService</class>
 
     <sslyze>
         <path>/opt/sslyze/sslyze_cli.py</path>

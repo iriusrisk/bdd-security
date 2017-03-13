@@ -33,7 +33,7 @@ Feature: Authentication
 
   @iriusrisk-cwe-525-repost
   Scenario: When authentication credentials are sent to the server, it should respond with a 3xx status code.
-    Given a new browser instance
+    Given a new browser or client instance
     And the client/browser is configured to use an intercepting proxy
     And the proxy logs are cleared
     When the default user logs in

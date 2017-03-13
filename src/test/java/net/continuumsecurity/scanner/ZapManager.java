@@ -38,7 +38,8 @@ public class ZapManager {
             File zapProgramFile = new File(zapPath);
             port = findOpenPortOnAllLocalInterfaces();
             List<String> params = new ArrayList<>();
-            params.add(zapProgramFile.getAbsolutePath()); params.add("-daemon");
+            params.add(zapProgramFile.getAbsolutePath());
+            //params.add("-daemon");
             params.add( "-host");  params.add( HOST);
             params.add("-port"); params.add(String.valueOf(port));
             params.add("-dir"); params.add("tmp");

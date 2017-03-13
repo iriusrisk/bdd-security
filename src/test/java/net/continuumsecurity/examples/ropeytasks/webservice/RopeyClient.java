@@ -6,7 +6,11 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 import javax.ws.rs.core.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by stephen on 30/06/15.
@@ -74,6 +78,7 @@ public class RopeyClient implements AuthTokenManager {
         Form postBody = new Form();
         postBody.param("username",username).param("password",password).param("_action_login","Login");
         lastResponse = post("user/index", postBody);
+        setCookieFromResponse(lastResponse);  //mimic browser behaviour
     }
 
     /*
@@ -88,7 +93,24 @@ public class RopeyClient implements AuthTokenManager {
 
     private void setCookieFromResponse(Response lastResponse) {
         NewCookie newCookie = lastResponse.getCookies().get(SESSION_ID_NAME);
-        if (newCookie != null) sessionID = newCookie.getValue();
+        if (newCookie != null) {
+            sessionID = newCookie.getValue();
+        } else {
+            sessionID = getSessionIDFromSetCookieHeader(lastResponse);
+        }
+    }
+
+    private String getSessionIDFromSetCookieHeader(Response lastResponse) {
+        List<String> setCookieHeaders = lastResponse.getStringHeaders().get("Set-Cookie");
+        if (setCookieHeaders == null) return null;
+        Pattern p = Pattern.compile(SESSION_ID_NAME+"=(.*?);.*");
+        for (String setCookieStrings : setCookieHeaders) {
+            Matcher m = p.matcher(setCookieStrings);
+            if (m.matches()) {
+                return m.group(1);
+            }
+        }
+        return null;
     }
 
     public Response post(String path, Form form) {

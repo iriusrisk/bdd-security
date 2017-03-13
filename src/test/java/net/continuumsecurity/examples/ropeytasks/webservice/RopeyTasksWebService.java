@@ -63,12 +63,21 @@ public class RopeyTasksWebService extends Application implements ILogin, ILogout
         client.get("user/logout");
     }
 
-    public void viewProfileForBob() {
+    public void viewBobsProfile() {
         client.get("user/edit/1");
     }
 
+    public void viewAlicesProfile() {
+        client.get("user/edit/2");
+    }
+
+    public void viewAllUsers() {
+        client.get("admin/list");
+    }
+
+
     /*
-    This method is called before spidering and scanning the service. It should include a workflow that excercises all
+    This method is called before spidering and scanning the service. It should include a workflow that exercises all
     of the key service methods
      */
     public void navigate() {

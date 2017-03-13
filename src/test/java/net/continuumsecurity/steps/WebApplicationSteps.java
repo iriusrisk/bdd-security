@@ -116,6 +116,8 @@ public class WebApplicationSteps {
     public void loginWithSetCredentials() {
         assert World.getInstance().getCredentials() != null;
         ((ILogin) app).login(World.getInstance().getCredentials());
+        //TODO remove me
+        List<HarEntry> history = getProxy().getHistory();
     }
 
     static String readFile(String path, Charset encoding)
@@ -213,6 +215,7 @@ public class WebApplicationSteps {
     @Given("the HTTP request-response containing the default credentials is selected")
     public void findRequestWithPassword() {
         UserPassCredentials credentials = World.getInstance().getUserPassCredentials();
+        //TODO remove me
         List<HarEntry> all = getProxy().getHistory();
         List<HarEntry> requests = getProxy().findInRequestHistory(credentials.getPassword());
         if (requests == null || requests.size() == 0)
@@ -381,6 +384,8 @@ public class WebApplicationSteps {
             // For web services, calling the method might throw an exception if
             // access is denied.
         } catch (NoSuchMethodException nsm) {
+            // The scenario includes a method name that doesn't exist in the class.
+            // This is an error in the scenario, not a security failure, so throw exception, instead of failing test
             throw nsm;
         } catch (Exception e) {
             fail("User with credentials: " + credentials.getUsername() + " "
@@ -394,6 +399,8 @@ public class WebApplicationSteps {
             return;
         }
         World.getInstance().getMethodProxyMap().put(methodName, getProxy().getHistory());
+        //TODO debugging remove
+        World world = World.getInstance();
         boolean accessible = getProxy().findInResponseHistory(sensitiveData).size() > 0;
         if (accessible) {
             log.debug("User: " + credentials.getUsername() + " can access resource: " + methodName);
