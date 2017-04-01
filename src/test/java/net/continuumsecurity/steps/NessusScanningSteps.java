@@ -57,7 +57,7 @@ public class NessusScanningSteps {
         hostNames.addAll(hosts);
     }
 
-    @When("the scanner is run with scan name (.*)$")
+    @When("^the scanner is run with scan name (.*)$")
     public void runScan(String scanName) throws LoginException {
         if (username == null) {
             username = Config.getInstance().getNessusUsername();

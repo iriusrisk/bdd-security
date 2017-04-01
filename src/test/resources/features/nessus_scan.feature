@@ -1,4 +1,4 @@
-@nessus_scan @skip
+@nessus_scan
 Feature: Nessus Scan
   Scan the hosts for known security vulnerabilities
 

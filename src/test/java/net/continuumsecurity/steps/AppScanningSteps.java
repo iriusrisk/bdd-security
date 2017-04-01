@@ -225,7 +225,7 @@ public class AppScanningSteps {
     }
 
 
-    @When("the scanner is run")
+    @When("^the scanner is run$")
     public void runScanner() throws Exception {
         log.info("Scanning: " + Config.getInstance().getBaseUrl());
         getScanner().scan(Config.getInstance().getBaseUrl());

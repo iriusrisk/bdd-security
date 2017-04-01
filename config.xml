@@ -46,8 +46,8 @@
 
     <!-- Optional login credentials for the Nessus server, the server location is specified in the nessus_scan.story file -->
     <nessus>
-        <username>continuum</username>
-        <password>continuum</password>
+        <username>admin</username>
+        <password>admin</password>
     </nessus>
 
     <!-- Optional location of a running OWASP ZAP instance.  Either an external- already running ZAP instance must be specified here, or the zapPath must be specified to launch ZAP
