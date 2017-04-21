@@ -58,6 +58,10 @@ task generateReportTask() {
     }
 }
 
+task buildIt() {
+    dependsOn assemble, compileTestJava, cleanReports
+}
+
 test {
     systemProperties = System.properties
     dependsOn assemble, compileTestJava, cleanReports
