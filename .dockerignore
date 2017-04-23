@@ -1,0 +1,9 @@
+_Store*
+.idea/*
+zap/tmp
+.git
+build/
+.gradle
+*.iml
+*.output
+log4j.properties
