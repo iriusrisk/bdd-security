@@ -59,6 +59,7 @@ public class NessusScanningSteps {
 
     @When("^the scanner is run with scan name (.*)$")
     public void runScan(String scanName) throws LoginException {
+        if (scanName == null || scanName.isEmpty()) throw new RuntimeException("the Scan Name must be specified");
         if (username == null) {
             username = Config.getInstance().getNessusUsername();
             password = Config.getInstance().getNessusPassword();
@@ -68,6 +69,7 @@ public class NessusScanningSteps {
         if (nessusVersion == 5) {
             scanIdentifierForStatus = scanName;
         } else {
+            if (scanUuid == null) throw new RuntimeException("Received a null scan UUID from the Nessus server. Check whether the policy named: "+policyName+" exists on the Nessus server and whether the scan named: "+scanName+" was created.");
             scanIdentifierForStatus = scanUuid;
         }
     }
