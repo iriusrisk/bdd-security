@@ -126,7 +126,7 @@ dependencies {
     testCompile 'org.glassfish.jersey.connectors:jersey-apache-connector:2.25.1'
     testCompile 'net.htmlparser.jericho:jericho-html:3.3'
     testCompile 'edu.umass.cs.benchlab:harlib:1.1.2'
-    testCompile 'org.zaproxy:zap-clientapi:1.0.0'
-    testCompile files ("lib/zap-client-1.0.0.jar", "lib/nessus-java-client-0.2-SNAPSHOT.jar","lib/jssylze-0.2-SNAPSHOT.jar")
+    testCompile 'org.zaproxy:zap-clientapi:1.2.0'
+    testCompile files ("lib/zap-client-1.2.0.jar", "lib/nessus-java-client-0.2-SNAPSHOT.jar","lib/jssylze-0.2-SNAPSHOT.jar")
 }
 

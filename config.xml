@@ -57,6 +57,6 @@
         <api></api>
     </proxy>-->
 
-    <zapPath>zap/zap.sh</zapPath>
+    <zapPath>zap/zap.bat</zapPath>
 
 </web-app>

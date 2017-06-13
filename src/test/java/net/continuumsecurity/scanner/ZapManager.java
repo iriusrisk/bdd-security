@@ -70,7 +70,7 @@ public class ZapManager {
         try {
             log.info("Stopping ZAP");
             ClientApi client = new ClientApi(HOST,port);
-            client.core.shutdown(API_KEY);
+            client.core.shutdown();
             Thread.sleep(2000);
             process.destroy();
         } catch (final Exception e) {

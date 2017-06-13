@@ -17,7 +17,6 @@ Feature: Authentication
   Scenario: Present the login form itself over an HTTPS connection
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy
-    And the proxy logs are cleared
     And the login page is displayed
     And the HTTP request-response containing the login form
     Then the protocol should be HTTPS

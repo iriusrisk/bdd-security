@@ -304,7 +304,7 @@ public class AppScanningSteps {
         String detail = "";
         if (alerts.size() != 0) {
             for (Alert alert : alerts) {
-                detail = detail + alert.getAlert() + "\n"
+                detail = detail + alert.getName() + "\n"
                         + "URL: " + alert.getUrl() + "\n"
                         + "Parameter: " + alert.getParam() + "\n"
                         + "CWE-ID: " + alert.getCweId() + "\n"
