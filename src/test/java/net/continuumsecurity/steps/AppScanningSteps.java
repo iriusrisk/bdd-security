@@ -224,7 +224,6 @@ public class AppScanningSteps {
         }
     }
 
-
     @When("^the scanner is run$")
     public void runScanner() throws Exception {
         log.info("Scanning: " + Config.getInstance().getBaseUrl());
@@ -359,7 +358,11 @@ public class AppScanningSteps {
             for (String regex : Config.getInstance().getIgnoreUrls()) {
                 getSpider().excludeFromSpider(regex);
             }
-            getContext().setIncludeInContext(ZAP_CONTEXT_NAME, ".*"); //if URLs are not in context then they won't be spidered
+            try {
+                getContext().setIncludeInContext(ZAP_CONTEXT_NAME, ".*"); //if URLs are not in context then they won't be spidered
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             getSpider().setMaxDepth(10);
             getSpider().setThreadCount(10);
             for (String url : Config.getInstance().getSpiderUrls()) {

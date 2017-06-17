@@ -69,7 +69,7 @@ public class ZapManager {
         if (process == null) return; //ZAP not running
         try {
             log.info("Stopping ZAP");
-            ClientApi client = new ClientApi(HOST,port);
+            ClientApi client = new ClientApi(HOST,port,API_KEY);
             client.core.shutdown();
             Thread.sleep(2000);
             process.destroy();
