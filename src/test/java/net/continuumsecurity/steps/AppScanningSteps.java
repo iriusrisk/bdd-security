@@ -205,6 +205,7 @@ public class AppScanningSteps {
             throw new RuntimeException("First set the scanning policy before setting attack strength or alert threshold");
         for (String id : scannerIds.split(",")) {
             getScanner().setScannerAttackStrength(id, strength.toUpperCase());
+
         }
     }
 
@@ -361,7 +362,7 @@ public class AppScanningSteps {
             try {
                 getContext().setIncludeInContext(ZAP_CONTEXT_NAME, ".*"); //if URLs are not in context then they won't be spidered
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
             getSpider().setMaxDepth(10);
             getSpider().setThreadCount(10);

@@ -108,8 +108,12 @@ public class DriverFactory {
     }
 
     private WebDriver createHtmlUnitDriver(DesiredCapabilities capabilities) {
-        if (capabilities != null) return new HtmlUnitDriver(capabilities);
+        if (capabilities != null) {
+            capabilities.setBrowserName("htmlunit");
+            return new HtmlUnitDriver(capabilities);
+        }
         capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("htmlunit");
         capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         return new HtmlUnitDriver(capabilities);
     }

@@ -8,6 +8,7 @@ import net.continuumsecurity.behaviour.ILogout;
 import net.continuumsecurity.behaviour.INavigable;
 import net.continuumsecurity.web.WebApplication;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class RopeyTasksApplication extends WebApplication implements ILogin,
         ILogout,INavigable {
@@ -69,7 +70,8 @@ public class RopeyTasksApplication extends WebApplication implements ILogin,
         findAndWaitForElement(By.linkText("Tasks")).click();
         driver.findElement(By.id("q")).clear();
         driver.findElement(By.id("q")).sendKeys(query);
-        driver.findElement(By.id("search")).click();
+        WebElement searchBtn = driver.findElement(By.name("search-button"));
+        searchBtn.click();
     }
 
     public void viewAllUsers() {
