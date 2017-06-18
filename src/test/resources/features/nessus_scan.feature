@@ -12,4 +12,6 @@ Feature: Nessus Scan
     And the list of issues is stored
     And the following nessus false positive are removed
       |pluginId    |hostname          |
+      |73484        | myhost          |
+
     Then no severity: 2 or higher issues should be present

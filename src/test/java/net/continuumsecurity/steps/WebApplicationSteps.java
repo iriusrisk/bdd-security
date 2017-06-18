@@ -207,6 +207,7 @@ public class WebApplicationSteps {
     public LoggingProxy getProxy() {
         if (proxy == null)
             proxy = new ZAProxyScanner(Config.getInstance().getProxyHost(), Config.getInstance().getProxyPort(), Config.getInstance().getProxyApi());
+            proxy.setAttackMode();
         return proxy;
     }
 
@@ -479,8 +480,8 @@ public class WebApplicationSteps {
                     e.printStackTrace();
                     throw new RuntimeException("Could not copy Har request");
                 }
-                List<HarEntry> results = getProxy().makeRequest(manual, true);
-                results = getProxy().findInResponseHistory(sensitiveData);
+                getProxy().makeRequest(manual, false); //TODO change this to true once ZAP bug is fixed
+                List<HarEntry> results = getProxy().findInResponseHistory(sensitiveData);
                 accessible = results != null && results.size() > 0;
                 if (accessible) break;
             }

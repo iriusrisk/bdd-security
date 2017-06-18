@@ -79,6 +79,7 @@ public class AppScanningSteps {
     public ZAProxyScanner getScanner() {
         if (scanner == null) {
             scanner = new ZAProxyScanner(Config.getInstance().getProxyHost(), Config.getInstance().getProxyPort(), Config.getInstance().getProxyApi());
+            scanner.setAttackMode();
         }
         return scanner;
     }
@@ -205,6 +206,7 @@ public class AppScanningSteps {
             throw new RuntimeException("First set the scanning policy before setting attack strength or alert threshold");
         for (String id : scannerIds.split(",")) {
             getScanner().setScannerAttackStrength(id, strength.toUpperCase());
+
         }
     }
 
@@ -223,7 +225,6 @@ public class AppScanningSteps {
             getScanner().excludeFromScanner(excluded);
         }
     }
-
 
     @When("^the scanner is run$")
     public void runScanner() throws Exception {
@@ -304,7 +305,7 @@ public class AppScanningSteps {
         String detail = "";
         if (alerts.size() != 0) {
             for (Alert alert : alerts) {
-                detail = detail + alert.getAlert() + "\n"
+                detail = detail + alert.getName() + "\n"
                         + "URL: " + alert.getUrl() + "\n"
                         + "Parameter: " + alert.getParam() + "\n"
                         + "CWE-ID: " + alert.getCweId() + "\n"
@@ -359,7 +360,11 @@ public class AppScanningSteps {
             for (String regex : Config.getInstance().getIgnoreUrls()) {
                 getSpider().excludeFromSpider(regex);
             }
-            getContext().setIncludeInContext(ZAP_CONTEXT_NAME, ".*"); //if URLs are not in context then they won't be spidered
+            try {
+                getContext().setIncludeInContext(ZAP_CONTEXT_NAME, ".*"); //if URLs are not in context then they won't be spidered
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             getSpider().setMaxDepth(10);
             getSpider().setThreadCount(10);
             for (String url : Config.getInstance().getSpiderUrls()) {

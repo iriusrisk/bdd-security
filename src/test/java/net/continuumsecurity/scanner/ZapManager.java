@@ -38,7 +38,8 @@ public class ZapManager {
             File zapProgramFile = new File(zapPath);
             port = findOpenPortOnAllLocalInterfaces();
             List<String> params = new ArrayList<>();
-            params.add(zapProgramFile.getAbsolutePath()); params.add("-daemon");
+            params.add(zapProgramFile.getAbsolutePath());
+            params.add("-daemon");
             params.add( "-host");  params.add( HOST);
             params.add("-port"); params.add(String.valueOf(port));
             params.add("-dir"); params.add("tmp");
@@ -69,8 +70,8 @@ public class ZapManager {
         if (process == null) return; //ZAP not running
         try {
             log.info("Stopping ZAP");
-            ClientApi client = new ClientApi(HOST,port);
-            client.core.shutdown(API_KEY);
+            ClientApi client = new ClientApi(HOST,port,API_KEY);
+            client.core.shutdown();
             Thread.sleep(2000);
             process.destroy();
         } catch (final Exception e) {
