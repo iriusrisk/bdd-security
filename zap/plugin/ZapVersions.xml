@@ -1,0 +1,1479 @@
+<ZAP>
+	<core>
+		<version>2.6.0</version>
+		<daily-version>D-2017-06-12</daily-version>
+		<daily>
+			<url>https://github.com/zaproxy/zaproxy/releases/download/w2017-06-12/ZAP_WEEKLY_D-2017-06-12.zip</url>
+			<file>ZAP_WEEKLY_D-2017-06-12.zip</file>
+			<hash>SHA1:990f7c1561ed432873e84a2361bfcbb6a174be25</hash>
+			<size>297067419</size>
+		</daily>
+		<windows>
+			<url>https://github.com/zaproxy/zaproxy/releases/download/2.6.0/ZAP_2_6_0_windows.exe</url>
+			<file>ZAP_2_6_0_windows.exe</file>
+			<hash>SHA1:c4485be9359a6a9e3d0c1bf75ecf4a2fed61d929</hash>
+			<size>123027968</size>
+		</windows>
+		<linux>
+			<url>https://github.com/zaproxy/zaproxy/releases/download/2.6.0/ZAP_2.6.0_Linux.tar.gz</url>
+			<file>ZAP_2.6.0_Linux.tar.gz</file>
+			<hash>SHA1:848d1d5fef1a41ba6c7f735e3a3a192723a120d7</hash>
+			<size>174350914</size>
+		</linux>
+		<mac>
+			<url>https://github.com/zaproxy/zaproxy/releases/download/2.6.0/ZAP_2_6_0_macos.dmg</url>
+			<file>ZAP_2_6_0_macos.dmg</file>
+			<hash>SHA1:922f8fe576bffa0653af238ad3e87ba3ca7fd49c</hash>
+			<size>190722788</size>
+		</mac>
+		<relnotes>
+			Bug fix and enhancement release.
+		</relnotes>
+		<relnotes-url>https://github.com/zaproxy/zap-core-help/wiki/HelpReleases2_6_0</relnotes-url>
+	</core>
+	
+    <addon>ascanrules</addon>
+    <addon_ascanrules>
+        <name>Active scanner rules</name>
+        <description>The release quality Active Scanner rules</description>
+        <author>ZAP Dev Team</author>
+        <version>26</version>
+        <file>ascanrules-release-26.zap</file>
+        <status>release</status>
+        <changes>Issue 2973: Drop suffix on *Nix Blind Command Injection time based variants to maximize compatibility.&lt;br&gt;
+    Improve error handling in some scanners.&lt;br&gt;
+    Support changing the length of time used in timing attacks via config options.&lt;br&gt;
+    Issue 3065: Ensure active scanners perform initial status checks against the proper original message(s) to prevent False Negative and False Positive conditions.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/ascanrules-release-26.zap</url>
+        <hash>SHA1:2c63618021f80b5abc8864955b1f72c07c77b474</hash>
+        <date>2017-04-06</date>
+        <size>574831</size>
+        <not-before-version>2.4.1</not-before-version>
+    </addon_ascanrules>
+    
+    <addon>coreLang</addon>
+    <addon_coreLang>
+        <name>Core Language Files</name>
+        <description>Translations of the core language files</description>
+        <author>ZAP Dev Team</author>
+        <version>11</version>
+        <file>coreLang-release-11.zap</file>
+        <status>release</status>
+        <changes>Fix installation issue.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/coreLang-release-11.zap</url>
+        <hash>SHA1:11e24142cd5e30d389161a1fc2e1dd08b445309c</hash>
+        <info>https://crowdin.com/project/owasp-zap</info>
+        <date>2017-04-06</date>
+        <size>2715653</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_coreLang>
+    
+    <addon>directorylistv1</addon>
+    <addon_directorylistv1>
+        <name>Directory List v1.0</name>
+        <description>List of directory names to be used with "Forced Browse" add-on.</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>directorylistv1-release-3.zap</file>
+        <status>release</status>
+        <changes>Removed repeated files.&lt;br&gt;
+	Added strings for version control directories of Git, Mercurial, SVN, CVS, Bazaar.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/directorylistv1-release-3.zap</url>
+        <hash>SHA1:135cd0a2e0831996811fec852e6871848c144bfc</hash>
+        <info>https://owasp.org/index.php/DirBuster</info>
+        <date>2016-06-02</date>
+        <size>847617</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_directorylistv1>
+    
+    <addon>directorylistv2_3</addon>
+    <addon_directorylistv2_3>
+        <name>Directory List v2.3</name>
+        <description>Lists of directory names to be used with "Forced Browse" add-on.</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>directorylistv2_3-release-3.zap</file>
+        <status>release</status>
+        <changes>Removed repeated files.&lt;br&gt;
+	Added strings for version control directories of Git, Mercurial, SVN, Bazaar.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/directorylistv2_3-release-3.zap</url>
+        <hash>SHA1:29c1661ae88dcc7bd1577504cfc9415e0aefcbff</hash>
+        <info>https://owasp.org/index.php/DirBuster</info>
+        <date>2016-06-02</date>
+        <size>8608732</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_directorylistv2_3>
+    
+    <addon>directorylistv2_3_lc</addon>
+    <addon_directorylistv2_3_lc>
+        <name>Directory List v2.3 LC</name>
+        <description>Lists of lower case directory names to be used with "Forced Browse" add-on.</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>directorylistv2_3_lc-release-3.zap</file>
+        <status>release</status>
+        <changes>Added strings for version control directories of Git, Mercurial, SVN, Bazaar.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/directorylistv2_3_lc-release-3.zap</url>
+        <hash>SHA1:d15984e9ca45e8cd238228cb471e8f6d59a61708</hash>
+        <info>https://owasp.org/index.php/DirBuster</info>
+        <date>2016-06-02</date>
+        <size>7454765</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_directorylistv2_3_lc>
+
+    <addon>exportreport</addon>
+    <addon_exportreport>
+        <name>Export Report</name>
+        <description>Report Export module that allows users to customize content and export in a desired format.</description>
+        <author>Goran Sarenkapa - JordanGS</author>
+        <version>4</version>
+        <file>exportreport-alpha-4.zap</file>
+        <status>alpha</status>
+        <changes>Updated the command line help messages.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/exportreport-alpha-4.zap</url>
+        <hash>SHA1:019c1361b0b04ba70dd0406c67f16351f4a19d78</hash>
+        <date>2017-05-25</date>
+        <size>6201200</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_exportreport>
+
+    <addon>formhandler</addon>
+    <addon_formhandler>
+        <name>Form Handler</name>
+        <description>This Form Handler Add-on allows a user to define field names and values to be used in a form's fields. Fields can be added, modified, enabled, and deleted for use in form fields.</description>
+        <author>ZAP Dev Team</author>
+        <version>1</version>
+        <file>formhandler-alpha-1.zap</file>
+        <status>alpha</status>
+        <changes>First version</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/formhandler-alpha-1.zap</url>
+        <hash>SHA1:6fc8df5c0c9c9a6d40ddefcc7c96e1c4b54df218</hash>
+        <date>2017-03-23</date>
+        <size>87717</size>
+        <not-before-version>2.6.0</not-before-version>
+    </addon_formhandler>
+    
+    <addon>fuzzdb</addon>
+    <addon_fuzzdb>
+        <name>FuzzDB files</name>
+        <description>FuzzDB files which can be used with the ZAP fuzzer</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>fuzzdb-release-4.zap</file>
+        <status>release</status>
+        <changes>Update FuzzDB files.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/fuzzdb-release-4.zap</url>
+        <hash>SHA1:52009a0c13015e6b06e396a506ccb8668cca3f7a</hash>
+        <info>https://github.com/fuzzdb-project/fuzzdb/</info>
+        <date>2016-06-02</date>
+        <size>5626766</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_fuzzdb>
+    
+    <addon>gettingStarted</addon>
+    <addon_gettingStarted>
+        <name>Getting Started with ZAP Guide</name>
+        <description>A short Getting Started with ZAP Guide</description>
+        <author>ZAP Dev Team</author>
+        <version>6</version>
+        <file>gettingStarted-release-6.zap</file>
+        <status>release</status>
+        <changes>Updated for 2.6.0.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/gettingStarted-release-6.zap</url>
+        <hash>SHA1:99c6a96422db8789454e927c3806bd1596ee6e57</hash>
+        <date>2017-04-06</date>
+        <size>474850</size>
+        <not-before-version>2.6.0</not-before-version>
+    </addon_gettingStarted>
+    
+    <addon>help</addon>
+    <addon_help>
+        <name>Help - English</name>
+        <description>English (master) version of the ZAP help file.</description>
+        <author>ZAP Crowdin Team</author>
+        <version>7</version>
+        <file>help-release-7.zap</file>
+        <status>release</status>
+        <changes>Updated for 2.6.0</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/help-release-7.zap</url>
+        <hash>SHA1:1fb17288f60d46d70375049cda86bda5d978456e</hash>
+        <info>https://github.com/zaproxy/zap-core-help/wiki/HelpIntro</info>
+        <date>2017-04-06</date>
+        <size>763371</size>
+        <not-before-version>2.6.0</not-before-version>
+    </addon_help>
+
+    <addon>help_pt_BR</addon>
+    <addon_help_pt_BR>
+        <name>Help - Portuguese, Brazilian</name>
+        <description>Portuguese, Brazilian version of the ZAP help file.</description>
+        <author>ZAP Crowdin Team</author>
+        <version>6</version>
+        <file>help_pt_BR-release-6.zap</file>
+        <status>release</status>
+        <changes>Updated for 2.5.0</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/help_pt_BR-release-6.zap</url>
+        <hash>SHA1:210d4bb4c4dbe5da5dbcf156bd4cf2d181172c16</hash>
+        <info>https://crowdin.com/project/owasp-zap-help</info>
+        <date>2016-06-03</date>
+        <size>797933</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_help_pt_BR>
+    
+    <addon>onlineMenu</addon>
+    <addon_onlineMenu>
+        <name>Online menus</name>
+        <description>ZAP Online menu items</description>
+        <author>ZAP Dev Team</author>
+        <version>5</version>
+        <file>onlineMenu-release-5.zap</file>
+        <status>release</status>
+        <changes>Minor code changes.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/onlineMenu-release-5.zap</url>
+        <hash>SHA1:1d403adc3667f732ed3a029e363389fd3457dc02</hash>
+        <info>https://github.com/zaproxy/zap-core-help/wiki/HelpAddonsOnlineMenuOnlineMenu</info>
+        <date>2017-04-06</date>
+        <size>200046</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_onlineMenu>
+    
+    <addon>pscanrules</addon>
+    <addon_pscanrules>
+        <name>Passive scanner rules</name>
+        <description>The release quality Passive Scanner rules</description>
+        <author>ZAP Dev Team</author>
+        <version>19</version>
+        <file>pscanrules-release-19.zap</file>
+        <status>release</status>
+        <changes>Correct evidence of alerts raised by scanner "Application Error Disclosure".&lt;br&gt;
+    Fixed some false positives caused by scanner "Private Address Disclosure".&lt;br&gt;
+    Add support for cookie ignore rule.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/pscanrules-release-19.zap</url>
+        <hash>SHA1:f09a048e9895a20328ce0510d0a1092a990c83c8</hash>
+        <date>2017-04-06</date>
+        <size>506870</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_pscanrules>
+    
+    <addon>quickstart</addon>
+    <addon_quickstart>
+        <name>Quick Start</name>
+        <description>Provides a tab which allows you to quickly test a target application</description>
+        <author>ZAP Dev Team</author>
+        <version>19</version>
+        <file>quickstart-release-19.zap</file>
+        <status>release</status>
+        <changes>Validate the provided URL as a request-uri.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/quickstart-release-19.zap</url>
+        <hash>SHA1:9f956d89ff8a08c13988fda83c2ddf4679baee0e</hash>
+        <date>2017-04-06</date>
+        <size>345718</size>
+        <not-before-version>2.4.2</not-before-version>
+    </addon_quickstart>
+    
+    <addon>reveal</addon>
+    <addon_reveal>
+        <name>Reveal</name>
+        <description>Show hidden fields and enable disabled fields</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>reveal-release-2.zap</file>
+        <status>release</status>
+        <changes>Code changes and API documentation.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/reveal-release-2.zap</url>
+        <hash>SHA1:fd0e6c2f99a7bba052c11b076794984615dc32e1</hash>
+        <date>2016-06-02</date>
+        <size>221496</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_reveal>
+    
+    <addon>saverawmessage</addon>
+    <addon_saverawmessage>
+        <name>Save Raw Message</name>
+        <description>Allows to save content of HTTP messages as binary</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>saverawmessage-release-3.zap</file>
+        <status>release</status>
+        <changes>Remember last selected directory (Issue 2446).</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/saverawmessage-release-3.zap</url>
+        <hash>SHA1:49868206b8b621fd7b2e7eeff11dbdf8c11b4d82</hash>
+        <date>2016-06-02</date>
+        <size>27005</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_saverawmessage>
+    
+    <addon>selenium</addon>
+    <addon_selenium>
+        <name>Selenium</name>
+        <description>WebDriver provider and includes HtmlUnit browser</description>
+        <author>ZAP Dev Team</author>
+        <version>10</version>
+        <semver>1.1.0</semver>
+        <file>selenium-release-10.zap</file>
+        <status>release</status>
+        <changes>Update help page to mention the IDs of the browsers.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/selenium-release-10.zap</url>
+        <hash>SHA1:c475dd96948c89a89cb536eaa0798eda0dc9c9c0</hash>
+        <date>2017-03-31</date>
+        <size>31357408</size>
+        <not-before-version>2.4.3</not-before-version>
+    </addon_selenium>
+
+    <addon>spiderAjax</addon>
+    <addon_spiderAjax>
+        <name>Ajax Spider</name>
+        <description>Allows you to spider sites that make heavy use of JavaScript using Crawljax</description>
+        <author>ZAP Dev Team</author>
+        <version>17</version>
+        <file>spiderAjax-release-17.zap</file>
+        <status>release</status>
+        <changes>Show alerts/tags in the AJAX Spider tab.&lt;br&gt;
+	Use a custom initiator ID (10) for AJAX Spider requests.&lt;br&gt;
+	Show always the latest configured browsers in AJAX Spider dialogue (Issue 3057).&lt;br&gt;
+	Honour global excluded URLs (Issue 3172).&lt;br&gt;
+	Reset URL counter on session change.&lt;br&gt;
+	Show excluded URLs in the AJAX Spider tab and through the ZAP API.&lt;br&gt;
+	Use provided browsers from Selenium add-on.&lt;br&gt;
+	Show messages that were not successful because of I/O errors.&lt;br&gt;
+	Ensure New Scan button is enabled, when the mode allows it.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/spiderAjax-release-17.zap</url>
+        <hash>SHA1:0f4ea1344da926688d2dd4cf229c32c5e45aabda</hash>
+        <info>https://github.com/zaproxy/zap-core-help/wiki/HelpAddonsSpiderAjaxConcepts</info>
+        <date>2017-03-06</date>
+        <size>2566619</size>
+        <not-before-version>2.5.0</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>selenium</id>
+                    <semver>&gt;=1.1.0 &amp; &lt;2.0.0</semver>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_spiderAjax>
+    
+    <addon>websocket</addon>
+    <addon_websocket>
+        <name>WebSockets</name>
+        <description>Allows you to inspect WebSocket communication.</description>
+        <author>ZAP Dev Team</author>
+        <version>12</version>
+        <file>websocket-release-12.zap</file>
+        <status>release</status>
+        <changes>Make breakpoint dialogues modal.&lt;br&gt;
+    Fix exception during the unload of the add-on, when in daemon mode.&lt;br&gt;
+    Correct fuzz location overlap detection with same start index.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/websocket-release-12.zap</url>
+        <hash>SHA1:38eca62c3f3c88a53a66877e70c10eb6c69ae674</hash>
+        <date>2017-04-06</date>
+        <size>826721</size>
+        <not-before-version>2.4.3</not-before-version>
+    </addon_websocket>
+
+    <addon>alertFilters</addon>
+    <addon_alertFilters>
+        <name>Context Alert Filters</name>
+        <description>Allows you to automate the changing of alert risk levels.</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>alertFilters-beta-4.zap</file>
+        <status>beta</status>
+        <changes>Minor functional improvement.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/alertFilters-beta-4.zap</url>
+        <hash>SHA1:a4feff43e36caef50fd28b0d4e82aaad85ef33b1</hash>
+        <date>2017-04-03</date>
+        <size>276934</size>
+        <not-before-version>2.4.2</not-before-version>
+    </addon_alertFilters>
+    
+    <addon>alertReport</addon>
+    <addon_alertReport>
+        <name>Report alert generator</name>
+        <description>Allows you to generate reports for alerts you specify in pdf or odt format</description>
+        <author>Talsoft SRL</author>
+        <version>14</version>
+        <file>alertReport-beta-14.zap</file>
+        <status>beta</status>
+        <changes>Fix an exception while generating the report (Issue 1612).&lt;br&gt;
+	Include Alert's evidence in report of ODT format.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/alertReport-beta-14.zap</url>
+        <hash>SHA1:d5f2a410eafec455e4b1051eb68d7d6560c68be5</hash>
+        <info>http://www.talsoft.com.ar</info>
+        <date>2016-06-02</date>
+        <size>9712171</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_alertReport>
+    
+    <addon>ascanrulesBeta</addon>
+    <addon_ascanrulesBeta>
+        <name>Active scanner rules (beta)</name>
+        <description>The beta quality Active Scanner rules</description>
+        <author>ZAP Dev Team</author>
+        <version>21</version>
+        <file>ascanrulesBeta-beta-21.zap</file>
+        <status>beta</status>
+        <changes>Support changing the length of time used in timing attacks via config options.&lt;br&gt;
+	Support ignoring specified forms when checking for CSRF vulnerabilities.&lt;br&gt;
+	Do not attempt to parse empty cross domain policy files.&lt;br&gt;
+	Correct creation of attack URL in Source Code Disclosure - CVE-2012-1823.&lt;br&gt;
+	Correct creation of attack URL in Remote Code Execution - CVE-2012-1823.&lt;br&gt;
+	Respect OS techs included when scanning with Remote Code Execution - CVE-2012-1823.&lt;br&gt;
+	Adjust log levels of some scanners, from INFO to DEBUG.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/ascanrulesBeta-beta-21.zap</url>
+        <hash>SHA1:0c59e05f3c153958fa23b3a5f05a7033c61b6a78</hash>
+        <date>2016-10-24</date>
+        <size>2714237</size>
+        <not-before-version>2.4.1</not-before-version>
+    </addon_ascanrulesBeta>
+    
+    <addon>beanshell</addon>
+    <addon_beanshell>
+        <name>BeanShell Console</name>
+        <description>Provides a BeanShell Console</description>
+        <author>ZAP Dev Team</author>
+        <version>5</version>
+        <file>beanshell-beta-5.zap</file>
+        <status>beta</status>
+        <changes>Updated for ZAP 2.4</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/beanshell-beta-5.zap</url>
+        <hash>SHA1:1fc34a12180cd700cc6fad2236641936cece8cdc</hash>
+        <date>2016-06-02</date>
+        <size>562333</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_beanshell>
+    
+    <addon>bruteforce</addon>
+    <addon_bruteforce>
+        <name>Forced Browse</name>
+        <description>Forced browsing of files and directories using code from the OWASP DirBuster tool</description>
+        <author>ZAP Dev Team</author>
+        <version>6</version>
+        <file>bruteforce-beta-6.zap</file>
+        <status>beta</status>
+        <changes>Allow to set higher number of threads (Issue 2912).&lt;br&gt;
+    Fix issue with multiple concurrent scans.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/bruteforce-beta-6.zap</url>
+        <hash>SHA1:5acad406b5d9abe8cf88b8c67eb9b7b9a4c8a5b0</hash>
+        <date>2017-04-03</date>
+        <size>1000348 </size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_bruteforce>
+    
+    <addon>diff</addon>
+    <addon_diff>
+        <name>Diff</name>
+        <description>Displays a dialog showing the differences between 2 requests or responses. It uses diffutils and diff_match_patch</description>
+        <author>ZAP Dev Team</author>
+        <version>7</version>
+        <file>diff-beta-7.zap</file>
+        <status>beta</status>
+        <changes>Minor code changes.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/diff-beta-7.zap</url>
+        <hash>SHA1:1a7cb9e64e0740d752280729dda4c3f606c29a6c</hash>
+        <date>2017-04-03</date>
+        <size>235040</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_diff>
+    
+    <addon>fuzz</addon>
+    <addon_fuzz>
+        <name>AdvFuzzer</name>
+        <description>Advanced fuzzer for manual testing</description>
+        <author>ZAP Dev Team</author>
+        <version>8</version>
+        <semver>2.0.1</semver>
+        <file>fuzz-beta-8.zap</file>
+        <status>beta</status>
+        <changes>Show help button in fuzzer dialogues.&lt;br&gt;
+    Correct method name in HTTP processor JavaScript template.&lt;br&gt;
+    Fix exception when adding file fuzzers with selected empty "Custom Fuzzers".&lt;br&gt;
+    Fix typos in the help pages.&lt;br&gt;
+    Automatically add Anti-CSRF Token Refresher, if available.&lt;br&gt;
+    Render custom states, always (Issue 3166).&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/fuzz-beta-8.zap</url>
+        <hash>SHA1:87d85e0420533274311d7a258aa6ae14b3108dea</hash>
+        <info>https://github.com/zaproxy/zap-core-help/wiki/HelpAddonsFuzzConcepts</info>
+        <date>2017-04-03</date>
+        <size>2359338</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_fuzz>
+    
+    <addon>importurls</addon>
+    <addon_importurls>
+        <name>Import files containing URLs</name>
+        <description>Adds an option to import a file of URLs. The file must be plain text with one URL per line.</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>importurls-beta-3.zap</file>
+        <status>beta</status>
+        <changes>Issue 1643: Add an API end point for importing URLs from file.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/importurls-beta-3.zap</url>
+        <hash>SHA1:5cc6bf40f8a371b217c12890ebc6bea3d93e667e</hash>
+        <date>2017-05-12</date>
+        <size>215827</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_importurls>
+    
+    <addon>invoke</addon>
+    <addon_invoke>
+        <name>Invoke Applications</name>
+        <description>Invoke external applications passing context related information such as URLs and parameters</description>
+        <author>ZAP Dev Team</author>
+        <version>6</version>
+        <file>invoke-beta-6.zap</file>
+        <status>beta</status>
+        <changes>Properly split application arguments.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/invoke-beta-6.zap</url>
+        <hash>SHA1:ef5cd83668332fc18b7df07eb2b104960310f2cf</hash>
+        <date>2017-04-03</date>
+        <size>289967</size>
+        <not-before-version>2.4.1</not-before-version>
+    </addon_invoke>
+    
+    <addon>jruby</addon>
+    <addon_jruby>
+        <name>Ruby scripting</name>
+        <description>Allows Ruby to be used for ZAP scripting - templates included</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>jruby-beta-4.zap</file>
+        <status>beta</status>
+        <changes>Updated for ZAP 2.4</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/jruby-beta-4.zap</url>
+        <hash>SHA1:d3c2f567a627ccf0f51eaff17afb8450871ad102</hash>
+        <date>2016-06-02</date>
+        <size>22467350</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_jruby>
+    
+    <addon>jython</addon>
+    <addon_jython>
+        <name>Python scripting</name>
+        <description>Allows Python to be used for ZAP scripting - templates included</description>
+        <author>ZAP Dev Team</author>
+        <version>5</version>
+        <file>jython-beta-5.zap</file>
+        <status>beta</status>
+        <changes>add the python module path interface</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/jython-beta-5.zap</url>
+        <hash>SHA1:439e476d56c03e06511305863fda8cb462d97c3f</hash>
+        <date>2017-01-10</date>
+        <size>14692630</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_jython>
+    
+    <addon>plugnhack</addon>
+    <addon_plugnhack>
+        <name>Plug-n-Hack Configuration</name>
+        <description>Supports the Mozilla Plug-n-Hack standard: https://developer.mozilla.org/en-US/docs/Plug-n-Hack.</description>
+        <author>ZAP Dev Team</author>
+        <version>9</version>
+        <file>plugnhack-beta-9.zap</file>
+        <status>beta</status>
+        <changes>Require API key before returning it (Issue 1714)&lt;br&gt;
+	Restrict use of CORS header in pnh (Issue 1716)&lt;br&gt;
+	Auto-scroll when new client events are available (Issue 1664)</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/plugnhack-beta-9.zap</url>
+        <hash>SHA1:a731c6b82605e4e94a4878fcbd5f8b2cb8c19c9e</hash>
+        <info>https://developer.mozilla.org/en-US/docs/Plug-n-Hack</info>
+        <date>2016-06-02</date>
+        <size>495129</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_plugnhack>
+    
+    <addon>portscan</addon>
+    <addon_portscan>
+        <name>Port Scanner</name>
+        <description>Allows to port scan a target server</description>
+        <author>ZAP Dev Team</author>
+        <version>7</version>
+        <file>portscan-beta-7.zap</file>
+        <status>beta</status>
+        <changes>Minor code changes.&lt;br&gt;
+	Do not access view components when view is not initialised (Issue 1617).</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/portscan-beta-7.zap</url>
+        <hash>SHA1:b6d852e021a286fede9da65b5f3ad020c60ed42e</hash>
+        <date>2016-06-02</date>
+        <size>602881</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_portscan>
+    
+    <addon>pscanrulesBeta</addon>
+    <addon_pscanrulesBeta>
+        <name>Passive scanner rules (beta)</name>
+        <description>The beta quality Passive Scanner rules</description>
+        <author>ZAP Dev Team</author>
+        <version>16</version>
+        <file>pscanrulesBeta-beta-16.zap</file>
+        <status>beta</status>
+        <changes>Added some keywords to the list of suspicious comments. &lt;br/&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/pscanrulesBeta-beta-16.zap</url>
+        <hash>SHA1:f8504a1bdcd9cea2bc12f1b235a0b65047191c41</hash>
+        <date>2017-04-25</date>
+        <size>531660</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_pscanrulesBeta>
+    
+    <addon>scripts</addon>
+    <addon_scripts>
+        <name>Script Console</name>
+        <description>Supports all JSR 223 scripting languages</description>
+        <author>ZAP Dev Team</author>
+        <version>18</version>
+        <file>scripts-beta-18.zap</file>
+        <status>beta</status>
+        <changes>Remove unused resource messages (Issue 2386).&lt;br&gt;
+    Update help page to mention HTTP Sender scripts.&lt;br&gt;
+    Allow to save scripts through the context menu.&lt;br&gt;
+    Reset Console Output panel on session changes.&lt;br&gt;
+    If there is only one script engine available, make it the default when creating a new script.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/scripts-beta-18.zap</url>
+        <hash>SHA1:73768eb48b2a49e2acf87963765dcf1a5df75931</hash>
+        <info>https://github.com/zaproxy/zaproxy/wiki/ScriptConsole</info>
+        <date>2017-04-03</date>
+        <size>525568</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_scripts>
+    
+    <addon>sqliplugin</addon>
+    <addon_sqliplugin>
+        <name>Advanced SQLInjection Scanner</name>
+        <description>An advanced active injection bundle for SQLi (derived by SQLMap)</description>
+        <author>Andrea Pompili (Yhawke)</author>
+        <version>11</version>
+        <file>sqliplugin-beta-11.zap</file>
+        <status>beta</status>
+        <changes>Check all DB techs when evaluating if the scanner should be run.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/sqliplugin-beta-11.zap</url>
+        <hash>SHA1:33b91ef51c3fb322efe14a8da56a77252760d392</hash>
+        <date>2016-07-07</date>
+        <size>104490</size>
+        <not-before-version>2.4.1</not-before-version>
+    </addon_sqliplugin>
+    
+    <addon>svndigger</addon>
+    <addon_svndigger>
+        <name>SVN Digger files</name>
+        <description>SVN Digger files which can be used with ZAP forced browsing</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>svndigger-beta-3.zap</file>
+        <status>beta</status>
+        <changes>Updated for ZAP 2.4</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/svndigger-beta-3.zap</url>
+        <hash>SHA1:257803a38ab33b7645deb63562d1fcce2c4fb46c</hash>
+        <info>http://www.mavitunasecurity.com/blog/svn-digger-better-lists-for-forced-browsing/</info>
+        <date>2016-06-02</date>
+        <size>614846</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_svndigger>
+    
+    <addon>tips</addon>
+    <addon_tips>
+        <name>Tips and Tricks</name>
+        <description>Display ZAP Tips and Tricks</description>
+        <author>ZAP Dev Team</author>
+        <version>6</version>
+        <file>tips-beta-6.zap</file>
+        <status>beta</status>
+        <changes>Minor code changes.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/tips-beta-6.zap</url>
+        <hash>SHA1:ae835ec3e884148f1ff49daf6fc80d613e28e297</hash>
+        <date>2017-04-03</date>
+        <size>501880</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_tips>
+    
+    <addon>tokengen</addon>
+    <addon_tokengen>
+        <name>Token generation and analysis</name>
+        <description>Allows you to generate and analyze pseudo random tokens, such as those used for session handling or CSRF protection</description>
+        <author>ZAP Dev Team</author>
+        <version>10</version>
+        <file>tokengen-beta-10.zap</file>
+        <status>beta</status>
+        <changes>Change active Pause Button to a Play button (Issue 1802).&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/tokengen-beta-10.zap</url>
+        <hash>SHA1:c4cfdac2f9a6517c55d812bbbd35357c1d6b1f4c</hash>
+        <date>2016-06-02</date>
+        <size>241229</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_tokengen>
+    
+    <addon>treetools</addon>
+    <addon_treetools>
+        <name>TreeTools</name>
+        <description>Tools to add functionality to the tree view.</description>
+        <author>Carl Sampson</author>
+        <version>6</version>
+        <file>treetools-beta-6.zap</file>
+        <status>beta</status>
+        <changes>Safe menu items will now be enabled in protected and safe modes (Issue 1278).</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/treetools-beta-6.zap</url>
+        <hash>SHA1:65dc679630d1d273cb4e8f541247d1deeff836e6</hash>
+        <date>2016-06-02</date>
+        <size>17636</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_treetools>
+    
+    <addon>webdriverlinux</addon>
+    <addon_webdriverlinux>
+        <name>Linux WebDrivers</name>
+        <description>Linux WebDrivers for Firefox and Chrome.</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>webdriverlinux-beta-2.zap</file>
+        <status>beta</status>
+        <changes>Update geckodriver to v0.14.0&lt;br&gt;
+	Download files from zap-libs repo&lt;br&gt;
+	Promote to beta&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/webdriverlinux-beta-2.zap</url>
+        <hash>SHA1:6185710a07776f21d288f17a0da2692bacc17926</hash>
+        <date>2017-03-06</date>
+        <size>10371607</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_webdriverlinux>
+    
+    <addon>webdrivermacos</addon>
+    <addon_webdrivermacos>
+        <name>MacOS WebDrivers</name>
+        <description>MacOS WebDrivers for Firefox and Chrome.</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>webdrivermacos-beta-2.zap</file>
+        <status>beta</status>
+        <changes>Update geckodriver to v0.14.0&lt;br&gt;
+	Download files from zap-libs repo&lt;br&gt;
+	Promote to beta&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/webdrivermacos-beta-2.zap</url>
+        <hash>SHA1:04ed621054505b5ca81a4a987c52294f42492385</hash>
+        <date>2017-03-06</date>
+        <size>5870746</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_webdrivermacos>
+    
+    <addon>webdriverwindows</addon>
+    <addon_webdriverwindows>
+        <name>Windows WebDrivers</name>
+        <description>Windows WebDrivers for Firefox, Chrome and IE.</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>webdriverwindows-beta-2.zap</file>
+        <status>beta</status>
+        <changes>Update geckodriver to v0.14.0&lt;br&gt;
+	Download files from zap-libs repo&lt;br&gt;
+	Promote to beta&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/webdriverwindows-beta-2.zap</url>
+        <hash>SHA1:e4f3a17a3c6b6262ead198b712d55d0c0e858e32</hash>
+        <date>2017-03-06</date>
+        <size>10202418</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_webdriverwindows>
+
+    <addon>zest</addon>
+    <addon_zest>
+        <name>Zest - Graphical Security Scripting Language</name>
+        <description>A graphical security scripting language, ZAPs macro language on steroids</description>
+        <author>ZAP Dev Team</author>
+        <version>23</version>
+        <file>zest-beta-23.zap</file>
+        <status>beta</status>
+        <changes>Always show the expected URL in request statements (Issue 2854).&lt;br&gt;
+    Add HTTP requests to Sequence scripts when recording (Issue 3044).&lt;br&gt;
+    Execute nodes' mouse click action just once (Issue 3099).&lt;br&gt;
+    Clear Zest Results panel on session changes.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/zest-beta-23.zap</url>
+        <hash>SHA1:c0057642b432f610fe8db77b9b220ce8376100fd</hash>
+        <info>https://github.com/zaproxy/zap-core-help/wiki/HelpAddonsZestZest</info>
+        <date>2017-04-03</date>
+        <size>2078595</size>
+        <not-before-version>2.4.0</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>selenium</id>
+                    <semver>1.*</semver>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_zest>
+	
+	<addon>accessControl</addon>
+    <addon_accessControl>
+        <name>Access Control Testing</name>
+        <description>Adds a set of tools for testing access control in web applications.</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>accessControl-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Fix an exception when cancelling the "Save" access control report dialogue.&lt;br&gt;
+	Do not allow to dynamically uninstall, not yet supported.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/accessControl-alpha-2.zap</url>
+        <hash>SHA1:967be37f73670af78a04deca1429dec4d8ff9231</hash>
+        <date>2016-06-02</date>
+        <size>495908</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_accessControl>
+    
+    <addon>amf</addon>
+    <addon_amf>
+        <name>AMF</name>
+        <description>Adds support for AMF messages</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>amf-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Deserialise the AMF request.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/amf-alpha-2.zap</url>
+        <hash>SHA1:e34f73753902f2ebedc0be130b446cae39ff4784</hash>
+        <date>2017-05-26</date>
+        <size>813478</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_amf>
+    
+    <addon>ascanrulesAlpha</addon>
+    <addon_ascanrulesAlpha>
+        <name>Active scanner rules (alpha)</name>
+        <description>The alpha quality Active Scanner rules</description>
+        <author>ZAP Dev Team</author>
+        <version>19</version>
+        <file>ascanrulesAlpha-alpha-19.zap</file>
+        <status>alpha</status>
+        <changes>Improve error handling in some scanners.&lt;br&gt;
+    Add MsSQL specific Injection scanner.&lt;br&gt;
+    Issue 3441: Add proper reference links to Proxy Discovery scanner.&lt;br&gt;
+    Issue 3279: Add ELMAH scanner.&lt;br&gt;
+    Issue 3280: Add trace.axd scanner.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/ascanrulesAlpha-alpha-19.zap</url>
+        <hash>SHA1:dd3dc27dca0a3240d4d61a1e6bd59e6826b2475e</hash>
+        <info>https://github.com/zaproxy/zap-extensions/wiki/HelpAddonsAscanrulesAlphaAscanalpha</info>
+        <date>2017-05-25</date>
+        <size>1420431</size>
+        <not-before-version>2.4.1</not-before-version>
+    </addon_ascanrulesAlpha>
+    
+    <addon>authstats</addon>
+    <addon_authstats>
+        <name>Authentication Statistics</name>
+        <description>Records logged in/out statistics for all contexts in scope.</description>
+        <author>ZAP Core Team</author>
+        <version>1</version>
+        <file>authstats-alpha-1.zap</file>
+        <status>alpha</status>
+        <changes>First version&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/authstats-alpha-1.zap</url>
+        <hash>SHA1:c00d7e572faba04ff1262bcc04406599a8b20ffd</hash>
+        <info>https://github.com/zaproxy/zap-extensions/wiki/HelpAddonsAuthstatsAuthStats</info>
+        <date>2016-08-16</date>
+        <size>11605</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_authstats>
+
+    <addon>browserView</addon>
+    <addon_browserView>
+        <name>Browser View</name>
+        <description>Adds an option to render HTML responses like a browser</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>browserView-alpha-4.zap</file>
+        <status>alpha</status>
+        <changes>Updated for ZAP 2.4</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/browserView-alpha-4.zap</url>
+        <hash>SHA1:d48e7768ecac5bb5e12d6e7c36907bfbf95ea46d</hash>
+        <date>2016-06-02</date>
+        <size>180584</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_browserView>
+    
+    <addon>bugtracker</addon>
+    <addon_bugtracker>
+        <name>Bug Tracker</name>
+        <description>Bug Tracker extension.</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>bugtracker-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Added help for the add-on</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/bugtracker-alpha-2.zap</url>
+        <hash>SHA1:156b7ad6616db6a17d96ecea42c44542e5bbf163</hash>
+        <date>2017-05-26</date>
+        <size>1995812</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_bugtracker>
+    
+    <addon>callgraph</addon>
+    <addon_callgraph>
+        <name>Call Graph</name>
+        <description>Allows the user to view a call graph of the selected resources</description>
+        <author>Colm O'Flaherty</author>
+        <version>3</version>
+        <file>callgraph-alpha-3.zap</file>
+        <status>alpha</status>
+        <changes>Updated for ZAP 2.4</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/callgraph-alpha-3.zap</url>
+        <hash>SHA1:d72894ec70bd21f30026154c29243d17983b36e9</hash>
+        <date>2016-06-02</date>
+        <size>1157575</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_callgraph>
+    
+    <addon>codedx</addon>
+    <addon_codedx>
+        <name>Code Dx Extension</name>
+        <description>Includes request and response data in XML reports and provides the ability to upload reports directly to a Code Dx server</description>
+        <author>Code Dx, Inc.</author>
+        <version>5</version>
+        <file>codedx-alpha-5.zap</file>
+        <status>alpha</status>
+        <changes>Add an upload to Code Dx option.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/codedx-alpha-5.zap</url>
+        <hash>SHA1:fad5d14acd070d6ab2b7baae7092a5f75f5b6a8c</hash>
+        <date>2017-04-18</date>
+        <size>1185698</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_codedx>
+    
+    <addon>communityScripts</addon>
+    <addon_communityScripts>
+        <name>Community Scripts</name>
+        <description>Useful ZAP scripts written by the ZAP community.</description>
+        <author>ZAP Community</author>
+        <version>3</version>
+        <file>communityScripts-alpha-3.zap</file>
+        <status>alpha</status>
+        <changes>Updated with the latest scripts for 2.5.0&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/communityScripts-alpha-3.zap</url>
+        <hash>SHA1:f1c2e0af4cf4500b9d0656723316a6f0e806f668</hash>
+        <info>https://github.com/zaproxy/community-scripts</info>
+        <date>2016-06-02</date>
+        <size>134107</size>
+        <not-before-version>2.4.3</not-before-version>
+    </addon_communityScripts>
+    
+    <addon>cspscanner</addon>
+    <addon_cspscanner>
+        <name>Content Security Policy Scanner</name>
+        <description>Content Security Policy (CSP) Scanner</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>cspscanner-alpha-3.zap</file>
+        <status>alpha</status>
+        <changes>Upgraded to Salvation library version 2.3.0.&lt;/br&gt;
+        Add support for checking if worker-src allows wildcard sources.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/cspscanner-alpha-3.zap</url>
+        <hash>SHA1:912c650bc1cb2d193a3de998547029a64d18c846</hash>
+        <date>2017-04-18</date>
+        <size>112803</size>
+        <not-before-version>2.5.0</not-before-version>
+        <dependencies>
+            <javaversion>1.8</javaversion>
+        </dependencies>
+    </addon_cspscanner>
+
+    <addon>customreport</addon>
+    <addon_customreport>
+        <name>CustomReport</name>
+        <description>New HTML report module allows users to customize report content.</description>
+        <author>Chienli Ma</author>
+        <version>2</version>
+        <file>customreport-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Allow to update/uninstall the add-on without restarting ZAP.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/customreport-alpha-2.zap</url>
+        <hash>SHA1:fe8f172a879e5372d040449973ac7a1a133eafd5</hash>
+        <date>2016-06-02</date>
+        <size>557158</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_customreport>
+    
+    <addon>domxss</addon>
+    <addon_domxss>
+        <name>DOM XSS Active scanner rule</name>
+        <description>DOM XSS Active scanner rule</description>
+        <author>ZAP Dev Team</author>
+        <version>3</version>
+        <file>domxss-alpha-3.zap</file>
+        <status>alpha</status>
+        <changes>Skip the scanner if not able to start Firefox.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/domxss-alpha-3.zap</url>
+        <hash>SHA1:b86bdc8d25461bf0922a699d84d635e1bc8dc9a0</hash>
+        <date>2016-10-24</date>
+        <size>192724</size>
+        <not-before-version>2.4.1</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>selenium</id>
+                    <semver>1.*</semver>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_domxss>
+    
+    <addon>help_bs_BA</addon>
+    <addon_help_bs_BA>
+        <name>Help - Bosnian</name>
+        <description>Bosnian version of the ZAP help file.</description>
+        <author>ZAP Crowdin Team</author>
+        <version>5</version>
+        <file>help_bs_BA-alpha-5.zap</file>
+        <status>alpha</status>
+        <changes>Updated for 2.5.0</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/help_bs_BA-alpha-5.zap</url>
+        <hash>SHA1:aa7ed9aa95bff1b2d1aeb547ff6cab7d5a37bef6</hash>
+        <info>https://crowdin.com/project/owasp-zap-help</info>
+        <date>2016-06-02</date>
+        <size>756583</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_help_bs_BA>
+    
+    <addon>help_es_ES</addon>
+    <addon_help_es_ES>
+        <name>Help - Spanish</name>
+        <description>Spanish version of the ZAP help file.</description>
+        <author>ZAP Crowdin Team</author>
+        <version>5</version>
+        <file>help_es_ES-alpha-5.zap</file>
+        <status>alpha</status>
+        <changes>Updated for 2.5.0</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/help_es_ES-alpha-5.zap</url>
+        <hash>SHA1:b25a9f3e4db5eb41c19647ec623750043d26325c</hash>
+        <info>https://crowdin.com/project/owasp-zap-help</info>
+        <date>2016-06-02</date>
+        <size>760182</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_help_es_ES>
+    
+    <addon>help_fr_FR</addon>
+    <addon_help_fr_FR>
+        <name>Help - French</name>
+        <description>French version of the ZAP help file.</description>
+        <author>ZAP Crowdin Team</author>
+        <version>5</version>
+        <file>help_fr_FR-alpha-5.zap</file>
+        <status>alpha</status>
+        <changes>Updated for 2.5.0</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/help_fr_FR-alpha-5.zap</url>
+        <hash>SHA1:423675291345b964ca0aeda95550ffd978071f6f</hash>
+        <info>https://crowdin.com/project/owasp-zap-help</info>
+        <date>2016-06-02</date>
+        <size>757459</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_help_fr_FR>
+    
+    <addon>help_ja_JP</addon>
+    <addon_help_ja_JP>
+        <name>Help - Japanese</name>
+        <description>Japanese version of the ZAP help file.</description>
+        <author>ZAP Crowdin Team</author>
+        <version>5</version>
+        <file>help_ja_JP-alpha-5.zap</file>
+        <status>alpha</status>
+        <changes>Updated for 2.5.0</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/help_ja_JP-alpha-5.zap</url>
+        <hash>SHA1:33bca35847c84da63a2522fb26c6679cf870211f</hash>
+        <info>https://crowdin.com/project/owasp-zap-help</info>
+        <date>2016-06-02</date>
+        <size>783581</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_help_ja_JP>
+    
+    <addon>highlighter</addon>
+    <addon_highlighter>
+        <name>Highlighter</name>
+        <description>Allows you to highlight strings in the request and response tabs.</description>
+        <author>ZAP Dev Team</author>
+        <version>6</version>
+        <file>highlighter-alpha-6.zap</file>
+        <status>alpha</status>
+        <changes>Updated for ZAP 2.4</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/highlighter-alpha-6.zap</url>
+        <hash>SHA1:ebc48b0880ff7862839ae0158de9ddb038218735</hash>
+        <date>2016-06-02</date>
+        <size>9568</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_highlighter>
+    
+    <addon>httpsInfo</addon>
+    <addon_httpsInfo>
+        <name>HttpsInfo</name>
+        <description>Displays HTTPS configuration information.</description>
+        <author>ZAP Dev Team</author>
+        <version>9</version>
+        <file>httpsInfo-alpha-9.zap</file>
+        <status>alpha</status>
+        <changes>Switch from SSLServer to OWASP DeepViolet.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/httpsInfo-alpha-9.zap</url>
+        <hash>SHA1:0cff9d0c95ae0a9acf9cc9df9951fed491596325</hash>
+        <date>2017-06-01</date>
+        <size>6234644</size>
+        <not-before-version>2.4.0</not-before-version>
+        <dependencies>
+            <javaversion>1.8</javaversion>
+        </dependencies>
+    </addon_httpsInfo>
+    
+    <addon>importLogFiles</addon>
+    <addon_importLogFiles>
+        <name>Log File Importer</name>
+        <description>Allows you to import log files from ModSecurity and files previously exported from ZAP</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>importLogFiles-alpha-4.zap</file>
+        <status>alpha</status>
+        <changes>Use API actions when importing files.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/importLogFiles-alpha-4.zap</url>
+        <hash>SHA1:ed557f0caf1e7c630532d9171f13f8afaa99be30</hash>
+        <info>https://github.com/zaproxy/zaproxy/wiki/MozillaMentorship_ImportingModSecurityLogs</info>
+        <date>2017-05-05</date>
+        <size>152363</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_importLogFiles>
+
+    <addon>jxbrowser</addon>
+    <addon_jxbrowser>
+        <name>JxBrowser (core)</name>
+        <description>An embedded browser based on Chromium, you must also install the relevant platform specific add-on</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>jxbrowser-alpha-4.zap</file>
+        <status>alpha</status>
+        <changes>Added button for selecting URL from Sites tree.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/jxbrowser-alpha-4.zap</url>
+        <hash>SHA1:b8f0253f88c2e15ef7d2552ac8aac7a0f62d728a</hash>
+        <date>2017-05-05</date>
+        <size>1411594</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_jxbrowser>
+
+    <addon>jxbrowserlinux32</addon>
+    <addon_jxbrowserlinux32>
+        <name>JxBrowser (Linux 32)</name>
+        <description>An embedded browser based on Chromium, Linux 32 specific</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>jxbrowserlinux32-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Updated for JxBrowser 6.14 which now accepts 'invalid' certificates.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/jxbrowserlinux32-alpha-2.zap</url>
+        <hash>SHA1:dbed700fb82554e25e26a73fdac1ad337fb2b5ce</hash>
+        <date>2017-04-25</date>
+        <size>46399267</size>
+        <not-before-version>2.5.0</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>jxbrowser</id>
+                </addon>
+                <addon>
+                    <id>webdriverlinux</id>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_jxbrowserlinux32>
+
+    <addon>jxbrowserlinux64</addon>
+    <addon_jxbrowserlinux64>
+        <name>JxBrowser (Linux 64)</name>
+        <description>An embedded browser based on Chromium, Linux 64 specific</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>jxbrowserlinux64-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Updated for JxBrowser 6.14 which now accepts 'invalid' certificates.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/jxbrowserlinux64-alpha-2.zap</url>
+        <hash>SHA1:49d07afb501d171ce7a04e03876d60951c504349</hash>
+        <date>2017-04-25</date>
+        <size>46037789</size>
+        <not-before-version>2.5.0</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>jxbrowser</id>
+                </addon>
+                <addon>
+                    <id>webdriverlinux</id>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_jxbrowserlinux64>
+
+    <addon>jxbrowsermacos</addon>
+    <addon_jxbrowsermacos>
+        <name>JxBrowser (Mac OS)</name>
+        <description>An embedded browser based on Chromium, Mac OS specific</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>jxbrowsermacos-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Updated for JxBrowser 6.14 which now accepts 'invalid' certificates.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/jxbrowsermacos-alpha-2.zap</url>
+        <hash>SHA1:9c949adbc339c269dc4880d4b3bf018693914878</hash>
+        <date>2017-04-25</date>
+        <size>51499781</size>
+        <not-before-version>2.5.0</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>jxbrowser</id>
+                </addon>
+                <addon>
+                    <id>webdrivermacos</id>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_jxbrowsermacos>
+
+    <addon>jxbrowserwindows</addon>
+    <addon_jxbrowserwindows>
+        <name>JxBrowser (Windows)</name>
+        <description>An embedded browser based on Chromium, Windows specific</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>jxbrowserwindows-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Updated for JxBrowser 6.14 which now accepts 'invalid' certificates.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/jxbrowserwindows-alpha-2.zap</url>
+        <hash>SHA1:efb07bab671efb6ed955107a799bf6ade3a4d15f</hash>
+        <date>2017-04-25</date>
+        <size>35906181</size>
+        <not-before-version>2.5.0</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>jxbrowser</id>
+                </addon>
+                <addon>
+                    <id>webdriverwindows</id>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_jxbrowserwindows>
+    
+    <addon>openapi</addon>
+    <addon_openapi>
+        <name>OpenAPI Support</name>
+        <description>Imports and spiders Open API definitions.</description>
+        <author>ZAP Core Team plus Joanna Bona, Artur Grzesica, Michal Materniak and Marcin Spiewak</author>
+        <version>6</version>
+        <file>openapi-alpha-6.zap</file>
+        <status>alpha</status>
+        <changes>Support optional host override.&lt;br&gt;
+		Detect and warn on potential loops.&lt;br&gt;
+		Allow add-on to be unloaded dynamically.&lt;br&gt;
+		Support user specified values when importing (Issue 3344).&lt;br&gt;
+		Support older swagger formats (Issue 3598).&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/openapi-alpha-6.zap</url>
+        <hash>SHA1:610041f0d2363a5a6aa988e96a607e9a43cc8a1c</hash>
+        <date>2017-06-02</date>
+        <size>3170033</size>
+        <not-before-version>2.6.0</not-before-version>
+    </addon_openapi>
+    
+    <addon>pscanrulesAlpha</addon>
+    <addon_pscanrulesAlpha>
+        <name>Passive scanner rules (alpha)</name>
+        <description>The alpha quality Passive Scanner rules</description>
+        <author>ZAP Dev Team</author>
+        <version>14</version>
+        <file>pscanrulesAlpha-alpha-14.zap</file>
+        <status>alpha</status>
+        <changes>Report missing CSP header as LOW even if CSP Report header present.&lt;br&gt;
+        Added X-Debug-Token Scanner (Issue 2452).&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/pscanrulesAlpha-alpha-14.zap</url>
+        <hash>SHA1:2d8746f679168a9d2a8e915e99eab7775703cb81</hash>
+        <date>2017-05-25</date>
+        <size>1955039</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_pscanrulesAlpha>
+    
+    <addon>replacer</addon>
+    <addon_replacer>
+        <name>Replacer</name>
+        <description>Easy way to replace strings in requests and responses.</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>replacer-beta-2.zap</file>
+        <status>beta</status>
+        <changes>Promoted to beta</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/replacer-beta-2.zap</url>
+        <hash>SHA1:d9ff3d4467a304f1f44b871fc9ffa4984fd819f7</hash>
+        <date>2017-04-03</date>
+        <size>283500</size>
+        <not-before-version>2.6.0</not-before-version>
+    </addon_replacer>
+
+    <addon>requester</addon>
+    <addon_requester>
+        <name>Requester</name>
+        <description>Request numbered panel.</description>
+        <author>Surikato</author>
+        <version>1</version>
+        <file>requester-alpha-1.zap</file>
+        <status>alpha</status>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/requester-alpha-1.zap</url>
+        <hash>SHA1:3f43ac40b5b6225ebdc918df0b14cd53f0e7e8a2</hash>
+        <date>2016-06-02</date>
+        <size>40411</size>
+        <not-before-version>2.4.2</not-before-version>
+    </addon_requester>
+    
+    <addon>revisit</addon>
+    <addon_revisit>
+        <name>Revisit</name>
+        <description>Revisit a site at any time in the past using the session history</description>
+        <author>ZAP Dev Team</author>
+        <version>2</version>
+        <file>revisit-alpha-2.zap</file>
+        <status>alpha</status>
+        <changes>Allow to update/uninstall the add-on without restarting ZAP.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/revisit-alpha-2.zap</url>
+        <hash>SHA1:84087ce758254bc515160b458bcf5c2c82773641</hash>
+        <date>2016-06-02</date>
+        <size>279982</size>
+        <not-before-version>2.4.2</not-before-version>
+    </addon_revisit>
+    
+    <addon>saml</addon>
+    <addon_saml>
+        <name>SAML Extension</name>
+        <description>Detect, Show, Edit, Fuzz SAML requests</description>
+        <author>ZAP Dev Team</author>
+        <version>6</version>
+        <file>saml-alpha-6.zap</file>
+        <status>alpha</status>
+        <changes>Use ZAP's home directory for SAML configuration file.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/saml-alpha-6.zap</url>
+        <hash>SHA1:89080cd9d83c2bf0fb3f010799b02bff3807a85b</hash>
+        <info>https://github.com/zaproxy/zaproxy</info>
+        <date>2016-06-02</date>
+        <size>994870</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_saml>
+    
+    <addon>sequence</addon>
+    <addon_sequence>
+        <name>Sequence</name>
+        <description>Gives the possibility of defining a sequence of requests to be scanned.</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>sequence-alpha-4.zap</file>
+        <status>alpha</status>
+        <changes>Correct error message to include the script name.&lt;br&gt;
+    Add help content (Issue 2191).&lt;br&gt;
+    Depend on Zest extension, since it is currently the only script option for Sequence scripts.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/sequence-alpha-4.zap</url>
+        <hash>SHA1:734c30eddc68fa938e9f7eedb8d3284c255b5038</hash>
+        <date>2017-05-25</date>
+        <size>1319013</size>
+        <not-before-version>2.4.1</not-before-version>
+        <dependencies>
+            <addons>
+                <addon>
+                    <id>zest</id>
+                </addon>
+            </addons>
+        </dependencies>
+    </addon_sequence>
+    
+    <addon>sniTerminator</addon>
+    <addon_sniTerminator>
+        <name>SNI Terminator</name>
+        <description>Transparent HTTP proxying</description>
+        <author>ZAP Dev Team</author>
+        <version>4</version>
+        <file>sniTerminator-alpha-4.zap</file>
+        <status>alpha</status>
+        <changes>Update library to work with newer versions of ZAP.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/sniTerminator-alpha-4.zap</url>
+        <hash>SHA1:aa38bb7f929d6d7b54ba4445a9a6c1c276951472</hash>
+        <info>http://www.computerist.org/blog/2014/07/23/Transparent-HTTPS-proxying-with-ZAP/</info>
+        <date>2016-06-02</date>
+        <size>247164</size>
+        <not-before-version>2.4.1</not-before-version>
+        <dependencies>
+            <javaversion>1.8</javaversion>
+        </dependencies>
+    </addon_sniTerminator>
+    
+    <addon>soap</addon>
+    <addon_soap>
+        <name>SOAP Scanner</name>
+        <description>Imports and scans WSDL files containing SOAP endpoints.</description>
+        <author>Alberto (albertov91) + ZAP Core team</author>
+        <version>3</version>
+        <file>soap-alpha-3.zap</file>
+        <status>alpha</status>
+        <changes>Added API, help and other minor code changes.</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.6/soap-alpha-3.zap</url>
+        <hash>SHA1:c02815ca249e8d2736d9e66498bfe7d43ed0d464</hash>
+        <date>2017-03-31</date>
+        <size>7337575</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_soap>
+    
+    <addon>sse</addon>
+    <addon_sse>
+        <name>Server-Sent Events</name>
+        <description>Allows you to view Server-Sent Events (SSE) communication.</description>
+        <author>ZAP Dev Team</author>
+        <version>9</version>
+        <file>sse-alpha-9.zap</file>
+        <status>alpha</status>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/sse-alpha-9.zap</url>
+        <hash>SHA1:c642ed5fa03bc2c7840c722baf9dc9d842197e9d</hash>
+        <date>2016-06-02</date>
+        <size>331696</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_sse>
+
+    <addon>tlsdebug</addon>
+    <addon_tlsdebug>
+        <name>TLS Debug</name>
+        <description>Provides a tab which allows to quickly debug a TLS/SSL connection</description>
+        <author>P.M.J. Roth</author>
+        <version>1</version>
+        <file>tlsdebug-alpha-1.zap</file>
+        <status>alpha</status>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/tlsdebug-alpha-1.zap</url>
+        <hash>SHA1:0b987f507e0219817ba012c38df890c862ce0ea5</hash>
+        <date>2016-11-02</date>
+        <size>22114</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_tlsdebug>
+    
+    <addon>viewstate</addon>
+    <addon_viewstate>
+        <name>ViewState</name>
+        <description>ASP/JSF ViewState Decoder and Editor</description>
+        <author>Calum Hutton</author>
+        <version>1</version>
+        <file>viewstate-alpha-1.zap</file>
+        <status>alpha</status>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/viewstate-alpha-1.zap</url>
+        <hash>SHA1:55decd0f02e3a75bcc8e6f3ce757d569e398a099</hash>
+        <date>2016-09-14</date>
+        <size>25184</size>
+        <not-before-version>2.4.0</not-before-version>
+    </addon_viewstate>
+    
+    <addon>wappalyzer</addon>
+    <addon_wappalyzer>
+        <name>Technology detection using Wappalyzer</name>
+        <description>Technology detection using Wappalyzer: wappalyzer.com</description>
+        <author>ZAP Dev Team</author>
+        <version>8</version>
+        <file>wappalyzer-alpha-8.zap</file>
+        <status>alpha</status>
+        <changes>Remove the use of passive scan rule.&lt;br&gt;
+    Minor code cleanup.&lt;br&gt;
+    Add support for wappalyzer META tag checks.&lt;br&gt;</changes>
+        <url>https://github.com/zaproxy/zap-extensions/releases/download/2.5/wappalyzer-alpha-8.zap</url>
+        <hash>SHA1:b25bc4338e348fdc31016f440c55f8cffb2c27e3</hash>
+        <date>2017-03-25</date>
+        <size>1275611</size>
+        <not-before-version>2.5.0</not-before-version>
+    </addon_wappalyzer>
+	
+</ZAP>
