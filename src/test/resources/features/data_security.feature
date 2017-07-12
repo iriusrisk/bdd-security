@@ -7,8 +7,8 @@ Feature: Data confidentiality
     Given a new browser instance
     And the client/browser is configured to use an intercepting proxy
     And the login page
-    And the username <username>
-    And the password <password>
+    And the username <username> is used
+    And the password <password> is used
     When the user logs in
     And the proxy logs are cleared
     And they access the restricted resource: <method>

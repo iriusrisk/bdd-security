@@ -112,7 +112,7 @@ public class WebApplicationSteps {
         openLoginPage();
     }
 
-    @When("the user logs in")
+    @When("^the user logs in$")
     public void loginWithSetCredentials() {
         assert World.getInstance().getCredentials() != null;
         ((ILogin) app).login(World.getInstance().getCredentials());
@@ -402,13 +402,12 @@ public class WebApplicationSteps {
         assertThat("User: " + credentials.getUsername() + " could access resource: " + methodName + " because the text: [" + sensitiveData + "] was present in the responses", accessible, equalTo(true));
     }
 
-
-    @Given("^the username (.*)$")
+    @Given("^the username (.*) is used$")
     public void setUsernameFromExamples(String username) {
         World.getInstance().getUserPassCredentials().setUsername(username);
     }
 
-    @Given("^the password (.*)$")
+    @Given("^the password (.*) is used$")
     public void setCredentialsFromExamples(String password) {
         World.getInstance().getUserPassCredentials().setPassword(password);
     }

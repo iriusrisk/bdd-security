@@ -8,8 +8,8 @@ Feature: Authorisation and Access Control
     And the client/browser is configured to use an intercepting proxy
     And the proxy logs are cleared
     And the login page
-    And the username <username>
-    And the password <password>
+    And the username <username> is used
+    And the password <password> is used
     When the user logs in
     And the proxy logs are cleared
     And the HTTP requests and responses are recorded
@@ -26,8 +26,8 @@ Feature: Authorisation and Access Control
   Scenario Outline: Users must not be able to view resources for which they are not authorised
     Given the access control map for authorised users has been populated
     And a new browser or client instance
-    And the username <username>
-    And the password <password>
+    And the username <username> is used
+    And the password <password> is used
     And the login page
     When the user logs in
     And the previously recorded HTTP Requests for <method> are replayed using the current session ID
