@@ -1,7 +1,12 @@
 @nmap_scan
 Feature: Nmap Scan
-  Scan the hosts with nmap for known security vulnerabilities
+  Scan the hosts for known security vulnerabilities and open ports
 
-  Scenario: The host systems should only have the required ports open
-    Given an nmap instance
-    When the scan is executed
+  @iriusrisk-ssh-service-disabled
+  Scenario: the SSH daemon should not be active on any hosts
+    Given an nmap instance installed at /usr/local
+    And a configured AWS client
+    And a list of target hostnames from AWS
+    When we scan all ports on each host
+    And we extract the open services
+    Then ssh must not be one of the services
