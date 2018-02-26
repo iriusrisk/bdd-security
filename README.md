@@ -1,7 +1,7 @@
 
 ![](https://www.continuumsecurity.net/wp-content/uploads/2016/10/bdd-security160.png) 
 
-<img src="https://github.com/cucumber-ltd/brand/blob/master/images/svg/tm/cucumber-compatible-black.svg" width="200"/>
+<img src="https://github.com/cucumber-ltd/brand/blob/master/images/svg/tm/cucumber-compatible-black.svg" width="300"/>
 
 BDD-Security is a security testing framework that uses Behaviour Driven Development concepts to create self-verifying security specifications.
 
