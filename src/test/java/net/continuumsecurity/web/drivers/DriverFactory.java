@@ -27,7 +27,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -106,23 +105,11 @@ public class DriverFactory {
         else if (type.equalsIgnoreCase(HTMLUNIT)) return createHtmlUnitDriver(null);
         throw new RuntimeException("Unsupported WebDriver browser: "+type);
     }
-
-    private WebDriver createHtmlUnitDriver(DesiredCapabilities capabilities) {
-        if (capabilities != null) {
-            capabilities.setBrowserName("htmlunit");
-            return new HtmlUnitDriver(capabilities);
-        }
-        capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("htmlunit");
-        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        return new HtmlUnitDriver(capabilities);
-    }
-
     private WebDriver createProxyDriver(String type) {
-        if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(createProxyCapabilities());
-        else if (type.equalsIgnoreCase(FIREFOX)) return createFirefoxDriver(createProxyCapabilities());
-        else if (type.equalsIgnoreCase(HTMLUNIT)) return createHtmlUnitDriver(createProxyCapabilities());
-        throw new RuntimeException("Unsupported WebDriver browser: "+type);
+        if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(createProxyCapabilities(type));
+        else if (type.equalsIgnoreCase(FIREFOX)) return createFirefoxDriver(createProxyCapabilities(type));
+	else if (type.equalsIgnoreCase(HTMLUNIT)) return createHtmlUnitDriver(createProxyCapabilities(type));
+	throw new RuntimeException("Unsupported WebDriver browser: "+type);
     }
 
     public WebDriver createChromeDriver(DesiredCapabilities capabilities) {
@@ -137,10 +124,18 @@ public class DriverFactory {
 
     }
 
-    public WebDriver createFirefoxDriver(DesiredCapabilities capabilities) {
-        if (capabilities != null) {
-            return new FirefoxDriver(capabilities);
+    private WebDriver createHtmlUnitDriver(DesiredCapabilities capabilities) {
+	if (capabilities != null) {
+            capabilities.setBrowserName("htmlunit");
+            return new HtmlUnitDriver(capabilities);
         }
+        capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("htmlunit");
+        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+        return new HtmlUnitDriver(capabilities);
+    }
+
+    public WebDriver createFirefoxDriver(DesiredCapabilities capabilities) {
 
         ProfilesIni allProfiles = new ProfilesIni();
         FirefoxProfile myProfile = allProfiles.getProfile("WebDriver");
@@ -154,6 +149,10 @@ public class DriverFactory {
         myProfile.setAcceptUntrustedCertificates(true);
         myProfile.setAssumeUntrustedCertificateIssuer(true);
         myProfile.setPreference("webdriver.load.strategy", "unstable");
+	    String noProxyHosts = Config.getInstance().getNoProxyHosts();
+	    if (! noProxyHosts.isEmpty()) {
+	        myProfile.setPreference("network.proxy.no_proxies_on", noProxyHosts);
+	    }
         if (capabilities == null) {
             capabilities = new DesiredCapabilities();
         }
@@ -162,7 +161,19 @@ public class DriverFactory {
     }
 
     public DesiredCapabilities createProxyCapabilities() {
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        DesiredCapabilities capabilities = null;
+	switch (type) {
+	case CHROME:
+	    capabilities = DesiredCapabilities.chrome();
+	    break;
+	case FIREFOX:
+	    capabilities = DesiredCapabilities.firefox();
+	    break;
+	case HTMLUNIT:
+	    capabilities = DesiredCapabilities.htmlunit();
+	default:
+	    break;
+	}
         Proxy proxy = new Proxy();
         proxy.setHttpProxy(Config.getInstance().getProxyHost() + ":" + Config.getInstance().getProxyPort());
         proxy.setSslProxy(Config.getInstance().getProxyHost() + ":" + Config.getInstance().getProxyPort());
