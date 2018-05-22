@@ -39,6 +39,7 @@
     <upstreamProxy>
         <host></host>
         <port></port>
+        <noProxyHosts></noProxyHosts><!-- ie: localhost,127.0.0.1,192.168.10.2 -->
     </upstreamProxy>
 
     <incorrectPassword>SDFsdfwjx1</incorrectPassword>

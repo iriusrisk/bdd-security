@@ -36,6 +36,7 @@ public class Config {
     protected XMLConfiguration xml;
     private String proxyHost;
     private int proxyPort = 0;
+    private String noProxyHosts;
     private String proxyApi;
     private static Config config;
 
@@ -130,6 +131,12 @@ public class Config {
         if (ret == null) throw new RuntimeException(value+" not defined in config.xml");
         return ret;
     }
+    
+    private String[] validateAndGetStringArray(String value) {
+        String[] ret = getXml().getStringArray(value);
+        if (ret == null) throw new RuntimeException(value+" not defined in config.xml");
+        return ret;
+    }
 
     public String getSSLyzePath() { return validateAndGetString("sslyze.path"); }
     public String getSSLyzeOption() { return validateAndGetString("sslyze.option"); }
@@ -193,6 +200,8 @@ public class Config {
     public String getNessusUsername() { return validateAndGetString("nessus.username");}
 
     public String getNessusPassword() { return validateAndGetString("nessus.password");}
+    
+    public String getNoProxyHosts() { return String.join(",", validateAndGetStringArray("upstreamProxy.noProxyHosts"));}
 
     public String getUpstreamProxyHost() { return validateAndGetString("upstreamProxy.host"); }
 
