@@ -29,6 +29,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.io.File;
 
@@ -170,7 +171,8 @@ public class DriverFactory {
 	    capabilities = DesiredCapabilities.firefox();
 	    break;
 	case HTMLUNIT:
-	    capabilities = DesiredCapabilities.htmlunit();
+	    capabilities = DesiredCapabilities.htmlUnit();
+	    break;
 	default:
 	    break;
 	}
