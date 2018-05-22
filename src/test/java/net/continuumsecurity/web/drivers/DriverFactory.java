@@ -160,7 +160,7 @@ public class DriverFactory {
         return new FirefoxDriver(capabilities);
     }
 
-    public DesiredCapabilities createProxyCapabilities() {
+    public DesiredCapabilities createProxyCapabilities(String type) {
         DesiredCapabilities capabilities = null;
 	switch (type) {
 	case CHROME:
