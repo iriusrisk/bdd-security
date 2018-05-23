@@ -48,7 +48,7 @@ public class ZapManager {
             params.add("-config"); params.add("api.key="+API_KEY);
             Config.getInstance().setProxyApi(API_KEY);
             String upstreamProxyHost = Config.getInstance().getUpstreamProxyHost();
-            if (upstreamProxyHost.isEmpty()) {
+            if (!upstreamProxyHost.isEmpty()) {
                 int upstreamProxyPort = Config.getInstance().getUpstreamProxyPort();
                 log.info("Setting upstream proxy for ZAP to: "+upstreamProxyHost+":"+upstreamProxyPort);
                 params.add("-config"); params.add("connection.proxyChain.hostName="+upstreamProxyHost);
