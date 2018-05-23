@@ -6,6 +6,7 @@ import net.continuumsecurity.Config;
 import net.continuumsecurity.jsslyze.JSSLyze;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,12 +18,14 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
  */
 public class SSLyzeSteps {
     final static String OUTFILENAME = "sslyze.output";
+    static String host=null;
 
-    @When("^the SSLyze command is run against the host (.*) on port (\\d+)$")
-    public void runSSLTestsOnSecureBaseUrl(String host, int port) throws IOException {
+    @When("^the SSLyze command is run against the application on port (\\d+)$")
+    public void runSSLTestsOnSecureBaseUrl(int port) throws IOException {
         if (!World.getInstance().isSslRunCompleted()) {
+            host= new URL(Config.getInstance().getBaseUrl()).getHost();
             JSSLyze jSSLLyze = new JSSLyze(Config.getInstance().getSSLyzePath(), OUTFILENAME);
-            jSSLLyze.execute(Config.getInstance().getSSLyzeOption(),host,port);
+            jSSLLyze.execute(Config.getInstance().getSSLyzeOption(), host, port);
             World.getInstance().setjSSLyze(jSSLLyze);
             World.getInstance().setSslRunCompleted(true);
         }
