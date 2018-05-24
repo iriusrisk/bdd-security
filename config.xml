@@ -15,9 +15,16 @@
     <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth authn/z and session management testing. -->
     <class>net.continuumsecurity.examples.ropeytasks.RopeyTasksApplication</class>
 
+    <!-- In order to install sslyze on a Linux system, these steps must be followed
+	apt-get update
+	apt-get install python-pip
+	pip install sslyze
+    -->
     <sslyze>
-        <path>/opt/sslyze/sslyze_cli.py</path>
-        <option>--regular</option>
+        <path>sslyze</path>
+	<option>--regular</option>
+        <targetHost>www.continuumsecurity.net</targetHost>
+        <targetPort>443</targetPort>
     </sslyze>
 
     <!-- Optional names of the session ID cookies for session management testing. -->
@@ -31,7 +38,8 @@
 
     <scanner>
         <ignoreUrl>.*logout.*</ignoreUrl>
-        <spiderUrl>baseUrl</spiderUrl>
+	<spiderUrl>baseUrl</spiderUrl>
+	<maxDepth>5</maxDepth>
     </scanner>
 
     <!-- An upstream proxy through which all HTTP traffic must pass before hitting the target

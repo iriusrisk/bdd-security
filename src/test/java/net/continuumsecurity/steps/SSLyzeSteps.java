@@ -17,10 +17,14 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
  */
 public class SSLyzeSteps {
     final static String OUTFILENAME = "sslyze.output";
+    static String host=null;
+    static int port=443;
 
-    @When("^the SSLyze command is run against the host (.*) on port (\\d+)$")
-    public void runSSLTestsOnSecureBaseUrl(String host, int port) throws IOException {
+    @When("the SSLyze command is run against the application")
+    public void runSSLTestsOnSecureBaseUrl() throws IOException {
         if (!World.getInstance().isSslRunCompleted()) {
+            port = Config.getInstance().getSslPort();
+            host= Config.getInstance().getSslHost();
             JSSLyze jSSLLyze = new JSSLyze(Config.getInstance().getSSLyzePath(), OUTFILENAME);
             jSSLLyze.execute(Config.getInstance().getSSLyzeOption(),host,port);
             World.getInstance().setjSSLyze(jSSLLyze);
