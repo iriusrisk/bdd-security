@@ -365,7 +365,8 @@ public class AppScanningSteps {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            getSpider().setMaxDepth(10);
+	    int maxDepth = Config.getInstance().getMaxDepth();
+            getSpider().setMaxDepth(maxDepth);
             getSpider().setThreadCount(10);
             for (String url : Config.getInstance().getSpiderUrls()) {
                 if (url.equalsIgnoreCase("baseurl")) url = Config.getInstance().getBaseUrl();

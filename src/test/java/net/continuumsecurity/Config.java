@@ -92,6 +92,12 @@ public class Config {
         return spiderUrls;
     }
 
+    public int getMaxDepth() {
+        String portAsString = validateAndGetString("scanner.maxDepth");
+        if (portAsString != null && portAsString.length() > 0) return Integer.parseInt(portAsString);
+        return 10;
+    }
+
     public String getClassName() {
         return validateAndGetString("class");
     }
@@ -209,6 +215,16 @@ public class Config {
         String portAsString = validateAndGetString("upstreamProxy.port");
         if (portAsString != null && portAsString.length() > 0) return Integer.parseInt(portAsString);
         return 80;
+    }
+
+    public String getSslHost(){
+        return validateAndGetString("sslyze.targetHost");
+    }
+
+    public int getSslPort(){
+        String portAsString =  validateAndGetString("sslyze.targetPort");
+        if (portAsString != null && portAsString.length() > 0) return Integer.parseInt(portAsString);
+        return 443;
     }
 
     public List<String> getSessionIDs() {
