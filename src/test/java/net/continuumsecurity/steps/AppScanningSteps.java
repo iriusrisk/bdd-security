@@ -100,6 +100,14 @@ public class AppScanningSteps {
         Files.write(pathToFile, xmlReport);
     }
 
+    @Then("the HTML report is written to the file (.*)")
+    public void writeHtmlReport(String path) throws IOException {
+        byte[] htmlReport = scanner.getHtmlReport();
+        Path pathToFile = Paths.get(path);
+        Files.createDirectories(pathToFile.getParent());
+        Files.write(pathToFile, htmlReport);
+    }
+
     @Given("a scanner with all policies enabled")
     public void enableAllScanners() {
         getScanner().enableAllScanners();
