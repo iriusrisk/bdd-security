@@ -132,8 +132,14 @@ public class Config {
         }
     }
 
+    /*
+        If value is defined as a system environment variable, then return its value.
+        If not, then search for it in the config file
+    */
     private String validateAndGetString(String value) {
-        String ret = getXml().getString(value);
+        String ret = System.getenv(value);
+        if (ret != null) return ret;
+        ret = getXml().getString(value);
         if (ret == null) throw new RuntimeException(value+" not defined in config.xml");
         return ret;
     }
