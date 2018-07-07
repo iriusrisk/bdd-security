@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nicolasiltis/bdd-security.svg?branch=master)](https://travis-ci.org/nicolasiltis/bdd-security)
+
 
 ![](https://www.continuumsecurity.net/wp-content/uploads/2016/10/bdd-security160.png) 
 
