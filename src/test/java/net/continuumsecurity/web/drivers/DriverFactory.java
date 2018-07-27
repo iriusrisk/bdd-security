@@ -26,6 +26,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -107,9 +108,9 @@ public class DriverFactory {
         throw new RuntimeException("Unsupported WebDriver browser: "+type);
     }
     private WebDriver createProxyDriver(String type) {
-        if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(createProxyCapabilities(type));
-        else if (type.equalsIgnoreCase(FIREFOX)) return createFirefoxDriver(createProxyCapabilities(type));
-	else if (type.equalsIgnoreCase(HTMLUNIT)) return createHtmlUnitDriver(createProxyCapabilities(type));
+        if (type.equalsIgnoreCase(CHROME)) return createChromeDriver(createProxyCapabilities(CHROME));
+        else if (type.equalsIgnoreCase(FIREFOX)) return createFirefoxDriver(createProxyCapabilities(FIREFOX));
+	else if (type.equalsIgnoreCase(HTMLUNIT)) return createHtmlUnitDriver(createProxyCapabilities(HTMLUNIT));
 	throw new RuntimeException("Unsupported WebDriver browser: "+type);
     }
 
@@ -158,6 +159,7 @@ public class DriverFactory {
             capabilities = new DesiredCapabilities();
         }
         capabilities.setCapability(FirefoxDriver.PROFILE, myProfile);
+        System.setProperty("webdriver.gecko.driver", Config.getInstance().getDefaultDriverPath());
         return new FirefoxDriver(capabilities);
     }
 
