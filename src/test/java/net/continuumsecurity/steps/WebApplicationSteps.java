@@ -245,7 +245,7 @@ public class WebApplicationSteps {
 
     @Given("the HTTP request-response containing the login form")
     public void findResponseWithLoginform() throws UnsupportedEncodingException {
-        String regex = "(?i)input[\\s\\w=:'-\"]*type\\s*=\\s*['\"]password['\"]";
+        String regex = "(?i)input[\\s\\w=:'\\-\\\"]*type\\s*=\\s*['\\\"]password['\\\"]";
         List<HarEntry> responses = getProxy().getHistory();
         responses = getProxy().findInResponseHistory(regex);
         if (responses == null || responses.size() == 0)
