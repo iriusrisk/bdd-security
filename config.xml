@@ -10,7 +10,7 @@
      <defaultDriver path="src/main/resources/drivers/chromedriver">Chrome</defaultDriver> 
 
     <!-- Base URL of the application to test -->
-    <baseUrl>http://www.google.com/</baseUrl>
+    <baseUrl>http://help.websiteos.com/</baseUrl>
 
     <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth authn/z and session management testing.-->
     <class>net.continuumsecurity.MyComplexApp</class>

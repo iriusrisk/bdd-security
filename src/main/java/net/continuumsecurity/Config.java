@@ -18,17 +18,18 @@
  ******************************************************************************/
 package net.continuumsecurity;
 
-import net.continuumsecurity.scanner.ZapManager;
-import net.continuumsecurity.web.Application;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.PropertyConfigurator;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
+import net.continuumsecurity.scanner.ZapManager;
+import net.continuumsecurity.web.Application;
 
 public class Config {
     private final static Logger log = Logger.getLogger(Config.class.getName());
@@ -102,13 +103,13 @@ public class Config {
         return validateAndGetString("class");
     }
 
-    public String getBaseUrl() {
-    	String url = System.getenv("TEST_URL");
-    	if(url.isEmpty()) 
-    		return validateAndGetString("baseUrl");
-    	else 
-    		return url;
-    }
+	public String getBaseUrl() {
+		String url = System.getenv("TEST_URL");
+		if (url == null || url.isEmpty())
+			return validateAndGetString("baseUrl");
+		else
+			return url;
+	}
 
     public String getDefaultDriver() {
         String driver="htmlunit";

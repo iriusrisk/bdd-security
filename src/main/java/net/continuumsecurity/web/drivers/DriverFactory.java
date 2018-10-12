@@ -18,7 +18,8 @@
  ******************************************************************************/
 package net.continuumsecurity.web.drivers;
 
-import net.continuumsecurity.Config;
+import java.io.File;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -26,13 +27,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import java.io.File;
+import net.continuumsecurity.Config;
 
 public class DriverFactory {
     private final static String CHROME = "chrome";
@@ -51,18 +51,20 @@ public class DriverFactory {
         return dm;
     }
 
-    public static WebDriver getProxyDriver(String name) {
-    	name = System.getenv("BROWSER");
-    	System.out.println("==============================" + name + "=======================");
-        return getDriver(name, true);
-    }
+	public static WebDriver getProxyDriver(String name) {
+		String browserFromEnv = System.getenv("BROWSER");
+		if (browserFromEnv != null && browserFromEnv.length() > 0)
+			name = browserFromEnv;
+		return getDriver(name, true);
+	}
 
-    public static WebDriver getDriver(String name) {
-    	
-    	name = System.getenv("BROWSER");
-    	System.out.println("++++++++++++++++++++++++++++++" + name + "++++++++++++++++++++++++");
-        return getDriver(name, false);
-    }
+	public static WebDriver getDriver(String name) {
+
+		String browserFromEnv = System.getenv("BROWSER");
+		if (browserFromEnv != null && browserFromEnv.length() > 0)
+			name = browserFromEnv;
+		return getDriver(name, false);
+	}
 
 
     // Return the desired driver and clear all its cookies
