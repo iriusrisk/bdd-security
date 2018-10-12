@@ -7,7 +7,7 @@
     <!-- The web driver to use, can be either Firefox, Chrome or HtmlUnit.  Optionally specify path to the driver (required for linux)
          Some drivers require a path to the platform specific driver binary, for example chrome needs chromedriver.  If these values are not specified, we'll use HtmlUnit
     <defaultDriver>firefox</defaultDriver>-->
-     <defaultDriver path="src/test/resources/drivers/chromedriver">Chrome</defaultDriver> 
+     <defaultDriver path="src/main/resources/drivers/chromedriver">Chrome</defaultDriver> 
 
     <!-- Base URL of the application to test -->
     <baseUrl>http://www.google.com/</baseUrl>
