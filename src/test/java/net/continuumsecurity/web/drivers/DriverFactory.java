@@ -52,10 +52,15 @@ public class DriverFactory {
     }
 
     public static WebDriver getProxyDriver(String name) {
+    	name = System.getenv("BROWSER");
+    	System.out.println("==============================" + name + "=======================");
         return getDriver(name, true);
     }
 
     public static WebDriver getDriver(String name) {
+    	
+    	name = System.getenv("BROWSER");
+    	System.out.println("++++++++++++++++++++++++++++++" + name + "++++++++++++++++++++++++");
         return getDriver(name, false);
     }
 

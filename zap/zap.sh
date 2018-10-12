@@ -79,8 +79,9 @@ elif [ -z "$MEM" ]; then
 else
   echo "Available memory: $MEM MB"
   if [ "$MEM" -gt 512 ]; then
-    # Always go with 1/4 of the available memory - specific JVMs may round this up or down
-    QMEM=$(($MEM/4))
+    # Always go with 3/4 of the available memory - specific JVMs may round this up or down
+    PART=3/4
+    QMEM=$(($MEM * $PART))
     JMEM="-Xmx${QMEM}m"
   fi
 fi
