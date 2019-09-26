@@ -13,7 +13,7 @@
     <baseUrl>http://help.websiteos.com/</baseUrl>
 
     <!-- A Java class to hold the Selenium steps to test the application in depth. Optionally required for in-depth authn/z and session management testing.-->
-    <class>net.continuumsecurity.MyComplexApp</class>
+    <class>net.continuumsecurity.TestApplication</class>
     <sslyze>
         <path>sslyze</path>
 	<option>--regular</option>

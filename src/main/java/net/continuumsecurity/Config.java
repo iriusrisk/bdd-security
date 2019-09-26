@@ -1,4 +1,5 @@
 /*******************************************************************************
+
  *    BDD-Security, application security testing framework
  *
  * Copyright (C) `2014 Stephen de Vries`
@@ -70,11 +71,15 @@ public class Config {
         return new User(getDefaultCredentials());
     }
 
-    public Credentials getDefaultCredentials() {
-        return new UserPassCredentials(
-                validateAndGetString("defaultUsername"),
-                validateAndGetString("defaultPassword"));
-    }
+	public Credentials getDefaultCredentials() {
+		String username = System.getenv(Constants.SECURITY_USERNAME);
+		String password = System.getenv(Constants.SECURITY_PASSWORD);
+		if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+			return new UserPassCredentials(validateAndGetString("defaultUsername"),
+					validateAndGetString("defaultPassword"));
+		} else
+			return new UserPassCredentials(username, password);
+	}
 
     public List<String> getIgnoreUrls() {
         List<String> ignoreUrls = new ArrayList<>();
@@ -93,11 +98,16 @@ public class Config {
         return spiderUrls;
     }
 
-    public int getMaxDepth() {
-        String portAsString = validateAndGetString("scanner.maxDepth");
-        if (portAsString != null && portAsString.length() > 0) return Integer.parseInt(portAsString);
-        return 10;
-    }
+	public int getMaxDepth() {
+		String max_depth = System.getenv(Constants.SECURITY_SPIDER_DEPTH);
+		if (max_depth == null || max_depth.isEmpty()) {
+			String portAsString = validateAndGetString("scanner.maxDepth");
+			if (portAsString != null && portAsString.length() > 0)
+				return Integer.parseInt(portAsString);
+			return 10;
+		} else
+			return Integer.parseInt(max_depth);
+	}
 
     public String getClassName() {
         return validateAndGetString("class");
