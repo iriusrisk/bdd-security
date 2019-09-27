@@ -60,7 +60,7 @@ public class WebApplication extends Application {
 
     public WebElement findAndWaitForElement(By by) {
         try {
-            WebDriverWait wait = new WebDriverWait(browser.getWebDriver(), 10);
+            WebDriverWait wait = new WebDriverWait(browser.getWebDriver(), 100);
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         } catch (TimeoutException e) {
             throw new NoSuchElementException(e.getMessage());

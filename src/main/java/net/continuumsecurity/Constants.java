@@ -17,4 +17,13 @@ public class Constants {
     public static String DHE_CIPHER = "DHE";
     public static String XSSPOLICY = "Cross-Site-Scripting";
     public static String SQLINJPOLICY = "sql-injection";
+
+    public static final String SECURITY_USERNAME = "USERNAME";
+    public static final String SECURITY_PASSWORD = "PASSWORD";
+    public static final String SECURITY_USERNAME_FIELD_ID = "username_field_id";
+    public static final String SECURITY_PASSWORD_FIELD_ID = "password_field_id";
+    public static final String SECURITY_SUBMIT_BUTTON_ID = "submit_button_id";
+    public static final String SECURITY_SPIDER_DEPTH = "SPIDER_DEPTH";
+
+
 }
