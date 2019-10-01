@@ -19,17 +19,17 @@ public class TestApplication extends WebApplication implements INavigable, ILogi
 		UserPassCredentials creds = new UserPassCredentials(credentials);
 		String username_field = System.getenv(Constants.SECURITY_USERNAME_FIELD_ID);
 		if (username_field != null && username_field.trim().length() > 0) {
-			driver.findElement(By.id(username_field)).clear();
-			driver.findElement(By.id(username_field)).sendKeys(creds.getUsername());
+			driver.findElement(By.xpath(username_field)).clear();
+			driver.findElement(By.xpath(username_field)).sendKeys(creds.getUsername());
 		}
 		String pass_field = System.getenv(Constants.SECURITY_PASSWORD_FIELD_ID);
 		if (pass_field != null && pass_field.trim().length() > 0) {
-			driver.findElement(By.id(pass_field)).clear();
-			driver.findElement(By.id(pass_field)).sendKeys(creds.getPassword());
+			driver.findElement(By.xpath(pass_field)).clear();
+			driver.findElement(By.xpath(pass_field)).sendKeys(creds.getPassword());
 		}
 		String submit_button = System.getenv(Constants.SECURITY_SUBMIT_BUTTON_ID);
 		if (submit_button != null && submit_button.trim().length() > 0)
-			driver.findElement(By.id(submit_button)).click();
+			driver.findElement(By.xpath(submit_button)).click();
 	}
 
 	@Override
