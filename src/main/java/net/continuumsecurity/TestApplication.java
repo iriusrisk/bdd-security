@@ -27,6 +27,7 @@ public class TestApplication extends WebApplication implements INavigable, ILogi
 			driver.findElement(By.xpath(pass_field)).clear();
 			driver.findElement(By.xpath(pass_field)).sendKeys(creds.getPassword());
 		}
+		sleep(5000);
 		String submit_button = System.getenv(Constants.SECURITY_SUBMIT_BUTTON_ID);
 		if (submit_button != null && submit_button.trim().length() > 0)
 			driver.findElement(By.xpath(submit_button)).click();
@@ -56,6 +57,16 @@ public class TestApplication extends WebApplication implements INavigable, ILogi
 	@Override
 	public void logout() {
 		// TODO Auto-generated method stub
+	}
+
+	private void sleep(long sleep) {
+		try {
+			Thread.sleep(sleep);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

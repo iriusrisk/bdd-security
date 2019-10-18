@@ -1,7 +1,7 @@
-if exist "%HOMEDRIVE%%HOMEPATH%\OWASP ZAP\.ZAP_JVM.properties" (
-	set /p jvmopts=< "%HOMEDRIVE%%HOMEPATH%\OWASP ZAP\.ZAP_JVM.properties"
+if exist "%USERPROFILE%\OWASP ZAP\.ZAP_JVM.properties" (
+	set /p jvmopts=< "%USERPROFILE%\OWASP ZAP\.ZAP_JVM.properties"
 ) else (
 	set jvmopts=-Xmx512m
 )
 
-java %jvmopts% -jar zap-2.6.0.jar %*
+java %jvmopts% -jar zap-2.8.1.jar %*

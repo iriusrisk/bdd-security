@@ -122,7 +122,7 @@ public class DriverFactory {
     }
 
     public WebDriver createChromeDriver(DesiredCapabilities capabilities) {
-        System.setProperty("webdriver.chrome.driver", Config.getInstance().getDefaultDriverPath());
+       // System.setProperty("webdriver.chrome.driver", Config.getInstance().getDefaultDriverPath());
         if (capabilities != null) {
             capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             ChromeOptions options = new ChromeOptions();
