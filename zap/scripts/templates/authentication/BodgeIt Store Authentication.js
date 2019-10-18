@@ -1,7 +1,3 @@
-// The following handles differences in printing between Java 7's Rhino JS engine
-// and Java 8's Nashorn JS engine
-if (typeof println == 'undefined') this.println = print;
-
 // The authenticate function is called whenever ZAP requires to authenticate, for a Context for which this script
 // was selected as the Authentication Method. The function should send any messages that are required to do the authentication
 // and should return a message with an authenticated response so the calling method.
@@ -18,28 +14,28 @@ if (typeof println == 'undefined') this.println = print;
 //					returned by the getCredentialsParamsNames() below
 
 function authenticate(helper, paramsValues, credentials) {
-	println("Authenticating via JavaScript script...");
+	print("Authenticating via JavaScript script...");
 	
 	// Make sure any Java classes used explicitly are imported
-	importClass(org.parosproxy.paros.network.HttpRequestHeader)
-	importClass(org.parosproxy.paros.network.HttpHeader)
-	importClass(org.apache.commons.httpclient.URI)
+	var HttpRequestHeader = Java.type("org.parosproxy.paros.network.HttpRequestHeader")
+	var HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader")
+	var URI = Java.type("org.apache.commons.httpclient.URI")
 
 	// Prepare the login request details
-	requestUri = new URI("http://localhost:8080/bodgeit/login.jsp", false);
-	requestMethod = HttpRequestHeader.POST;
+	var requestUri = new URI("http://localhost:8080/bodgeit/login.jsp", false);
+	var requestMethod = HttpRequestHeader.POST;
 	// Build the request body using the credentials values
-	requestBody = "username="+encodeURIComponent(credentials.getParam("username"));
+	var requestBody = "username="+encodeURIComponent(credentials.getParam("username"));
 	requestBody+= "&password="+encodeURIComponent(credentials.getParam("password"));
 
 	// Build the actual message to be sent
-	msg=helper.prepareMessage();
+	var msg=helper.prepareMessage();
 	msg.setRequestHeader(new HttpRequestHeader(requestMethod, requestUri, HttpHeader.HTTP10));
 	msg.setRequestBody(requestBody);
 
 	// Send the authentication message and return it
 	helper.sendAndReceive(msg);
-	println("Received BodgeIt response status code: "+ msg.getResponseHeader().getStatusCode());
+	print("Received BodgeIt response status code: "+ msg.getResponseHeader().getStatusCode());
 
 	return msg;
 }

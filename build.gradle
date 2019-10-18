@@ -131,8 +131,8 @@ dependencies {
     compile 'org.glassfish.jersey.connectors:jersey-apache-connector:2.25.1'
     compile 'net.htmlparser.jericho:jericho-html:3.3'
     compile 'edu.umass.cs.benchlab:harlib:1.1.2'
-    compile group: 'org.zaproxy', name: 'zap-clientapi', version: '1.2.0'
-    compile files ("lib/zap-java-api-2.6.0.jar", "lib/nessus-java-client-0.2-SNAPSHOT.jar","lib/jssylze-0.2-SNAPSHOT.jar")
+    compile group: 'org.zaproxy', name: 'zap-clientapi', version: '1.6.0'
+    compile files ("lib/zap-2.8.1.jar", "lib/nessus-java-client-0.2-SNAPSHOT.jar","lib/jssylze-0.2-SNAPSHOT.jar")
 }
 
 distZip.shouldRunAfter(build)
