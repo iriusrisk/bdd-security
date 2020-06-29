@@ -1,0 +1,5 @@
+@Library('reanplatform') _
+
+node {
+    sourceCodePipelines.releaseBuild(name: 'bdd-security')
+}
