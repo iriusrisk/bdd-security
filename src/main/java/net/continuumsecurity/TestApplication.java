@@ -11,7 +11,7 @@ public class TestApplication extends WebApplication implements INavigable, ILogi
 
 	@Override
 	public void openLoginPage() {
-		driver.get(Config.getInstance().getBaseUrl());
+		driver.get(Config.getInstance().getLoginUrl());
 	}
 
 	@Override

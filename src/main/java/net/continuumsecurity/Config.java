@@ -121,6 +121,11 @@ public class Config {
 			return url;
 	}
 
+	public String getLoginUrl() {
+		String url = System.getenv("LOGIN_URL");
+		return url;
+	}
+
     public String getDefaultDriver() {
         String driver="htmlunit";
         try {

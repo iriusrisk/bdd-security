@@ -374,6 +374,7 @@ public class AppScanningSteps {
                 e.printStackTrace();
             }
 	    int maxDepth = Config.getInstance().getMaxDepth();
+	    log.info("Maximum Spider depth set to "+maxDepth);
             getSpider().setMaxDepth(maxDepth);
             getSpider().setThreadCount(10);
             for (String url : Config.getInstance().getSpiderUrls()) {
