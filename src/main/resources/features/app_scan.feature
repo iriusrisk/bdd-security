@@ -17,7 +17,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/sql_injection.xml
+    And the XML report is written to the file build/reports/zap/sql_injection.xml
+	And the HTML report is written to the file build/reports/zap/sql_injections.html    
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-79
@@ -28,7 +29,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/xss.xml
+    And the XML report is written to the file build/reports/zap/xss.xml
+    And the HTML report is written to the file build/reports/zap/xss.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-22
@@ -39,7 +41,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/ssi.xml
+    And the XML report is written to the file build/reports/zap/ssi.xml
+    And the HTML report is written to the file build/reports/zap/ssi.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-98
@@ -50,7 +53,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/sfi.xml
+    And the XML report is written to the file build/reports/zap/sfi.xml
+    And the HTML report is written to the file build/reports/zap/sfi.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-97
@@ -61,7 +65,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/ssi.xml
+    And the XML report is written to the file build/reports/zap/ssi.xml
+    And the HTML report is written to the file build/reports/zap/ssi.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-94
@@ -72,7 +77,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/ss_code_injection.xml
+    And the XML report is written to the file build/reports/zap/ss_code_injection.xml
+    And the HTML report is written to the file build/reports/zap/ss_code_injection.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @cwe-78
@@ -83,7 +89,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/os_injection.xml
+    And the XML report is written to the file build/reports/zap/os_injection.xml
+    And the HTML report is written to the file build/reports/zap/os_injection.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-113
@@ -94,7 +101,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/crlf_injection.xml
+    And the XML report is written to the file build/reports/zap/crlf_injection.xml
+    And the HTML report is written to the file build/reports/zap/crlf_injection.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-601
@@ -105,7 +113,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/redirect.xml
+    And the XML report is written to the file build/reports/zap/redirect.xml
+    And the HTML report is written to the file build/reports/zap/redirect.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-541
@@ -116,7 +125,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/source_disclosure.xml
+    And the XML report is written to the file build/reports/zap/source_disclosure.xml
+    And the HTML report is written to the file build/reports/zap/source_disclosure.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-78
@@ -127,7 +137,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/shell_shock.xml
+    And the XML report is written to the file build/reports/zap/shell_shock.xml
+    And the HTML report is written to the file build/reports/zap/shell_shock.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-90
@@ -138,7 +149,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/ldap_injection.xml
+    And the XML report is written to the file build/reports/zap/ldap_injection.xml
+    And the HTML report is written to the file build/reports/zap/ldap_injection.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-91
@@ -149,7 +161,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/xpath_injection.xml
+    And the XML report is written to the file build/reports/zap/xpath_injection.xml
+    And the HTML report is written to the file build/reports/zap/xpath_injection.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-611
@@ -160,7 +173,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/xxe.xml
+    And the XML report is written to the file build/reports/zap/xxe.xml
+    And the HTML report is written to the file build/reports/zap/xxe.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-209-poodle
@@ -171,7 +185,8 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/padding_oracle.xml
+    And the XML report is written to the file build/reports/zap/padding_oracle.xml
+    And the HTML report is written to the file build/reports/zap/padding_oracle.html
     Then no Medium or higher risk vulnerabilities should be present
 
   @iriusrisk-cwe-200
@@ -182,5 +197,6 @@ Feature: Automated Application Security Scanning
     When the scanner is run
     And the following false positives are removed
       |url                    |parameter          |cweId      |wascId   |
-    And the XML report is written to the file build/zap/insecure_methods.xml
+    And the XML report is written to the file build/reports/zap/insecure_methods.xml
+    And the HTML report is written to the file build/reports/zap/insecure_methods.html
     Then no Medium or higher risk vulnerabilities should be present
