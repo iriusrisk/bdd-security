@@ -98,6 +98,7 @@ public class AppScanningSteps {
         Path pathToFile = Paths.get(path);
         Files.createDirectories(pathToFile.getParent());
         Files.write(pathToFile, xmlReport);
+        log.info("Zap xml reports are generated at "+ pathToFile.toString());
     }
 
     @Then("the HTML report is written to the file (.*)")
@@ -106,6 +107,7 @@ public class AppScanningSteps {
         Path pathToFile = Paths.get(path);
         Files.createDirectories(pathToFile.getParent());
         Files.write(pathToFile, htmlReport);
+        log.info("Zap html reports are generated at "+ pathToFile.toString());
     }
 
     @Given("a scanner with all policies enabled")
@@ -206,6 +208,7 @@ public class AppScanningSteps {
         }
         if (scannerIds == null) throw new UnexpectedContentException("No matching policy found for: " + policyName);
         getScanner().setEnableScanners(scannerIds, true);
+        log.info(policyName + " policy is enabled on ZAP scanner.");
     }
 
     @Given("the attack strength is set to (\\S+)")
