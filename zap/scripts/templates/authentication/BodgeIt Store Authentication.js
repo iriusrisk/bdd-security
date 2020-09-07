@@ -22,7 +22,7 @@ function authenticate(helper, paramsValues, credentials) {
 	var URI = Java.type("org.apache.commons.httpclient.URI")
 
 	// Prepare the login request details
-	var requestUri = new URI("http://localhost:8080/bodgeit/login.jsp", false);
+	var requestUri = new URI("https://localhost:8080/bodgeit/login.jsp", false);
 	var requestMethod = HttpRequestHeader.POST;
 	// Build the request body using the credentials values
 	var requestBody = "username="+encodeURIComponent(credentials.getParam("username"));

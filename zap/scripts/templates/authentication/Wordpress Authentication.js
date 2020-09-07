@@ -32,7 +32,7 @@ function authenticate(helper, paramsValues, credentials) {
 	var path = paramsValues.get("Path");
 	print("Logging in to domain " + domain + " and path " + path);
 
-	var requestUri = new URI("http://"+domain + path + "wp-login.php", false);
+	var requestUri = new URI("https://"+domain + path + "wp-login.php", false);
 	var requestMethod = HttpRequestHeader.POST;
 
 	// Build the request body using the credentials values
